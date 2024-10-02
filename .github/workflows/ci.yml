@@ -17,17 +17,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Cache node modules
+      - name: Cache Yarn cache
         uses: actions/cache@v3
-        env:
-          cache-name: cache-node-modules
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          path: client/.cache/yarn
+          key: ${{ runner.os }}-yarn-${{ hashFiles('client/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-build-
-            ${{ runner.os }}-
+            ${{ runner.os }}-yarn-
 
       - name: Setup Node.js 20.9.0
         uses: actions/setup-node@v3
@@ -35,7 +31,9 @@ jobs:
           node-version: 20.9.0
 
       - name: Install dependencies
+        working-directory: client
         run: yarn install
 
       - name: Run build
+        working-directory: client
         run: yarn build
