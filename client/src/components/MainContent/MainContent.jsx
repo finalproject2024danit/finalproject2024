@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './MainContent.module.scss'
 
 const MainContent = ({title, content}) => {
@@ -17,6 +18,16 @@ const MainContent = ({title, content}) => {
       )}
     </div>
   );
+};
+
+MainContent.propTypes = {
+  title: PropTypes.string.isRequired, // 'title' is a required string
+  content: PropTypes.arrayOf( // 'content' is an array of objects
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      body: PropTypes.string.isRequired,
+    })
+  ).isRequired, // 'content' is required
 };
 
 export default MainContent;

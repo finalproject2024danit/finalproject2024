@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './Card.module.scss'; 
 
 const Card = ({ post, user, onDelete, onShowUserInfo }) => {
@@ -13,6 +14,22 @@ const Card = ({ post, user, onDelete, onShowUserInfo }) => {
       </div>
     </div>
   );
+};
+
+
+Card.propTypes = {
+  post: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    imageUrl: PropTypes.string,
+    title: PropTypes.string.isRequired,
+    body: PropTypes.string.isRequired,
+  }).isRequired,
+  user: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+  }).isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onShowUserInfo: PropTypes.func.isRequired,
 };
 
 export default Card;
