@@ -5,7 +5,7 @@ import styles from './Card.module.scss';
 const Card = ({ post, user, onDelete, onShowUserInfo }) => {
   return (
     <div className={styles.card} onClick={() => onShowUserInfo(user)}>
-      <img src={post.imageUrl || "https://via.placeholder.com/150"} alt="Post image" />
+      <img src={post.imageUrl || "https://via.placeholder.com/200"} alt="Post image" />
       <div className={styles['cards-items']}>
         <p><strong className={styles['user-name']}>{user.name}</strong> ({user.email})</p>
         <h3>{post.title}</h3>
