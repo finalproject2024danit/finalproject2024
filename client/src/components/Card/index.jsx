@@ -28,8 +28,8 @@ Card.propTypes = {
     name: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
   }).isRequired,
-  onDelete: PropTypes.func.isRequired,
-  onShowUserInfo: PropTypes.func.isRequired,
+  onDelete: PropTypes.func,
+  onShowUserInfo: PropTypes.func,
 };
 
 export default Card;
