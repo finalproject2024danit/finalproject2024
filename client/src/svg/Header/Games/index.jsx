@@ -1,3 +1,5 @@
+import React from "react";
+
 const GamesIcon = () => {
   return (
     <svg width="30px" height="30px" viewBox="0 0 32 32">

@@ -1,5 +1,6 @@
 
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './Modal.module.scss'; // Импорт модульных стилей
 
 const Modal = ({ user, onClose }) => {
@@ -22,6 +23,26 @@ const Modal = ({ user, onClose }) => {
       </div>
     </div>
   );
+};
+
+Modal.propTypes = {
+  user: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    phone: PropTypes.string.isRequired,
+    website: PropTypes.string.isRequired,
+    company: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }).isRequired,
+    address: PropTypes.shape({
+      street: PropTypes.string.isRequired,
+      suite: PropTypes.string,
+      city: PropTypes.string.isRequired,
+      zipcode: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired, // 'user' is required
+  onClose: PropTypes.func.isRequired, // 'onClose' is required
 };
 
 export default Modal;

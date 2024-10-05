@@ -1,11 +1,9 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 import "./App.scss";
 // import "./variables.scss";
 
 import Header from "./components/Header";
 import AppRoutes from "./AppRoutes";
-import LeftSidebar from "./components/LeftSidebar/LeftSidebar";
 
 const App = () => {
   return (
