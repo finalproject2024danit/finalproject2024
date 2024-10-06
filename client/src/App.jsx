@@ -4,6 +4,7 @@ import "./App.scss";
 
 import Header from "./components/Header";
 import AppRoutes from "./AppRoutes";
+import Footer from "./components/Footer/Footer";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
       {/* -------------------------------------------------------------------------- */}
 
       {/* -------------------------------------------------------------------------- */}
+      <Footer/>
     </>
   );
 };
