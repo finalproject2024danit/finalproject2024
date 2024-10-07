@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loginSuccess, loginFailure } from "../../redux/slices/authSlice";
 import { useNavigate } from "react-router-dom";
+import { loginFailure, loginSuccess } from "../../redux/slices/authSlice";
 import styles from "./LoginPage.module.scss";
 
 const LoginPage = () => {

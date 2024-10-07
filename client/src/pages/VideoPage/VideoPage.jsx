@@ -1,7 +1,7 @@
-import React from "react";
-import styles from "./VideoPage.module.scss";
+// import React from "react";
 import LeftSidebar from "../../components/LeftSidebar/LeftSidebar";
 import MainContent from "../../components/MainContent/MainContent";
+import styles from "./VideoPage.module.scss";
 
 const VideoPage = () => {
   // Define the list of videos with titles and URLs

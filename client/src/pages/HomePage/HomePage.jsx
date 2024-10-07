@@ -1,9 +1,9 @@
-import React from "react";
-import LeftSidebar from "../../components/LeftSidebar/LeftSidebar.jsx";
-import RightSidebar from "../../components/RightSidebar/RightSidebar.jsx";
-import MainContent from "../../components/MainContent/MainContent.jsx";
-import styles from "./HomePage.module.scss";
+// import React from "react";
 import Card from "../../components/Card/index.jsx";
+import LeftSidebar from "../../components/LeftSidebar/LeftSidebar.jsx";
+import MainContent from "../../components/MainContent/MainContent.jsx";
+import RightSidebar from "../../components/RightSidebar/RightSidebar.jsx";
+import styles from "./HomePage.module.scss";
 
 
 
