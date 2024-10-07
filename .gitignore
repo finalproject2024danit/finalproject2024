@@ -38,4 +38,5 @@ docker/db-data
 ### ENV ###
 .env
 
-logback-spring.xml
+logback-spring.xml.DS_Store
+.DS_Store
