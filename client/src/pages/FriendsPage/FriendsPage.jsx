@@ -80,7 +80,9 @@ const FriendsPage = () => {
     <div className={styles.layout}>
     <LeftSidebar />
     <div className={styles.mainContent}>
-    <MainContent title="Friends" content={content} />
+    <MainContent title="Friends" >
+      {content}
+    </MainContent>
     {selectedUser && <Modal user={selectedUser} onClose={closeModal} />}
     </div>
   </div>

@@ -20,7 +20,8 @@ const GroupPage = () => {
         <div className={styles.layout}>
         <LeftSidebar />
         <div className={styles.mainContent}>
-        <MainContent title="Group" content={groupContent} />
+        <MainContent title="Group">{content}
+        </MainContent>
         </div>
       </div>
 

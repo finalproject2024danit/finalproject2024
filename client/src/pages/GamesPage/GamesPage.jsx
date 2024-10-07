@@ -21,7 +21,9 @@ const GamesPage = () => {
         <div className={styles.layout}>
         <LeftSidebar />
         <div className={styles.mainContent}>
-        <MainContent title="Games" content={gamesContent} />
+        <MainContent title="Games" >
+          {content}
+        </MainContent>
         </div>
       </div>
     //     <div className={styles.games__box}>

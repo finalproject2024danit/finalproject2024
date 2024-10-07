@@ -1,3 +1,5 @@
+import React from "react";
+
 const AccountIcon = () => {
   return (
     <svg
