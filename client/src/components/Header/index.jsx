@@ -81,7 +81,7 @@ const Header = () => {
               </div>
             </NavLink>
           </li>
-7
+
           <li>
             <NavLink
               className={({ isActive }) => (isActive ? styles.active : "")}
