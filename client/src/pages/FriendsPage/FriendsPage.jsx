@@ -1,6 +1,4 @@
-
-
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './FriendsPage.module.scss';
 import Card from '../../components/Card';
 import Modal from '../../components/Modal';

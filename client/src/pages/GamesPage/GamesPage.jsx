@@ -1,4 +1,4 @@
-import React from "react";
+// import React from "react";
 import styles from './GamesPage.module.scss';
 import LeftSidebar from "../../components/LeftSidebar/LeftSidebar";
 import MainContent from "../../components/MainContent/MainContent";
@@ -22,7 +22,7 @@ const GamesPage = () => {
         <LeftSidebar />
         <div className={styles.mainContent}>
         <MainContent title="Games" >
-          {content}
+          {gamesContent}
         </MainContent>
         </div>
       </div>

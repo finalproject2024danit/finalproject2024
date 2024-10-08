@@ -1,4 +1,4 @@
-import React from 'react';
+// import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './MainContent.module.scss'
 
@@ -13,6 +13,7 @@ const MainContent = ({title, children}) => {
 
 MainContent.propTypes = {
   title: PropTypes.string.isRequired, // 'title' is a required string
+  children: PropTypes.node, // Додано валідацію для children
 };
 
 export default MainContent;
