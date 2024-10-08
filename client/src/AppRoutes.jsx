@@ -1,56 +1,56 @@
 // import React from "react";
 import { Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage/HomePage.jsx";
-import LoginPage from "./pages/LoginPage/LoginPage.jsx";
+// import LoginPage from "./pages/LoginPage/LoginPage.jsx";
 import VideoPage from "./pages/VideoPage/VideoPage.jsx";
 import GroupPage from "./pages/GroupPage/GroupPage.jsx";
 import GamesPage from "./pages/GamesPage/GamesPage.jsx";
 import FriendsPage from "./pages/FriendsPage/FriendsPage.jsx";
-import PrivateRoute from "./components/PrivateRoute.jsx";
+// import PrivateRoute from "./components/PrivateRoute.jsx";
 
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/login" element={<LoginPage />} />
+      {/* <Route path="/login" element={<LoginPage />} /> */}
       {/* <Route path="/" */}
       <Route
         path="/"
         element={
-          <PrivateRoute>
+          // <PrivateRoute>
             <HomePage />
-          </PrivateRoute>
+          // </PrivateRoute>
         }
       />
       <Route
         path="/friends"
         element={
-          <PrivateRoute>
+          // <PrivateRoute>
             <FriendsPage />
-          </PrivateRoute>
+          // </PrivateRoute>
         }
       />
       <Route
         path="/video"
         element={
-          <PrivateRoute>
+          // <PrivateRoute>
             <VideoPage />
-          </PrivateRoute>
+          // </PrivateRoute>
         }
       />
       <Route
         path="/group"
         element={
-          <PrivateRoute>
+          // <PrivateRoute>
             <GroupPage />
-          </PrivateRoute>
+          // </PrivateRoute>
         }
       />
       <Route
         path="/games"
         element={
-          <PrivateRoute>
+          // <PrivateRoute>
             <GamesPage />
-          </PrivateRoute>
+          // </PrivateRoute>
         }
       />
     </Routes>
