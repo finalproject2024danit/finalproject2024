@@ -7,7 +7,7 @@ import FriendsIcon from "../../svg/Header/Friends";
 import GamesIcon from "../../svg/Header/Games";
 // import GroupIcon from "../../svg/Header/Group";
 // import HomeIcon from "../../svg/Header/Home";
-import MenuIcon from "../../svg/Header/Menu";
+// import MenuIcon from "../../svg/Header/Menu";
 import MessengerIcon from "../../svg/Header/Messenger";
 import NotificationIcon from "../../svg/Header/Notification";
 import VideoIcon from "../../svg/Header/Video";
