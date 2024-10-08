@@ -100,8 +100,8 @@ const Header = () => {
               className={({ isActive }) => (isActive ? styles.active : "")}
               to=""
             >
-              <MenuIcon />
-              {/* <span>MenuIcon</span> */}
+              {/* <MenuIcon /> */}
+              <span>MenuIcon</span>
             </NavLink>
           </li>
           <li>
