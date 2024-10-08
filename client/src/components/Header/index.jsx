@@ -9,7 +9,7 @@ import GamesIcon from "../../svg/Header/Games";
 // import HomeIcon from "../../svg/Header/Home";
 // import MenuIcon from "../../svg/Header/Menu";
 // import MessengerIcon from "../../svg/Header/Messenger";
-import NotificationIcon from "../../svg/Header/Notification";
+// import NotificationIcon from "../../svg/Header/Notification";
 import VideoIcon from "../../svg/Header/Video";
 import styles from "./Header.module.scss";
 
@@ -118,8 +118,8 @@ const Header = () => {
               className={({ isActive }) => (isActive ? styles.active : "")}
               to=""
             >
-              <NotificationIcon />
-              {/* <span>NotificationIcon</span> */}
+              {/* <NotificationIcon /> */}
+              <span>NotificationIcon</span>
             </NavLink>
           </li>
           <li>
