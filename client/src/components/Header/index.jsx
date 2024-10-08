@@ -1,16 +1,16 @@
 // // import PropTypes from "prop-types";
 // import React from "react";
 import { NavLink } from "react-router-dom";
-import AccountIcon from "../../svg/Header/Account/index.jsx";
-import FacebookIcon from "../../svg/Header/Facebook./index.jsx";
-import FriendsIcon from "../../svg/Header/Friends/index.jsx";
-import GamesIcon from "../../svg/Header/Games/index.jsx";
-import GroupIcon from "../../svg/Header/Group/index.jsx";
-import HomeIcon from "../../svg/Header/Home./index.jsx";
-import MenuIcon from "../../svg/Header/Menu/index.jsx";
-import MessengerIcon from "../../svg/Header/Messenger/index.jsx";
-import NotificationIcon from "../../svg/Header/Notification/index.jsx";
-import VideoIcon from "../../svg/Header/Video/index.jsx";
+import AccountIcon from "../../svg/Header/Account";
+import FacebookIcon from "../../svg/Header/Facebook";
+import FriendsIcon from "../../svg/Header/Friends";
+import GamesIcon from "../../svg/Header/Games";
+import GroupIcon from "../../svg/Header/Group";
+import HomeIcon from "../../svg/Header/Home";
+import MenuIcon from "../../svg/Header/Menu";
+import MessengerIcon from "../../svg/Header/Messenger";
+import NotificationIcon from "../../svg/Header/Notification";
+import VideoIcon from "../../svg/Header/Video";
 import styles from "./Header.module.scss";
 
 const Header = () => {
