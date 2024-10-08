@@ -5,7 +5,7 @@ import AccountIcon from "../../svg/Header/Account";
 import FacebookIcon from "../../svg/Header/Facebook";
 import FriendsIcon from "../../svg/Header/Friends";
 import GamesIcon from "../../svg/Header/Games";
-import GroupIcon from "../../svg/Header/Group";
+// import GroupIcon from "../../svg/Header/Group";
 import HomeIcon from "../../svg/Header/Home";
 import MenuIcon from "../../svg/Header/Menu";
 import MessengerIcon from "../../svg/Header/Messenger";
@@ -76,12 +76,12 @@ const Header = () => {
               to="/group"
             >
               <div className={styles.iconWrapper}>
-                <GroupIcon />
-                {/* <span>GroupIcon</span> */}
+                {/* <GroupIcon /> */}
+                <span>GroupIcon</span>
               </div>
             </NavLink>
           </li>
-
+7
           <li>
             <NavLink
               className={({ isActive }) => (isActive ? styles.active : "")}
