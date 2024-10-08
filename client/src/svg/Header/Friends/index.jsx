@@ -1,9 +1,7 @@
-// import React from "react";
-
 const FriendsIcon = () => {
     return (
         <svg
-        fill="#000000"
+        // fill="#000000"
         version="1.1"
         width="30px"
         height="30px"

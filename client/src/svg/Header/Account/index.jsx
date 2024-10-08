@@ -1,12 +1,9 @@
-// import React from "react";
-
 const AccountIcon = () => {
   return (
     <svg
       width="30px"
       height="30px"
-      viewBox="0 0 61.8092 61.8092"
-      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 61.8092 61.8092"      
     >
       <title />
 
