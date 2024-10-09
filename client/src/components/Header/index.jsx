@@ -125,7 +125,7 @@ const Header = () => {
           <li>
             <NavLink
               className={({ isActive }) => (isActive ? styles.active : "")}
-              to=""
+              to="/account"
             >
               <AccountIcon />
               {/* <span>AccountIcon</span> */}

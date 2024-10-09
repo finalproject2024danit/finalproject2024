@@ -6,6 +6,7 @@ import VideoPage from "./pages/VideoPage/VideoPage.jsx";
 import GroupPage from "./pages/GroupPage/GroupPage.jsx";
 import GamesPage from "./pages/GamesPage/GamesPage.jsx";
 import FriendsPage from "./pages/FriendsPage/FriendsPage.jsx";
+import AccountPage from "./pages/AccountPage/AccountPage.jsx";
 // import PrivateRoute from "./components/PrivateRoute.jsx";
 
 const AppRoutes = () => {
@@ -53,6 +54,7 @@ const AppRoutes = () => {
           // </PrivateRoute>
         }
       />
+      <Route path="/account" element={<AccountPage />} />
     </Routes>
   );
 };
