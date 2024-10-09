@@ -5,11 +5,11 @@ import AccountIcon from "../../svg/Header/Account";
 import FacebookIcon from "../../svg/Header/Facebook";
 import FriendsIcon from "../../svg/Header/Friends";
 import GamesIcon from "../../svg/Header/Games";
-import GroupIcon from "../../svg/Header/Group2";
-import HomeIcon from "../../svg/Header/Home";
-import MenuIcon from "../../svg/Header/Menu";
-import MessengerIcon from "../../svg/Header/Messenger";
-import NotificationIcon from "../../svg/Header/Notification";
+import GroupIcon from "../../svg/Header/Group1";
+import HomeIcon from "../../svg/Header/Home1";
+import MenuIcon from "../../svg/Header/Menu1";
+import MessengerIcon from "../../svg/Header/Messenger1";
+import NotificationIcon from "../../svg/Header/Notification1";
 import VideoIcon from "../../svg/Header/Video";
 import styles from "./Header.module.scss";
 
