@@ -1,0 +1,165 @@
+@import '../../App.scss';
+
+.accountPage {
+    .profileHeader {
+      position: relative;
+      text-align: center;
+      .banner {
+        width: 1250px;
+        height: 500px;
+        border-radius: 5px;
+        object-fit: cover;
+      }
+      .avatarContainer {
+        position: relative;
+        left: -33%;
+        bottom: 50px;
+        display: flex;
+        align-items: center;
+        .avatar {
+          width: 150px;
+          height: 150px;
+          border-radius: 50%;
+          border: 3px solid white;
+        }
+        .userInfo {
+          margin-left: 20px;
+          h2 {
+            margin: 0;
+          }
+          p {
+            margin: 0;
+          }
+        }
+      }
+    }
+  }
+  .accountPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh; // Устанавливаем минимальную высоту
+  }
+  
+  .profileHeader {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .bannerButton {
+    position: absolute;
+    bottom: 180px; /* Расположение кнопки от нижней границы */
+    right: 20px; /* Расположение кнопки от правой границы */
+    width: 200px;
+    height: 35px;
+    background-color: rgba(255, 255, 255, 0.8); /* Полупрозрачный фон */
+    border: none; /* Убираем границу */
+    padding: 5px 10px; /* Отступы вокруг текста */
+    cursor: pointer; /* Указатель при наведении */
+    border-radius: 5px; /* Скругление углов */
+  }
+  
+  .avatarButton {
+    position: absolute;
+    height: 35px;
+    width: 35px;
+    bottom: 20px; /* Расположение кнопки от нижней границы */
+    right: 100px; /* Расположение кнопки от правой границы */
+    background-color: black; /* Полупрозрачный фон */
+    border: none; /* Убираем границу */
+    padding: 5px 10px; /* Отступы вокруг текста */
+    cursor: pointer; /* Указатель при наведении */
+    border-radius:50%; /* Кнопка круглая */
+  }
+
+  .friendsSection {
+    display: flex;
+    width: 1150px;
+    padding: 10px;
+    background-color: #f7f7f7; // Цвет фона для секции друзей
+    border-radius: 8px; // Скругление углов
+  }
+  
+  .friendsList {
+    display: flex;
+    flex-wrap: wrap; // Позволяет карточкам друзей занимать несколько строк
+    justify-content: center;
+    gap: 15px; // Промежуток между карточками
+  }
+  
+  .friendCard {
+    border: 1px solid #ccc; // Рамка для карточки друга
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center; // Центрируем текст
+    width: 150px;
+    height: 200px;
+  }
+  
+  .friendAvatar {
+    width: 100px; // Ширина аватара друга
+    height: 120px; // Высота аватара друга
+    border-radius: 5%; // Круглый аватар
+  }
+  
+  .friendName {
+    margin: 10px 0; // Отступы для имени друга
+  }
+  
+  .addFriendButton {
+    padding: 5px 10px; // Отступы для кнопки
+    background-color: #007bff; // Цвет фона кнопки
+    color: white; // Цвет текста кнопки
+    border: none; // Убираем рамку
+    border-radius: 5px; // Скругление углов
+    cursor: pointer; // Указываем, что кнопка кликабельная
+  }
+
+  .toggleFriendsButton {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    left: 560px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+
+  .toggleFriendsButton:hover {
+    background-color: #b6b5b5;
+  }
+
+  .accountBrake {
+    background-color: rgb(36, 35, 35);
+    width: 1200px;
+    height: 1px;
+  }
+  
+  .navLinks {
+    display: flex; 
+    width: 1200px;
+    margin: 16px 0; /* Отступы сверху и снизу */
+  }
+  
+  .navLink {
+    position: relative; /* Для абсолютного позиционирования активной полоски */
+    margin: 0 10px; /* Отступы между ссылками */
+    text-decoration: none; /* Убираем подчеркивание */
+    color: black; /* Цвет текста */
+    font-weight: bold; /* Жирный шрифт */
+    cursor: pointer; /* Курсор при наведении */
+  }
+  
+  .active {
+    color: blue; /* Цвет текста для активной ссылки */
+  }
+  
+  .activeLine {
+    content: '';
+    position: absolute;
+    bottom: -16px; /* Расположение полоски под текстом */
+    left: 0;
+    right: 0;
+    height: 2px; /* Высота полоски */
+    background-color: blue; /* Цвет полоски */
+    border-radius: 5px;
+  }

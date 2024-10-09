@@ -1,9 +1,30 @@
+import  { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styles from "./Account.module.scss"; 
+
+
 const AccountIcon = () => {
+
+  const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const goToProfile = () => {
+    navigate('/account'); 
+    setIsOpen(false);
+  };
+
   return (
+    <>
     <svg
       width="30px"
       height="30px"
-      viewBox="0 0 61.8092 61.8092"      
+      viewBox="0 0 61.8092 61.8092"     
+      onClick={toggleDropdown}
+      style={{ cursor: 'pointer' }} 
     >
       <title />
 
@@ -79,6 +100,44 @@ const AccountIcon = () => {
         </g>
       </g>
     </svg>
+    {isOpen && (
+        <ul className={styles.dropdownMenu}> 
+          <li 
+            className={`${styles.dropdownItem} ${styles.dropdownProfile}`} 
+            onClick={goToProfile} 
+          >
+            <span className={styles.icon}>
+              <svg
+                width="40px"
+                height="40px"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle cx="12" cy="12" r="10" fill="#9f82bb" />
+              </svg>
+            </span>
+            
+            Profile
+          </li>
+          <li className={styles.dropdownItem}>
+            <span className={styles.icon}>
+              <svg
+                width="40px"
+                height="40px"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle cx="12" cy="12" r="10" fill="#6f82bb" />
+              </svg>
+            </span>
+            Logout
+          </li>
+        </ul>
+      )}
+
+    </>
   );
 };
 
