@@ -5,8 +5,8 @@ import AccountIcon from "../../svg/Header/Account";
 import FacebookIcon from "../../svg/Header/Facebook";
 import FriendsIcon from "../../svg/Header/Friends";
 import GamesIcon from "../../svg/Header/Games";
-import GroupIcon from "../../svg/Header/1.Group";
-import HomeIcon from "../../svg/Header/Home";
+import GroupIcon from "../../svg/Header/Group";
+// import HomeIcon from "../../svg/Header/Home";
 // import MenuIcon from "../../svg/Header/Menu";
 // import MessengerIcon from "../../svg/Header/Messenger";
 // import NotificationIcon from "../../svg/Header/Notification";
@@ -47,8 +47,8 @@ const Header = () => {
               className={({ isActive }) => (isActive ? styles.active : "")}
               to="/"
             >
-              <HomeIcon />
-              {/* <span>HomeIcon</span> */}
+              {/* <HomeIcon /> */}
+              <span>HomeIcon</span>
             </NavLink>
           </li>
           <li>
