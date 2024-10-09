@@ -5,7 +5,7 @@ import AccountIcon from "../../svg/Header/Account";
 import FacebookIcon from "../../svg/Header/Facebook";
 import FriendsIcon from "../../svg/Header/Friends";
 import GamesIcon from "../../svg/Header/Games";
-import GroupIcon from "../../svg/Header/Group1";
+import GroupIcon from "../../svg/Header/Group";
 import HomeIcon from "../../svg/Header/Home1";
 import MenuIcon from "../../svg/Header/Menu1";
 import MessengerIcon from "../../svg/Header/Messenger1";
