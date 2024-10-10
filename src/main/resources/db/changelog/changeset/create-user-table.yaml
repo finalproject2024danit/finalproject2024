@@ -9,6 +9,7 @@ databaseChangeLog:
               - column:
                   name: id
                   type: SERIAL
+                  autoIncrement: true
                   constraints:
                     primaryKey: true
                     nullable: false
@@ -29,11 +30,16 @@ databaseChangeLog:
                     nullable: false
                     unique: true
               - column:
+                  name: password
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: false
+              - column:
                   name: gender
                   type: VARCHAR(10)
               - column:
-                  name: date
-                  type: DATE
+                  name: date_of_birth
+                  type: BIGINT
               - column:
                   name: avatar
                   type: VARCHAR(255)
