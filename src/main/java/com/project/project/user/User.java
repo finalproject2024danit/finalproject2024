@@ -12,10 +12,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
 
 import static jakarta.persistence.TemporalType.TIMESTAMP;
 import static lombok.AccessLevel.PRIVATE;
@@ -37,17 +34,19 @@ public class User extends AbstractEntity {
     @NotNull
     String email;
 
+    @NotNull
+    String password;
+
+    @Enumerated(EnumType.STRING)
     Gender gender;
 
-    LocalDate date;
+    Long dateOfBirth;
 
     String avatar;
 
-    @ElementCollection
-    Set<String> phones;
+    String phones;
 
-    @ElementCollection
-    List<String> photoData;
+    String photoData;
 
     @CreatedDate
     @Temporal(TIMESTAMP)
