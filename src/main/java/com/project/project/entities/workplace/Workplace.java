@@ -31,4 +31,3 @@ public class Workplace extends AbstractEntity {
     Set<User> users;
 
 }
-
