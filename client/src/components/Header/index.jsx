@@ -5,11 +5,11 @@ import AccountIcon from "../../svg/Header/Account";
 import FacebookIcon from "../../svg/Header/Facebook";
 import FriendsIcon from "../../svg/Header/Friends";
 import GamesIcon from "../../svg/Header/Games";
-// import GroupIcon from "../../svg/Header/Group";
-// import HomeIcon from "../../svg/Header/Home";
-// import MenuIcon from "../../svg/Header/Menu";
-// import MessengerIcon from "../../svg/Header/Messenger";
-// import NotificationIcon from "../../svg/Header/Notification";
+import GroupIcon from "../../svg/Header/Group";
+import HomeIcon from "../../svg/Header/Home";
+import MenuIcon from "../../svg/Header/Menu";
+import MessengerIcon from "../../svg/Header/Messenger";
+import NotificationIcon from "../../svg/Header/Notification";
 import VideoIcon from "../../svg/Header/Video";
 import styles from "./Header.module.scss";
 
@@ -47,8 +47,8 @@ const Header = () => {
               className={({ isActive }) => (isActive ? styles.active : "")}
               to="/"
             >
-              {/* <HomeIcon /> */}
-              <span>HomeIcon</span>
+              <HomeIcon />
+              {/* <span>HomeIcon</span> */}
             </NavLink>
           </li>
           <li>
@@ -76,8 +76,8 @@ const Header = () => {
               to="/group"
             >
               <div className={styles.iconWrapper}>
-                {/* <GroupIcon /> */}
-                <span>GroupIcon</span>
+                <GroupIcon />
+                {/* <span>GroupIcon</span> */}
               </div>
             </NavLink>
           </li>
@@ -100,8 +100,8 @@ const Header = () => {
               className={({ isActive }) => (isActive ? styles.active : "")}
               to=""
             >
-              {/* <MenuIcon /> */}
-              <span>MenuIcon</span>
+              <MenuIcon />
+              {/* <span>MenuIcon</span> */}
             </NavLink>
           </li>
           <li>
@@ -109,8 +109,8 @@ const Header = () => {
               className={({ isActive }) => (isActive ? styles.active : "")}
               to=""
             >
-              {/* <MessengerIcon /> */}
-              <span>MessengerIcon</span>
+              <MessengerIcon />
+              {/* <span>MessengerIcon</span> */}
             </NavLink>
           </li>
           <li>
@@ -118,8 +118,8 @@ const Header = () => {
               className={({ isActive }) => (isActive ? styles.active : "")}
               to=""
             >
-              {/* <NotificationIcon /> */}
-              <span>NotificationIcon</span>
+              <NotificationIcon />
+              {/* <span>NotificationIcon</span> */}
             </NavLink>
           </li>
           <li>
