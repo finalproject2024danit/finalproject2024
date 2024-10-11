@@ -1,26 +1,26 @@
-package com.project.project.dto;
+package com.project.project.entities.message.api.dto;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonView;
-import com.project.project.entities.user.api.dto.View;
+import com.project.project.dto.AbstractDto;
+import com.project.project.entities.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import static lombok.AccessLevel.PRIVATE;
 
+
 @FieldDefaults(level = PRIVATE)
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
-@NoArgsConstructor
 @Data
-public class BaseResponseDto<T extends AbstractDto> {
-    @JsonView(View.Admin.class)
-    @JsonInclude(JsonInclude.Include.NON_NULL)
-    T dto;
+public class ResponseMessageDto extends AbstractDto {
 
     @JsonView(View.Admin.class)
-    String message;
+    User userFrom;
+
+    @JsonView(View.Admin.class)
+    String content;
+
 }
