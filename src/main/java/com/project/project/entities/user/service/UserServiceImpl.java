@@ -24,6 +24,10 @@ public class UserServiceImpl implements UserService {
     public User getUserById(long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(UserStatus.USER_NOT_FOUND.getMessage()));
+    }
 
+    @Override
+    public User addUser(User user) {
+        return userRepository.save(user);
     }
 }

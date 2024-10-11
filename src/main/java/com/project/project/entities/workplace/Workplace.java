@@ -1,23 +1,33 @@
 package com.project.project.entities.workplace;
 
+import com.project.project.AbstractEntity;
 import com.project.project.entities.user.User;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
 
-import java.util.List;
+import java.util.Set;
+
+import static lombok.AccessLevel.PRIVATE;
 
 
+@EqualsAndHashCode(callSuper = true)
+@Data
 @Entity
-public class Workplace {
+@Table(name = "workplace")
+@FieldDefaults(level = PRIVATE)
+@NoArgsConstructor
+@AllArgsConstructor
+public class Workplace extends AbstractEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column
+    String name;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "workplace_id")
-    private List<User> users;
-
-    private String workLocation;
+    Set<User> users;
 
 }
-

@@ -10,4 +10,7 @@ public interface UserService {
     Page<User> findAllFiltered(Pageable pageable);
 
     User getUserById(long id);
+  
+    User addUser(User user);
+
 }
