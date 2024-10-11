@@ -27,7 +27,8 @@ public class Message extends AbstractEntity {
     User userFrom;
 
     @ManyToOne
-    @JoinColumn(name = "user_to_id", nullable = false)    User userTo;
+    @JoinColumn(name = "user_to_id", nullable = false)
+    User userTo;
 
     @Column(name = "content", nullable = false)
     String content;

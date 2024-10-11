@@ -5,7 +5,9 @@ import com.project.project.entities.user.User;
 import com.project.project.entities.user.api.dto.ResponseUserDto;
 import com.project.project.entities.user.api.dto.UserMapper;
 import com.project.project.entities.user.api.dto.View;
+import com.project.project.entities.user.model.AddUserModel;
 import com.project.project.entities.user.service.UserServiceImpl;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.PageRequest;
@@ -56,5 +58,30 @@ public class UserController {
         ResponseUserDto responseDto = UserMapper.INSTANCE.userToUserDto(user);
 
         return ResponseEntity.ok(responseDto);
+    }
+
+    @GetMapping("/create")
+    @JsonView(View.Admin.class)
+    public ResponseEntity<ResponseUserDto> addUser(@Valid @RequestBody AddUserModel addUserModel) {
+        User user = new User();
+        user.setFirstName(addUserModel.firstName());
+        user.setLastName(addUserModel.lastName());
+        user.setEmail(addUserModel.email());
+        user.setPassword(addUserModel.password());
+        user.setGender(addUserModel.gender());
+        user.setDateOfBirth(addUserModel.dateOfBirth());
+        user.setAvatar(addUserModel.avatar());
+        user.setPhones(addUserModel.phones());
+        user.setPhotoData(addUserModel.photoData());
+
+        User savedUser = userService.addUser(user);
+
+        ResponseUserDto responseUserDto = new ResponseUserDto();
+        responseUserDto.setId(savedUser.getId());
+        responseUserDto.setFirstName(savedUser.getFirstName());
+        responseUserDto.setLastName(savedUser.getLastName());
+        responseUserDto.setEmail(savedUser.getEmail());
+
+        return ResponseEntity.ok(responseUserDto);
     }
 }
