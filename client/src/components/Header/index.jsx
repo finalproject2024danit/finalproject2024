@@ -1,18 +1,16 @@
 // // import PropTypes from "prop-types";
 // import React from "react";
 import { NavLink } from "react-router-dom";
-// import AccountIcon from "../../svg/Header/Account";
-// import FacebookIcon from "../../svg/Header/Facebook";
 import FriendsIcon from "../../svg/Header/Friends";
-// import GamesIcon from "../../svg/Header/Games";
 import GroupIcon from "../../svg/Header/Group";
 import HomeIcon from "../../svg/Header/Home";
+import ChatIcon from "../../svg/Header/Chat";
+// import AccountIcon from "../../svg/Header/Account";
 // import MenuIcon from "../../svg/Header/Menu";
 // import MessengerIcon from "../../svg/Header/Messenger";
-// import NotificationIcon from "../../svg/Header/Notification";
-// import VideoIcon from "../../svg/Header/Video";
+
 import styles from "./Header.module.scss";
-import ChatIcon from "../../svg/Header/Games";
+
 
 
 const Header = () => {
