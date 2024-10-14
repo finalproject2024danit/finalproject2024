@@ -1,45 +1,51 @@
 // import React from "react";
-import Card from "../../components/Card/index.jsx";
-import LeftSidebar from "../../components/LeftSidebar/LeftSidebar.jsx";
+// import Card from "../../components/Card/index.jsx";
+// import LeftSidebar from "../../components/LeftSidebar/LeftSidebar.jsx";
 import MainContent from "../../components/MainContent/MainContent.jsx";
-import RightSidebar from "../../components/RightSidebar/RightSidebar.jsx";
+// import RightSidebar from "../../components/RightSidebar/RightSidebar.jsx";
 import styles from "./HomePage.module.scss";
 
 
 
 const HomePage = () => {
-const user = {
-  name: 'Peter Pepper',
-  email: 'peterpepperitto@ukr.net'
-}
 
-  const posts = [
-    { id: 1, title: 'Post 1', body: 'This is the first post content.' },
-    { id: 2, title: 'Post 2', body: 'This is the second post content.' },
-  ];
+// const user = {
+//   name: 'Peter Pepper',
+//   email: 'peterpepperitto@ukr.net'
+// }
 
-  const deletePost = (postId) => {
-    console.log(`Post ${postId} deleted`);
-  };
+//   const posts = [
+//     { id: 1, title: 'Post 1', body: 'This is the first post content.' },
+//     { id: 2, title: 'Post 2', body: 'This is the second post content.' },
+//   ];
 
-  const content = posts.map((post) => (
-    <Card
-      key={post.id}
-      post={post}
-      user={user}
-      onDelete={() => deletePost(post.id)}
-    />
-  ));
+//   const deletePost = (postId) => {
+//     console.log(`Post ${postId} deleted`);
+//   };
+
+//   const content = posts.map((post) => (
+//     <Card
+//       key={post.id}
+//       post={post}
+//       user={user}
+//       onDelete={() => deletePost(post.id)}
+//     />
+//   ));
 
   return (
-    <div className={styles.layout}>
-      <LeftSidebar />
+    <>
+    {/* <div><MainContent title="News Feed"> */}
+    {/* <div><MainContent>      
+    </MainContent></div> */}
+    {/* <div className={styles.layout}> */}
+      {/* <LeftSidebar /> */}
       <div className={styles.mainContent}>
-        <MainContent title="News Feed">{content}
+        <MainContent title="Home Information">
         </MainContent>
       </div>
-      <RightSidebar />
-    </div>
+      {/* <RightSidebar /> */}
+    {/* </div> */}
+    </>
   );
 };
 

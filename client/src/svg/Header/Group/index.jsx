@@ -3,7 +3,7 @@ const GroupIcon = () => {
     <svg
       width="30px"
       height="30px"
-      fill="#000000"
+      fill="#686B6E"
       version="1.1"
       viewBox="0 0 512 512"      
     >

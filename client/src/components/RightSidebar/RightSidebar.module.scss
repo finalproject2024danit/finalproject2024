@@ -1,21 +1,47 @@
 @import '../../App.scss';
 
-// .rightSidebar {
-//   width: 20%;
-//   background-color: #5a3434;
-//   padding: 20px;
-//   border-right: 1px solid #ccc;
-// }
+.mainMenu {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    width: 10%;
+    height: 100vh;
+    padding-top: 20px;
+    background-color: $nodle-black-800;
+    border-radius: 10px;
+    border: 1px solid $nodle-black-500;
+    
+    position: fixed;  
+    top: 170px;
+    right: -150px;
+    transition: 1.5s;
+      
+    li {
+      margin-bottom: 10px;
+    }
+  
+  }
+  
+  .mainMenu:hover{
+    right: 0;
+  }
 
-// .rightSidebar ul {
-//   list-style-type: none;
-// }
+// // .rightSidebar {
+// //   width: 20%;
+// //   background-color: #5a3434;
+// //   padding: 20px;
+// //   border-right: 1px solid #ccc;
+// // }
 
-// .rightSidebar ul li {
-//   padding: 10px 0;
-//   cursor: pointer;
-// }
+// // .rightSidebar ul {
+// //   list-style-type: none;
+// // }
 
-// .rightSidebar ul li:hover {
-//   background-color: #f0f0f0;
-// }
+// // .rightSidebar ul li {
+// //   padding: 10px 0;
+// //   cursor: pointer;
+// // }
+
+// // .rightSidebar ul li:hover {
+// //   background-color: #f0f0f0;
+// // }

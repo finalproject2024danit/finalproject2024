@@ -4,9 +4,9 @@ import styles from './MainContent.module.scss'
 
 const MainContent = ({title, children}) => {
   return (
-    <div className={styles.mainFeed}>
+    <div className={styles.mainFeed}>        
       <h1>{title}</h1>
-      {children && children.length > 0 ? (children) : (<p>No content available.</p>)}
+      {children && children ? (children) : (<p>No content available.</p>)}
     </div>
   );
 };

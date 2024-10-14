@@ -1,22 +1,55 @@
 @import '../../App.scss';
 
+.menu {
+    width: 20%;
+    height: 100vh;
+    background-color: $nodle-black-800;
+    border-radius: 10px;
+    position: relative;
+  
+    .exit {
+      position: absolute;
+      bottom: 30px;
+      left: 30px;
+      padding: 10px;
+      border-radius: 10px;
+      background-color: $background-button;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 80px;
+  
+      .exitBlock {
+        display: flex;
+        gap: 20px;
+      }
+  
+      .exitUser {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+    }
+  }
+  
 
-// .leftSidebar{
-//   width: 20%;
-//   background-color: #d92727;
-//   padding: 20px;
-//   border-right: 1px solid #ccc;
-// }
+// // .leftSidebar{
+// //   width: 20%;
+// //   background-color: #d92727;
+// //   padding: 20px;
+// //   border-right: 1px solid #ccc;
+// // }
 
-// .leftSidebar ul{
-//   list-style-type: none;
-// }
+// // .leftSidebar ul{
+// //   list-style-type: none;
+// // }
 
-// .leftSidebar ul li {
-//   padding: 10px 0;
-//   cursor: pointer;
-// }
+// // .leftSidebar ul li {
+// //   padding: 10px 0;
+// //   cursor: pointer;
+// // }
 
-// .leftSidebar ul li:hover {
-//   background-color: #f0f0f0;
-// }
+// // .leftSidebar ul li:hover {
+// //   background-color: #f0f0f0;
+// // }

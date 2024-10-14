@@ -1,5 +1,13 @@
 @import '../../App.scss';
 
+.mainFeed {
+    box-sizing: border-box;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: $nodle-black-800;
+    width: 88%;
+}
+
 // .mainFeed {
 //     background-color: #dc0909;
 //     padding: 20px;

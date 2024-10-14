@@ -4,23 +4,35 @@ import "./App.scss";
 
 import Header from "./components/Header";
 import AppRoutes from "./AppRoutes";
-import Footer from "./components/Footer/Footer";
+import LeftSidebar from "./components/LeftSidebar/LeftSidebar";
+import RightSidebar from "./components/RightSidebar/RightSidebar";
+// import Footer from "./components/Footer/Footer";
 
 const App = () => {
   return (
-    <>
-      <Header />
+    <div className="container">
+      <LeftSidebar />     
+      <div className="inner">
+        <Header />
+        <div>
+          {/* <main> */}
+          <div className="main-container">
+            {/* <h1>FACEBOOK</h1> */}
+            <div className="menu-social">
+              <AppRoutes />
+            </div>
+            <RightSidebar />           
+          </div>
 
-      <main>
-        <h1>FACEBOOK</h1>
-        <AppRoutes />
-      </main>
+          {/* </main> */}
+        </div>
+      </div>
 
       {/* -------------------------------------------------------------------------- */}
 
       {/* -------------------------------------------------------------------------- */}
-      <Footer/>
-    </>
+      {/* <Footer/> */}
+    </div>
   );
 };
 
