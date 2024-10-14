@@ -1,36 +1,31 @@
 // import React from "react";
 import styles from './ChatPage.module.scss';
-// import LeftSidebar from "../../components/LeftSidebar/LeftSidebar";
 import MainContent from "../../components/MainContent/MainContent";
-
+import MemberList from "../../components/MemberList/MemberList"; // Create this component for the right sidebar
+import ChatFeed from "../../components/ChatFeed/ChatFeed"; // Create this component for the chat messages
 
 const ChatPage = () => {
-    // const chatContent = (
-    //     <div>
-    //       <h2>Featured Games</h2>
-    //       <ul>
-    //         <li>Game 1: Puzzle Adventure</li>
-    //         <li>Game 2: Space Shooter</li>
-    //         <li>Game 3: Racing Challenge</li>
-    //         <li>Game 4: Fantasy World</li>
-    //       </ul>
-    //     </div>
-    //   );
 
-    return(
-        <div className={styles.layout}>
-        {/* <LeftSidebar /> */}
-        <div className={styles.mainContent}>
-        <MainContent title=" Chat">
-          {/* {chatContent} */}
+  return (
+    <div className={styles.layout}>
+      {/* Left Sidebar if necessary */}
+      {/* <LeftSidebar /> */}
+      
+      {/* Main Content Area */}
+      <div className={styles.mainContent}>
+        <MainContent title="Spaceship Crew">
+          <div className={styles.chatFeed}>
+          <ChatFeed /> {/* This component will render the list of chat messages */}
+          </div>
         </MainContent>
-        </div>
       </div>
-    //     <div className={styles.games__box}>
-    //         <LeftSidebar/>
-    // <h1>Games</h1>    
-    // </div>
-    )
+
+      {/* Right Sidebar for Members */}
+      <div className={styles.memberList}>
+        <MemberList /> {/* This component will list the currently online and offline members */}
+      </div>
+    </div>
+  );
 }
 
 export default ChatPage;
