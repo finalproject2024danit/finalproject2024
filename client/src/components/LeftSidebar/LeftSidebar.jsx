@@ -4,15 +4,17 @@ import styles from './LeftSidebar.module.scss'
 
 const LeftSidebar = () => {
   return (
-    <div className={styles.leftSidebar}>
+    <>
+    {/* <div className={styles.leftSidebar}>
       <ul>
         <li>Home</li>
         <li>Friends</li>
         <li>Groups</li>
         <li>Marketplace</li>
-        {/* Add more sidebar items here */}
+        Add more sidebar items here
       </ul>
-    </div>
+    </div> */}
+    </>
   );
 };
 

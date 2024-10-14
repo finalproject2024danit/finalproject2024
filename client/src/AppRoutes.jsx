@@ -4,7 +4,7 @@ import HomePage from "./pages/HomePage/HomePage.jsx";
 // import LoginPage from "./pages/LoginPage/LoginPage.jsx";
 import VideoPage from "./pages/VideoPage/VideoPage.jsx";
 import GroupPage from "./pages/GroupPage/GroupPage.jsx";
-import GamesPage from "./pages/GamesPage/GamesPage.jsx";
+import ChatPage from "./pages/ChatPage/ChatPage.jsx";
 import FriendsPage from "./pages/FriendsPage/FriendsPage.jsx";
 import AccountPage from "./pages/AccountPage/AccountPage.jsx";
 // import PrivateRoute from "./components/PrivateRoute.jsx";
@@ -47,10 +47,10 @@ const AppRoutes = () => {
         }
       />
       <Route
-        path="/games"
+        path="/chat"
         element={
           // <PrivateRoute>
-            <GamesPage />
+            <ChatPage />
           // </PrivateRoute>
         }
       />

@@ -1,14 +1,72 @@
 /* Colors */
-$primary-color: #4267B2;
-$secondary-color: #4a69bd;
-$third-color: #f0f2f5;
-$fourth-color: #252525;
-$fifth-color: #333333;
-$sixth-color: #000;
-$seventh-color: #fff;
-$hover-color: #37578a;
-$border-color: rgba(0, 0, 0, 0.1);
-$shadow-color: rgba(0, 0, 0, 0.1);
+// $primary-color: #4267B2;
+// $secondary-color: #4a69bd;
+// $third-color: #f0f2f5;
+// $fourth-color: #252525;
+// $fifth-color: #333333;
+// $sixth-color: #000;
+// $seventh-color: #fff;
+// $hover-color: #37578a;
+// $border-color: rgba(0, 0, 0, 0.1);
+// $shadow-color: rgba(0, 0, 0, 0.1);
+
+$nodle-black-0:#FFFFFF; // Этот цвет используется для заголовков h1//
+$nodle-black-100:#E8E9E9; // Этот цвет используется для заголовков h2 (можно использовать для текста в сообщениях)//
+$nodle-black-200:#CDCECF; // Этот цвет используется для заголовков h3//
+$nodle-black-300:#9B9C9E; // Этот цвет используется для обычного текста (но текст переписок или же после заглавных букв)//
+$nodle-black-400:#686B6E; // Этот цвет используется для текста возле иконок и иконок!!!//
+$nodle-black-500:#363A3D; // Этот цвет используется для незаметного текста по типу если не выбрана строка в сообщении и там написано (отправьте сообщение) (так же для отображения что человек не в сети) //
+$nodle-black-600:#1A1D21; // Єтот цвет для кнопок отправить фото или отправить сообщение или же написать сообщение, вообщем для таких кнопок
+$nodle-black-700:#131619; // Этот цвет используется для заднего фона, но я бы выбрал наверное 600 но мне кажется будет слишком светло//
+$nodle-black-800:#0D0F10; // Этот цвет используется для Хедера, Сайдбара и Для Сайдбара с друзьями и для места где писать сообщение//
+
+$day-blue-900:#0C1132; // Этот цвет используется для текста на зелёных кнопках //
+
+$stem-green-500:#B6F09C; //Этот цвет используется для кнопок, иконок(на вкладке которой вы находитесь), текста  выделенного и для подчеркивания выбранной вкладки на которой вы находитесь (но так-же предлагаю выбрать какой-то другой цвет для текста или же для кнопки, хотя на макете выглядит весьма приятно для зрения)//
+$stem-green-600:#9AD37F; // Этот цвет используется для обозначения что человек онлайн //
+
+$heisenberg-blue-500:#82DBF7; // Этот цвет испльзуется для пятиугольника на сайдбаре //
+
+$red-power-600:#D0302F; // Этот цвет используется для треугольника на сайдбаре //
+
+$happy-orange-600:#E26F20; // Этот цвет используется для 2-второго квадратика на сайдбаре //
+$sunglow-600:#E2B42B; // Этот цвет используется для 1-вого квадратика на сайдбаре //
+
+$background-button: linear-gradient(145deg, rgba(225, 215, 237, 0.16) 0%, rgba(235, 204, 217, 0.16) 100%); // тут не понятно но это стиль для сайдбара слева что бы знать на какой ты странице находишся, так же для отображения твоего аватара слева снизу //
+$glass-stroke: rgba(255, 255, 255, 0.08);
+$glass-modal: rgba(26, 29, 33, 0.96);
+
+$font-size-title: 34px;
+
+$font-weight-black: 900; // h1 //
+$font-weight-extra-bold: 800; // h2 и даже для h3 //
+$font-weight-bold: 700; 
+$font-weight-semi-bold: 600; 
+$font-weight-medium: 500; 
+$font-weight-normal: 400; 
+$font-weight-light: 300; 
+$font-weight-extra-light: 200; 
+$font-weight-ultra-light: 100; 
+
+// 100 — очень тонкий шрифт (Ultra Light, Thin).
+// 200 — Extra Light (Ultra Light).
+// 300 — Light (Светлый).
+// 400 — Обычный шрифт (Normal, Regular).
+// 500 — Средний шрифт (Medium).
+// 600 — Полужирный шрифт (Semi Bold, Demi Bold).
+// 700 — Жирный шрифт (Bold).
+// 800 — Очень жирный (Extra Bold).
+// 900 — Чрезвычайно жирный (Black, Heavy).
+
+// xx-small
+// x-small
+// small
+// medium (по умолчанию)
+// large
+// x-large
+// xx-large
+
+
 
 /* Fonts */
 $primary-font: 'Arial', sans-serif;
@@ -31,43 +89,122 @@ $border-radius-medium: 8px;
 $border-radius-large: 12px;
 
 /* Box Shadows */
-$box-shadow: 0px 4px 12px $shadow-color;
+// $box-shadow: 0px 4px 12px $shadow-color;
 
 /* Breakpoints */
 $mobile-breakpoint: 768px;
 $tablet-breakpoint: 1024px;
 $large-screen-breakpoint: 1440px;
 
+
+
+// __________________________________________\\
+.container {
+  display: flex;
+  box-sizing: border-box;
+  padding: 10px;
+  gap: 10px;
+  width: 100%;
+}
+
+.menu {
+  width: 20%;
+  height: 100vh;
+  background-color: $nodle-black-800;
+  border-radius: 10px;
+  position: relative;
+
+  .exit {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: $background-button;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 80px;
+
+    &-block {
+      display: flex;
+      gap: 20px;
+    }
+
+    &-user {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+  }
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 1721px;
+}
+
+.main-container {
+  display: flex;
+  gap: 10px;
+  height: 100vh;
+  width: 100%;
+  border-radius: 10px;
+}
+
+.main-menu {
+  width: 10%;
+  height: 100vh;
+  background-color: $nodle-black-800;
+  border-radius: 10px;
+}
+
+.menu-social {
+  background-color: $nodle-black-700;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+// ___________________________________________\\
+
 /* Base Styles */
 body {
-  font-family: $primary-font;
-  background-color: $third-color;
-  color: $sixth-color;
-  margin: 0;
-  padding: 0;
-}
-
-header {
-  background-color: $primary-color;
-  color: $seventh-color;
+  // font-family: $primary-font;
+  // background-color: $third-color;
+  // color: $sixth-color;
+  // margin: 0;
+  // padding: 0;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: $padding-medium;
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-
-
+  box-sizing: border-box;
+  overflow: hidden;
+  color: white;
+  background-color: $nodle-black-700;
 }
+
+// header {
+//   // background-color: $primary-color;
+//   // color: $seventh-color;
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   // padding: $padding-medium;
+//   position: sticky;
+//   top: 0;
+//   // z-index: 1000;
+
+
+// }
 
 .logo {
-  font-size: $font-size-large;
+  // font-size: $font-size-large;
   font-weight: bold;
 }
 
 .search-bar input {
-  padding: $padding-small;
+  // padding: $padding-small;
   border-radius: 20px;
   border: none;
   width: 250px;
@@ -75,34 +212,34 @@ header {
 
 .nav-icons {
   display: flex;
-  gap: $padding-medium;
+  // gap: $padding-medium;
 }
 
 .nav-icons .icon {
   cursor: pointer;
-  padding: $padding-small $padding-medium;
-  background-color: $secondary-color;
-  border-radius: $border-radius-small;
+  // padding: $padding-small $padding-medium;
+  // background-color: $secondary-color;
+  // border-radius: $border-radius-small;
   transition: background-color 0.3s ease;
 }
 
 .nav-icons .icon:hover {
-  background-color: $hover-color;
+  // background-color: $hover-color;
 }
 
 /* Layout for Sidebars and Feed */
-.container {
-  display: flex;
-  justify-content: space-between;
-  padding: $padding-large;
-}
+// .container {
+//   display: flex;
+//   justify-content: space-between;
+//   // padding: $padding-large;
+// }
 
 .leftSidebar, .rightSidebar {
   width: 220px;
-  background-color: $seventh-color;
-  padding: $padding-large;
-  border-radius: $border-radius-medium;
-  box-shadow: $box-shadow;
+  // background-color: $seventh-color;
+  // padding: $padding-large;
+  // border-radius: $border-radius-medium;
+  // box-shadow: $box-shadow;
 }
 
 .leftSidebar ul {
@@ -110,49 +247,49 @@ header {
 }
 
 .leftSidebar li {
-  padding: $padding-medium 0;
+  // padding: $padding-medium 0;
   cursor: pointer;
-  font-weight: bold;
+  // font-weight: bold;
 }
 
 .leftSidebar li:hover {
-  background-color: $third-color;
+  // background-color: $third-color;
 }
 
 .feed {
   flex-grow: 1;
-  margin: 0 $padding-medium;
+  // margin: 0 $padding-medium;
 }
 //2 next positions taken from HomePage
-.layout {
-  display: flex;
-  width: 100vw;
-  height: 100vh;
-  margin-top: 60px;
-}
+// .layout {
+//   display: flex;
+//   width: 100vw;
+//   height: 100vh;
+//   margin-top: 60px;
+// }
 
-.mainContent {
-  width: 60%;
-  padding: 20px;
-  background-color: #f0f2f5;
-  overflow-y: auto;
-}
+// .mainContent {
+//   width: 60%;
+//   padding: 20px;
+//   background-color: #f0f2f5;
+//   overflow-y: auto;
+// }
 
 .post {
-  background-color: $seventh-color;
-  padding: $padding-medium;
-  margin-bottom: $margin-medium;
-  border-radius: $border-radius-medium;
-  box-shadow: $box-shadow;
+  // background-color: $seventh-color;
+  // padding: $padding-medium;
+  // margin-bottom: $margin-medium;
+  // border-radius: $border-radius-medium;
+  // box-shadow: $box-shadow;
 }
 
 /* Right Sidebar Styles */
 .rightSidebar .suggestions, .rightSidebar .ads {
-  background-color: $seventh-color;
-  padding: $padding-medium;
-  margin-bottom: $margin-medium;
-  border-radius: $border-radius-medium;
-  box-shadow: $box-shadow;
+  // background-color: $seventh-color;
+  // padding: $padding-medium;
+  // margin-bottom: $margin-medium;
+  // border-radius: $border-radius-medium;
+  // box-shadow: $box-shadow;
 }
 
 .suggestions {
@@ -160,81 +297,82 @@ header {
 }
 
 .ads {
-  color: $fifth-color;
-  font-size: $font-size-small;
+  // color: $fifth-color;
+  // font-size: $font-size-small;
 }
 
 /* Media Queries */
 
 /* Mobile Styles */
-@media (max-width: $mobile-breakpoint) {
-  .header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+// @media (max-width: $mobile-breakpoint) {
+//   .header {
+//     flex-direction: column;
+//     align-items: flex-start;
+//   }
 
-  .search-bar input {
-    width: 100%;
-    margin-top: $padding-small;
-  }
+//   .search-bar input {
+//     width: 100%;
+//     // margin-top: $padding-small;
+//   }
 
-  .container {
-    flex-direction: column;
-    padding: $padding-medium;
-  }
+//   .container {
+//     flex-direction: column;
+//     // padding: $padding-medium;
+//   }
 
-  .leftSidebar, .rightSidebar {
-    display: none; /* Hide sidebars on mobile */
-  }
+//   .leftSidebar, .rightSidebar {
+//     display: none; /* Hide sidebars on mobile */
+//   }
 
-  .mainFeed {
-    margin: 0;
-  }
-}
+//   .mainFeed {
+//     margin: 0;
+//   }
+// }
 
-/* Tablet Styles */
-@media (max-width: $tablet-breakpoint) {
-  .container {
-    flex-direction: row;
-    padding: $padding-medium;
-  }
+// /* Tablet Styles */
+// @media (max-width: $tablet-breakpoint) {
+//   .container {
+//     flex-direction: row;
+//     // padding: $padding-medium;
+//   }
 
-  .leftSidebar, .rightSidebar {
-    width: 180px;
-    padding: $padding-medium;
-  }
+//   .leftSidebar, .rightSidebar {
+//     width: 180px;
+//     // padding: $padding-medium;
+//   }
 
-  .search-bar input {
-    width: 180px;
-  }
+//   .search-bar input {
+//     width: 180px;
+//   }
 
-  .mainFeed {
-    margin: 0 $padding-small;
-  }
+//   .mainFeed {
+//     // margin: 0 $padding-small;
+//   }
 
-  .post {
-    padding: $padding-small;
-  }
-}
+//   .post {
+//     // padding: $padding-small;
+//   }
+// }
 
-/* Large Screen Styles */
-@media (min-width: $large-screen-breakpoint) {
-  .container {
-    padding: $padding-large;
-    max-width: 1400px;
-    margin: 0 auto;
-  }
+// /* Large Screen Styles */
+// @media (min-width: $large-screen-breakpoint) {
+//   .container {
+//     // padding: $padding-large;
+//     // max-width: 1400px;
+//     margin: 0 auto;
+//   }
 
-  .leftSidebar, .rightSidebar {
-    width: 280px;
-    padding: $padding-large;
-  }
+//   .leftSidebar, .rightSidebar {
+//     width: 280px;
+//     // padding: $padding-large;
+//   }
 
-  .mainFeed {
-    margin: 0 $padding-large;
-  }
+//   .mainFeed {
+//     // margin: 0 $padding-large;
+//   }
 
-  .search-bar input {
-    width: 300px;
-  }
-}
+//   .search-bar input {
+//     width: 300px;
+//   }
+// }
+

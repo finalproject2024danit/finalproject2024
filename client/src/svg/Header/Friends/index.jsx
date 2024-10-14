@@ -1,7 +1,7 @@
 const FriendsIcon = () => {
     return (
         <svg
-        // fill="#000000"
+        fill="#686B6E"
         version="1.1"
         width="30px"
         height="30px"

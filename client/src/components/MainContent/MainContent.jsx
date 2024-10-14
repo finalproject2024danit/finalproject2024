@@ -6,7 +6,7 @@ const MainContent = ({title, children}) => {
   return (
     <div className={styles.mainFeed}>
       <h1>{title}</h1>
-      {children && children.length > 0 ? (children) : (<p>No content available.</p>)}
+      {/* {children && children.length > 0 ? (children) : (<p>No content available.</p>)} */}
     </div>
   );
 };
