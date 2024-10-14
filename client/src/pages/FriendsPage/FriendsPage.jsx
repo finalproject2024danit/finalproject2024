@@ -78,7 +78,7 @@ const FriendsPage = () => {
     <div className={styles.layout}>
     {/* <LeftSidebar /> */}
     <div className={styles.mainContent}>
-    <MainContent title="Friends" >
+    <MainContent title="" >
       {content}
     </MainContent>
     {selectedUser && <Modal user={selectedUser} onClose={closeModal} />}

@@ -1,23 +1,27 @@
 @import '../../App.scss';
 
-.mainContent {
-  padding: 20px;
-  background-color: #f9f9f9;
-}
+// .mainContent {
+//   padding: 20px;
+//   background-color: #f9f9f9;
+// }
 
 .article {
   margin-bottom: 20px;
   padding: 15px;
-  background-color: #ffffff;
+  // background-color: #ffffff;
+  color: $nodle-black-300;
   border-radius: 8px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  background-image: url(https://pixewall.com/wp-content/uploads/2023/10/4k-Space-Wallpaper-768x432.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .articleTitle {
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 10px;
-  color: #2a9d8f;
+  color: $nodle-black-green;
 }
 
 .articleSnippet {
@@ -28,8 +32,9 @@
 
 .articleContent {
   font-size: 16px;
-  color: #333333;
+  color: $nodle-black-200;
   margin-bottom: 10px;
+  line-height: 25px;
 }
 
 .articleDate {
@@ -37,29 +42,3 @@
   color: #888888;
   text-align: right;
 }
-
-
-// * {
-//     margin: 0;
-//     padding: 0;
-//     box-sizing: border-box;
-//   }
-  
-  // body {
-  //   font-family: Arial, sans-serif;
-  //   background-color: #f0f2f5;
-  // }
-  
-  // .layout {
-  //   display: flex;
-  //   width: 100vw;
-  //   height: 100vh;
-  //   margin-top: 60px;
-  // }
-
-  // .mainContent {
-  //   width: 60%;
-  //   padding: 20px;
-  //   background-color: #f0f2f5;
-  //   overflow-y: auto;
-  // }

@@ -4,16 +4,16 @@
     display: flex;
     flex-direction: column;
     align-items: center; 
-    width: 10%;
-    height: 100vh;
+    width: 180px;
+    height: 79%;
     padding-top: 20px;
     background-color: $nodle-black-800;
     border-radius: 10px;
     border: 1px solid $nodle-black-500;
     
     position: fixed;  
-    top: 170px;
-    right: -150px;
+    top: 169px;
+    right: -123px;
     transition: 1.5s;
       
     li {
@@ -23,7 +23,7 @@
   }
   
   .mainMenu:hover{
-    right: 0;
+    right: 10px;
   }
 
 // // .rightSidebar {
