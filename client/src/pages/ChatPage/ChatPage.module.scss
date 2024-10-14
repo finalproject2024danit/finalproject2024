@@ -1,17 +1,44 @@
 @import '../../App.scss';
 
-
-.games__box{
-
-    background-color: rgb(31, 34, 160);
-min-height: 100vh;
-position: relative;
-padding: 100px 40px;
-    h1 {
-
-
-    text-align: center; 
-    font-size: 20px;
-}
-}
-
+.layout {
+    width: 80%;
+    display: flex;
+    height: 100vh;
+    background-color: $nodle-black-700;
+    gap: $padding-medium;
+    padding: $padding-large;
+    border-radius: $border-radius-medium;
+    border: 1px solid $border-color-pink;
+  }
+  
+  .mainContent {
+    flex-grow: 1;
+    background-color: $nodle-black-800;
+    padding: $padding-large;
+    border-radius: $border-radius-medium;
+    border: 1px solid $border-color-yellow;
+    box-shadow: 0px 4px 12px $shadow-color;
+    overflow-y: auto;
+  }
+  
+  .memberList {
+    width: 20%;
+    background-color: $nodle-black-800;
+    border-radius: $border-radius-medium;
+    border: 1px solid $border-color-green;
+    box-shadow: 0px 4px 12px $shadow-color;
+    padding: $padding-medium;
+  }
+  
+  .chatFeed {
+    display: flex;
+    flex-direction: column;
+    gap: $padding-medium;
+    padding: $padding-large;
+    background-color: $nodle-black-600;
+    border-radius: $border-radius-medium;
+    border: 1px solid $border-color-blue;
+    box-shadow: 0px 4px 12px $shadow-color;
+    overflow-y: auto;
+  }
+  

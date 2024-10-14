@@ -1,20 +1,22 @@
 @import '../../App.scss';
 
-.mainFeed {
-    box-sizing: border-box;
-    padding: 30px;
-    border-radius: 10px;
-    background-color: $nodle-black-800;
-    width: 88%;
-}
-
-// .mainFeed {
-//     background-color: #dc0909;
-//     padding: 20px;
-//     border-radius: 10px;
-//     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-//   }
+// ChatPage.module.scss
+.layout {
+    display: flex;
+    height: 100vh;
+  }
   
-//   .post {
-//     margin-bottom: 20px;
-//   }
+  .mainContent {
+    flex: 1;
+    padding: 20px;
+    background-color: #1c1f2a; /* Adjust this according to your theme */
+    color: white;
+  }
+  
+  .rightSidebar {
+    width: 250px;
+    background-color: #282c34;
+    padding: 10px;
+    color: white;
+  }
+  

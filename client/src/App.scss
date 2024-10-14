@@ -7,8 +7,11 @@
 // $sixth-color: #000;
 // $seventh-color: #fff;
 // $hover-color: #37578a;
-// $border-color: rgba(0, 0, 0, 0.1);
-// $shadow-color: rgba(0, 0, 0, 0.1);
+$border-color-pink: rgba(242, 3, 246, 0.928);
+$border-color-green: rgba(6, 246, 54, 0.928);
+$border-color-blue: rgba(3, 192, 249, 0.928);
+$border-color-yellow: rgba(246, 250, 4, 0.928);
+$shadow-color: rgba(0, 0, 0, 0.1);
 
 $nodle-black-0:#FFFFFF; // Этот цвет используется для заголовков h1//
 $nodle-black-100:#E8E9E9; // Этот цвет используется для заголовков h2 (можно использовать для текста в сообщениях)//
@@ -309,9 +312,9 @@ body {
 //     width: 180px;
 //   }
 
-//   .mainFeed {
-//     // margin: 0 $padding-small;
-//   }
+  .mainFeed {
+    margin: 0 $padding-small;
+  }
 
 //   .post {
 //     // padding: $padding-small;
