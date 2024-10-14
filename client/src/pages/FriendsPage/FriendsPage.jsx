@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import styles from './FriendsPage.module.scss';
 import Card from '../../components/Card';
 import Modal from '../../components/Modal';
-import LeftSidebar from '../../components/LeftSidebar/LeftSidebar';
+// import LeftSidebar from '../../components/LeftSidebar/LeftSidebar';
 import MainContent from '../../components/MainContent/MainContent';
 
 const usersUrl = "https://ajax.test-danit.com/api/json/users";
@@ -76,7 +76,7 @@ const FriendsPage = () => {
 
     // Тут використовується компонент MainContent
     <div className={styles.layout}>
-    <LeftSidebar />
+    {/* <LeftSidebar /> */}
     <div className={styles.mainContent}>
     <MainContent title="Friends" >
       {content}

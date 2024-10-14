@@ -1,6 +1,6 @@
 // import React from "react";
 import styles from './ChatPage.module.scss';
-import LeftSidebar from "../../components/LeftSidebar/LeftSidebar";
+// import LeftSidebar from "../../components/LeftSidebar/LeftSidebar";
 import MainContent from "../../components/MainContent/MainContent";
 
 
@@ -19,9 +19,9 @@ const ChatPage = () => {
 
     return(
         <div className={styles.layout}>
-        <LeftSidebar />
+        {/* <LeftSidebar /> */}
         <div className={styles.mainContent}>
-        <MainContent title="" >
+        <MainContent title=" Chat">
           {/* {chatContent} */}
         </MainContent>
         </div>

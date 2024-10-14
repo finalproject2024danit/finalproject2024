@@ -104,47 +104,14 @@ $large-screen-breakpoint: 1440px;
   box-sizing: border-box;
   padding: 10px;
   gap: 10px;
-  width: 100%;
-}
-
-.menu {
-  width: 20%;
-  height: 100vh;
-  background-color: $nodle-black-800;
-  border-radius: 10px;
-  position: relative;
-
-  .exit {
-    position: absolute;
-    bottom: 30px;
-    left: 30px;
-    padding: 10px;
-    border-radius: 10px;
-    background-color: $background-button;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 80px;
-
-    &-block {
-      display: flex;
-      gap: 20px;
-    }
-
-    &-user {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-    }
-  }
+  width: 2200px;
 }
 
 .inner {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  width: 1721px;
+  width: 100%;  
 }
 
 .main-container {
@@ -155,12 +122,7 @@ $large-screen-breakpoint: 1440px;
   border-radius: 10px;
 }
 
-.main-menu {
-  width: 10%;
-  height: 100vh;
-  background-color: $nodle-black-800;
-  border-radius: 10px;
-}
+
 
 .menu-social {
   background-color: $nodle-black-700;
@@ -182,6 +144,8 @@ body {
   overflow: hidden;
   color: white;
   background-color: $nodle-black-700;
+  // width: 100vh;
+  // height: 100vh;
 }
 
 // header {
@@ -275,31 +239,31 @@ body {
 //   overflow-y: auto;
 // }
 
-.post {
-  // background-color: $seventh-color;
-  // padding: $padding-medium;
-  // margin-bottom: $margin-medium;
-  // border-radius: $border-radius-medium;
-  // box-shadow: $box-shadow;
-}
+// .post {
+//   background-color: $seventh-color;
+//   padding: $padding-medium;
+//   margin-bottom: $margin-medium;
+//   border-radius: $border-radius-medium;
+//   box-shadow: $box-shadow;
+// }
 
 /* Right Sidebar Styles */
-.rightSidebar .suggestions, .rightSidebar .ads {
-  // background-color: $seventh-color;
-  // padding: $padding-medium;
-  // margin-bottom: $margin-medium;
-  // border-radius: $border-radius-medium;
-  // box-shadow: $box-shadow;
-}
+// .rightSidebar .suggestions, .rightSidebar .ads {
+//   background-color: $seventh-color;
+//   padding: $padding-medium;
+//   margin-bottom: $margin-medium;
+//   border-radius: $border-radius-medium;
+//   box-shadow: $box-shadow;
+// }
 
 .suggestions {
   font-weight: bold;
 }
 
-.ads {
-  // color: $fifth-color;
-  // font-size: $font-size-small;
-}
+// .ads {
+//   color: $fifth-color;
+//   font-size: $font-size-small;
+// }
 
 /* Media Queries */
 

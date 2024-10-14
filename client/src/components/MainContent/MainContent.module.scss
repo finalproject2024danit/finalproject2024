@@ -1,12 +1,20 @@
-// @import '../../App.scss';
+@import '../../App.scss';
 
-// // .mainFeed {
-// //     background-color: #dc0909;
-// //     padding: 20px;
-// //     border-radius: 10px;
-// //     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-// //   }
+.mainFeed {
+    box-sizing: border-box;
+    padding: 30px;
+    border-radius: 10px;
+    background-color: $nodle-black-800;
+    width: 88%;
+}
+
+// .mainFeed {
+//     background-color: #dc0909;
+//     padding: 20px;
+//     border-radius: 10px;
+//     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+//   }
   
-// //   .post {
-// //     margin-bottom: 20px;
-// //   }
+//   .post {
+//     margin-bottom: 20px;
+//   }

@@ -1,6 +1,6 @@
 // import React from "react";
 import styles from './GroupPage.module.scss';
-import LeftSidebar from "../../components/LeftSidebar/LeftSidebar";
+// import LeftSidebar from "../../components/LeftSidebar/LeftSidebar";
 import MainContent from "../../components/MainContent/MainContent";
 
 const GroupPage = () => {
@@ -18,7 +18,7 @@ const GroupPage = () => {
 
     return(
         <div className={styles.layout}>
-        <LeftSidebar />
+        {/* <LeftSidebar /> */}
         <div className={styles.mainContent}>
         <MainContent title="Group">{groupContent}
         </MainContent>

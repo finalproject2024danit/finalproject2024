@@ -1,5 +1,38 @@
-// @import '../../App.scss';
+@import '../../App.scss';
 
+.menu {
+    width: 20%;
+    height: 100vh;
+    background-color: $nodle-black-800;
+    border-radius: 10px;
+    position: relative;
+  
+    .exit {
+      position: absolute;
+      bottom: 30px;
+      left: 30px;
+      padding: 10px;
+      border-radius: 10px;
+      background-color: $background-button;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 80px;
+  
+      .exitBlock {
+        display: flex;
+        gap: 20px;
+      }
+  
+      .exitUser {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+      }
+    }
+  }
+  
 
 // // .leftSidebar{
 // //   width: 20%;
