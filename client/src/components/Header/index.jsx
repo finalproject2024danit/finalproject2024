@@ -3,7 +3,7 @@
 import { NavLink } from "react-router-dom";
 import FriendsIcon from "../../svg/Header/Friends";
 import GroupIcon from "../../svg/Header/Group1";
-import HomeIcon from "../../svg/Header/Home";
+import HomeIcon from "../../svg/Header/Home1";
 import ChatIcon from "../../svg/Header/Chat";
 // import AccountIcon from "../../svg/Header/Account";
 // import MenuIcon from "../../svg/Header/Menu";
