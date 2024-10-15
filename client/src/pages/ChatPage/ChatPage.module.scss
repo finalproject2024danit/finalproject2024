@@ -1,44 +1,49 @@
-@import '../../App.scss';
+@import "../../App.scss";
 
-.layout {
-    width: 80%;
-    display: flex;
-    height: 100vh;
-    background-color: $nodle-black-700;
-    gap: $padding-medium;
-    padding: $padding-large;
-    border-radius: $border-radius-medium;
-    border: 1px solid $border-color-pink;
-  }
+
+.ChatPage {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.5rem;
+  background-color: $nodle-black-700; // from App.scss
+  border-radius: $border-radius-medium; // Assuming you have a border-radius variable
+  box-shadow: $shadow-color;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.chatMessage {
+  background-color: $nodle-black-600; // lighter background for individual messages
+  padding: 1rem;
+  border-radius: $border-radius-medium;
+  box-shadow: $shadow-color; // assuming you have different levels of shadows
+  transition: background-color 0.3s ease;
   
-  .mainContent {
-    flex-grow: 1;
-    background-color: $nodle-black-800;
-    padding: $padding-large;
-    border-radius: $border-radius-medium;
-    border: 1px solid $border-color-yellow;
-    box-shadow: 0px 4px 12px $shadow-color;
-    overflow-y: auto;
+  &:hover {
+    border: 1px solid $border-color-yellow; // color on hover
   }
-  
-  .memberList {
-    width: 20%;
-    background-color: $nodle-black-800;
-    border-radius: $border-radius-medium;
-    border: 1px solid $border-color-green;
-    box-shadow: 0px 4px 12px $shadow-color;
-    padding: $padding-medium;
-  }
-  
-  .chatFeed {
-    display: flex;
-    flex-direction: column;
-    gap: $padding-medium;
-    padding: $padding-large;
-    background-color: $nodle-black-600;
-    border-radius: $border-radius-medium;
-    border: 1px solid $border-color-blue;
-    box-shadow: 0px 4px 12px $shadow-color;
-    overflow-y: auto;
-  }
-  
+}
+
+.messageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.userName {
+  font-weight: bold;
+  color: $nodle-black-300; // main text color from App.scss
+}
+
+.messageDate {
+  font-size: 0.85rem;
+  color: $nodle-black-200; // lighter color for dates
+}
+
+.messageText {
+  font-size: 1rem;
+  color: $nodle-black-300;
+  line-height: 1.5;
+}

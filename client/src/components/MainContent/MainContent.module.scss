@@ -3,7 +3,7 @@
 // ChatPage.module.scss
 .layout {
     display: flex;
-    height: 100vh;
+    // height: 100vh;
   }
   
   .mainContent {
@@ -23,6 +23,33 @@
   .mainFeed {
     position: fixed;
     width: 71%;
+    height: 100%;
     top: 170px;
     right: 11%;
+
+    // width: 300px; /* ширина блока */
+    // height: 200px; /* висота блока */
+    overflow-y: scroll; /* вертикальний скрол */
+    overflow-x: hidden; /* приховати горизонтальний скрол (опціонально) */
+    overflow: auto;
+  }
+
+  .mainFeed::-webkit-scrollbar {
+    width: 8px; /* Вузький скролбар */
+  }
+  
+  .mainFeed::-webkit-scrollbar-track {
+    background: #2f2f2f; /* Темний фон для скролбару */
+  }
+  
+  .mainFeed::-webkit-scrollbar-thumb {
+    background-color: #555; /* Темніший "повзунок" */
+    border-radius: 10px; /* Закруглені кути */
+    border: 2px solid #2f2f2f; /* Простір між скролом і треком */
+  }
+  
+  /* Стиль для Firefox */
+  .mainFeed {
+    scrollbar-width: thin; /* Вузький скролбар */
+    scrollbar-color: #555 #2f2f2f; /* Темний повзунок і темний трек */
   }

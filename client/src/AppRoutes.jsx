@@ -2,7 +2,7 @@
 import { Route, Routes } from "react-router-dom";
 import HomePage from "./pages/HomePage/HomePage.jsx";
 // import LoginPage from "./pages/LoginPage/LoginPage.jsx";
-// import VideoPage from "./pages/VideoPage/VideoPage.jsx";
+// import MessengerPage from "./pages/MessengerPage/MessengerPage.jsx";
 import GroupPage from "./pages/GroupPage/GroupPage.jsx";
 import ChatPage from "./pages/ChatPage/ChatPage.jsx";
 import FriendsPage from "./pages/FriendsPage/FriendsPage.jsx";
@@ -55,6 +55,14 @@ const AppRoutes = () => {
           // </PrivateRoute>
         }
       />
+      {/* <Route
+        path="/messenger"
+        element={
+          // <PrivateRoute>
+            <MessengerPage />
+          // </PrivateRoute>
+        }
+      /> */}
       <Route path="/account" element={<AccountPage />} />
     </Routes>
   );
