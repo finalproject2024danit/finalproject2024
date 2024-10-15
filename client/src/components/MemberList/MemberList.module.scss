@@ -1,54 +1,54 @@
-@import "../../App.scss";
+// @import "../../App.scss";
 
-.memberList {
-  display: flex;
-  justify-content: space-between;
-  padding: $padding-medium;
-  background-color: $nodle-black-700;
-  border-radius: $border-radius-medium;
-  box-shadow: 0px 4px 12px $shadow-color;
-}
+// .memberList {
+//   display: flex;
+//   justify-content: space-between;
+//   padding: $padding-medium;
+//   background-color: $nodle-black-700;
+//   border-radius: $border-radius-medium;
+//   box-shadow: 0px 4px 12px $shadow-color;
+// }
 
-.onlineSection, .offlineSection {
-  width: 48%;
-  background-color: $nodle-black-800;
-  padding: $padding-large;
-  border-radius: $border-radius-medium;
-  box-shadow: 0px 2px 8px $shadow-color;
-}
+// .onlineSection, .offlineSection {
+//   width: 48%;
+//   background-color: $nodle-black-800;
+//   padding: $padding-large;
+//   border-radius: $border-radius-medium;
+//   box-shadow: 0px 2px 8px $shadow-color;
+// }
 
-h3 {
-  font-size: $font-weight-extra-bold;
-  color: $nodle-black-200;
-  margin-bottom: $margin-medium;
-  font-weight: $font-weight-bold;
-}
+// h3 {
+//   font-size: $font-weight-extra-bold;
+//   color: $nodle-black-200;
+//   margin-bottom: $margin-medium;
+//   font-weight: $font-weight-bold;
+// }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
+// ul {
+//   list-style-type: none;
+//   padding: 0;
+// }
 
-li {
-  font-size: $font-size-medium;
-  padding: $padding-small 0;
-  border-bottom: 1px solid $glass-stroke;
-}
+// li {
+//   font-size: $font-size-medium;
+//   padding: $padding-small 0;
+//   border-bottom: 1px solid $glass-stroke;
+// }
 
-li:last-child {
-  border-bottom: none;
-}
+// li:last-child {
+//   border-bottom: none;
+// }
 
-.online {
-  color: $stem-green-600; // Green color to represent online members
-}
+// .online {
+//   color: $stem-green-600; // Green color to represent online members
+// }
 
-.offline {
-  color: $nodle-black-500; // Gray color for offline members
-}
+// .offline {
+//   color: $nodle-black-500; // Gray color for offline members
+// }
 
-li:hover {
-    border: 1px solid $border-color-green;
-  border-radius: $border-radius-small;
-  cursor: pointer;
-}
+// li:hover {
+//     border: 1px solid $border-color-green;
+//   border-radius: $border-radius-small;
+//   cursor: pointer;
+// }
