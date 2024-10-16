@@ -1,3 +1,4 @@
+import React from "react";
 import { useState, useEffect } from "react";
 import MainContent from "../../components/MainContent/MainContent.jsx";
 import styles from "./HomePage.module.scss";
