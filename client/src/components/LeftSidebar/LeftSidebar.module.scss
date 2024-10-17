@@ -10,86 +10,88 @@
     left: 0;
 
     .exit {
-      position: absolute;
-      bottom: 30px;
-      width: 80%;
-      left: 30px;
-      padding: 10px;
-      border-radius: 10px;
-      background: rgb(30,29,32);
-      background-color: $background-button;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 10px;
-    
-      .exitBlock {
-        display: flex;
-        gap: 20px;
-      }
-  
-      .exitUser {
+        position: absolute;
+        bottom: 30px;
+        width: 80%;
+        left: 30px;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: $background-button;
         display: flex;
         align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        color: #B6F09C;
-        line-height: 25px;
-      }
+        justify-content: space-between;
+        gap: 10px;
 
-      .exitBlockImg {
-        border-radius: 50%;
-      }
+        .exitBlock {
+            display: flex;
+            gap: 20px;
+        }
+
+        .exitUser {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #B6F09C;
+            line-height: 25px;
+        }
+
+        .exitBlockImg {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
     }
-    
+
     .iconWrapper {
-      background: rgb(30,29,32);
-      background-color: $background-button;
-      position: absolute;
-      top: 30px;
-      width: 80%;
-      left: 30px;
-      padding: 10px;
-      border-radius: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+        background-color: $background-button;
+        position: absolute;
+        top: 30px;
+        width: 80%;
+        left: 30px;
+        padding: 10px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 
     .iconWrapper img {
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
     }
 
     .menuForm {
-      padding: 20px 10px;
-      background: rgb(30,29,32);
-      background-color: $background-button;
-      width: 80%;
-      margin-top: 180px;
-      margin-left: 30px;
-      border-radius: 10px;
-      display: flex;
-      flex-direction: column;
-      gap: 30px;
+        padding: 20px 10px;
+        background-color: $background-button;
+        width: 80%;
+        margin-top: 180px;
+        margin-left: 30px;
+        border-radius: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
     }
 
     .menuForm input {
-      padding: 25px 10px;
+        padding: 25px 10px;
     }
 
     .menuForm button {
-      background-color: $nodle-black-300;
-      color: $border-color-green;
-      border-radius: 5px;
-      padding: 5px;
+        background-color: $nodle-black-300;
+        color: $border-color-green;
+        border-radius: 5px;
+        padding: 5px;
     }
 
     a {
-      cursor: pointer;
+        cursor: pointer;
     }
-  }
+}
