@@ -44,6 +44,9 @@ const ProfilePage = () => {
   const handleSubmit = (values) => {
     // Сохраняем данные в локальное хранилище
     localStorage.setItem('userData', JSON.stringify(values));
+
+     // Використовуємо подію для оповіщення про зміну даних
+  window.dispatchEvent(new Event('userDataUpdated'));
     
     // Обновляем состояние компонента
     setUserData(values);
