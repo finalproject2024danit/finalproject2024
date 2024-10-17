@@ -18,9 +18,11 @@ const LeftSidebar = () => {
     };
 
     window.addEventListener('storage', handleStorageChange);
+    window.addEventListener('userDataUpdated', handleStorageChange);
 
     return () => {
       window.removeEventListener('storage', handleStorageChange);
+      window.removeEventListener('userDataUpdated', handleStorageChange);
     };
   }, []);
 
