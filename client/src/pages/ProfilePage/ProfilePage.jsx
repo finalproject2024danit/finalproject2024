@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import InputMask from 'react-input-mask';  // Додали бібліотеку для маски
+import MaskedInput from 'react-text-mask';  // Використовуємо react-text-mask
 import styles from './ProfilePage.module.scss';
 
 const ProfilePage = () => {
@@ -9,7 +9,7 @@ const ProfilePage = () => {
   const initialUserData = JSON.parse(localStorage.getItem('userData')) || {
     firstName: '',
     lastName: '',
-    phoneNumber: '+38', // Встановлюємо +38 за замовчуванням
+    phoneNumber: '+38(___) ___-__-__', // Встановлюємо маску за замовчуванням
     email: '',
     gender: '',
     birthday: ''
@@ -90,11 +90,10 @@ const ProfilePage = () => {
               <label>Phone Number</label>
               <Field name="phoneNumber">
                 {({ field }) => (
-                  <InputMask
+                  <MaskedInput
                     {...field}
-                    mask="+38(999) 999-99-99"  // Маска для введення номера
+                    mask={['+', '3', '8', '(', /[0-9]/, /[0-9]/, /[0-9]/, ')', ' ', /[0-9]/, /[0-9]/, /[0-9]/, '-', /[0-9]/, /[0-9]/, '-', /[0-9]/, /[0-9]/]}
                     placeholder="+38(XXX) XXX-XX-XX"
-                    value={values.phoneNumber}
                     onChange={(e) => setFieldValue('phoneNumber', e.target.value)}
                   />
                 )}
@@ -120,7 +119,16 @@ const ProfilePage = () => {
 
             <div className={styles.formRow}>
               <label>Birthday</label>
-              <Field type="date" name="birthday" />
+              <Field name="birthday">
+                {({ field }) => (
+                  <input
+                    type="date"
+                    {...field}
+                    placeholder="dd-MM-yyyy"
+                    onChange={(e) => setFieldValue('birthday', e.target.value)}
+                  />
+                )}
+              </Field>
               {errors.birthday && touched.birthday ? <div>{errors.birthday}</div> : null}
             </div>
 
@@ -133,4 +141,3 @@ const ProfilePage = () => {
 };
 
 export default ProfilePage;
-
