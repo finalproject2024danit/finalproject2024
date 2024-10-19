@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
+import MaskedInput from 'react-text-mask';  // Використовуємо react-text-mask
 import styles from './ProfilePage.module.scss';
 
 const ProfilePage = () => {
@@ -8,7 +9,7 @@ const ProfilePage = () => {
   const initialUserData = JSON.parse(localStorage.getItem('userData')) || {
     firstName: '',
     lastName: '',
-    phoneNumber: '',
+    phoneNumber: '+38(___) ___-__-__', // Встановлюємо маску за замовчуванням
     email: '',
     gender: '',
     birthday: ''
@@ -17,11 +18,12 @@ const ProfilePage = () => {
   const [avatar, setAvatar] = useState(initialAvatar);
   const [userData, setUserData] = useState(initialUserData);
 
+  // Схема валідації
   const ProfileSchema = Yup.object().shape({
     firstName: Yup.string().required('First Name is required'),
     lastName: Yup.string().required('Last Name is required'),
     phoneNumber: Yup.string()
-      .matches(/^(?:\+380|0)\d{9}$/, 'Phone number must be in the format +380XXXXXXXXX or 0XXXXXXXXX')
+      .matches(/^\+38\(\d{3}\)\s\d{3}-\d{2}-\d{2}$/, 'Phone number must be in the format +38(XXX) XXX-XX-XX')
       .required('Phone number is required'),
     email: Yup.string().email('Invalid email').required('Email is required'),
     gender: Yup.string().oneOf(['male', 'female'], 'Select your gender').required('Gender is required'),
@@ -42,24 +44,17 @@ const ProfilePage = () => {
   };
 
   const handleSubmit = (values) => {
-    // Сохраняем данные в локальное хранилище
     localStorage.setItem('userData', JSON.stringify(values));
-
-     // Використовуємо подію для оповіщення про зміну даних
-  window.dispatchEvent(new Event('userDataUpdated'));
-    
-    // Обновляем состояние компонента
+    window.dispatchEvent(new Event('userDataUpdated'));
     setUserData(values);
   };
 
   return (
     <div className={styles.profilePage}>
       <div className={styles.avatarSection}>
-        {/* Аватарка */}
         <img src={avatar} alt="User Avatar" className={styles.avatar} />
         <input type="file" onChange={handleAvatarChange} />
 
-        {/* Информация о пользователе */}
         <div className={styles.userInfo}>
           <h3>Profile Information</h3>
           <p><strong>First Name:</strong> {userData.firstName}</p>
@@ -71,14 +66,13 @@ const ProfilePage = () => {
         </div>
       </div>
 
-      {/* Форма */}
       <Formik
         initialValues={userData}
-        enableReinitialize={true} // Позволяет форме обновляться при изменении данных
+        enableReinitialize={true}
         validationSchema={ProfileSchema}
         onSubmit={handleSubmit}
       >
-        {({ errors, touched }) => (
+        {({ errors, touched, setFieldValue, values }) => (
           <Form className={styles.profileForm}>
             <div className={styles.formRow}>
               <label>First Name</label>
@@ -94,7 +88,16 @@ const ProfilePage = () => {
 
             <div className={styles.formRow}>
               <label>Phone Number</label>
-              <Field name="phoneNumber" placeholder="+380XXXXXXXXX" />
+              <Field name="phoneNumber">
+                {({ field }) => (
+                  <MaskedInput
+                    {...field}
+                    mask={['+', '3', '8', '(', /[0-9]/, /[0-9]/, /[0-9]/, ')', ' ', /[0-9]/, /[0-9]/, /[0-9]/, '-', /[0-9]/, /[0-9]/, '-', /[0-9]/, /[0-9]/]}
+                    placeholder="+38(XXX) XXX-XX-XX"
+                    onChange={(e) => setFieldValue('phoneNumber', e.target.value)}
+                  />
+                )}
+              </Field>
               {errors.phoneNumber && touched.phoneNumber ? <div>{errors.phoneNumber}</div> : null}
             </div>
 
@@ -116,7 +119,16 @@ const ProfilePage = () => {
 
             <div className={styles.formRow}>
               <label>Birthday</label>
-              <Field type="date" name="birthday" />
+              <Field name="birthday">
+                {({ field }) => (
+                  <input
+                    type="date"
+                    {...field}
+                    placeholder="dd-MM-yyyy"
+                    onChange={(e) => setFieldValue('birthday', e.target.value)}
+                  />
+                )}
+              </Field>
               {errors.birthday && touched.birthday ? <div>{errors.birthday}</div> : null}
             </div>
 
