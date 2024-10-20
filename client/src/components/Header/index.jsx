@@ -14,6 +14,19 @@ import styles from "./Header.module.scss";
 const Header = () => {
   return (
     <header>
+      <div class={styles.skyContainer}>
+        <span class={styles.star}></span>
+        <span class={styles.star}></span>
+        <span class={styles.star}></span>
+        <span class={styles.star}></span>
+        <span class={styles.star}></span>
+        <span class={styles.star}></span>
+        <span class={styles.star}></span>
+        <span class={styles.star}></span>
+        <span class={styles.star}></span>
+        <span class={styles.star}></span>
+      </div>
+
       <div className={styles.headerTop}>
         <NavLink
           className={({ isActive }) => (isActive ? styles.active : "")}
