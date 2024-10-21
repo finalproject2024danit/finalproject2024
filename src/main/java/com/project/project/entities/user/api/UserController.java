@@ -1,18 +1,23 @@
 package com.project.project.entities.user.api;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.project.project.dto.BaseResponseDto;
 import com.project.project.entities.user.User;
+import com.project.project.entities.user.api.dto.RequestPatchUserDto;
 import com.project.project.entities.user.api.dto.ResponseUserDto;
 import com.project.project.entities.user.api.dto.UserMapper;
 import com.project.project.entities.user.api.dto.View;
 import com.project.project.entities.user.model.AddUserModel;
 import com.project.project.entities.user.service.UserServiceImpl;
+import com.project.project.entities.user.status.UserStatus;
+import com.project.project.exceptions.UserNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -83,5 +88,32 @@ public class UserController {
         responseUserDto.setEmail(savedUser.getEmail());
 
         return ResponseEntity.ok(responseUserDto);
+    }
+
+    @PatchMapping("/patch/{id}")
+    public ResponseEntity<BaseResponseDto<ResponseUserDto>> patchUser(
+            @PathVariable Long id,
+            @Valid @RequestBody RequestPatchUserDto requestPatchUserDto) {
+        log.info("Trying to patch customer with ID: {}", id);
+
+        BaseResponseDto<ResponseUserDto> baseResponseDto = new BaseResponseDto<>();
+
+        try {
+            User updatedUser = userService.patchUser(id, requestPatchUserDto);
+            ResponseUserDto responseCustomerDto = UserMapper.INSTANCE.userToUserDto(updatedUser);
+
+            baseResponseDto.setDto(responseCustomerDto);
+            baseResponseDto.setMessage(UserStatus.USER_UPDATED.getMessage());
+
+            return ResponseEntity.ok(baseResponseDto);
+
+        } catch (UserNotFoundException e) {
+            baseResponseDto.setMessage(UserStatus.USER_NOT_FOUND.getMessage());
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(baseResponseDto);
+
+        } catch (Exception e) {
+            baseResponseDto.setMessage(UserStatus.UNEXPECTED.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(baseResponseDto);
+        }
     }
 }
