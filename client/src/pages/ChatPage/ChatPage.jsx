@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMessages, selectUser, sendMessage } from '../../redux/slices/chatSlice';
 import NewMessageForm from "./NewMessageForm/NewMessageForm";
@@ -8,6 +8,8 @@ import styles from "./ChatPage.module.scss";
 const ChatPage = () => {
   const dispatch = useDispatch();
   const { messages, selectedUser, loading } = useSelector((state) => state.chat);
+  const [isFormVisible, setFormVisible] = useState(false); // State to control form visibility
+  
 
   useEffect(() =>{
     dispatch(fetchMessages());
@@ -15,11 +17,20 @@ const ChatPage = () => {
 
   const handleUserSelect = (user) => {
     dispatch(selectUser(user));
+    setFormVisible(true);
   };
 
   const handleSendMessage = (message) => {
     dispatch(sendMessage(message));
   };
+
+  // const handleNext = () => {
+  //   setCurrentIndex((prevIndex) => (prevIndex + 1) % messages.length);
+  // };
+
+  // const handlePrev = () => {
+  //   setCurrentIndex((prevIndex) => (prevIndex - 1 + messages.length) % messages.length);
+  // };
 
   return (
     <div className={styles.layout}>
@@ -51,6 +62,31 @@ const ChatPage = () => {
                 {selectedUser && (
                   <div>
                     <h2>{selectedUser}'s Messages</h2>
+
+                    {/* Carousel Section */}
+                    {/* {messages
+                      .filter((msg) => msg.user === selectedUser)
+                      .map((msg) => (
+                    <div key={msg.id} className={styles.carousel}>
+                      <button className={styles.prevButton} onClick={handlePrev}>Prev</button>
+
+                      <div className={styles.carousel__item}>
+                        <img
+                          src={msg.avatar}
+                          alt={msg.user}
+                          className={styles.messageAvatar}
+                        />
+                        <div className={styles.carousel__text}>
+                          <p>{msg.message}</p>
+                          <span>{msg.date}</span>
+                        </div>
+                      </div>
+
+                      <button className={styles.nextButton} onClick={handleNext}>Next</button>
+                    </div>
+                      ))} */}
+                    {/* End of Carousel */}
+
                     {messages
                       .filter((msg) => msg.user === selectedUser)
                       .map((msg) => (
@@ -69,7 +105,7 @@ const ChatPage = () => {
           )}
 
           {/* Formik form to send new message */}
-          {selectedUser && (
+          {selectedUser && isFormVisible && (
             <NewMessageForm onSendMessage={handleSendMessage} selectedUser={selectedUser} />
           )}
         </MainContent>

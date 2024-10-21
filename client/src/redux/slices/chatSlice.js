@@ -73,7 +73,7 @@ export const fetchMessages = createAsyncThunk('chat/fetchMessages', async () => 
             user: "David Singh",
             date: "2 days ago",
             message: "We might need to adjust the pacing of the script.",
-            status: "Offline",
+            status: "Online",
             avatar: "https://ui-avatars.com/api/?name=David+Singh&background=random"
         },
         {
@@ -81,7 +81,7 @@ export const fetchMessages = createAsyncThunk('chat/fetchMessages', async () => 
             user: "Harper Singh",
             date: "Today",
             message: "Could we brainstorm more ideas for episode 5?",
-            status: "Do not disturb",
+            status: "Online",
             avatar: "https://ui-avatars.com/api/?name=Harper+Singh&background=random"
         },
         {
@@ -113,7 +113,7 @@ export const fetchMessages = createAsyncThunk('chat/fetchMessages', async () => 
             user: "Sophia Zhang",
             date: "Yesterday",
             message: "We could add more depth to the villain character.",
-            status: "Do not disturb",
+            status: "Online",
             avatar: "https://ui-avatars.com/api/?name=Sophia+Zhang&background=random"
         },
         // Add more mock messages
