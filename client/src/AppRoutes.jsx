@@ -5,7 +5,7 @@ import HomePage from "./pages/HomePage/HomePage.jsx";
 // import MessengerPage from "./pages/MessengerPage/MessengerPage.jsx";
 import GroupPage from "./pages/GroupPage/GroupPage.jsx";
 import ChatPage from "./pages/ChatPage/ChatPage.jsx";
-import FriendsPage from "./pages/FriendsPage/FriendsPage.jsx";
+import UsersPage from "./pages/UsersPage/UsersPage.jsx";
 import AccountPage from "./pages/AccountPage/AccountPage.jsx";
 import ProfilePage from "./pages/ProfilePage/ProfilePage.jsx";
 // import PrivateRoute from "./components/PrivateRoute.jsx";
@@ -24,10 +24,10 @@ const AppRoutes = () => {
         }
       />
       <Route
-        path="/friends"
+        path="/users"
         element={
           // <PrivateRoute>
-            <FriendsPage />
+            <UsersPage />
           // </PrivateRoute>
         }
       />

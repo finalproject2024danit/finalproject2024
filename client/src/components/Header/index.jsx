@@ -1,7 +1,7 @@
 // // import PropTypes from "prop-types";
 import React from "react";
 import { NavLink } from "react-router-dom";
-import FriendsIcon from "../../svg/Header/Friends";
+import UsersIcon from "../../svg/Header/Users";
 import GroupIcon from "../../svg/Header/Group";
 import HomeIcon from "../../svg/Header/Home";
 import ChatIcon from "../../svg/Header/Chat";
@@ -52,9 +52,9 @@ const Header = () => {
             <li>
               <NavLink
                 className={({ isActive }) => (isActive ? styles.active : "")}
-                to="/friends"
+                to="/users"
               >
-                <FriendsIcon />
+                <UsersIcon />
                 {/* <span>FriendsIcon</span> */}
               </NavLink>
             </li>
