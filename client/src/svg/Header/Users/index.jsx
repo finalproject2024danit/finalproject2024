@@ -1,4 +1,4 @@
-const FriendsIcon = () => {
+const UsersIcon = () => {
     return (
         <svg
         fill="#686B6E"
@@ -40,4 +40,4 @@ const FriendsIcon = () => {
     );
   }
   
-  export default FriendsIcon;
+  export default UsersIcon;
