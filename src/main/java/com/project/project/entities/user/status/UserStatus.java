@@ -8,7 +8,8 @@ import lombok.RequiredArgsConstructor;
 public enum UserStatus {
     SUCCESS("Success operation."),
     USER_NOT_FOUND("User not found."),
-    UNEXPECTED("An unexpected error occurred.");
+    UNEXPECTED("An unexpected error occurred."),
+    USER_UPDATED("User is updated.");
 
     private final String message;
 }
