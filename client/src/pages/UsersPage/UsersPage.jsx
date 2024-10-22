@@ -1,26 +1,35 @@
 import React, { useEffect, useState } from "react"; 
 import styles from './UsersPage.module.scss';
 import MainContent from '../../components/MainContent/MainContent';
-import axios from "axios";
+import axiosInstance from './axiosConfig'; // Імпортуємо налаштований axios
 
 const UsersContent = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 10; // Кількість користувачів на запит
+  const usersPerPage = 10; // Кількість користувачів на сторінку
+  const sortBy = "firstName"; // Зміна на firstName для сортування
+  const sortDirection = "asc"; // 'asc' або 'desc' - напрямок сортування
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const userIds = await getUserIds(); // Отримання ID користувачів
-      const requests = userIds.slice(0, currentPage * usersPerPage).map(id => 
-        axios.get(`http://134.209.246.21:9000/api/v1/users/user/${id}`)
-      );
-
       try {
-        const responses = await Promise.all(requests);
-        const usersData = responses.map(response => response.data);
-        setUsers(prevUsers => [...prevUsers, ...usersData]);
+        const response = await axiosInstance.get('/', { // Використовуємо базовий URL
+          params: {
+            startPage: currentPage,
+            perPage: usersPerPage,
+            sortBy,
+            sortDirection
+          }
+        });
+        
+        const usersData = response.data;
+        if (Array.isArray(usersData) && usersData.length > 0) {
+          setUsers(prevUsers => [...prevUsers, ...usersData]); // Додавання нових користувачів до вже існуючих
+        } else {
+          throw new Error('Дані користувачів не відповідають очікуваній структурі або порожні');
+        }
       } catch (err) {
         setError(`Помилка під час завантаження даних: ${err.message}`);
       } finally {
@@ -31,15 +40,10 @@ const UsersContent = () => {
     fetchUsers();
   }, [currentPage]);
 
-  const getUserIds = async () => {
-    // Тут ви можете реалізувати логіку для отримання ID користувачів
-    return Array.from({ length: 50 }, (_, i) => i + 1); // Приклад статичного масиву з 50 ID
-  };
-
   useEffect(() => {
     const handleScroll = () => {
       if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight) {
-        setCurrentPage(prev => prev + 1);
+        setCurrentPage(prev => prev + 1); // Збільшуємо сторінку при прокручуванні
       }
     };
 
@@ -64,9 +68,9 @@ const UsersContent = () => {
       {users.length > 0 ? (
         users.map((user) => (
           <div key={user.id}>
-            <h2>{user.name}</h2>
+            <h2>{user.firstName} {user.lastName}</h2> {/* Відображення ім'я та прізвище */}
             <p>Email: {user.email}</p>
-            <p>Вік: {user.age}</p>
+            <p>Вік: {new Date().getFullYear() - new Date(user.dateOfBirth).getFullYear()}</p> {/* Розрахунок віку */}
           </div>
         ))
       ) : (
@@ -90,77 +94,4 @@ const UsersPage = () => {
 };
 
 export default UsersPage;
-
-
-// import React, { useEffect, useState } from "react"; 
-// import styles from './UsersPage.module.scss';
-// import MainContent from '../../components/MainContent/MainContent';
-// import axios from "axios";
-
-// const UsersContent = () => {
-//   const [users, setUsers] = useState([]);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState(null);
-
-//   useEffect(() => {
-//     const fetchUsers = async () => {
-//       const userIds = [1, 2, 3];
-//       const requests = userIds.map(id => 
-//         axios.get(`http://134.209.246.21:9000/api/v1/users/user/${id}`)
-//       );
-
-//       try {
-//         const responses = await Promise.all(requests);
-//         const usersData = responses.map(response => response.data);
-//         setUsers(usersData);
-//       } catch (err) {
-//         setError(`Помилка під час завантаження даних: ${err.message}`);
-//       } finally {
-//         setLoading(false);
-//       }
-//     };
-
-//     fetchUsers();
-//   }, []);
-
-//   if (loading) {
-//     return <p>Завантаження...</p>;
-//   }
-
-//   if (error) {
-//     return <p>{error}</p>;
-//   }
-
-//   return (
-//     <div>
-//       <h1>Список користувачів:</h1>
-//       {users.length > 0 ? (
-//         users.map((user) => (
-//           <div key={user.id}>
-//             <h2>{user.name}</h2>
-//             <p>Email: {user.email}</p>
-//             <p>Вік: {user.age}</p>
-//           </div>
-//         ))
-//       ) : (
-//         <p>Користувачі не знайдені.</p>
-//       )}
-//     </div>
-//   );
-// };
-
-// const UsersPage = () => {
-//   return (
-//     <div className={styles.layout}>   
-//       <div className={styles.mainContent}>
-//         <MainContent title="">
-//           <UsersContent /> {/* Виклик компонента */}
-//         </MainContent>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default UsersPage;
-
 

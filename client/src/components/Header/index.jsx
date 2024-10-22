@@ -14,17 +14,17 @@ import styles from "./Header.module.scss";
 const Header = () => {
   return (
     <header>
-      <div class={styles.skyContainer}>
-        <span class={styles.star}></span>
-        <span class={styles.star}></span>
-        <span class={styles.star}></span>
-        <span class={styles.star}></span>
-        <span class={styles.star}></span>
-        <span class={styles.star}></span>
-        <span class={styles.star}></span>
-        <span class={styles.star}></span>
-        <span class={styles.star}></span>
-        <span class={styles.star}></span>
+      <div className={styles.skyContainer}>
+        <span className={styles.star}></span>
+        <span className={styles.star}></span>
+        <span className={styles.star}></span>
+        <span className={styles.star}></span>
+        <span className={styles.star}></span>
+        <span className={styles.star}></span>
+        <span className={styles.star}></span>
+        <span className={styles.star}></span>
+        <span className={styles.star}></span>
+        <span className={styles.star}></span>
       </div>
 
       <div className={styles.headerTop}>
@@ -46,7 +46,6 @@ const Header = () => {
                 to="/"
               >
                 <HomeIcon />
-                {/* <span>Home</span> */}
               </NavLink>
             </li>
             <li>
@@ -55,7 +54,6 @@ const Header = () => {
                 to="/users"
               >
                 <UsersIcon />
-                {/* <span>FriendsIcon</span> */}
               </NavLink>
             </li>
             <li>
@@ -65,7 +63,6 @@ const Header = () => {
               >
                 <div className={styles.iconWrapper}>
                   <ChatIcon />
-                  {/* <span>GroupIcon</span> */}
                 </div>
               </NavLink>
             </li>
@@ -76,130 +73,12 @@ const Header = () => {
               >
                 <div className={styles.iconWrapper}>
                   <GroupIcon />
-                  {/* <span>GroupIcon</span> */}
                 </div>
               </NavLink>
             </li>
           </ul>
         </nav>
       </div>
-      {/* <nav>
-        <ul>
-          <li>
-            <NavLink
-              className={({ isActive }) => (isActive ? styles.active : "")}
-              to="/"
-            >
-              <div className={styles.iconWrapper}>
-                <FacebookIcon />
-                <span>FacebookIcon</span>
-              </div>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              className={({ isActive }) => (isActive ? styles.active : "")}
-              to=""
-            >
-              <form action="">
-                <input type="text" />
-                <button>tada</button>
-              </form>
-            </NavLink>
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <NavLink
-              className={({ isActive }) => (isActive ? styles.active : "")}
-              to="/"
-            >
-              <HomeIcon />
-              <span>HomeIcon</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              className={({ isActive }) => (isActive ? styles.active : "")}
-              to="/friends"
-            >
-              <FriendsIcon />
-              <span>FriendsIcon</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              className={({ isActive }) => (isActive ? styles.active : "")}
-              to="/video"
-            >
-              <VideoIcon />
-              <span>VideoIcon</span>
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink
-              className={({ isActive }) => (isActive ? styles.active : "")}
-              to="/group"
-            >
-              <div className={styles.iconWrapper}>
-                <GroupIcon />
-                <span>GroupIcon</span>
-              </div>
-            </NavLink>
-          </li>
-
-          <li>
-            <NavLink
-              className={({ isActive }) => (isActive ? styles.active : "")}
-              to="/games"
-            >
-              <div className={styles.iconWrapper}>
-                <GamesIcon />
-                <span>GamesIcon</span>
-              </div>
-            </NavLink>
-          </li>
-        </ul>
-        <ul>
-          <li>
-            <NavLink
-              className={({ isActive }) => (isActive ? styles.active : "")}
-              to=""
-            >
-              <MenuIcon />
-              <span>MenuIcon</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              className={({ isActive }) => (isActive ? styles.active : "")}
-              to=""
-            >
-              <MessengerIcon />
-              <span>MessengerIcon</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              className={({ isActive }) => (isActive ? styles.active : "")}
-              to=""
-            >
-              <NotificationIcon />
-              <span>NotificationIcon</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              className={({ isActive }) => (isActive ? styles.active : "")}
-              to="/account"
-            >
-              <AccountIcon />
-              <span>AccountIcon</span>
-            </NavLink>
-          </li>
-        </ul>
-      </nav>  */}
     </header>
   );
 };
