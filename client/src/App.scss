@@ -119,7 +119,7 @@ $large-screen-breakpoint: 1440px;
   width: 100%;  
 }
 
-.main-container {
+.mainContainer {
   display: flex;
   gap: 10px;
   // height: 100vh;
@@ -129,7 +129,7 @@ $large-screen-breakpoint: 1440px;
 
 
 
-.menu-social {
+.menuSocial {
   background-color: $nodle-black-700;
   width: 100%;
   height: 100%;
@@ -172,19 +172,19 @@ body {
   font-weight: bold;
 }
 
-.search-bar input {
+.searchBar input {
   // padding: $padding-small;
   border-radius: 20px;
   border: none;
   width: 250px;
 }
 
-.nav-icons {
+.navIcons {
   display: flex;
   // gap: $padding-medium;
 }
 
-.nav-icons .icon {
+.navIcons .icon {
   cursor: pointer;
   // padding: $padding-small $padding-medium;
   // background-color: $secondary-color;
@@ -192,7 +192,7 @@ body {
   transition: background-color 0.3s ease;
 }
 
-.nav-icons .icon:hover {
+.navIcons .icon:hover {
   // background-color: $hover-color;
 }
 

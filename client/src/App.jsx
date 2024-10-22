@@ -16,9 +16,9 @@ const App = () => {
         <Header />
         <div>
           {/* <main> */}
-          <div className="main-container">
+          <div className="mainContainer">
             {/* <h1>FACEBOOK</h1> */}
-            <div className="menu-social">
+            <div className="menuSocial">
               <AppRoutes />
             </div>
             <RightSidebar />           
