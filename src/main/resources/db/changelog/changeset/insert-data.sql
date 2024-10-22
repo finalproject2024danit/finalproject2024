@@ -15,4 +15,39 @@ INSERT INTO users (
           'Charlie', 'Brown', 'charlie.brown@example.com', 'charliePass!', 'NOT_SPECIFIED', 441763200000,
           'https://res.cloudinary.com/dsr6kwzrr/image/upload/v1728655814/fitness_jump_health_woman_girl_healthy_fit_sportive-1103572_mshkng.jpg', '12345',
           'User photo data for Charlie', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+      ),
+      (
+          'David', 'Wilson', 'david.wilson@example.com', 'davidSecure!', 'MALE', 504576000000,
+          'photo', '12345',
+          'User photo data for David', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+      ),
+      (
+          'Edward', 'Davis', 'edward.davis@example.com', 'edwardPass123', 'MALE', 378604800000,
+          'photo', '12345',
+          'User photo data for Edward', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+      ),
+      (
+          'Frank', 'Miller', 'frank.miller@example.com', 'frankSecurePass', 'MALE', 662688000000,
+          'photo', '12345',
+          'User photo data for Frank', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+      ),
+      (
+          'George', 'Taylor', 'george.taylor@example.com', 'georgePass!', 'MALE', 283996800000,
+          'photo', '12345',
+          'User photo data for George', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+      ),
+      (
+          'Henry', 'Moore', 'henry.moore@example.com', 'henrySecure1', 'MALE', 505190400000,
+          'photo', '12345',
+          'User photo data for Henry', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+      ),
+      (
+          'Isaac', 'Clark', 'isaac.clark@example.com', 'isaacPass!', 'MALE', 246931200000,
+          'photo', '12345',
+          'User photo data for Isaac', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
+      ),
+      (
+          'James', 'White', 'james.white@example.com', 'jamesSecurePass!', 'MALE', 312768000000,
+          'photo', '12345',
+          'User photo data for James', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP
       );

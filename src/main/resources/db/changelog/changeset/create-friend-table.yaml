@@ -1,0 +1,49 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-friend
+      author: Viktor Lytvynenko
+      changes:
+        - createTable:
+            tableName: friends
+            columns:
+              - column:
+                  name: id
+                  type: SERIAL
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: user_from_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_to_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_date
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_modified_date
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            constraintName: fk_friend_user_from
+            baseTableName: friends
+            baseColumnNames: user_from_id
+            referencedTableName: users
+            referencedColumnNames: id
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            constraintName: fk_friend_user_to
+            baseTableName: friends
+            baseColumnNames: user_to_id
+            referencedTableName: users
+            referencedColumnNames: id
+            onDelete: CASCADE
