@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"; 
+import React, { useEffect, useState } from "react";
 import styles from './UsersPage.module.scss';
 import MainContent from '../../components/MainContent/MainContent';
 import axiosInstance from './axiosConfig'; // Імпортуємо налаштований axios
@@ -7,15 +7,16 @@ const UsersContent = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 10; // Кількість користувачів на сторінку
   const sortBy = "firstName"; // Зміна на firstName для сортування
   const sortDirection = "asc"; // 'asc' або 'desc' - напрямок сортування
+  const currentPage = 0;
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axiosInstance.get('/', { // Використовуємо базовий URL
+        // Виконуємо запит до сервера
+        const response = await axiosInstance.get('/users/filter', {
           params: {
             startPage: currentPage,
             perPage: usersPerPage,
@@ -23,12 +24,13 @@ const UsersContent = () => {
             sortDirection
           }
         });
-        
-        const usersData = response.data;
-        if (Array.isArray(usersData) && usersData.length > 0) {
+
+        const usersData = response.data || []; // Припускаю, що відповідь містить поле "content" для даних користувачів
+
+        if (usersData.length > 0) {
           setUsers(prevUsers => [...prevUsers, ...usersData]); // Додавання нових користувачів до вже існуючих
         } else {
-          throw new Error('Дані користувачів не відповідають очікуваній структурі або порожні');
+          setError('Користувачі не знайдені.');
         }
       } catch (err) {
         setError(`Помилка під час завантаження даних: ${err.message}`);
@@ -38,23 +40,9 @@ const UsersContent = () => {
     };
 
     fetchUsers();
-  }, [currentPage]);
+  }, []); // Запит лише при завантаженні компонента
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight) {
-        setCurrentPage(prev => prev + 1); // Збільшуємо сторінку при прокручуванні
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, []);
-
-  if (loading && users.length === 0) {
+  if (loading) {
     return <p>Завантаження...</p>;
   }
 
@@ -71,19 +59,19 @@ const UsersContent = () => {
             <h2>{user.firstName} {user.lastName}</h2> {/* Відображення ім'я та прізвище */}
             <p>Email: {user.email}</p>
             <p>Вік: {new Date().getFullYear() - new Date(user.dateOfBirth).getFullYear()}</p> {/* Розрахунок віку */}
+            <img src={user.avatar} alt={`${user.firstName}'s avatar`} />
           </div>
         ))
       ) : (
         <p>Користувачі не знайдені.</p>
       )}
-      {loading && <p>Завантаження ще...</p>}
     </div>
   );
 };
 
 const UsersPage = () => {
   return (
-    <div className={styles.layout}>   
+    <div className={styles.layout}>
       <div className={styles.mainContent}>
         <MainContent title="">
           <UsersContent /> {/* Виклик компонента */}
