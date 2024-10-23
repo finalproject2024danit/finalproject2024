@@ -8,6 +8,7 @@ import ChatPage from "./pages/ChatPage/ChatPage.jsx";
 import UsersPage from "./pages/UsersPage/UsersPage.jsx";
 import AccountPage from "./pages/AccountPage/AccountPage.jsx";
 import ProfilePage from "./pages/ProfilePage/ProfilePage.jsx";
+import UserPage from "./pages/UserPage/UserPage.jsx";
 // import PrivateRoute from "./components/PrivateRoute.jsx";
 
 const AppRoutes = () => {
@@ -52,6 +53,14 @@ const AppRoutes = () => {
         element={
           // <PrivateRoute>
             <ChatPage />
+          // </PrivateRoute>
+        }
+      />
+      <Route
+        path="/user"
+        element={
+          // <PrivateRoute>
+            <UserPage />
           // </PrivateRoute>
         }
       />
