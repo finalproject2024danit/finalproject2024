@@ -8,7 +8,7 @@
   
   .mainContent {
     flex: 1;
-    padding: 20px;
+    padding: 25px;
     background-color: #1c1f2a; /* Adjust this according to your theme */
     color: white;
   }
@@ -22,9 +22,10 @@
 
   .mainFeed {
     position: fixed;
+    // margin-top: 180px;
     width: 71%;
     height: 100%;
-    top: 170px;
+    top: 180px;
     right: 11%;
 
     // width: 300px; /* ширина блока */

@@ -13,8 +13,9 @@ import styles from "./Header.module.scss";
 
 const Header = () => {
   return (
-    <header>
-      <div className={styles.skyContainer}>
+    <div className={styles.test4}>
+    <header className={styles.shinyCta}>
+      {/* <div className={styles.skyContainer}>
         <span className={styles.star}></span>
         <span className={styles.star}></span>
         <span className={styles.star}></span>
@@ -25,7 +26,7 @@ const Header = () => {
         <span className={styles.star}></span>
         <span className={styles.star}></span>
         <span className={styles.star}></span>
-      </div>
+      </div> */}
 
       <div className={styles.headerTop}>
         <NavLink
@@ -80,6 +81,7 @@ const Header = () => {
         </nav>
       </div>
     </header>
+    </div>
   );
 };
 

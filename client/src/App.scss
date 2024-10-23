@@ -40,6 +40,7 @@ $glass-stroke: rgba(255, 255, 255, 0.08);
 $glass-modal: rgba(26, 29, 33, 0.96);
 
 $nodle-black-green:#2a9d8f;
+$border-primary:#5cb85c;
 
 $font-size-title: 34px;
 
@@ -110,11 +111,13 @@ $large-screen-breakpoint: 1440px;
   padding: 10px;
   gap: 10px;
   width: 2200px;
+  position: relative;
 }
 
 .inner {
   display: flex;
   flex-direction: column;
+  position: relative;
   gap: 10px;
   width: 100%;  
 }
@@ -153,20 +156,6 @@ body {
   // height: 100vh;
 }
 
-// header {
-//   // background-color: $primary-color;
-//   // color: $seventh-color;
-//   display: flex;
-//   align-items: center;
-//   justify-content: space-between;
-//   // padding: $padding-medium;
-//   position: sticky;
-//   top: 0;
-//   // z-index: 1000;
-
-
-// }
-
 .logo {
   // font-size: $font-size-large;
   font-weight: bold;
@@ -192,23 +181,12 @@ body {
   transition: background-color 0.3s ease;
 }
 
-.navIcons .icon:hover {
-  // background-color: $hover-color;
-}
 
-/* Layout for Sidebars and Feed */
-// .container {
-//   display: flex;
-//   justify-content: space-between;
-//   // padding: $padding-large;
-// }
+
 
 .leftSidebar, .rightSidebar {
   width: 220px;
-  // background-color: $seventh-color;
-  // padding: $padding-large;
-  // border-radius: $border-radius-medium;
-  // box-shadow: $box-shadow;
+
 }
 
 .leftSidebar ul {
@@ -229,119 +207,228 @@ body {
   flex-grow: 1;
   // margin: 0 $padding-medium;
 }
-//2 next positions taken from HomePage
-// .layout {
-//   display: flex;
-//   width: 100vw;
-//   height: 100vh;
-//   margin-top: 60px;
-// }
 
-// .mainContent {
-//   width: 60%;
-//   padding: 20px;
-//   background-color: #f0f2f5;
-//   overflow-y: auto;
-// }
-
-// .post {
-//   background-color: $seventh-color;
-//   padding: $padding-medium;
-//   margin-bottom: $margin-medium;
-//   border-radius: $border-radius-medium;
-//   box-shadow: $box-shadow;
-// }
-
-/* Right Sidebar Styles */
-// .rightSidebar .suggestions, .rightSidebar .ads {
-//   background-color: $seventh-color;
-//   padding: $padding-medium;
-//   margin-bottom: $margin-medium;
-//   border-radius: $border-radius-medium;
-//   box-shadow: $box-shadow;
-// }
 
 .suggestions {
   font-weight: bold;
 }
 
-// .ads {
-//   color: $fifth-color;
-//   font-size: $font-size-small;
-// }
 
-/* Media Queries */
-
-/* Mobile Styles */
-// @media (max-width: $mobile-breakpoint) {
-//   .header {
-//     flex-direction: column;
-//     align-items: flex-start;
-//   }
-
-//   .search-bar input {
-//     width: 100%;
-//     // margin-top: $padding-small;
-//   }
-
-//   .container {
-//     flex-direction: column;
-//     // padding: $padding-medium;
-//   }
-
-//   .leftSidebar, .rightSidebar {
-//     display: none; /* Hide sidebars on mobile */
-//   }
-
-//   .mainFeed {
-//     margin: 0;
-//   }
-// }
-
-// /* Tablet Styles */
-// @media (max-width: $tablet-breakpoint) {
-//   .container {
-//     flex-direction: row;
-//     // padding: $padding-medium;
-//   }
-
-//   .leftSidebar, .rightSidebar {
-//     width: 180px;
-//     // padding: $padding-medium;
-//   }
-
-//   .search-bar input {
-//     width: 180px;
-//   }
 
   .mainFeed {
     margin: 0 $padding-small;
   }
 
-//   .post {
-//     // padding: $padding-small;
-//   }
-// }
+////////////////////////////////////////////
 
-// /* Large Screen Styles */
-// @media (min-width: $large-screen-breakpoint) {
-//   .container {
-//     // padding: $padding-large;
-//     // max-width: 1400px;
-//     margin: 0 auto;
-//   }
+:root {
+  --shiny-cta-bg: #000000;
+  --shiny-cta-bg-subtle: #1a1818;
+  --shiny-cta-fg: #ffffff;
+  --shiny-cta-highlight: blue;
+  --shiny-cta-highlight-subtle: #8484ff;
+}
 
-//   .leftSidebar, .rightSidebar {
-//     width: 280px;
-//     // padding: $padding-large;
-//   }
+@property --gradient-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
 
-//   .mainFeed {
-//     // margin: 0 $padding-large;
-//   }
+@property --gradient-angle-offset {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
 
-//   .search-bar input {
-//     width: 300px;
-//   }
-// }
+@property --gradient-percent {
+  syntax: "<percentage>";
+  initial-value: 5%;
+  inherits: false;
+}
+
+@property --gradient-shine {
+  syntax: "<color>";
+  initial-value: white;
+  inherits: false;
+}
+
+.shinyCta {
+  --animation: gradient-angle linear infinite;
+  --duration: 3s;
+  --shadow-size: 2px;
+  isolation: isolate;
+  position: relative;
+  overflow: hidden;
+  /* Убираем курсор указателя */
+  cursor: default;
+  outline-offset: 4px;
+  /* padding можно настроить по необходимости */
+  font-family: inherit;
+  font-size: 1.125rem;
+  line-height: 1.2;
+  border: 3px solid transparent;
+  /* Убираем закругленные углы */
+  border-radius: 0;
+  color: var(--shiny-cta-fg);
+  background: linear-gradient(var(--shiny-cta-bg), var(--shiny-cta-bg))
+      padding-box,
+    conic-gradient(
+        from calc(var(--gradient-angle) - var(--gradient-angle-offset)),
+        transparent,
+        var(--shiny-cta-highlight) var(--gradient-percent),
+        var(--gradient-shine) calc(var(--gradient-percent) * 2),
+        var(--shiny-cta-highlight) calc(var(--gradient-percent) * 3),
+        transparent calc(var(--gradient-percent) * 4)
+      )
+      border-box;
+  box-shadow: inset 0 0 0 1px var(--shiny-cta-bg-subtle);
+
+  &::before,
+  &::after,
+  span::before {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset-inline-start: 50%;
+    inset-block-start: 50%;
+    translate: -50% -50%;
+    z-index: -1;
+  }
+
+  /* Убираем активное состояние */
+  /* &:active { translate: 0 1px; } */
+}
+
+/* Убираем анимацию при наведении */
+.shinyCta:is(:hover, :focus-visible) {
+  --gradient-percent: 5%;
+  --gradient-angle-offset: 0;
+  --gradient-shine: var(--shiny-cta-bg-subtle);
+  
+  /* Убираем включение анимации при наведении */
+  &,
+  &::before,
+  &::after {
+    animation-play-state: paused;
+  }
+  
+  span::before {
+    opacity: 0;
+  }
+}
+
+/* Dots pattern */
+.shinyCta::before {
+  --size: calc(100% - var(--shadow-size) * 3);
+  --position: 2px;
+  --space: calc(var(--position) * 2);
+  width: var(--size);
+  height: var(--size);
+  background: radial-gradient(
+      circle at var(--position) var(--position),
+      white calc(var(--position) / 4),
+      transparent 0
+    )
+    padding-box;
+  background-size: var(--space) var(--space);
+  background-repeat: space;
+  mask-image: conic-gradient(
+    from calc(var(--gradient-angle) + 45deg),
+    black,
+    transparent 10% 90%,
+    black
+  );
+  border-radius: inherit;
+  opacity: 0.4;
+  z-index: -1;
+}
+
+/* Inner shimmer */
+.shinyCta::after {
+  --animation: shimmer linear infinite;
+  width: 100%;
+  aspect-ratio: 1;
+  background: linear-gradient(
+    -50deg,
+    transparent,
+    var(--shiny-cta-highlight),
+    transparent
+  );
+  mask-image: radial-gradient(circle at bottom, transparent 40%, black);
+  opacity: 0.6;
+}
+
+.shinyCta span {
+  z-index: 1;
+
+  &::before {
+    --size: calc(100% + 1rem);
+    width: var(--size);
+    height: var(--size);
+    box-shadow: inset 0 -1ex 2rem 4px var(--shiny-cta-highlight);
+    opacity: 0;
+  }
+}
+
+/* Animate */
+.shinyCta {
+  --transition: 800ms cubic-bezier(0.25, 1, 0.5, 1);
+  transition: var(--transition);
+  transition-property: --gradient-angle-offset, --gradient-percent,
+    --gradient-shine;
+
+  &,
+  &::before,
+  &::after {
+    animation: var(--animation) var(--duration),
+      var(--animation) calc(var(--duration) / 0.4) reverse paused;
+    animation-composition: add;
+  }
+
+  span::before {
+    transition: opacity var(--transition);
+    animation: calc(var(--duration) * 1.5) breathe linear infinite;
+  }
+}
+
+.shinyCta:is(:hover, :focus-visible) {
+  --gradient-percent: 20%;
+  --gradient-angle-offset: 95deg;
+  --gradient-shine: var(--shiny-cta-highlight-subtle);
+
+  &,
+  &::before,
+  &::after {
+    animation-play-state: running;
+  }
+
+  span::before {
+    opacity: 1;
+  }
+}
+
+@keyframes gradient-angle {
+  to {
+    --gradient-angle: 360deg;
+  }
+}
+
+@keyframes shimmer {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@keyframes breathe {
+  from,
+  to {
+    scale: 1;
+  }
+  50% {
+    scale: 1.2;
+  }
+}
+
+
 
