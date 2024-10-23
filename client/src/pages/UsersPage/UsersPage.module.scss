@@ -1,17 +1,122 @@
 // @import '../../App.scss';
 
-// // .friends__box{
-// // position: relative;
-// // background-color: aqua;
-// // min-height: 100vh;
-// // position: relative;
-// // padding: 100px 40px;
-// // margin: 0 auto;
-// //     h1 {
+.userBox {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px 20px;
+    padding: 0 20px;
+    justify-content: space-between;
 
 
-// //     text-align: center; 
-// //     font-size: 20px;
-// // }
-// // }
+.userCard {
+  position: relative;
+  min-width: 300px;
+  width: 20%;
+  height: 200px;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+  cursor: pointer;
+  &.flipped {
+    transform: rotateY(180deg);
+  }
+}
+
+.front,
+.back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border: 1px solid #cababa;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20px;
+}
+
+.back {
+  transform: rotateY(180deg);
+  background: linear-gradient(to right, rgb(90, 91, 92), rgb(105, 105, 218));
+}
+
+.front .inner h2 {
+  color: grey;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-weight: 300;
+  font-size: 18px;
+}
+
+.front .inner h2::after {
+  content: "";
+  width: 4rem;
+  height: 2px;
+  position: absolute;
+  background: #c6d4df;
+  display: block;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  bottom: -0.75rem;
+}
+
+.userPhoto {
+  width: 200px;
+  height: auto;
+}
+}
+
+
+
+       
+// .userBox {
+//     display: flex;
+//     flex-wrap: wrap;
+//     gap: 30px;
+//     padding: 0 20px;
+//     justify-content: space-between; // Додає рівномірне розміщення карток
+  
+//     .userCard {
+//       display: flex;
+//       flex-direction: column;
+//       gap: 20px;
+//       align-items: center;
+//       padding: 20px;
+//       border-radius: 10px;
+//       border: 1px solid blue;
+//       width: calc(25% - 30px); // 4 колонки на великих екранах
+//       min-width: 250px;
+//       box-sizing: border-box;
+  
+//       // Висота для однакових карток
+//       min-height: 200px; 
+//     }
+  
+//     .userPhoto {
+//       width: 200px;
+//       height: auto;
+//     }
+//   }
+  
+//   // Адаптивність для середніх екранів
+//   @media (max-width: 1200px) {
+//     .userCard {
+//       width: calc(33.33% - 30px); // 3 колонки на середніх екранах
+//     }
+//   }
+  
+//   // Адаптивність для маленьких екранів
+//   @media (max-width: 768px) {
+//     .userCard {
+//       width: calc(50% - 30px); // 2 колонки на маленьких екранах
+//     }
+//   }
+  
+//   // Для мобільних пристроїв
+//   @media (max-width: 480px) {
+//     .userCard {
+//       width: 100%; // 1 колонка на мобільних екранах
+//     }
+//   }
+  
+
 
