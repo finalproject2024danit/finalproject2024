@@ -2,18 +2,19 @@
 
 .menu {
     width: 17%;
-    height: 98%;
+    height: 96vh;
     background-color: $nodle-black-800;
     border-radius: 10px;
-    position: fixed;
-    top: 10px;
+    // border: 1px solid $border-color-green;
+    position: sticky;
+    top: 0;
     left: 0;
 
     .exit {
         position: absolute;
         bottom: 30px;
         width: 80%;
-        left: 30px;
+        left: 10px;
         padding: 10px;
         border-radius: 10px;
         background-color: $background-button;
@@ -51,7 +52,7 @@
         position: absolute;
         top: 30px;
         width: 80%;
-        left: 30px;
+        left: 10px;
         padding: 10px;
         border-radius: 10px;
         display: flex;
@@ -73,7 +74,7 @@
         background-color: $background-button;
         width: 80%;
         margin-top: 180px;
-        margin-left: 30px;
+        margin-left: 10px;
         border-radius: 10px;
         display: flex;
         flex-direction: column;
@@ -81,12 +82,13 @@
     }
 
     .menuForm input {
-        padding: 25px 10px;
+        width: 95%;
+        padding: 20px 5px;
     }
 
     .menuForm button {
-        background-color: $nodle-black-300;
-        color: $border-color-green;
+        background-color: $border-primary;
+        color: $nodle-black-100;
         border-radius: 5px;
         padding: 5px;
     }

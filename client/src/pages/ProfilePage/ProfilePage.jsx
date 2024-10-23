@@ -3,6 +3,7 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import MaskedInput from 'react-text-mask';  // Використовуємо react-text-mask
 import styles from './ProfilePage.module.scss';
+import MainContent from '../../components/MainContent/MainContent';
 
 const ProfilePage = () => {
   const initialAvatar = localStorage.getItem('avatar') || 'default-avatar.png';
@@ -140,4 +141,16 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+const ProfileInfo = () => {
+  return (
+    <div className={styles.layout}>
+      <div className={styles.mainContent}>
+        <MainContent title="">
+          <ProfilePage />
+        </MainContent>
+      </div>
+    </div>
+  );
+};
+
+export default ProfileInfo;
