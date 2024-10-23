@@ -105,7 +105,6 @@ const ChatPage = () => {
         </MainContent>
       </div>
     </div>
-    </div>
   );
 };
 
