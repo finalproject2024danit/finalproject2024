@@ -33,69 +33,63 @@ const ChatPage = () => {
   // };
 
   return (
-    <div className={styles.layout}>
-      <div className={styles.mainContent}>
+    <div className={styles.container}>
+      <div className={styles.row}>
         <MainContent title="Chat">
           {loading ? (
             <p>Loading...</p>
           ) : (
-            <div className={styles.chatArea}>
-              <div className={styles.userList}>
+            <div className={styles.discussions}>
+              <div className={styles.discussionsSearch}>
+          <div className={styles.searchbar}>
+            <i className={styles.fa-search} aria-hidden="true"></i>
+            <input type="text" placeholder="Search..."></input>
+          </div>
+        </div>
+            <div className={styles.userList}>
                 {/* User list */}
                 {messages.map((msg) => (
                   <div
                     key={msg.id}
-                    className={styles.userItem}
+                    className={styles.discussion}
                     onClick={() => handleUserSelect(msg.user)}
                   >
-                    <img src={msg.avatar} alt={msg.user} className={styles.avatar} />
-                    <div className={styles.userInfo}>
-                      <span className={styles.userName}>{msg.user}</span> - 
-                      <span className={styles.userStatus}>{msg.status}</span>
+                    <img src={msg.avatar} alt={msg.user} className={styles.photo} />
+                    <div className={styles.descContact}>
+                      <span className={styles.name}>{msg.user}</span> - 
+                      <p className={styles.message}>You can't see me</p>
                     </div>
+                    <div className={styles.status}>{msg.status}</div>
                   </div>
                 ))}
-              </div>
+            </div>
 
-              <div className={styles.messageList}>
+          </div> 
+        </div>
+        
+
+<div className={styles.chat}>
+<div className={styles.headerChat}>
+{/* <i className={styles.icon} aria-hidden="true"></i>
+<p className={styles.name}>Megan Leib</p>
+<i className={styles.icon} aria-hidden="true"></i> */}
+</div>
                 {/* Message history */}
                 {selectedUser && (
                   <div>
                     <h2>{selectedUser}'s Messages</h2>
 
-                    {/* Carousel Section */}
-                    {/* {messages
-                      .filter((msg) => msg.user === selectedUser)
-                      .map((msg) => (
-                    <div key={msg.id} className={styles.carousel}>
-                      <button className={styles.prevButton} onClick={handlePrev}>Prev</button>
-
-                      <div className={styles.carousel__item}>
-                        <img
-                          src={msg.avatar}
-                          alt={msg.user}
-                          className={styles.messageAvatar}
-                        />
-                        <div className={styles.carousel__text}>
-                          <p>{msg.message}</p>
-                          <span>{msg.date}</span>
-                        </div>
-                      </div>
-
-                      <button className={styles.nextButton} onClick={handleNext}>Next</button>
-                    </div>
-                      ))} */}
-                    {/* End of Carousel */}
-
                     {messages
                       .filter((msg) => msg.user === selectedUser)
                       .map((msg) => (
-                        <div key={msg.id} className={styles.chatMessage}>
-                            <img src={msg.avatar} alt={msg.user} className={styles.messageAvatar} />
-                          <div className={styles.messageContent}>
-                            <p>{msg.message}</p>
+                        <div className={styles.messageChat}>
+                        <div key={msg.id} className={styles.message}>
+                            <img src={msg.avatar} alt={msg.user} className={styles.photo} />
+                          <div>
+                            <p className={styles.text}>{msg.message}</p>
                             <span>{msg.date}</span>
                           </div>
+                        </div>
                         </div>
                       ))}
                   </div>
@@ -110,6 +104,7 @@ const ChatPage = () => {
           )}
         </MainContent>
       </div>
+    </div>
     </div>
   );
 };
