@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: create-post
+      id: create-like
       author: Viktor Lytvynenko
       changes:
         - createTable:
-            tableName: posts
+            tableName: likes
             columns:
               - column:
                   name: id
@@ -14,13 +14,13 @@ databaseChangeLog:
                     primaryKey: true
                     nullable: false
               - column:
-                  name: user_id
+                  name: post_id
                   type: BIGINT
                   constraints:
                     nullable: false
               - column:
-                  name: content
-                  type: TEXT
+                  name: user_id
+                  type: BIGINT
                   constraints:
                     nullable: false
               - column:
@@ -36,8 +36,15 @@ databaseChangeLog:
                   constraints:
                     nullable: false
         - addForeignKeyConstraint:
-            constraintName: fk_post_user
-            baseTableName: posts
+            constraintName: fk_like_post
+            baseTableName: likes
+            baseColumnNames: post_id
+            referencedTableName: posts
+            referencedColumnNames: id
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            constraintName: fk_like_user
+            baseTableName: likes
             baseColumnNames: user_id
             referencedTableName: users
             referencedColumnNames: id
