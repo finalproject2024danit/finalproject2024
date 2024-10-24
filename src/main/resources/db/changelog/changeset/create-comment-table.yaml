@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: create-post
+      id: create-comment
       author: Viktor Lytvynenko
       changes:
         - createTable:
-            tableName: posts
+            tableName: comments
             columns:
               - column:
                   name: id
@@ -12,6 +12,11 @@ databaseChangeLog:
                   autoIncrement: true
                   constraints:
                     primaryKey: true
+                    nullable: false
+              - column:
+                  name: post_id
+                  type: BIGINT
+                  constraints:
                     nullable: false
               - column:
                   name: user_id
@@ -36,8 +41,15 @@ databaseChangeLog:
                   constraints:
                     nullable: false
         - addForeignKeyConstraint:
-            constraintName: fk_post_user
-            baseTableName: posts
+            constraintName: fk_comment_post
+            baseTableName: comments
+            baseColumnNames: post_id
+            referencedTableName: posts
+            referencedColumnNames: id
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            constraintName: fk_comment_user
+            baseTableName: comments
             baseColumnNames: user_id
             referencedTableName: users
             referencedColumnNames: id

@@ -22,7 +22,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Set<Post> getPostsByUserId(long userId) {
+    public Set<Post> getPostsByUserId(long id) {
         return Set.of();
     }
 
@@ -32,13 +32,16 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post updatePost(long postId, Post post) {
+    public Post updatePost(long id, Post post) {
         return null;
     }
 
     @Override
-    public void deletePost(long postId) {
-
+    public void deletePost(long id) {
+        if (!postRepository.existsById(id)) {
+            throw new PostNotFoundException(PostStatus.POST_NOT_FOUND.getMessage());
+        }
+        postRepository.deleteById(id);
     }
 
 }
