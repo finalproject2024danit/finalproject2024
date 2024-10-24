@@ -6,8 +6,8 @@ import HomePage from "./pages/HomePage/HomePage.jsx";
 import GroupPage from "./pages/GroupPage/GroupPage.jsx";
 import ChatPage from "./pages/ChatPage/ChatPage.jsx";
 import UsersPage from "./pages/UsersPage/UsersPage.jsx";
-import AccountPage from "./pages/AccountPage/AccountPage.jsx";
-import ProfilePage from "./pages/ProfilePage/ProfilePage.jsx";
+// import AccountPage from "./pages/AccountPage/AccountPage.jsx"; !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+import ProfileInfo from "./pages/ProfilePage/ProfilePage.jsx";
 import UserPage from "./pages/UserPage/UserPage.jsx";
 // import PrivateRoute from "./components/PrivateRoute.jsx";
 
@@ -36,7 +36,7 @@ const AppRoutes = () => {
         path="/profile"
         element={
           // <PrivateRoute>
-            <ProfilePage />
+            <ProfileInfo />
           // </PrivateRoute>
         }
       />
@@ -72,7 +72,7 @@ const AppRoutes = () => {
           // </PrivateRoute>
         }
       /> */}
-      <Route path="/account" element={<AccountPage />} />
+      {/* <Route path="/account" element={<AccountPage />} /> !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */}
     </Routes>
   );
 };

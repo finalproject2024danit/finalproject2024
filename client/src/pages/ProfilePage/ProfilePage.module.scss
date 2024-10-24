@@ -1,8 +1,8 @@
+@import '../../App.scss';
+
 .profilePage {
-    position: relative;
-    top: 140px;
-    left: 300px;
     display: flex;
+    width: 100%;
     // Теперь аватарка и формы располагаются горизонтально
     justify-content: flex-start;
     padding: 20px;
@@ -15,6 +15,7 @@
     flex-direction: column;
     align-items: center;
     margin-right: 20px;
+    width: 30%;
     
     .avatar {
       width: 150px;
@@ -58,7 +59,7 @@
   }
   
   .profileForm {
-    width: 46%;
+    width: 70%;
     height: auto;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -87,7 +88,7 @@
     }
   
     input:focus, select:focus {
-      border-color: #5cb85c;
+      border-color: $border-primary;
       outline: none;
     }
   
@@ -100,7 +101,7 @@
   button {
     grid-column: span 2;
     padding: 10px;
-    background-color: #5cb85c;
+    background-color: $border-primary;
     color: #fff;
     border: none;
     border-radius: 5px;
