@@ -4,7 +4,6 @@ import MainContent from "../../components/MainContent/MainContent";
 import axiosInstance from "./axiosConfig";
 import { NavLink } from "react-router-dom"; // Імпорт NavLink, якщо ви його використовуєте
 
-
 const UsersContent = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -58,7 +57,8 @@ const UsersContent = () => {
     }, 5000);
   };
 
-  const defaultAvatar = "https://res.cloudinary.com/dsr6kwzrr/image/upload/w_1000,ar_16:9,c_fill,g_auto,e_sharpen/v1729669892/photo_2024-10-23_10-30-18_nmluce.jpg";
+  const defaultAvatar =
+    "https://res.cloudinary.com/dsr6kwzrr/image/upload/w_1000,ar_16:9,c_fill,g_auto,e_sharpen/v1729669892/photo_2024-10-23_10-30-18_nmluce.jpg";
 
   return (
     <div className={styles.userBox}>
@@ -66,7 +66,9 @@ const UsersContent = () => {
         users.map((user) => (
           <div
             key={user.id}
-            className={`${styles.userCard} ${flippedCards[user.id] ? styles.flipped : ""}`}
+            className={`${styles.userCard} ${
+              flippedCards[user.id] ? styles.flipped : ""
+            }`}
             onClick={() => handleCardClick(user.id)}
           >
             <div className={styles.front}>
@@ -88,11 +90,11 @@ const UsersContent = () => {
 
             <div className={styles.back}>
               <div className={styles.inner}>
-              <NavLink
-                // className={({ isActive }) => (isActive ? styles.active : "")}
-                to="/user"              >
-                <h3>Info user</h3>
-              </NavLink>
+                
+                <NavLink to={`/user/${user.id}`}>
+                  <h3>Info user</h3>
+                </NavLink>
+
                 <h2>Click to flip back</h2>
               </div>
             </div>
@@ -118,6 +120,3 @@ const UsersPage = () => {
 };
 
 export default UsersPage;
-
-
-
