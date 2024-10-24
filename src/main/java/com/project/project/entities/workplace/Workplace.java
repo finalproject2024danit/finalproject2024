@@ -17,7 +17,7 @@ import static lombok.AccessLevel.PRIVATE;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-@Table(name = "workplace")
+@Table(name = "workplaces")
 @FieldDefaults(level = PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor

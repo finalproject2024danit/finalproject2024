@@ -4,7 +4,7 @@ databaseChangeLog:
       author: Viktor Lytvynenko
       changes:
         - createTable:
-            tableName: workplace
+            tableName: workplaces
             columns:
               - column:
                   name: id
@@ -29,7 +29,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
         - createTable:
-            tableName: workplace_users
+            tableName: workplaces_users
             columns:
               - column:
                   name: workplace_id
@@ -43,14 +43,14 @@ databaseChangeLog:
                     nullable: false
         - addForeignKeyConstraint:
             constraintName: fk_workplace_user_workplace
-            baseTableName: workplace_users
+            baseTableName: workplaces_users
             baseColumnNames: workplace_id
-            referencedTableName: workplace
+            referencedTableName: workplaces
             referencedColumnNames: id
             onDelete: CASCADE
         - addForeignKeyConstraint:
             constraintName: fk_workplace_user_user
-            baseTableName: workplace_users
+            baseTableName: workplaces_users
             baseColumnNames: user_id
             referencedTableName: users
             referencedColumnNames: id

@@ -8,4 +8,14 @@ databaseChangeLog:
   - include:
       file: db/changelog/changeset/create-friend-table.yaml
   - include:
-      file: db/changelog/changeset/insert-data.sql
+      file: db/changelog/changeset/create-post-table.yaml
+  - include:
+      file: db/changelog/changeset/insert-data-users.sql
+  - include:
+      file: db/changelog/changeset/insert-data-posts.sql
+  - include:
+      file: db/changelog/changeset/insert-data-workplaces.sql
+  - include:
+      file: db/changelog/changeset/insert-data-friends.sql
+  - include:
+      file: db/changelog/changeset/insert-data-messages.sql
