@@ -36,6 +36,8 @@ public class LikeController {
 
     @PostMapping("/liked")
     public ResponseEntity<ResponseLikeDto> likePost(@RequestParam Long postId, @RequestParam Long userId) {
+        log.info("Trying to like post");
+
         Like like = likeService.addLike(postId, userId);
 
         ResponseLikeDto responseLikeDto = LikeMapper.INSTANCE.likeToResponseLikeDto(like);

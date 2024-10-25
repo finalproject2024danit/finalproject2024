@@ -20,11 +20,11 @@ import static lombok.AccessLevel.PRIVATE;
 public class Friend extends AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    Long id;
 
     @Column(name = "user_from_id", nullable = false)
-    private long userFromId;
+    Long userFromId;
 
     @Column(name = "user_to_id", nullable = false)
-    private long userToId;
+    Long userToId;
 }

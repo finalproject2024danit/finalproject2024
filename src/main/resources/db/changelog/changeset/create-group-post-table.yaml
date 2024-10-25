@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-group-post
+      author: Viktor Lytvynenko
+      changes:
+        - createTable:
+            tableName: group_post
+            columns:
+              - column:
+                  name: group_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: post_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            constraintName: fk_group_post_group
+            baseTableName: group_post
+            baseColumnNames: group_id
+            referencedTableName: groups
+            referencedColumnNames: id
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            constraintName: fk_group_post_post
+            baseTableName: group_post
+            baseColumnNames: post_id
+            referencedTableName: posts
+            referencedColumnNames: id
+            onDelete: CASCADE

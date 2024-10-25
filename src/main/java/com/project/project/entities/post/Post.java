@@ -2,6 +2,7 @@ package com.project.project.entities.post;
 
 import com.project.project.AbstractEntity;
 import com.project.project.entities.comment.Comment;
+import com.project.project.entities.group.Group;
 import com.project.project.entities.like.Like;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,7 +13,6 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -40,6 +40,10 @@ public class Post extends AbstractEntity {
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Like> likes = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "group_id", nullable = false)
+    private Group group;
 
     @CreatedDate
     @Temporal(TIMESTAMP)

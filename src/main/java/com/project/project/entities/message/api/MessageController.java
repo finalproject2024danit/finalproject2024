@@ -5,6 +5,7 @@ import com.project.project.entities.message.api.dto.RequestMessageDto;
 import com.project.project.entities.message.api.dto.ResponseMessageDto;
 import com.project.project.entities.message.service.MessageServiceImpl;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@Log4j2
 @RequestMapping("/api/v1/messages")
 public class MessageController {
     private final MessageServiceImpl messageService;
@@ -47,6 +49,8 @@ public class MessageController {
 
     @GetMapping("/{id}")
     public ResponseMessageDto getMessageById(@PathVariable Long id) {
+        log.info("Trying to get message by id");
+
         Message message = messageService.getMessageById(id);
         return new ResponseMessageDto(
                 message.getUserFrom(),

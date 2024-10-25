@@ -25,20 +25,17 @@ import static lombok.AccessLevel.PRIVATE;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Like extends AbstractEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "post_id", nullable = false)
-    private Post post;
+    Post post;
 
     @ManyToOne
     @JoinColumn(name = "comment_id", nullable = false)
-    private Comment comment;
+    Comment comment;
 
     @Column(name = "user_id", nullable = false)
-    private Long userId;
+    Long userId;
 
     @CreatedDate
     @Temporal(TIMESTAMP)
