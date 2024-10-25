@@ -36,6 +36,8 @@ public class CommentController {
 
     @PostMapping("/like")
     public ResponseEntity<String> likeComment(@Valid @RequestBody LikeCommentRequestDto likeCommentRequestDto) {
+        log.info("Trying to like comment");
+
         commentService.likeComment(likeCommentRequestDto.getCommentId(), likeCommentRequestDto.getUserId());
         return ResponseEntity.ok(CommentStatus.LIKED_SUCCESSFULLY.getMessage());
     }

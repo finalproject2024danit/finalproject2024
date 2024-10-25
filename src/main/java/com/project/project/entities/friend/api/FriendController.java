@@ -20,12 +20,16 @@ public class FriendController {
 
     @PostMapping("/add")
     public ResponseEntity<Friend> addFriend(@RequestParam long userFromId, @RequestParam long userToId) {
+        log.info("Trying to add friend");
+
         Friend friend = friendService.addFriend(userFromId, userToId);
         return ResponseEntity.ok(friend);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteFriend(@PathVariable Long id) {
+        log.info("Trying to delete friend");
+
         friendService.deleteFriend(id);
         return ResponseEntity.ok("Friend has been successfully deleted.");
     }

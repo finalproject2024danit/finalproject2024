@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-group-user
+      author: Viktor Lytvynenko
+      changes:
+        - createTable:
+            tableName: group_user
+            columns:
+              - column:
+                  name: group_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            constraintName: fk_group_user_group
+            baseTableName: group_user
+            baseColumnNames: group_id
+            referencedTableName: groups
+            referencedColumnNames: id
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            constraintName: fk_group_user_user
+            baseTableName: group_user
+            baseColumnNames: user_id
+            referencedTableName: users
+            referencedColumnNames: id
+            onDelete: CASCADE

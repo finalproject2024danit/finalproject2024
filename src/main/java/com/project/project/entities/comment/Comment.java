@@ -30,16 +30,16 @@ public class Comment extends AbstractEntity {
 
     @ManyToOne
     @JoinColumn(name = "post_id", nullable = false)
-    private Post post;
+    Post post;
 
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Like> likedByUsers = new HashSet<>();
+    Set<Like> likedByUsers = new HashSet<>();
 
     @Column(name = "user_id", nullable = false)
-    private Long userId;
+    Long userId;
 
     @Column(nullable = false)
-    private String content;
+    String content;
 
     @CreatedDate
     @Temporal(TIMESTAMP)
