@@ -28,6 +28,9 @@ public class ResponseLikeDto extends AbstractDto {
     Long postId;
 
     @JsonView(View.Admin.class)
+    Long commentId;
+
+    @JsonView(View.Admin.class)
     Long userId;
 
     @JsonView(View.Admin.class)

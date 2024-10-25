@@ -8,7 +8,8 @@ import lombok.RequiredArgsConstructor;
 public enum CommentStatus {
     SUCCESS("Success operation."),
     COMMENT_NOT_FOUND("Comment not found."),
-    UNEXPECTED("An unexpected error occurred.");
+    UNEXPECTED("An unexpected error occurred."),
+    LIKED_SUCCESSFULLY("Comment liked/unliked successfully.");
 
     private final String message;
 }

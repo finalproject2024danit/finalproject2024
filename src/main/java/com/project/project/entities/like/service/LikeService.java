@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface LikeService {
     Like getLikeById(long id);
+    Like addLike(Long postId, Long userId);
 }

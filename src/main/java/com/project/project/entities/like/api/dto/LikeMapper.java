@@ -11,6 +11,7 @@ public interface LikeMapper {
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "post.id", target = "postId")
+    @Mapping(source = "comment.id", target = "commentId")
     @Mapping(source = "userId", target = "userId")
     @Mapping(source = "createdDate", target = "createdDate")
     @Mapping(source = "lastModifiedDate", target = "lastModifiedDate")

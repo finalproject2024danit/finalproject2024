@@ -3,7 +3,9 @@ package com.project.project.entities.comment.api;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.project.project.entities.comment.Comment;
 import com.project.project.entities.comment.service.CommentServiceImpl;
+import com.project.project.entities.comment.status.CommentStatus;
 import com.project.project.entities.user.api.dto.View;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
@@ -30,5 +32,11 @@ public class CommentController {
         ResponseCommentDto responseCommentDto = CommentMapper.INSTANCE.commentToResponseCommentDto(comment);
 
         return ResponseEntity.ok(responseCommentDto);
+    }
+
+    @PostMapping("/like")
+    public ResponseEntity<String> likeComment(@Valid @RequestBody LikeCommentRequestDto likeCommentRequestDto) {
+        commentService.likeComment(likeCommentRequestDto.getCommentId(), likeCommentRequestDto.getUserId());
+        return ResponseEntity.ok(CommentStatus.LIKED_SUCCESSFULLY.getMessage());
     }
 }

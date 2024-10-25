@@ -1,6 +1,7 @@
 package com.project.project.entities.comment;
 
 import com.project.project.AbstractEntity;
+import com.project.project.entities.like.Like;
 import com.project.project.entities.post.Post; // Import Post entity
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 import static jakarta.persistence.TemporalType.TIMESTAMP;
 import static lombok.AccessLevel.PRIVATE;
@@ -28,6 +31,9 @@ public class Comment extends AbstractEntity {
     @ManyToOne
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
+
+    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Like> likedByUsers = new HashSet<>();
 
     @Column(name = "user_id", nullable = false)
     private Long userId;
