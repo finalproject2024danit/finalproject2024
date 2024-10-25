@@ -1,6 +1,7 @@
 package com.project.project.entities.like;
 
 import com.project.project.AbstractEntity;
+import com.project.project.entities.comment.Comment;
 import com.project.project.entities.post.Post; // Import Post entity
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -31,6 +32,10 @@ public class Like extends AbstractEntity {
     @ManyToOne
     @JoinColumn(name = "post_id", nullable = false)
     private Post post;
+
+    @ManyToOne
+    @JoinColumn(name = "comment_id", nullable = false)
+    private Comment comment;
 
     @Column(name = "user_id", nullable = false)
     private Long userId;

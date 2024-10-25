@@ -33,4 +33,13 @@ public class LikeController {
 
         return ResponseEntity.ok(responseLikeDto);
     }
+
+    @PostMapping("/liked")
+    public ResponseEntity<ResponseLikeDto> likePost(@RequestParam Long postId, @RequestParam Long userId) {
+        Like like = likeService.addLike(postId, userId);
+
+        ResponseLikeDto responseLikeDto = LikeMapper.INSTANCE.likeToResponseLikeDto(like);
+
+        return ResponseEntity.ok(responseLikeDto);
+    }
 }

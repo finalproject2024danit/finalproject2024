@@ -1,0 +1,31 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-comment-likes-table
+      author: Viktor Lytvynenko
+      changes:
+        - createTable:
+            tableName: comment_likes
+            columns:
+              - column:
+                  name: id
+                  type: SERIAL
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: comment_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    nullable: false
+        - addForeignKeyConstraint:
+            constraintName: fk_comment_like_comment
+            baseTableName: comment_likes
+            baseColumnNames: comment_id
+            referencedTableName: comments
+            referencedColumnNames: id
+            onDelete: CASCADE
