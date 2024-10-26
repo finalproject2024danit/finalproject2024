@@ -24,6 +24,11 @@ const ChatPage = () => {
   const handleSendMessage = (newMessage) => {
     dispatch(sendMessage(newMessage)); // Dispatch the action to send a message
   };
+
+  const messagesList = [
+    // Array of message objects
+  ];
+  
   
   
 
@@ -77,7 +82,10 @@ console.log('Filtered Messages:', filteredMessages);
             </div>
             
             {/* Messages History */}
-            <div className={styles.messagesChat}>
+            <div className={styles.messagesHistory}>
+            {/* Render filtered messages here if needed */}
+          </div>
+            {/* <div className={styles.messagesChat}>
               {filteredMessages.map((msg) => (
                   <div key={msg.id} className={`${styles.message} ${msg.isUser ? styles.textOnly : ''}`}>
                     {!msg.isUser && (
@@ -89,24 +97,17 @@ console.log('Filtered Messages:', filteredMessages);
                     {msg.isUser && <p className={styles.responseTime}> {msg.date}</p>}
                   </div>
                 ))}
-            </div>
+            </div> */}
+
+            
 
             {/* New Message Form for Responding to Messages */}
-          {selectedUser && (
-            <NewMessageForm
-              onSendMessage={(newMessage) => {
-                // Add the new message to the messages state here, e.g., dispatch an action
-                console.log('Sending message:', newMessage);
-              }}
+            {selectedUser && (
+              <NewMessageForm 
+              onSendMessage={handleSendMessage} 
               selectedUser={selectedUser}
-              filteredMessages={filteredMessages} // Pass the filteredMessages as a prop
-            />
-          )}
-
-            {/* New Message Form for Responding to Messages */}
-            {/* {selectedUser && (
-              <NewMessageForm onSendMessage={handleSendMessage} selectedUser={selectedUser} />
-            )} */}
+              filteredMessages={filteredMessages}  />
+            )}
           </section>
         
     </div>
