@@ -220,33 +220,7 @@
   right: 40px;
 }
 
-.chat .messages-chat {
-  padding: 25px 35px;
-}
 
-.chat .messages-chat .message {
-  display:flex;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-.chat .messages-chat .message .photo {
-    display: block;
-    width: 45px;
-    height: 45px;
-    background: #E6E7ED;
-    border-radius: 50%;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-
-.chat .messages-chat .text {
-  margin: 0 35px;
-  background-color: $nodle-black-600;
-  padding: 15px;
-  border-radius: 12px;
-}
 
 .text-only {
   margin-left: 45px;
