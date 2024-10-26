@@ -26,6 +26,7 @@ const NewMessageForm = ({ onSendMessage, selectedUser }) => {
   };
 
   return (
+    <div>
     <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
       <Form className={styles.form}>
         <div className={styles.formGroup}>
@@ -37,6 +38,7 @@ const NewMessageForm = ({ onSendMessage, selectedUser }) => {
         </button>
       </Form>
     </Formik>
+    </div>
   );
 };
 
