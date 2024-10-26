@@ -150,7 +150,6 @@ console.log('Filtered Messages:', filteredMessages);
 
   return (
     <MainContent title="Chat">
-<div>
     <div className={styles.container}>
         
         {/* Discussions Section */}
@@ -187,8 +186,8 @@ console.log('Filtered Messages:', filteredMessages);
         
         {/* Chat Section */}
        
-        <section id="particles-js" className={styles.chat}>
-            <div className={styles.headerChat}>
+        <section className={styles.chat}>
+            <div  id="particles-js" className={styles.headerChat}>
               <i className={`fa fa-user-o ${styles.icon}`} aria-hidden="true"></i>
               {selectedUser && <p className={styles.name}>{selectedUser}</p>}
               <i className={`fa fa-ellipsis-h ${styles.icon} ${styles.clickable} ${styles.right}`} aria-hidden="true"></i>
@@ -208,7 +207,6 @@ console.log('Filtered Messages:', filteredMessages);
             )}
           </section>
         
-    </div>
     </div>
     </MainContent>
   );
