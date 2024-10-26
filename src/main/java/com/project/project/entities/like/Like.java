@@ -27,11 +27,11 @@ import static lombok.AccessLevel.PRIVATE;
 public class Like extends AbstractEntity {
 
     @ManyToOne
-    @JoinColumn(name = "post_id", nullable = false)
+    @JoinColumn(name = "post_id", nullable = true)
     Post post;
 
     @ManyToOne
-    @JoinColumn(name = "comment_id", nullable = false)
+    @JoinColumn(name = "comment_id", nullable = true)
     Comment comment;
 
     @Column(name = "user_id", nullable = false)

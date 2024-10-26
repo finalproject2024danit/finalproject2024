@@ -11,6 +11,8 @@ import com.project.project.exceptions.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class GroupServiceImpl implements GroupService {
@@ -68,4 +70,23 @@ public class GroupServiceImpl implements GroupService {
             throw new IllegalArgumentException(GroupStatus.NOT_MEMBER.getMessage());
         }
     }
+
+    @Override
+    public Group getGroupByName(String name) {
+        return groupRepository.findByName(name)
+                .orElseThrow(() -> new GroupNotFoundException(GroupStatus.GROUP_NOT_FOUND.getMessage()));
+    }
+
+    @Override
+    public List<Group> searchGroupsByName(String name) {
+        List<Group> groups = groupRepository.findByNameContaining(name);
+
+        if (groups.isEmpty() || groups.size() < 3) {
+            throw new GroupNotFoundException(GroupStatus.GROUP_NOT_FOUND.getMessage());
+        }
+
+        return groups;
+    }
+
+
 }

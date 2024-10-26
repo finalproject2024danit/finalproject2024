@@ -1,5 +1,6 @@
 package com.project.project.entities.user;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.project.project.AbstractEntity;
 import com.project.project.entities.group.Group;
 import com.project.project.util.Gender;
@@ -54,6 +55,7 @@ public class User extends AbstractEntity {
     @Column
     String photoData;
 
+    @JsonBackReference
     @ManyToMany
     @JoinTable(
             name = "user_group",

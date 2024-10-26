@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
-      id: create-post
-      author: Viktor Lytvynenko
+      id: 1
+      author: yourname
       changes:
         - createTable:
             tableName: posts
@@ -9,7 +9,6 @@ databaseChangeLog:
               - column:
                   name: id
                   type: SERIAL
-                  autoIncrement: true
                   constraints:
                     primaryKey: true
                     nullable: false
@@ -26,19 +25,21 @@ databaseChangeLog:
               - column:
                   name: created_date
                   type: TIMESTAMP
-                  defaultValueComputed: CURRENT_TIMESTAMP
                   constraints:
                     nullable: false
               - column:
                   name: last_modified_date
                   type: TIMESTAMP
-                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: group_id
+                  type: BIGINT
                   constraints:
                     nullable: false
         - addForeignKeyConstraint:
-            constraintName: fk_post_user
             baseTableName: posts
-            baseColumnNames: user_id
-            referencedTableName: users
+            baseColumnNames: group_id
+            referencedTableName: groups
             referencedColumnNames: id
-            onDelete: CASCADE
+            constraintName: fk_posts_group_id
