@@ -11,6 +11,8 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Log4j2
 @RestController
 @RequestMapping("/api/v1/groups")
@@ -69,5 +71,31 @@ public class GroupController {
         groupService.removeUserFromGroup(userGroupDto.groupId(), userGroupDto.userId());
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/name/{name}")
+    public ResponseEntity<ResponseGroupDto> getGroupById(@PathVariable String name) {
+        log.info("Trying to get group by name");
+
+        Group group = groupService.getGroupByName(name);
+
+        ResponseGroupDto responseGroupDto = GroupMapper.INSTANCE.groupToResponseGroupDTO(group);
+
+        return ResponseEntity.ok(responseGroupDto);
+    }
+
+    @GetMapping("/search/{name}")
+    public ResponseEntity<List<ResponseGroupDto>> searchGroupsByName(@PathVariable String name) {
+        List<Group> groups = groupService.searchGroupsByName(name);
+
+        if (groups.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        List<ResponseGroupDto> responseGroupsDto = groups.stream()
+                .map(GroupMapper.INSTANCE::groupToResponseGroupDTO)
+                .toList();
+
+        return ResponseEntity.ok(responseGroupsDto);
     }
 }

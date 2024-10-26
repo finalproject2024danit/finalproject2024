@@ -4,7 +4,7 @@ databaseChangeLog:
       author: Viktor Lytvynenko
       changes:
         - createTable:
-            tableName: group_user
+            tableName: user_group
             columns:
               - column:
                   name: group_id
@@ -17,15 +17,15 @@ databaseChangeLog:
                   constraints:
                     nullable: false
         - addForeignKeyConstraint:
-            constraintName: fk_group_user_group
-            baseTableName: group_user
+            constraintName: fk_user_group_group
+            baseTableName: user_group
             baseColumnNames: group_id
             referencedTableName: groups
             referencedColumnNames: id
             onDelete: CASCADE
         - addForeignKeyConstraint:
-            constraintName: fk_group_user_user
-            baseTableName: group_user
+            constraintName: fk_user_group_user
+            baseTableName: user_group
             baseColumnNames: user_id
             referencedTableName: users
             referencedColumnNames: id

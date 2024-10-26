@@ -1,5 +1,6 @@
 package com.project.project.entities.group;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.project.project.AbstractEntity;
 import com.project.project.entities.post.Post;
 import com.project.project.entities.user.User;
@@ -22,7 +23,7 @@ import static lombok.AccessLevel.PRIVATE;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-@Table(name = "likes")
+@Table(name = "groups")
 @FieldDefaults(level = PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor
@@ -34,6 +35,7 @@ public class Group extends AbstractEntity {
     @Column(nullable = false)
     Boolean isOpen;
 
+    @JsonManagedReference
     @ManyToMany(mappedBy = "groups")
     Set<User> users;
 

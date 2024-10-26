@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
-      id: create-like
-      author: Viktor Lytvynenko
+      id: 1
+      author: yourname
       changes:
         - createTable:
             tableName: likes
@@ -9,7 +9,6 @@ databaseChangeLog:
               - column:
                   name: id
                   type: SERIAL
-                  autoIncrement: true
                   constraints:
                     primaryKey: true
                     nullable: false
@@ -17,7 +16,12 @@ databaseChangeLog:
                   name: post_id
                   type: BIGINT
                   constraints:
-                    nullable: false
+                    nullable: true
+              - column:
+                  name: comment_id
+                  type: BIGINT
+                  constraints:
+                    nullable: true
               - column:
                   name: user_id
                   type: BIGINT
@@ -26,26 +30,22 @@ databaseChangeLog:
               - column:
                   name: created_date
                   type: TIMESTAMP
-                  defaultValueComputed: CURRENT_TIMESTAMP
                   constraints:
                     nullable: false
               - column:
                   name: last_modified_date
                   type: TIMESTAMP
-                  defaultValueComputed: CURRENT_TIMESTAMP
                   constraints:
                     nullable: false
         - addForeignKeyConstraint:
-            constraintName: fk_like_post
             baseTableName: likes
             baseColumnNames: post_id
             referencedTableName: posts
             referencedColumnNames: id
-            onDelete: CASCADE
+            constraintName: fk_likes_post_id
         - addForeignKeyConstraint:
-            constraintName: fk_like_user
             baseTableName: likes
-            baseColumnNames: user_id
-            referencedTableName: users
+            baseColumnNames: comment_id
+            referencedTableName: comments
             referencedColumnNames: id
-            onDelete: CASCADE
+            constraintName: fk_likes_comment_id

@@ -1,5 +1,7 @@
 package com.project.project.entities.post;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.project.project.AbstractEntity;
 import com.project.project.entities.comment.Comment;
 import com.project.project.entities.group.Group;
@@ -35,12 +37,14 @@ public class Post extends AbstractEntity {
     @Column(nullable = false)
     private String content;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Comment> comments = new HashSet<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Like> likes = new HashSet<>();
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "group_id", nullable = false)
     private Group group;

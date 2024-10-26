@@ -1,5 +1,6 @@
 package com.project.project.entities.comment;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.project.project.AbstractEntity;
 import com.project.project.entities.like.Like;
 import com.project.project.entities.post.Post; // Import Post entity
@@ -28,6 +29,7 @@ import static lombok.AccessLevel.PRIVATE;
 @AllArgsConstructor
 public class Comment extends AbstractEntity {
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "post_id", nullable = false)
     Post post;
