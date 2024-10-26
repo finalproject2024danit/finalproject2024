@@ -16,7 +16,7 @@ const UserPage = () => {
         const response = await axiosInstance.get(`/users/user/${id}`);
         setUser(response.data);
       } catch (err) {
-        setError(`Помилка завантаження користувача: ${err.message}`);
+        setError(`Error loading user: ${err.message}`);
       } finally {
         setLoading(false);
       }
@@ -31,7 +31,7 @@ const UserPage = () => {
   };
 
   if (loading) {
-    return <p>Завантаження...</p>;
+    return <p>Loading...</p>;
   }
 
   if (error) {
@@ -44,7 +44,7 @@ const UserPage = () => {
     } else if (typeof phones === "string") {
       return phones; // Якщо телефон - рядок, повертаємо його
     } else {
-      return "Немає телефонів"; // Якщо не масив і не рядок
+      return "No phones"; // Якщо не масив і не рядок
     }
   };
 
