@@ -150,9 +150,7 @@ console.log('Filtered Messages:', filteredMessages);
 
   return (
     <MainContent title="Chat">
-<div id="particles-js">
-
-
+<div>
     <div className={styles.container}>
         
         {/* Discussions Section */}
@@ -189,7 +187,7 @@ console.log('Filtered Messages:', filteredMessages);
         
         {/* Chat Section */}
        
-        <section className={styles.chat}>
+        <section id="particles-js" className={styles.chat}>
             <div className={styles.headerChat}>
               <i className={`fa fa-user-o ${styles.icon}`} aria-hidden="true"></i>
               {selectedUser && <p className={styles.name}>{selectedUser}</p>}
@@ -200,22 +198,7 @@ console.log('Filtered Messages:', filteredMessages);
             <div className={styles.messagesHistory}>
             {/* Render filtered messages here if needed */}
           </div>
-            {/* <div className={styles.messagesChat}>
-              {filteredMessages.map((msg) => (
-                  <div key={msg.id} className={`${styles.message} ${msg.isUser ? styles.textOnly : ''}`}>
-                    {!msg.isUser && (
-                      <div className={styles.photo} style={{ backgroundImage: `url(${msg.userImage})` }}>
-                        {msg.isOnline && <div className={styles.online}></div>}
-                      </div>
-                    )}
-                    <p className={styles.text}>{msg.message}</p>
-                    {msg.isUser && <p className={styles.responseTime}> {msg.date}</p>}
-                  </div>
-                ))}
-            </div> */}
-
-            
-
+           
             {/* New Message Form for Responding to Messages */}
             {selectedUser && (
               <NewMessageForm 

@@ -59,7 +59,7 @@
   }
   
   .submitBtn {
-    background-color: $nodle-black-600; // Button background color
+    background-color: $nodle-black-600;
     color: white; // Button text color
     padding: 8px 15px; // Smaller padding for a smaller button
     border: none;
@@ -72,6 +72,6 @@
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Add a shadow for distinction
   
     &:hover {
-      background-color: darken($nodle-black-600, 10%); // Darker shade on hover
+      background-color: $nodle-black-400; // Darker shade on hover
     }
   }
