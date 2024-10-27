@@ -6,6 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface UserService {
     Page<User> findAllFiltered(Pageable pageable);
@@ -15,6 +17,6 @@ public interface UserService {
     User addUser(User user);
 
     User patchUser(Long id, RequestPatchUserDto requestPatchUserDto) throws IllegalAccessException;
-
-
+    List<User> searchByFirstName(String firstName);
+    List<User> searchByFirstNameAndLastName(String firstName, String lastName);
 }

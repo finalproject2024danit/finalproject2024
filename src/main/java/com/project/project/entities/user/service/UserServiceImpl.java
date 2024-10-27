@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -62,4 +63,13 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         return user;
     }
+    public List<User> searchByFirstName(String firstName) {
+        return userRepository.searchByFirstName(firstName);
+    }
+
+    public List<User> searchByFirstNameAndLastName(String firstName, String lastName) {
+        return userRepository.searchByFirstNameAndLastName(firstName, lastName);
+    }
+
+
 }

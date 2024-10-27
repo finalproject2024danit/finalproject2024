@@ -116,4 +116,24 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(baseResponseDto);
         }
     }
+
+    @GetMapping("/search")
+    public List<ResponseUserDto> searchByFullName(@RequestParam String fullName) {
+        log.info("Trying to search users by name and surname");
+        String[] nameParts = fullName.trim().split("\\s+");
+        String firstName = nameParts[0];
+
+        String lastName = nameParts.length > 1 ? nameParts[1] : "";
+
+        if (lastName == "") {
+            List<User> users = userService.searchByFirstName(firstName);
+            return users.stream()
+                    .map(UserMapper.INSTANCE::userToUserDto)
+                    .toList();
+        }
+        List<User> users = userService.searchByFirstNameAndLastName(firstName, lastName);
+        return users.stream()
+                .map(UserMapper.INSTANCE::userToUserDto)
+                .toList();
+    }
 }
