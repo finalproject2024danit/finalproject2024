@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./HomePage.module.scss";
 import MainContent from "../../components/MainContent/MainContent";
-import axiosInstance from "../UsersPage/axiosConfig";
+import axiosInstance from "../../api/axiosInstance.js";
 
 const NewsContent = () => {
   const [news, setNews] = useState([]);
