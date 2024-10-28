@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axiosInstance from "../UsersPage/axiosConfig";
+import axiosInstance from "../../api/axiosInstance.js";
 import styles from "./UserPage.module.scss";
 import MainContent from "../../components/MainContent/MainContent";
 

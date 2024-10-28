@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./UsersPage.module.scss";
 import MainContent from "../../components/MainContent/MainContent";
-import axiosInstance from "./axiosConfig";
+import axiosInstance from "../../api/axiosInstance.js";
 import { NavLink } from "react-router-dom"; // Імпорт NavLink, якщо ви його використовуєте
 
 const UsersContent = () => {

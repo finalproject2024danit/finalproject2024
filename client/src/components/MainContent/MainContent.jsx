@@ -1,10 +1,9 @@
-import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './MainContent.module.scss'
 
 const MainContent = ({title, children}) => {
   return (
-    <div className={styles.mainFeed}>        
+    <div className={styles.mainFeed}>
       <h1>{title}</h1>
       {children && children ? (children) : (<p>No content available.</p>)}
     </div>
