@@ -1,10 +1,10 @@
 package com.project.project.entities.user.service;
 
+import com.project.project.entities.user.User;
 import com.project.project.entities.user.api.dto.RequestPatchUserDto;
 import com.project.project.entities.user.db.UserRepository;
-import com.project.project.exceptions.UserNotFoundException;
-import com.project.project.entities.user.User;
 import com.project.project.entities.user.status.UserStatus;
+import com.project.project.exceptions.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -63,12 +63,17 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
         return user;
     }
+
     public List<User> searchByFirstName(String firstName) {
         return userRepository.searchByFirstName(firstName);
     }
 
     public List<User> searchByFirstNameAndLastName(String firstName, String lastName) {
         return userRepository.searchByFirstNameAndLastName(firstName, lastName);
+    }
+
+    public List<User> findAllById(Iterable<Long> userIds) {
+        return userRepository.findAllById(userIds);
     }
 
 

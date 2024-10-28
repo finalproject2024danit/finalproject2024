@@ -2,10 +2,18 @@ package com.project.project.entities.friend.api;
 
 import com.project.project.entities.friend.Friend;
 import com.project.project.entities.friend.service.FriendServiceImpl;
+import com.project.project.entities.user.User;
+import com.project.project.entities.user.api.dto.ResponseUserDto;
+import com.project.project.entities.user.api.dto.UserMapper;
+import com.project.project.entities.user.service.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Log4j2
 @RestController
@@ -17,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class FriendController {
     private final FriendServiceImpl friendService;
+    private final UserServiceImpl userService;
 
     @PostMapping("/add")
     public ResponseEntity<Friend> addFriend(@RequestParam long userFromId, @RequestParam long userToId) {
@@ -32,5 +41,37 @@ public class FriendController {
 
         friendService.deleteFriend(id);
         return ResponseEntity.ok("Friend has been successfully deleted.");
+    }
+
+    @GetMapping("/search")
+    public List<ResponseUserDto> searchFriendsByFullName(
+            @RequestParam Long currentUserId,
+            @RequestParam String fullName) {
+
+        log.info("Find friends by first and/or lastName: {}", currentUserId);
+        String[] nameParts = fullName.trim().split("\\s+");
+        String firstName = nameParts[0];
+        String lastName = nameParts.length > 1 ? nameParts[1] : "";
+
+        List<Friend> friends;
+        if (lastName.isEmpty()) {
+            friends = friendService.findFriendsByNameExcludingSelf(firstName, "", currentUserId);
+        } else {
+            friends = friendService.findFriendsByNameExcludingSelf(firstName, lastName, currentUserId);
+        }
+
+        Set<Long> userIds = new HashSet<>();
+        for (Friend friend : friends) {
+            userIds.add(friend.getUserFromId());
+            userIds.add(friend.getUserToId());
+        }
+
+        List<User> users = userService.findAllById(userIds);
+
+        users.removeIf(user -> user.getId().equals(currentUserId));
+
+        return users.stream()
+                .map(UserMapper.INSTANCE::userToUserDto)
+                .toList();
     }
 }
