@@ -20,7 +20,11 @@ export const fetchMessages = createAsyncThunk('chat/fetchMessages', async () => 
 
 const chatSlice = createSlice({
     name: 'chat',
-    initialState,
+    initialState: {
+        messages: [],
+        selectedUser: null,
+        loading: false,
+    },
     reducers: {
         sendMessage: (state, action) => {
             // Add new message to state
