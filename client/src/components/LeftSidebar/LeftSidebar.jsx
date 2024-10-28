@@ -27,7 +27,7 @@ const LeftSidebar = () => {
   }, []);
 
   return (
-    <aside className={`${styles.menu} ${styles.shinyCta}`}>
+    <aside className={`${styles.leftMenu} ${styles.shinyCta}`}>
       <div>
         <NavLink className={({ isActive }) => (isActive ? styles.active : "")} to="/profile/general_information">
           <div className={styles.iconWrapper}>

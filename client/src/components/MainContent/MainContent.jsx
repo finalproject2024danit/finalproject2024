@@ -3,7 +3,7 @@ import styles from './MainContent.module.scss'
 
 const MainContent = ({title, children}) => {
   return (
-    <div className={styles.mainFeed}>
+    <div className={styles.mainBox}>        
       <h1>{title}</h1>
       {children && children ? (children) : (<p>No content available.</p>)}
     </div>

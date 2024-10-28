@@ -4,7 +4,7 @@ import axiosInstance from "../../api/axiosInstance.js";
 import styles from "./UserPage.module.scss";
 import MainContent from "../../components/MainContent/MainContent";
 
-const UserPage = () => {
+const UserInfo = () => {
   const { id } = useParams();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -15,8 +15,9 @@ const UserPage = () => {
       try {
         const response = await axiosInstance.get(`/users/user/${id}`);
         setUser(response.data);
+        console.log(response.data); // Логування для перевірки
       } catch (err) {
-        setError(`Error loading user: ${err.message}`);
+        setError(`Помилка завантаження користувача: ${err.message}`);
       } finally {
         setLoading(false);
       }
@@ -31,7 +32,7 @@ const UserPage = () => {
   };
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <p>Завантаження...</p>;
   }
 
   if (error) {
@@ -39,37 +40,45 @@ const UserPage = () => {
   }
 
   const formatPhones = (phones) => {
-    if (Array.isArray(phones)) {
-      return phones.join(", ");
-    } else if (typeof phones === "string") {
-      return phones; // Якщо телефон - рядок, повертаємо його
-    } else {
-      return "No phones"; // Якщо не масив і не рядок
-    }
+    return phones || "Немає телефонів"; // Якщо телефони не вказані
   };
 
   return (
-    <div className={styles.layout}>
+    <div className={styles.userBox}>
       <img
         className={styles.userPhoto}
-        src={user.avatar || "default_avatar_url"}
+        src={user.avatar || "default_avatar_url"} // Змінити на URL за замовчуванням
         alt={`${user.firstName} ${user.lastName}`}
       />
       <div className={styles.mainContent}>
-        <MainContent title={`${user.firstName} ${user.lastName}`}>
+        <div title={`${user.firstName} ${user.lastName}`}>
           <div className={styles.userDetails}>
-            <p>Email: {user.email}</p>
+            <h2>{`${user.firstName} ${user.lastName}`}</h2> {/* Відображення імені */}
             <p>Date of birth: {formatDate(user.dateOfBirth)}</p>
+            <p>Email: {user.email}</p>
             <p>Phone: {formatPhones(user.phones)}</p>
-            {/* Інша інформація про користувача */}
+            <p>Gender: {user.gender}</p>
+            <p>Created Date: {formatDate(user.createdDate)}</p>
           </div>
-        </MainContent>
+        </div>
       </div>
     </div>
   );
-  
+};
+
+const UserPage = () => {
+  return (
+    <div className={styles.userBox}>
+      {/* <div className={styles.mainContent}> */}
+        <MainContent title="">
+          <UserInfo />
+        </MainContent>
+      {/* </div> */}
+    </div>
+  );
 };
 
 export default UserPage;
+
 
 
