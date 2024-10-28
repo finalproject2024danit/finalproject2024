@@ -1,9 +1,30 @@
+@import '../../App.scss';
 
-  
+.userBox {
+  display: flex;
+  // flex-direction: column;
+  gap: 20px;
+
   .userPhoto {   
-    width: 100%; /* Ширина фото 100% від контейнера */
+    width: 80%; /* Ширина фото 100% від контейнера */
     height: auto; /* Висота для збереження пропорцій */
     border-radius: 5px; 
     
-  }
+  }  
+}
+
+.userDetails h2 {
+  font-size: $font-size-title;    
+  color: $border-color-yellow;
+}
+
+.userDetails p {
+  font-size: $font-size-text;
+  color: $nodle-black-100;
+}
+  
+  
+  
+  
+  
   

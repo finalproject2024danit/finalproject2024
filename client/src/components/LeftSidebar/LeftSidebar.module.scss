@@ -1,14 +1,14 @@
 @import '../../App.scss';
 
-.menu {
-    width: 17%;
+.leftMenu {
+    width: 16%;
     height: 96vh;
     background-color: $nodle-black-800;
     border-radius: 10px;
     // border: 1px solid $border-color-green;
     position: sticky;
-    top: 0;
-    left: 0;
+    top: 10px;
+    left: 10px;
 
     .exit {
         position: absolute;

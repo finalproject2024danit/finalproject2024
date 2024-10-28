@@ -43,6 +43,7 @@ $nodle-black-green:#2a9d8f;
 $border-primary:#5cb85c;
 
 $font-size-title: 34px;
+$font-size-text: 24px;
 
 $font-weight-black: 900; // h1 //
 $font-weight-extra-bold: 800; // h2 и даже для h3 //
@@ -108,9 +109,10 @@ $large-screen-breakpoint: 1440px;
 .container {
   display: flex;
   box-sizing: border-box;
-  padding: 10px;
+  // padding: 10px;
   gap: 10px;
-  width: 2200px;
+  // width: 1900px;
+  width: 100vw;
   position: relative;
 }
 
@@ -184,10 +186,10 @@ body {
 
 
 
-.leftSidebar, .rightSidebar {
-  width: 220px;
+// .leftSidebar, .rightSidebar {
+//   width: 220px;
 
-}
+// }
 
 .leftSidebar ul {
   list-style: none;
@@ -199,9 +201,9 @@ body {
   // font-weight: bold;
 }
 
-.leftSidebar li:hover {
-  // background-color: $third-color;
-}
+// .leftSidebar li:hover {
+//   // background-color: $third-color;
+// }
 
 .feed {
   flex-grow: 1;
