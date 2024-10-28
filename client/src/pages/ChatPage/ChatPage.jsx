@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMessages, selectUser, sendMessage, fetchTalks } from "../../redux/slices/chatSlice";
 import NewMessageForm from "./NewMessageForm/NewMessageForm";
@@ -9,7 +9,7 @@ import styles from "./ChatPage.module.scss";
 const ChatPage = () => {
   const dispatch = useDispatch();
   const { messages, selectedUser, loading , talks} = useSelector((state) => state.chat);
-  const currentUser = {id: 1}; 
+  const {currentUser, setCurrentUser} = useState({id: 1}); 
 
   useEffect(() => {
     if (window.particlesJS) {
@@ -129,13 +129,13 @@ const ChatPage = () => {
 useEffect(() => {
   // Fetch talks when the component mounts
   dispatch(fetchTalks());
-}, []);  
+}, [dispatch]);  
 
 useEffect(() => {
   if (selectedUser) {
       dispatch(fetchMessages({ userFrom: currentUser, userTo: selectedUser.id }));
   }
-}, [selectedUser, dispatch, currentUser]);
+}, [selectedUser, dispatch]);
 
   const handleUserSelect = (user) => {
     dispatch(selectUser(user));
