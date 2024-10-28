@@ -13,7 +13,7 @@ import styles from "./Header.module.scss";
 
 const Header = () => {
   return (
-    <div className={styles.test4}>
+    <div className={styles.headerBox}>
     <header className={styles.shinyCta}>
       {/* <div className={styles.skyContainer}>
         <span className={styles.star}></span>

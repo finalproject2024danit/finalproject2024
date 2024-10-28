@@ -1,10 +1,10 @@
 @import '../../App.scss';
 
-.mainMenu {
+.rightMenu {
     display: flex;
     flex-direction: column;
     align-items: center; 
-    width: 180px;
+    width: 10%;
     height: 79%;
     padding-top: 20px;
     background-color: $nodle-black-800;
@@ -13,7 +13,7 @@
     
     position: fixed;  
     top: 180px;
-    right: -123px;
+    right: 10px;
     transition: 1.5s;
       
     li {
@@ -22,9 +22,9 @@
   
   }
   
-  .mainMenu:hover{
-    right: 10px;
-  }
+  // .mainMenu:hover{
+  //   right: 10px;
+  // }
 
 // // .rightSidebar {
 // //   width: 20%;
