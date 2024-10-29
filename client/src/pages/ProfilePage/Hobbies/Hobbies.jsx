@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ProfileMenu from "../ProfileMenu/ProfileMenu.jsx";
 import MainContent from "../../../components/MainContent/MainContent.jsx";
-import styles from "./hobbies.module.scss";
+import styles from "./Hobbies.module.scss";
 import { updateUserData } from "../../../redux/slices/userSlice.js";
 
 const Hobbies = () => {
