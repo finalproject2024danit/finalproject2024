@@ -1,27 +1,24 @@
 import ProfileMenu from "../ProfileMenu/ProfileMenu.jsx";
 import styles from "./Workplace.module.scss";
 import MainContent from "../../../components/MainContent/MainContent.jsx";
-import { useState } from "react";
 import axios from "axios";
 import * as Yup from "yup";
 import { useFormik } from "formik";
+import { useState } from "react";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().max(100, "Max 100 characters").required("Required"),
 });
 
 const Workplace = () => {
-  const [name, setName] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, { resetForm }) => {
     setLoading(true);
     try {
-      await axios.post("/api/v1/workplace/create", {
-        name: values.name,
-      });
+      await axios.post("/api/v1/workplace/create", { name: values.name });
       console.log("Workplace added successfully");
-      setName(""); // Очистить поле после успешного добавления
+      resetForm(); // Очистить форму после успешного добавления
     } catch (error) {
       console.error("Error adding workplace", error);
     } finally {
