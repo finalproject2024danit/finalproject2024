@@ -5,10 +5,6 @@ import UsersIcon from "../../svg/Header/Users";
 import GroupIcon from "../../svg/Header/Group";
 import HomeIcon from "../../svg/Header/Home";
 import ChatIcon from "../../svg/Header/Chat";
-// import AccountIcon from "../../svg/Header/Account";
-// import MenuIcon from "../../svg/Header/Menu";
-// import MessengerIcon from "../../svg/Header/Messenger";
-
 import styles from "./Header.module.scss";
 
 const Header = () => {
@@ -34,7 +30,7 @@ const Header = () => {
           to="/"
         >
           <div className={styles.iconWrapper}>
-            <h1>Title - Slogan!!!!!!!!!!!!!!!!!!!!</h1>
+            <h1>Galactic Connections "Reach for the and connect!"</h1>
           </div>
         </NavLink>
       </div>
