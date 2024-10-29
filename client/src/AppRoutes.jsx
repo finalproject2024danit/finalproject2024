@@ -7,7 +7,7 @@ import GroupPage from "./pages/GroupPage/GroupPage.jsx";
 import ChatPage from "./pages/ChatPage/ChatPage.jsx";
 import UsersPage from "./pages/UsersPage/UsersPage.jsx";
 // import AccountPage from "./pages/AccountPage/AccountPage.jsx"; !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-import ProfilePage from "./pages/ProfilePage/ProfilePage.jsx";
+// import ProfilePage from "./pages/ProfilePage/ProfilePage.jsx";
 import UserPage from "./pages/UserPage/UserPage.jsx";
 import GeneralInformation from "./pages/ProfilePage/GeneralInformation/GeneralInformation.jsx";
 import PlaceOfResidence from "./pages/ProfilePage/PlaceOfResidence/PlaceOfResidence.jsx";
