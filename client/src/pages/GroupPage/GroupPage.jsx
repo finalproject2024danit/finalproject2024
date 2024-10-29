@@ -11,7 +11,8 @@ const GroupPage = () => {
     setActiveIndex(index);
   };
 
-  const groupContent = (
+  return (
+    <MainContent title="">
     <div className={styles.groupContainer}>
       {/* Список зображень */}
       <ul className={styles.groupHeader}>
@@ -88,15 +89,9 @@ const GroupPage = () => {
         ))}
       </ul>
     </div>
+    </MainContent>
   );
-
-  return (
-    <div className={styles.layout}>
-      <div className={styles.mainContent}>
-        <MainContent title="">{groupContent}</MainContent>
-      </div>
-    </div>
-  );
+ 
 };
 
 export default GroupPage;
@@ -104,137 +99,3 @@ export default GroupPage;
 
 
 
-// import React, { useState } from "react";
-// import styles from "./GroupPage.module.scss";
-// import MainContent from "../../components/MainContent/MainContent";
-
-// const GroupPage = () => {
-//   // Використання useState для зберігання активного індексу
-//   const [activeIndex, setActiveIndex] = useState(0);
-
-//   // Функція для обробки кліку по зображенню
-//   const handleImageClick = (index) => {
-//     setActiveIndex(index);
-//   };
-
-//   const groupContent = (
-//     <div className={styles.groupContainer}>
-//       {/* Список зображень */}
-//       <ul className={styles.groupHeader}>
-//         {[
-//           "https://res.cloudinary.com/dsr6kwzrr/image/upload/w_200/v1728633396/samples/animals/three-dogs.jpg",
-//           "https://res.cloudinary.com/dsr6kwzrr/image/upload/w_200/v1728633397/samples/ecommerce/leather-bag-gray.jpg",
-//           "https://res.cloudinary.com/dsr6kwzrr/image/upload/w_200/v1728633397/samples/imagecon-group.jpg",
-//           "https://res.cloudinary.com/dsr6kwzrr/image/upload/w_200/v1728633405/cld-sample-2.jpg"
-//         ].map((imageSrc, index) => (
-//           <li
-//             key={index}
-//             className={styles.groupList}
-//             onClick={() => handleImageClick(index)} // Обробник кліку
-//           >
-//             <img src={imageSrc} alt={`Group ${index + 1}`} />
-//           </li>
-//         ))}
-//       </ul>
-
-//       {/* Відображення контенту відповідно до активного індексу */}
-//       <ul className={styles.groupMain}>
-//         {[
-//           "1.Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium, facilis! (1)",
-//           "2.Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium, facilis! (2)",
-//           "3.Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium, facilis! (3)",
-//           "4.Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium, facilis! (4)"
-//         ].map((content, index) => (
-//           <li
-//             key={index}
-//             className={
-//               index === activeIndex ? styles.active : styles.hidden
-//             } // Відображаємо лише активний елемент
-//           >
-//             {content}
-//           </li>
-//         ))}
-//       </ul>
-//     </div>
-//   );
-
-//   return (
-//     <div className={styles.layout}>
-//       <div className={styles.mainContent}>
-//         <MainContent title="">{groupContent}</MainContent>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default GroupPage;
-
-
-
-
-
-// // import React from "react";
-// import styles from "./GroupPage.module.scss";
-// // import LeftSidebar from "../../components/LeftSidebar/LeftSidebar";
-// import MainContent from "../../components/MainContent/MainContent";
-
-// const GroupPage = () => {
-//   const groupContent = (
-//     <div className={styles.groupContainer}>
-//       <ul className={styles.groupHeader}>
-//         <li className={styles.groupList}>
-//           <img
-//             src="https://res.cloudinary.com/dsr6kwzrr/image/upload/w_200/v1728633396/samples/animals/three-dogs.jpg"
-//             alt=""
-//           />
-//         </li>
-//         <li className={styles.groupList}>
-//           <img
-//             src="https://res.cloudinary.com/dsr6kwzrr/image/upload/w_200/v1728633397/samples/ecommerce/leather-bag-gray.jpg"
-//             alt=""
-//           />
-//         </li>
-//         <li className={styles.groupList}>
-//           <img
-//             src="https://res.cloudinary.com/dsr6kwzrr/image/upload/w_200/v1728633397/samples/imagecon-group.jpg"
-//             alt=""
-//           />
-//         </li>
-//         <li className={styles.groupList}>
-//           <img
-//             src="https://res.cloudinary.com/dsr6kwzrr/image/upload/w_200/v1728633405/cld-sample-2.jpg"
-//             alt=""
-//           />
-//         </li>
-//       </ul>
-//       <ul className={styles.groupMain}>
-//         <li>
-//           Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
-//           facilis!
-//         </li>
-//         <li>
-//           Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
-//           facilis!
-//         </li>
-//         <li>
-//           Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
-//           facilis!
-//         </li>
-//         <li>
-//           Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium,
-//           facilis!
-//         </li>
-//       </ul>
-//     </div>
-//   );
-
-//   return (
-//     <div className={styles.layout}>
-//       <div className={styles.mainContent}>
-//         <MainContent title="">{groupContent}</MainContent>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default GroupPage;

@@ -4,7 +4,7 @@ import axiosInstance from "../../api/axiosInstance.js";
 import styles from "./UserPage.module.scss";
 import MainContent from "../../components/MainContent/MainContent";
 
-const UserInfo = () => {
+const UserPage = () => {
   const { id } = useParams();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -44,6 +44,7 @@ const UserInfo = () => {
   };
 
   return (
+    <MainContent title="">
     <div className={styles.userBox}>
       <img
         className={styles.userPhoto}
@@ -63,20 +64,10 @@ const UserInfo = () => {
         </div>
       </div>
     </div>
-  );
+    </MainContent>
+  );  
 };
 
-const UserPage = () => {
-  return (
-    <div className={styles.userBox}>
-      {/* <div className={styles.mainContent}> */}
-        <MainContent title="">
-          <UserInfo />
-        </MainContent>
-      {/* </div> */}
-    </div>
-  );
-};
 
 export default UserPage;
 
