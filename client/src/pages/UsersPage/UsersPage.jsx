@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from "react"; 
+import React, { useEffect, useState } from "react";
 import styles from "./UsersPage.module.scss";
 import MainContent from "../../components/MainContent/MainContent";
 import axiosInstance from "../../api/axiosInstance.js";
-import { NavLink } from "react-router-dom"; 
+import { NavLink } from "react-router-dom";
 import ButtonAddFriend from "../../components/ButtonAddFriend/index.jsx";
 
 const UsersPage = () => {
   const [users, setUsers] = useState([]);
+  const [searchTerm, setSearchTerm] = useState(""); // Состояние для поиска
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [flippedCards, setFlippedCards] = useState({});
@@ -26,23 +27,30 @@ const UsersPage = () => {
             sortDirection,
           },
         });
-    
+
         const usersData = response.data || [];
         if (usersData.length > 0) {
-          setUsers((prevUsers) => [...prevUsers, ...usersData]);
+          setUsers(usersData);
         } else {
           setError("Користувачі не знайдені.");
         }
       } catch (err) {
-        console.error("Помилка під час завантаження даних:", err.response ? err.response.data : err.message);
-        setError(`Помилка під час завантаження даних: ${err.response ? err.response.data.message : err.message}`);
+        console.error("Помилка під час завантаження даних:", err.message);
+        setError(`Помилка під час завантаження даних: ${err.message}`);
       } finally {
         setLoading(false);
       }
     };
-    
+
     fetchUsers();
   }, []);
+
+  // Фильтруем пользователей на основе введённого текста
+  const filteredUsers = users.filter((user) =>
+    `${user.firstName} ${user.lastName}`
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase())
+  );
 
   const handleCardClick = (id) => {
     setFlippedCards((prev) => ({
@@ -59,9 +67,8 @@ const UsersPage = () => {
   };
 
   const addFriend = async (userId) => {
-    const userFromId = 1; // Замість об'єкта, просто вкажіть ID користувача
+    const userFromId = 1;
 
-    // Валідація ID користувачів
     if (typeof userFromId !== "number" || typeof userId !== "number") {
       console.error("Invalid user ID(s)");
       return;
@@ -69,13 +76,13 @@ const UsersPage = () => {
 
     try {
       const response = await axiosInstance.post(`/api/v1/friends/add`, {
-        userFromId, // Передаємо як об'єкт
+        userFromId,
         userToId: userId,
       });
 
       console.log("Friend added successfully:", response.data);
     } catch (error) {
-      console.error("Помилка при додаванні у друзі:", error.response ? error.response.data : error.message);
+      console.error("Помилка при додаванні у друзі:", error.message);
     }
   };
 
@@ -84,60 +91,63 @@ const UsersPage = () => {
 
   return (
     <MainContent title="">
-    <div className={styles.userBox}>
-      {loading ? (
-        <p>Завантаження...</p>
-      ) : error ? (
-        <p>{error}</p>
-      ) : users.length > 0 ? (
-        users.map((user) => (
-          <div
-            key={user.id}
-            className={`${styles.userCard} ${flippedCards[user.id] ? styles.flipped : ""}`}
-            onClick={() => handleCardClick(user.id)}
-          >
-            <div className={styles.front}>
-              <div className={styles.inner}>
-                <img
-                  className={styles.userPhoto}
-                  src={user.avatar ? user.avatar : defaultAvatar}
-                  alt={`${user.firstName} ${user.lastName}'s avatar`}
-                  onError={(e) => {
-                    e.target.src = defaultAvatar;
-                  }}
-                />
-                <h2>
-                  {user.firstName} {user.lastName}
-                </h2>
-              </div>
-            </div>
+      <div className={styles.searchContainer}>
+        <input
+          type="text"
+          placeholder="Пошук друзів..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className={styles.searchInput}
+        />
+      </div>
 
-            <div className={styles.back}>
-              <div className={styles.inner}>
-                <NavLink to={`/user/${user.id}`}>
-                  <h3>Info user</h3>
-                </NavLink>
-                <ButtonAddFriend onClick={() => addFriend(user.id)} />
-                <h2>Click to flip back</h2>
+      <div className={styles.userBox}>
+        {loading ? (
+          <p>Завантаження...</p>
+        ) : error ? (
+          <p>{error}</p>
+        ) : filteredUsers.length > 0 ? (
+          filteredUsers.map((user) => (
+            <div
+              key={user.id}
+              className={`${styles.userCard} ${
+                flippedCards[user.id] ? styles.flipped : ""
+              }`}
+              onClick={() => handleCardClick(user.id)}
+            >
+              <div className={styles.front}>
+                <div className={styles.inner}>
+                  <img
+                    className={styles.userPhoto}
+                    src={user.avatar || defaultAvatar}
+                    alt={`${user.firstName} ${user.lastName}`}
+                    onError={(e) => (e.target.src = defaultAvatar)}
+                  />
+                  <h2>
+                    {user.firstName} {user.lastName}
+                  </h2>
+                </div>
+              </div>
+              <div className={styles.back}>
+                <div className={styles.inner}>
+                  <NavLink to={`/user/${user.id}`} className={styles.link}>
+                    <h3 className={styles.infoUser}>Info user</h3>
+                  </NavLink>
+                  <ButtonAddFriend onClick={() => addFriend(user.id)} />
+                  <h2 className={styles.clickToFlip}>Click to flip back</h2>
+                </div>
               </div>
             </div>
-          </div>
-        ))
-      ) : (
-        <p>Користувачі не знайдені.</p>
-      )}
-    </div>
+          ))
+        ) : (
+          <p>Користувачі не знайдені.</p>
+        )}
+      </div>
     </MainContent>
   );
 };
 
 export default UsersPage;
-
-
-
-
-
-
 
 // import React, { useEffect, useState } from "react";
 // import styles from "./UsersPage.module.scss";
@@ -232,12 +242,12 @@ export default UsersPage;
 
 //             <div className={styles.back}>
 //               <div className={styles.inner}>
-                
+
 //                 <NavLink to={`/user/${user.id}`}>
 //                   <h3>Info user</h3>
 //                 </NavLink>
-                
-//                 <ButtonAddFriend onClick={() => {  }}/>  
+
+//                 <ButtonAddFriend onClick={() => {  }}/>
 
 //                 <h2>Click to flip back</h2>
 //               </div>

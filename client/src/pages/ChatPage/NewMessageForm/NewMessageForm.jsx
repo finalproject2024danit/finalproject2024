@@ -1,6 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import styles from './NewMessageForm.module.scss';
+import PropTypes from 'prop-types';
 
 const NewMessageForm = ({ onSendMessage, selectedUser, filteredMessages }) => {
   const initialValues = {
@@ -56,6 +57,20 @@ const NewMessageForm = ({ onSendMessage, selectedUser, filteredMessages }) => {
     </Formik>
     </div>
   );
+};
+
+NewMessageForm.propTypes = {
+  onSendMessage: PropTypes.func.isRequired,
+  selectedUser: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    isOnline: PropTypes.bool.isRequired,
+  }).isRequired,
+  filteredMessages: PropTypes.arrayOf(
+    PropTypes.shape({
+      content: PropTypes.string.isRequired,
+    })
+  ).isRequired,
 };
 
 export default NewMessageForm;
