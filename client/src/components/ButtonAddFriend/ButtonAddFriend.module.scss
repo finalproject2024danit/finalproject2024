@@ -1,3 +1,17 @@
 .btn {
-    color: red;
+  background-color: #4f36ee;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 30px;
+  cursor: pointer;
+  margin: 10px 0;
+  font-size: 16px;
+  transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+
+.btn:hover {
+  background-color: #331fcc;
+  box-shadow: 0 8px 16px rgba(106, 90, 205, 0.6);
+  transform: scale(1.05);
 }
