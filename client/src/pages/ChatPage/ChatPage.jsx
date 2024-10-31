@@ -142,16 +142,19 @@ useEffect(() => {
     console.log("user in handleUserSelect", user);
   };
 
-
-  const handleSendMessage = (newMessageContent) => {
-    const newMessage = {
-      content: newMessageContent,
-      userFrom: currentUser,
-      userTo: selectedUser.id,
-    };
-    websocket.send(JSON.stringify(newMessage)); // Replace 'websocket' with your actual WebSocket instance
-    dispatch(sendMessage(newMessage));
+  const handleSendMessage = (message) => {
+    dispatch(sendMessage(message));
   };
+
+  // const handleSendMessage = (newMessageContent) => {
+  //   const newMessage = {
+  //     content: newMessageContent,
+  //     userFrom: currentUser,
+  //     userTo: selectedUser.id,
+  //   };
+  //   websocket.send(JSON.stringify(newMessage)); // Replace 'websocket' with your actual WebSocket instance
+  //   dispatch(sendMessage(newMessage));
+  // };
 
   const filteredMessages = messages.filter(
     (msg) => msg.userFrom === currentUser || msg.userTo === currentUser);
