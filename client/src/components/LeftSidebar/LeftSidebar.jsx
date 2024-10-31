@@ -67,13 +67,13 @@ const LeftSidebar = () => {
         className={({ isActive }) => (isActive ? styles.active : "")}
         to="/game2"
       >
-        Game 2
+       Game 2
       </NavLink>
       <NavLink
         className={({ isActive }) => (isActive ? styles.active : "")}
         to="/game3"
       >
-        Game 3
+      Game 3
       </NavLink>
       </div>
 
