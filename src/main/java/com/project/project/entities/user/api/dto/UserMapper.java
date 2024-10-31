@@ -25,4 +25,22 @@ public interface UserMapper {
     @Mapping(source = "createdDate", target = "createdDate")
     @Mapping(source = "lastModifiedDate", target = "lastModifiedDate")
     ResponseUserDto userToUserDto(User user);
+
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "firstName", target = "firstName")
+    @Mapping(source = "lastName", target = "lastName")
+    @Mapping(source = "email", target = "email")
+    @Mapping(source = "gender", target = "gender")
+    @Mapping(source = "dateOfBirth", target = "dateOfBirth")
+    @Mapping(source = "avatar", target = "avatar")
+    @Mapping(source = "phones", target = "phones")
+    @Mapping(source = "workplace.name", target = "workplace")
+    @Mapping(source = "residence.planet", target = "residence.planet")
+    @Mapping(source = "residence.country", target = "residence.country")
+    @Mapping(source = "residence.city", target = "residence.city")
+    @Mapping(source = "photoData", target = "photoData")
+    @Mapping(source = "createdDate", target = "createdDate")
+    @Mapping(source = "lastModifiedDate", target = "lastModifiedDate")
+    ResponseUserAllDataDto userToUserAllDataDto(User user);
+
 }

@@ -1,7 +1,8 @@
-package com.project.project.entities.workplace.api.dto;
+package com.project.project.entities.residence.api;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.project.project.dto.AbstractDto;
+import com.project.project.entities.user.api.dto.View;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -16,12 +17,13 @@ import static lombok.AccessLevel.PRIVATE;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ResponseWorkplaceDto extends AbstractDto {
+public class ResponseResidenceDto extends AbstractDto {
+    @JsonView(View.Admin.class)
+    String planet;
 
     @JsonView(View.Admin.class)
-    Long id;
+    String country;
 
     @JsonView(View.Admin.class)
-    String name;
-
+    String city;
 }

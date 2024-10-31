@@ -1,26 +1,47 @@
 package com.project.project.entities.residence;
 
+import com.project.project.AbstractEntity;
 import com.project.project.entities.user.User;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.FieldDefaults;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.Set;
+
+import static jakarta.persistence.TemporalType.TIMESTAMP;
+import static lombok.AccessLevel.PRIVATE;
+
+@EqualsAndHashCode(callSuper = true)
+@Data
 @Entity
-public class Residence {
+@Table(name = "residences")
+@FieldDefaults(level = PRIVATE)
+@NoArgsConstructor
+@AllArgsConstructor
+public class Residence extends AbstractEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    String planet;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<User> users;
+    String country;
 
-    @NotNull
-    @Size(min = 3, max = 30, message = "Country name must be at least 3 characters long")
-    private String country;
+    String city;
 
-    @NotNull
-    @Size(min = 3, max = 30, message = "City name must be at least 3 characters long")
-    private String city;
+    @OneToMany(mappedBy = "residence", fetch = FetchType.LAZY)
+    Set<User> users;
+
+    @CreatedDate
+    @Temporal(TIMESTAMP)
+    @Column(name = "created_date", updatable = false, nullable = false)
+    LocalDateTime createdDate;
+
+    @LastModifiedDate
+    @Temporal(TIMESTAMP)
+    @Column(name = "last_modified_date", nullable = false)
+    LocalDateTime lastModifiedDate;
 }

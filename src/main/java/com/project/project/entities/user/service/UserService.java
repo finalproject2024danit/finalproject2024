@@ -13,10 +13,16 @@ public interface UserService {
     Page<User> findAllFiltered(Pageable pageable);
 
     User getUserById(long id);
-  
+
     User addUser(User user);
 
     User patchUser(Long id, RequestPatchUserDto requestPatchUserDto) throws IllegalAccessException;
+
     List<User> searchByFirstName(String firstName);
+
     List<User> searchByFirstNameAndLastName(String firstName, String lastName);
+
+    List<User> findAllById(Iterable<Long> userIds);
+
+    List<User> getFriendsByUserId(Long userId);
 }

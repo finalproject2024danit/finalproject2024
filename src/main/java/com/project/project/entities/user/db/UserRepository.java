@@ -12,4 +12,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "SELECT * FROM users WHERE first_name ILIKE CONCAT('%', ?1, '%') AND last_name ILIKE CONCAT('%', ?2, '%')", nativeQuery = true)
     List<User> searchByFirstNameAndLastName(String firstName, String lastName);
+
+    @Query("SELECT u FROM User u WHERE u.id IN (" +
+            "SELECT f.userToId FROM Friend f WHERE f.userFromId = :userId " +
+            "UNION " +
+            "SELECT f.userFromId FROM Friend f WHERE f.userToId = :userId)")
+    List<User> findFriendsByUserId(Long userId);
 }

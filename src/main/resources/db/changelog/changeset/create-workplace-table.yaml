@@ -28,30 +28,3 @@ databaseChangeLog:
                   type: TIMESTAMP
                   constraints:
                     nullable: false
-        - createTable:
-            tableName: workplaces_users
-            columns:
-              - column:
-                  name: workplace_id
-                  type: BIGINT
-                  constraints:
-                    nullable: false
-              - column:
-                  name: user_id
-                  type: BIGINT
-                  constraints:
-                    nullable: false
-        - addForeignKeyConstraint:
-            constraintName: fk_workplace_user_workplace
-            baseTableName: workplaces_users
-            baseColumnNames: workplace_id
-            referencedTableName: workplaces
-            referencedColumnNames: id
-            onDelete: CASCADE
-        - addForeignKeyConstraint:
-            constraintName: fk_workplace_user_user
-            baseTableName: workplaces_users
-            baseColumnNames: user_id
-            referencedTableName: users
-            referencedColumnNames: id
-            onDelete: CASCADE
