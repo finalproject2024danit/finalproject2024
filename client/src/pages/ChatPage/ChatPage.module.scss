@@ -15,6 +15,21 @@
   background-color:$nodle-black-700; 
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
   height: 700px;
+
+   /* === Tablet Styles === */
+   @media (max-width: 1024px) {
+    height: auto; // Adjust height for tablet
+    padding: 10px; // Add padding for tablet
+  }
+
+  /* === iPhone Styles === */
+  @media (max-width: 767px) {
+    height: auto; // Adjust height for iPhone
+    padding: 10px; // Add padding for iPhone
+    box-shadow: none; // Remove shadow for smaller screens
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 /* === CONVERSATIONS === */
@@ -28,6 +43,30 @@
   overflow: hidden;
   background-color:$nodle-black-700;
   display: inline-block;
+
+   /* === Tablet Styles === */
+   @media (max-width: 1024px) {
+    width: 100%; // Full width on tablet
+    height: 500px; // Adjust height on tablet
+    margin-bottom: 20px; // Add space below discussions
+  }
+
+  /* === iPhone Styles === */
+  @media (max-width: 767px) {
+    width: 100%; // Full width on iPhone
+    height: 300px; // Adjust height on iPhone
+    margin-bottom: 15px; // Add space below discussions
+
+
+    .discussion {
+      width: 100%;
+    height: auto; // Allow height to adjust based on content
+    margin-bottom: 0; // Remove margin for better alignment
+    display: flex;
+    flex-direction: row; // Align discussions in a row
+    overflow-x: auto;
+    }
+  }
 }
 
 .discussions .discussion {
@@ -38,6 +77,23 @@
   display:flex;
   align-items: center;
   cursor: pointer;
+
+  @media (max-width: 767px) {
+    height: 70px; // Keep height for discussion
+      flex-shrink: 0; // Prevent shrinking of discussion items
+  
+  
+    .discussions .discussion .photo {
+      margin-left: 5px; // Adjust margin for photo
+      width: 40px; // Adjust width
+      height: 40px; // Adjust height
+    }
+  
+    .discussions .discussion .name,
+    .discussions .discussion .message {
+      display: none; // Hide name and message on mobile
+    }
+  } 
 }
 
 .discussions .search {
@@ -57,6 +113,12 @@
   display:flex;
   align-items: center;
   cursor: pointer;
+
+  @media (max-width: 767px){
+    .search .searchbar {
+      width: 90%; // Wider search bar on iPhone
+    }
+  }
 }
 
 .discussions .search .searchbar input {
@@ -112,14 +174,6 @@
   border: 3px solid $nodle-black-800;
 }
 
-.desc-contact {
-  height: 43px;
-  width:50%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .discussions .discussion .name {
   margin: 0 0 0 20px;
   font-family:'Montserrat', sans-serif;
@@ -153,6 +207,14 @@
   background-color: $nodle-black-700;
   box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.20);
   position: relative; 
+
+  @media (max-width: 767px){
+    .chat {
+      width: 100%;
+      height: calc(100vh - 70px); // Make chat take the rest of the screen
+      margin-top: 10px; // Add some spacing above the chat
+    }
+  }
 }
 
 .headerChat {
@@ -165,6 +227,17 @@
   height: 90px;
   border-bottom: solid 1px $nodle-black-500;
   box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.15);
+
+   /* === Tablet Styles === */
+   @media (max-width: 1024px) {
+    padding: 0 10px; // Less padding on tablet
+  }
+
+  /* === iPhone Styles === */
+  @media (max-width: 767px) {
+    padding: 0 10px; // Less padding on iPhone
+    height: 70px; // Smaller height on iPhone
+  }
 }
 
 .headerChat .icon {
@@ -182,6 +255,16 @@
   font-weight: 600;
   margin: 0 0 0 20px;
   text-transform: uppercase;
+
+   /* === Tablet Styles === */
+   @media (max-width: 1024px) {
+    font-size: 12pt; // Adjust font size on tablet
+  }
+
+  /* === iPhone Styles === */
+  @media (max-width: 767px) {
+    font-size: 10pt; // Adjust font size on iPhone
+  }
 }
 
 .headerChat .right {
@@ -196,6 +279,16 @@
   background-color: $nodle-black-700;
   scrollbar-width: thin;
   scrollbar-color: $nodle-black-500 $nodle-black-700;
+
+    /* === Tablet Styles === */
+    @media (max-width: 1024px) {
+      padding: 15px; // Adjust padding on tablet
+    }
+  
+    /* === iPhone Styles === */
+    @media (max-width: 767px) {
+      padding: 10px; // Adjust padding on iPhone
+    }
 }
 
 .messagesHistory::-webkit-scrollbar {
@@ -218,6 +311,11 @@
   font-size: 10pt;
   display: flex;
   align-items: center;
+
+  @media (max-width: 767px) {
+    font-size: 9pt; // Smaller font size on iPhone
+    padding: 8px; // Less padding on iPhone
+  }
 }
 
 .messageItem p {
@@ -227,84 +325,83 @@
 
 
 
-// === Tablet Styles (768px - 1024px) ===
-@media (max-width: 1024px) {
-  .container {
-    height: auto;
-    padding: 10px;
-  }
+// // === Tablet Styles (768px - 1024px) ===
+// @media (max-width: 1024px) {
+//   .container {
+//     height: auto;
+//     padding: 10px;
+//   }
 
-  .discussions {
-    width: 100%;
-    height: 500px;
-    margin-bottom: 20px;
-  }
+//   .discussions {
+//     width: 100%;
+//     height: 500px;
+//     margin-bottom: 20px;
+//   }
 
-  .chat {
-    width: 100%;
-    height: 500px;
-  }
+//   .chat {
+//     width: 100%;
+//     height: 500px;
+//   }
 
-  .headerChat {
-    padding: 0 10px;
-  }
+//   .headerChat {
+//     padding: 0 10px;
+//   }
 
-  .headerChat .name {
-    font-size: 12pt;
-  }
+//   .headerChat .name {
+//     font-size: 12pt;
+//   }
 
-  .headerChat .icon {
-    font-size: 12pt;
-    margin-left: 15px;
-  }
-}
+//   .headerChat .icon {
+//     font-size: 12pt;
+//     margin-left: 15px;
+//   }
+// }
 
-// === iPhone Styles (max-width: 767px) ===
-@media (max-width: 767px) {
-  .container {
-    height: auto;
-    padding: 10px;
-    box-shadow: none;
-  }
+// // === iPhone Styles (max-width: 767px) ===
+// @media (max-width: 767px) {
+//   .container {
+//     height: auto;
+//     padding: 10px;
+//     box-shadow: none;
+//   }
 
-  .discussions {
-    width: 100%;
-    height: 300px;
-    margin-bottom: 15px;
-  }
+//   .discussions {
+//     width: 100%;
+//     height: 300px;
+//     margin-bottom: 15px;
+//   }
 
-  .discussions .discussion {
-    height: 70px;
-  }
+//   .discussions .discussion {
+//     height: 70px;
+//   }
 
-  .discussions .search .searchbar {
-    width: 90%;
-  }
+//   .discussions .search .searchbar {
+//     width: 90%;
+//   }
 
-  .chat {
-    width: 100%;
-    height: 300px;
-  }
+  // .chat {
+  //   width: 100%;
+  //   height: 300px;
+  // }
 
-  .headerChat {
-    padding: 0 10px;
-    height: 70px;
-  }
+  // .headerChat {
+  //   padding: 0 10px;
+  //   height: 70px;
+  // }
 
-  .headerChat .name {
-    font-size: 10pt;
-  }
+  // .headerChat .name {
+  //   font-size: 10pt;
+  // }
 
-  .headerChat .icon {
-    font-size: 10pt;
-  }
+  // .headerChat .icon {
+  //   font-size: 10pt;
+  // }
 
-  .messagesHistory {
-    padding: 10px;
-  }
+  // .messagesHistory {
+  //   padding: 10px;
+  // }
 
-  .messageItem {
-    font-size: 9pt;
-    padding: 8px;
-  }
-}
+  // .messageItem {
+  //   font-size: 9pt;
+  //   padding: 8px;
+  // }
