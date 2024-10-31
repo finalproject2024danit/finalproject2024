@@ -1,99 +1,101 @@
-@import '../../App.scss';
+@import "../../App.scss";
 
 .leftMenu {
-    width: 16%;
-    height: 96vh;
-    background-color: $nodle-black-800;
-    border-radius: 10px;
-    // border: 1px solid $border-color-green;
-    position: sticky;
-    top: 10px;
+  width: 16%;
+  height: 96vh;
+  background-color: $nodle-black-800;
+  border-radius: 10px;
+  // border: 1px solid $border-color-green;
+  position: sticky;
+  top: 10px;
+  left: 10px;
+
+  .iconWrapper {
+    background-color: $background-button;
+    position: absolute;
+    top: 30px;
+    width: 80%;
     left: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-    .exit {
-        position: absolute;
-        bottom: 30px;
-        width: 80%;
-        left: 10px;
-        padding: 10px;
-        border-radius: 10px;
-        background-color: $background-button;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 10px;
+  .iconWrapper img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
 
-        .exitBlock {
-            display: flex;
-            gap: 20px;
-        }
+  .menuForm {
+    padding: 20px 10px;
+    background-color: $background-button;
+    width: 80%;
+    margin-top: 180px;
+    margin-left: 10px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
 
-        .exitUser {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: #B6F09C;
-            line-height: 25px;
-        }
+  .menuForm input {
+    width: 95%;
+    padding: 20px 5px;
+  }
 
-        .exitBlockImg {
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-        }
+  .menuForm button {
+    background-color: $border-primary;
+    color: $nodle-black-100;
+    border-radius: 5px;
+    padding: 5px;
+  }
+
+  a {
+    cursor: pointer;
+  }
+
+  .exit {
+    position: absolute;
+    bottom: 30px;
+    width: 80%;
+    left: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: $background-button;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+
+    .exitBlock {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
     }
 
-    .iconWrapper {
-        background-color: $background-button;
-        position: absolute;
-        top: 30px;
-        width: 80%;
-        left: 10px;
-        padding: 10px;
-        border-radius: 10px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    .exitUser {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #b6f09c;
+      line-height: 25px;
     }
 
-    .iconWrapper img {
-        width: 70px;
-        height: 70px;
-        border-radius: 50%;
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
+    .exitBlockImg {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
     }
-
-    .menuForm {
-        padding: 20px 10px;
-        background-color: $background-button;
-        width: 80%;
-        margin-top: 180px;
-        margin-left: 10px;
-        border-radius: 10px;
-        display: flex;
-        flex-direction: column;
-        gap: 30px;
-    }
-
-    .menuForm input {
-        width: 95%;
-        padding: 20px 5px;
-    }
-
-    .menuForm button {
-        background-color: $border-primary;
-        color: $nodle-black-100;
-        border-radius: 5px;
-        padding: 5px;
-    }
-
-    a {
-        cursor: pointer;
-    }
+  }
 }
