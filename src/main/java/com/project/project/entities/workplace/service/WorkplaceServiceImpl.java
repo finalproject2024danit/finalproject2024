@@ -7,6 +7,8 @@ import com.project.project.exceptions.WorkplaceNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class WorkplaceServiceImpl implements WorkplaceService {
@@ -22,5 +24,10 @@ public class WorkplaceServiceImpl implements WorkplaceService {
     public Workplace getWorkplaceById(long id) {
         return workplaceRepository.findById(id)
                 .orElseThrow(() -> new WorkplaceNotFoundException(WorkplaceStatus.WORKPLACE_NOT_FOUND.getMessage()));
+    }
+
+    @Override
+    public List<Workplace> getAllWorkplaces() {
+        return workplaceRepository.findAll();
     }
 }

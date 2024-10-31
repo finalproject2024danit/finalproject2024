@@ -1,7 +1,7 @@
 package com.project.project.entities.workplace.api;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.project.project.entities.user.api.dto.View;
+import com.project.project.entities.workplace.api.dto.View;
 import com.project.project.entities.workplace.Workplace;
 import com.project.project.entities.workplace.api.dto.ResponseWorkplaceDto;
 import com.project.project.entities.workplace.api.dto.WorkplaceMapper;
@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Log4j2
 @RestController
@@ -48,5 +50,19 @@ public class WorkplaceController {
         ResponseWorkplaceDto responseWorkplaceDto = WorkplaceMapper.INSTANCE.workplaceToResponseWorkplaceDto(workplace);
 
         return ResponseEntity.ok(responseWorkplaceDto);
+    }
+
+    @GetMapping("")
+    @JsonView(View.Admin.class)
+    public ResponseEntity<List<ResponseWorkplaceDto>> getAllWorkplaces() {
+        log.info("Trying to get all workplaces");
+
+        List<Workplace> allWorkplaces = workplaceService.getAllWorkplaces();
+
+        List<ResponseWorkplaceDto> workplacesDto = allWorkplaces.stream()
+                .map(WorkplaceMapper.INSTANCE::workplaceToResponseWorkplaceDto)
+                .toList();
+
+        return ResponseEntity.ok(workplacesDto);
     }
 }

@@ -2,7 +2,7 @@ package com.project.project.entities.user.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.project.project.dto.AbstractDto;
-import com.project.project.entities.residence.api.ResponseResidenceDto;
+import com.project.project.entities.residence.api.ResponseResidenceForUserDto;
 import com.project.project.util.Gender;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -49,11 +49,15 @@ public class ResponseUserAllDataDto extends AbstractDto {
     String photoData;
 
     @JsonView(View.Admin.class)
+    String workplace;
+
+    @JsonView(View.Admin.class)
+    ResponseResidenceForUserDto residence;
+
+    @JsonView(View.Admin.class)
     LocalDateTime createdDate;
 
     @JsonView(View.Admin.class)
     LocalDateTime lastModifiedDate;
 
-    @JsonView(View.Admin.class)
-    ResponseResidenceDto residence;
 }

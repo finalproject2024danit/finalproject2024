@@ -141,14 +141,17 @@ public class UserController {
     public ResponseEntity<ResponseUserAllDataDto> getAllUserInformationById(@PathVariable long id) {
         log.info("Trying to get all information about user id: {}", id);
 
-        ResponseUserAllDataDto userInfo = userService.findAllInformationAboutUser(id);
+        User user = userService.getUserById(id);
 
-        return ResponseEntity.ok(userInfo);
+        ResponseUserAllDataDto responseUserAllDataDto = UserMapper.INSTANCE.userToUserAllDataDto(user);
+
+        return ResponseEntity.ok(responseUserAllDataDto);
     }
 
     @GetMapping("/{userId}/friends")
     @JsonView(View.Admin.class)
     public List<ResponseUserDto> getFriendsByUserId(@PathVariable Long userId) {
+        log.info("Trying to get all friends by user id: {}", userId);
 
         List<User> friendsByUserId = userService.getFriendsByUserId(userId);
 

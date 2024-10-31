@@ -2,7 +2,6 @@ package com.project.project.entities.user.service;
 
 import com.project.project.entities.user.User;
 import com.project.project.entities.user.api.dto.RequestPatchUserDto;
-import com.project.project.entities.user.api.dto.ResponseUserAllDataDto;
 import com.project.project.entities.user.db.UserRepository;
 import com.project.project.entities.user.status.UserStatus;
 import com.project.project.exceptions.UserNotFoundException;
@@ -81,35 +80,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResponseUserAllDataDto findAllInformationAboutUser(long userId) {
-        ResponseUserAllDataDto user = userRepository.findAllInformationAboutUser(userId)
-                .orElseThrow(() -> new UserNotFoundException(UserStatus.USER_NOT_FOUND.getMessage()));
-
-        // Ручное сопоставление полей из User в ResponseUserAllDataDto
-        ResponseUserAllDataDto responseDto = new ResponseUserAllDataDto();
-        responseDto.setId(user.getId());
-        responseDto.setFirstName(user.getFirstName());
-        responseDto.setLastName(user.getLastName());
-        responseDto.setEmail(user.getEmail());
-        responseDto.setGender(user.getGender());
-        responseDto.setDateOfBirth(user.getDateOfBirth());
-        responseDto.setAvatar(user.getAvatar());
-        responseDto.setPhones(user.getPhones());
-        responseDto.setPhotoData(user.getPhotoData());
-        responseDto.setCreatedDate(user.getCreatedDate());
-        responseDto.setLastModifiedDate(user.getLastModifiedDate());
-
-        // Если у вас есть связь с Residence и вы хотите добавить ее в DTO, вам нужно сделать это здесь
-        // Например, если у вас есть метод getResidence у User:
-//        if (user.getResidence() != null) {
-//            responseDto.setResidencePlanet(user.getResidence().getPlanet());
-//            responseDto.setResidenceCountry(user.getResidence().getCountry());
-//            responseDto.setResidenceCity(user.getResidence().getCity());
-//        }
-
-        return responseDto;
-    }
-
     public List<User> getFriendsByUserId(Long userId) {
         return userRepository.findFriendsByUserId(userId);
     }
