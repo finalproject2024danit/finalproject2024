@@ -25,4 +25,5 @@ public interface UserMapper {
     @Mapping(source = "createdDate", target = "createdDate")
     @Mapping(source = "lastModifiedDate", target = "lastModifiedDate")
     ResponseUserDto userToUserDto(User user);
+
 }

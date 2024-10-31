@@ -1,4 +1,4 @@
-package com.project.project.entities.residence;
+package com.project.project.entities.user_residence;
 
 import com.project.project.AbstractEntity;
 import jakarta.persistence.Column;
@@ -21,17 +21,17 @@ import static lombok.AccessLevel.PRIVATE;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
-@Table(name = "residences")
+@Table(name = "user_residences")
 @FieldDefaults(level = PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor
-public class Residence extends AbstractEntity {
+public class UserResidence extends AbstractEntity {
 
-    String planet;
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
 
-    String country;
-
-    String city;
+    @Column(name = "residence_id", nullable = false)
+    private Long residenceId;
 
     @CreatedDate
     @Temporal(TIMESTAMP)

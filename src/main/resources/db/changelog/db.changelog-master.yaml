@@ -15,14 +15,16 @@ databaseChangeLog:
       file: db/changelog/changeset/create-comment-table.yaml
   - include:
       file: db/changelog/changeset/create-like-table.yaml
-#  - include:
-#      file: db/changelog/changeset/create-comment-like-table.yaml
   - include:
       file: db/changelog/changeset/create-user-group-table.yaml
   - include:
       file: db/changelog/changeset/create-group-post-table.yaml
   - include:
       file: db/changelog/changeset/create-news-table.yaml
+  - include:
+      file: db/changelog/changeset/create-residence-table.yaml
+  - include:
+      file: db/changelog/changeset/create-user-residence-table.yaml
   - include:
       file: db/changelog/changeset/insert-data-users.sql
   - include:
@@ -37,3 +39,7 @@ databaseChangeLog:
       file: db/changelog/changeset/insert-data-messages.sql
   - include:
       file: db/changelog/changeset/insert-data-news.sql
+  - include:
+      file: db/changelog/changeset/insert-data-residences.sql
+  - include:
+      file: db/changelog/changeset/insert-data-user-residences.sql
