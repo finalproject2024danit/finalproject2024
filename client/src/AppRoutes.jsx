@@ -7,9 +7,18 @@ import GroupPage from "./pages/GroupPage/GroupPage.jsx";
 import ChatPage from "./pages/ChatPage/ChatPage.jsx";
 import UsersPage from "./pages/UsersPage/UsersPage.jsx";
 // import AccountPage from "./pages/AccountPage/AccountPage.jsx"; !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-import ProfileInfo from "./pages/ProfilePage/ProfilePage.jsx";
+// import ProfilePage from "./pages/ProfilePage/ProfilePage.jsx";
 import UserPage from "./pages/UserPage/UserPage.jsx";
+import GeneralInformation from "./pages/ProfilePage/GeneralInformation/GeneralInformation.jsx";
+import PlaceOfResidence from "./pages/ProfilePage/PlaceOfResidence/PlaceOfResidence.jsx";
+import Hobbies from "./pages/ProfilePage/Hobbies/Hobbies.jsx";
+import Workplace from "./pages/ProfilePage/Workplace/Workplace.jsx";
+import PhotoLibrary from "./pages/ProfilePage/PhotoLibrary/PhotoLibrary.jsx";
 // import PrivateRoute from "./components/PrivateRoute.jsx";
+
+import Game1 from "./pages/Games/Game1/Game1.jsx";
+import Game2 from "./pages/Games/Game2/Game2.jsx";
+import Game3 from "./pages/Games/Game3/Game3.jsx";
 
 const AppRoutes = () => {
   return (
@@ -20,7 +29,7 @@ const AppRoutes = () => {
         path="/"
         element={
           // <PrivateRoute>
-            <HomePage />
+          <HomePage />
           // </PrivateRoute>
         }
       />
@@ -28,23 +37,29 @@ const AppRoutes = () => {
         path="/users"
         element={
           // <PrivateRoute>
-            <UsersPage />
+          <UsersPage />
           // </PrivateRoute>
         }
       />
+
       <Route
         path="/profile"
-        element={
-          // <PrivateRoute>
-            <ProfileInfo />
-          // </PrivateRoute>
-        }
-      />
+        // element={
+        //     <ProfilePage/>
+        // }
+      >
+        <Route path="general_information" element={<GeneralInformation />} />
+        <Route path="place_of_residence" element={<PlaceOfResidence />} />
+        <Route path="hobbies" element={<Hobbies />} />
+        <Route path="workplace" element={<Workplace />} />
+        <Route path="photo_library" element={<PhotoLibrary />} />
+      </Route>
+
       <Route
         path="/group"
         element={
           // <PrivateRoute>
-            <GroupPage />
+          <GroupPage />
           // </PrivateRoute>
         }
       />
@@ -52,7 +67,7 @@ const AppRoutes = () => {
         path="/chat"
         element={
           // <PrivateRoute>
-            <ChatPage />
+          <ChatPage />
           // </PrivateRoute>
         }
       />
@@ -60,10 +75,36 @@ const AppRoutes = () => {
         path="/user/:id"
         element={
           // <PrivateRoute>
-            <UserPage />
+          <UserPage />
           // </PrivateRoute>
         }
       />
+
+      <Route
+        path="/game1"
+        element={
+          // <PrivateRoute>
+          <Game1 />
+          // </PrivateRoute>
+        }
+      />
+      <Route
+        path="/game2"
+        element={
+          // <PrivateRoute>
+          <Game2 />
+          // </PrivateRoute>
+        }
+      />
+      <Route
+        path="/game3"
+        element={
+          // <PrivateRoute>
+          <Game3 />
+          // </PrivateRoute>
+        }
+      />
+
       {/* <Route
         path="/messenger"
         element={

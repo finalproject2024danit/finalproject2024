@@ -1,0 +1,79 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  background: linear-gradient(to bottom, #141e30, #243b55);
+  color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.content {
+  flex: 1;
+  background-color: rgba(20, 30, 48, 0.8);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.title {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+
+.hobbyList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.hobbyItem {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #1c2a3e;
+  border: 1px solid #394a6d;
+}
+
+.hobbyInput {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #1c2a3e;
+  color: #ffffff;
+  border: 1px solid #394a6d;
+}
+
+.hobbyText {
+  color: #ffffff;
+  flex-grow: 1;
+}
+
+.addButton,
+.editButton,
+.removeButton {
+  margin-right: 10px;
+  padding: 12px 20px;
+  border-radius: 8px;
+  background-color: #3b4e7e;
+  color: #ffffff;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.addButton:hover,
+.editButton:hover,
+.removeButton:hover {
+  background-color: #4a90e2;
+  transform: scale(1.05);
+}
+
+.editButton {
+  margin-top: 2rem;
+  align-self: flex-start;
+}
