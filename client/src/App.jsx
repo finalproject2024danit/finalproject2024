@@ -14,24 +14,15 @@ const App = () => {
       <LeftSidebar />     
       <div className="inner">
         <Header />
-        <div>
-          {/* <main> */}
-          <div className="mainContainer">
-            {/* <h1>FACEBOOK</h1> */}
+        <div>     
+          <div className="mainContainer">           
             <div className="menuSocial">
               <AppRoutes />
             </div>
             <RightSidebar />           
-          </div>
-
-          {/* </main> */}
+          </div>         
         </div>
-      </div>
-
-      {/* -------------------------------------------------------------------------- */}
-
-      {/* -------------------------------------------------------------------------- */}
-      {/* <Footer/> */}
+      </div> 
     </div>
   );
 };
