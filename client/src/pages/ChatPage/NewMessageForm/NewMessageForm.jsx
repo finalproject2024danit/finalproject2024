@@ -38,7 +38,7 @@ const NewMessageForm = ({ onSendMessage, selectedUser, filteredMessages }) => {
                 {msg.isOnline && <div className={styles.online}></div>}
               </div>
             )}
-            <p className={styles.text}>{msg.message}</p>
+            <p className={styles.text}>{msg.message || "No content available"}</p>
             {msg.isUser && <p className={styles.responseTime}> {msg.date}</p>}
           </div>
         ))}
@@ -51,7 +51,7 @@ const NewMessageForm = ({ onSendMessage, selectedUser, filteredMessages }) => {
           <ErrorMessage name="message" component="div" className={styles.error} />
         </div>
         <button type="submit" className={styles.submitBtn}>
-          Send Message
+        &#8593;{/* Upward arrow */}
         </button>
       </Form>
     </Formik>
@@ -74,3 +74,18 @@ NewMessageForm.propTypes = {
 };
 
 export default NewMessageForm;
+
+
+NewMessageForm.propTypes = {
+  onSendMessage: PropTypes.func.isRequired,
+  selectedUser: PropTypes.shape({
+    name: PropTypes.string,
+    image: PropTypes.string,
+    isOnline: PropTypes.bool,
+  }).isRequired,
+  filteredMessages: PropTypes.arrayOf(
+    PropTypes.shape({
+      content: PropTypes.string,  // Changed to optional
+    })
+  ).isRequired,
+};

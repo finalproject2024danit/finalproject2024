@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchMessages, selectUser, sendMessage } from "../../redux/slices/chatSlice";
+import { fetchMessages, selectUser, sendMessage, fetchTalks } from "../../redux/slices/chatSlice";
 import NewMessageForm from "./NewMessageForm/NewMessageForm";
 import MainContent from "../../components/MainContent/MainContent";
 import styles from "./ChatPage.module.scss";
@@ -8,7 +8,8 @@ import styles from "./ChatPage.module.scss";
 
 const ChatPage = () => {
   const dispatch = useDispatch();
-  const { messages, selectedUser, loading } = useSelector((state) => state.chat);
+  const { messages, selectedUser, loading , talks} = useSelector((state) => state.chat);
+  const {currentUser, setCurrentUser} = useState({id: 1}); 
 
   useEffect(() => {
     if (window.particlesJS) {
@@ -125,28 +126,43 @@ const ChatPage = () => {
     }
 }, [dispatch]); // This is where the useEffect closing brace goes
 
-  
-  useEffect(() => {
-    dispatch(fetchMessages());
-  }, [dispatch]);
+useEffect(() => {
+  // Fetch talks when the component mounts
+  dispatch(fetchTalks());
+}, [dispatch]);  
+
+useEffect(() => {
+  if (selectedUser) {
+      dispatch(fetchMessages({ userFrom: currentUser, userTo: selectedUser.id }));
+  }
+}, [selectedUser, dispatch]);
 
   const handleUserSelect = (user) => {
     dispatch(selectUser(user));
+    console.log("user in handleUserSelect", user);
   };
 
-  // const handleSendMessage = (message) => {
-  //   dispatch(sendMessage(message));
+  const handleSendMessage = (message) => {
+    dispatch(sendMessage(message));
+  };
+
+  // const handleSendMessage = (newMessageContent) => {
+  //   const newMessage = {
+  //     content: newMessageContent,
+  //     userFrom: currentUser,
+  //     userTo: selectedUser.id,
+  //   };
+  //   websocket.send(JSON.stringify(newMessage)); // Replace 'websocket' with your actual WebSocket instance
+  //   dispatch(sendMessage(newMessage));
   // };
-  const handleSendMessage = (newMessage) => {
-    dispatch(sendMessage(newMessage)); // Dispatch the action to send a message
-  };
-  
-  
-  
 
-  const filteredMessages = messages.filter((msg) => msg.user === selectedUser);
+  const filteredMessages = messages.filter(
+    (msg) => msg.userFrom === currentUser || msg.userTo === currentUser);
 console.log('Filtered Messages:', filteredMessages);
 
+// const uniqueUsers = Array.from(
+//   new Set(messages.flatMap((msg) => [msg.userFrom, msg.userTo]))
+// ).filter((user) => user !== currentUser);
 
   return (
     <MainContent title="Chat">
@@ -161,41 +177,47 @@ console.log('Filtered Messages:', filteredMessages);
             </div>
           </div>
           
-          {/* User List */}
+          {/* Unique User List */}
           {loading ? (
-            <p>Loading...</p>
-          ) : (
-            messages.map((msg) => (
+          <p>Loading...</p>
+        ) : (
+          talks.map((talk) => {
+            // Find the latest message with this user
+            return (
               <div
-                key={msg.id}
-                className={`${styles.discussion} ${msg.user === selectedUser ? styles.messageActive : ''}`}
-                onClick={() => handleUserSelect(msg.user)}
+                key={talk.id}
+                className={`${styles.discussion} ${talk.id === selectedUser?.id ? styles.messageActive : ''}`}
+                onClick={() => handleUserSelect({ id: talk.id })}
               >
-                <div className={styles.photo} style={{ backgroundImage: `url(${msg.userImage})` }}>
-                  {msg.isOnline && <div className={styles.online}></div>}
+                <div className={styles.photo} style={{ backgroundImage: `url(${talk.userImage})` }}>
+                  {talk.isOnline && <div className={styles.online}></div>}
                 </div>
                 <div className={styles.descContact}>
-                  <p className={styles.name}>{msg.user}</p>
-                  <p className={styles.message}>{msg.message}</p>
+                  <p className={styles.name}>{talk.user}</p>
+                  <p className={styles.message}>{talk.content}</p>
                 </div>
-                <div className={styles.timer}>{msg.date}</div>
+                <div className={styles.timer}>{new Date(talk.date).toLocaleTimeString()}</div>
               </div>
-            ))
-          )}
+            );
+          })
+        )}
         </section>
         
         {/* Chat Section */}
-       
         <section className={styles.chat}>
-            <div  id="particles-js" className={styles.headerChat}>
+            <div id="particles-js"  className={styles.headerChat}>
               <i className={`fa fa-user-o ${styles.icon}`} aria-hidden="true"></i>
-              {selectedUser && <p className={styles.name}>{selectedUser}</p>}
+              {selectedUser && <p className={styles.name}>{selectedUser.firstName} {selectedUser.lastName}</p>}
               <i className={`fa fa-ellipsis-h ${styles.icon} ${styles.clickable} ${styles.right}`} aria-hidden="true"></i>
             </div>
             
             {/* Messages History */}
             <div className={styles.messagesHistory}>
-            {/* Render filtered messages here if needed */}
+            {filteredMessages.map((msg) => (
+                            <div key={msg.id} className={styles.messageItem}>
+                                <p><strong>{msg.userFrom === currentUser ? "You" : selectedUser.firstName}:</strong> {msg.content}</p>
+                            </div>
+                        ))}
           </div>
            
             {/* New Message Form for Responding to Messages */}

@@ -2,6 +2,15 @@
 
 .messagesChat {
     padding: 25px 35px;
+
+
+  @media (max-width: 768px) { // Tablet styles
+    padding: 20px 25px;
+  }
+
+  @media (max-width: 480px) { // iPhone styles
+    padding: 15px 20px;
+  }
   }
   
 
@@ -9,6 +18,11 @@
     display:flex;
     align-items: center;
     margin-bottom: 8px;
+
+    &.textOnly { // Style for messages without photo
+      justify-content: flex-end;
+    }
+  
   }
   
 .messagesChat .message .photo {
@@ -20,6 +34,19 @@
       background-position: center;
       background-size: cover;
       background-repeat: no-repeat;
+      position: relative;
+
+      .online {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 10px;
+        height: 10px;
+        background-color: #4CAF50;
+        border-radius: 50%;
+        border: 2px solid #E6E7ED;
+      }
+
   }
   
 .messagesChat .text {
@@ -27,6 +54,25 @@
     background-color: $nodle-black-600;
     padding: 15px;
     border-radius: 12px;
+    font-size: 10pt;
+    max-width: 60%;
+
+    @media (max-width: 768px) { // Tablet styles
+      padding: 12px;
+      font-size: 9pt;
+    }
+  
+    @media (max-width: 480px) { // iPhone styles
+      padding: 10px;
+      font-size: 8pt;
+      max-width: 75%; // Increase width for smaller screens
+    }
+  }
+
+  .messagesChat .responseTime {
+    font-size: 0.8rem;
+    color: #aaa;
+    margin-left: 5px; // Space between message and time
   }
 
   .form {
@@ -50,6 +96,15 @@
     border-radius: 8px;
     resize: none; // Prevent resizing
     font-family: inherit; // Ensure consistent font
+
+    @media (max-width: 768px) { // Tablet styles
+      height: 50px;
+    }
+  
+    @media (max-width: 480px) { // iPhone styles
+      height: 40px;
+      font-size: 14px; // Adjust font size for smaller screens
+    }
   }
   
   .error {
@@ -61,17 +116,37 @@
   .submitBtn {
     background-color: $nodle-black-600;
     color: white; // Button text color
+    font-weight: 1000;
     padding: 8px 15px; // Smaller padding for a smaller button
     border: none;
-    border-radius: 8px;
+    border-radius: 50%;
     cursor: pointer;
     transition: background-color 0.3s;
     position: absolute; // Positioning the button in the right corner
     bottom: 15px; // Space from the bottom
     right: 15px; // Space from the right
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Add a shadow for distinction
+    width: 40px; // Fixed width for circular shape
+    height: 40px; // Fixed height for circular shape
+    display: flex; // Center icon vertically and horizontally
+    align-items: center;
+    justify-content: center;
   
     &:hover {
       background-color: $nodle-black-400; // Darker shade on hover
+    }
+
+    @media (max-width: 768px) { // Tablet styles
+      padding: 7px 12px;
+      font-size: 14px; // Adjust font size for tablets
+      width: 35px;
+      height: 35px;
+    }
+  
+    @media (max-width: 480px) { // iPhone styles
+      padding: 6px 10px;
+      font-size: 12px; // Adjust font size for iPhones
+      width: 30px;
+      height: 30px;
     }
   }
