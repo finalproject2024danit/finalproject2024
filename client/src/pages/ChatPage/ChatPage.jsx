@@ -201,32 +201,11 @@ console.log('Filtered Messages:', filteredMessages);
             );
           })
         )}
-
-          {/* {loading ? (
-            <p>Loading...</p>
-          ) : (
-            messages.map((msg) => (
-              <div
-                key={msg.id}
-                className={`${styles.discussion} ${msg.user === selectedUser ? styles.messageActive : ''}`}
-                onClick={() => handleUserSelect(msg.user)}
-              >
-                <div className={styles.photo} style={{ backgroundImage: `url(${msg.userImage})` }}>
-                  {msg.isOnline && <div className={styles.online}></div>}
-                </div>
-                <div className={styles.descContact}>
-                  <p className={styles.name}>{msg.user}</p>
-                  <p className={styles.message}>{msg.message}</p>
-                </div>
-                <div className={styles.timer}>{msg.date}</div>
-              </div>
-            ))
-          )} */}
         </section>
         
         {/* Chat Section */}
         <section className={styles.chat}>
-            <div  id="particles-js" className={styles.headerChat}>
+            <div id="particles-js"  className={styles.headerChat}>
               <i className={`fa fa-user-o ${styles.icon}`} aria-hidden="true"></i>
               {selectedUser && <p className={styles.name}>{selectedUser.firstName} {selectedUser.lastName}</p>}
               <i className={`fa fa-ellipsis-h ${styles.icon} ${styles.clickable} ${styles.right}`} aria-hidden="true"></i>

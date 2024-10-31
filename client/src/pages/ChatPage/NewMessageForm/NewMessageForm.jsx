@@ -51,7 +51,7 @@ const NewMessageForm = ({ onSendMessage, selectedUser, filteredMessages }) => {
           <ErrorMessage name="message" component="div" className={styles.error} />
         </div>
         <button type="submit" className={styles.submitBtn}>
-          Send Message
+        &#8593;{/* Upward arrow */}
         </button>
       </Form>
     </Formik>
