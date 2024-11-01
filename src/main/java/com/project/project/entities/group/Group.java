@@ -35,6 +35,9 @@ public class Group extends AbstractEntity {
     @Column(nullable = false)
     Boolean isOpen;
 
+    @Column
+    String photo;
+
     @JsonManagedReference
     @ManyToMany(mappedBy = "groups")
     Set<User> users;

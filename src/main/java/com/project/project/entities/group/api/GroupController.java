@@ -1,13 +1,15 @@
 package com.project.project.entities.group.api;
 
+
+import com.fasterxml.jackson.annotation.JsonView;
 import com.project.project.entities.group.Group;
-import com.project.project.entities.group.api.dto.GroupMapper;
-import com.project.project.entities.group.api.dto.RequestGroupDto;
-import com.project.project.entities.group.api.dto.ResponseGroupDto;
-import com.project.project.entities.group.api.dto.UserGroupDto;
+import com.project.project.entities.group.api.dto.*;
 import com.project.project.entities.group.service.GroupServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +25,25 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GroupController {
     private final GroupServiceImpl groupService;
+
+    @GetMapping("/filter")
+    @JsonView(View.Admin.class)
+    public ResponseEntity<List<ResponseGroupDto>> findAllFiltered(@RequestParam(defaultValue = "0") int startPage,
+                                                                  @RequestParam(defaultValue = "10") int perPage,
+                                                                  @RequestParam(defaultValue = "id") String sortBy,
+                                                                  @RequestParam(defaultValue = "asc") String sortDirection) {
+        log.info("Trying to get all groups with parameters");
+        Sort.Direction direction = Sort.Direction.fromString(sortDirection);
+        Pageable pageable = PageRequest.of(startPage, perPage, Sort.by(direction, sortBy));
+
+        List<ResponseGroupDto> groups = groupService.findAllFiltered(pageable).stream()
+                .map(GroupMapper.INSTANCE::groupToResponseGroupDTO).toList();
+        if (groups.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(groups);
+        }
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<ResponseGroupDto> getGroupById(@PathVariable("id") Long groupId) {
@@ -74,7 +95,7 @@ public class GroupController {
     }
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<ResponseGroupDto> getGroupById(@PathVariable String name) {
+    public ResponseEntity<ResponseGroupDto> getGroupByName(@PathVariable String name) {
         log.info("Trying to get group by name");
 
         Group group = groupService.getGroupByName(name);

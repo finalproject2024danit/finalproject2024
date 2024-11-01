@@ -12,8 +12,7 @@ public interface GroupMapper {
     @Mapping(source = "id", target = "id")
     @Mapping(source = "name", target = "name")
     @Mapping(source = "isOpen", target = "isOpen")
-    @Mapping(source = "users", target = "users")
-    @Mapping(source = "posts", target = "posts")
+    @Mapping(source = "photo", target = "photo")
     @Mapping(source = "createdDate", target = "createdDate")
     @Mapping(source = "lastModifiedDate", target = "lastModifiedDate")
     ResponseGroupDto groupToResponseGroupDTO(Group group);
