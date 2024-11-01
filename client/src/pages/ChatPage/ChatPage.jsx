@@ -9,7 +9,9 @@ import styles from "./ChatPage.module.scss";
 const ChatPage = () => {
   const dispatch = useDispatch();
   const { messages, selectedUser, loading , talks} = useSelector((state) => state.chat);
-  const {currentUser, setCurrentUser} = useState({id: 1}); 
+  const {currentUser} = useState({id: 1}); 
+
+  // , setCurrentUser я тут убрал эту переменную отсюда   const {currentUser, setCurrentUser} = useState({id: 1}); она нигде не используется и ругается lint
 
   useEffect(() => {
     if (window.particlesJS) {

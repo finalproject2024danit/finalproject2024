@@ -84,3 +84,49 @@
 .suggestions li:hover {
   background-color: #f0f0f0;
 }
+
+/* Media Queries for Responsive Design */
+@media (max-width: 1024px) {
+  .container {
+    padding: 20px; 
+  }
+
+  .title {
+    font-size: 1.6rem; 
+  }
+
+  .button {
+    padding: 10px 15px; 
+  }
+
+  .input {
+    padding: 8px; 
+  }
+}
+
+@media (max-width: 767px) {
+  .container {
+    padding: 15px; 
+  }
+
+  .title {
+    font-size: 1.4rem; 
+  }
+
+  .form {
+    gap: 0.5rem; 
+  }
+
+  .input {
+    padding: 6px; 
+  }
+
+  .button {
+    width: 100%; 
+    padding: 10px; 
+  }
+
+  .suggestions {
+    width: 100%; 
+  }
+}
