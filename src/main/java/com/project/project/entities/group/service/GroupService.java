@@ -1,12 +1,16 @@
 package com.project.project.entities.group.service;
 
 import com.project.project.entities.group.Group;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
 public interface GroupService {
+
+    Page<Group> findAllFiltered(Pageable pageable);
 
     Group getGroupById(Long groupId);
 

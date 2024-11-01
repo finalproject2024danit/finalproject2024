@@ -24,6 +24,11 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
+                  name: photo
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: true
+              - column:
                   name: created_date
                   type: TIMESTAMP
                   defaultValueComputed: CURRENT_TIMESTAMP
