@@ -95,28 +95,28 @@ public class GroupController {
     }
 
     @GetMapping("/name/{name}")
-    public ResponseEntity<ResponseGroupDto> getGroupByName(@PathVariable String name) {
+    public ResponseEntity<ResponseGroupFullInfoDto> getGroupByName(@PathVariable String name) {
         log.info("Trying to get group by name");
 
         Group group = groupService.getGroupByName(name);
 
-        ResponseGroupDto responseGroupDto = GroupMapper.INSTANCE.groupToResponseGroupDTO(group);
+        ResponseGroupFullInfoDto responseGroupFullInfoDto = GroupMapper.INSTANCE.groupToResponseGroupFullInfoDTO(group);
 
-        return ResponseEntity.ok(responseGroupDto);
+        return ResponseEntity.ok(responseGroupFullInfoDto);
     }
 
     @GetMapping("/search/{name}")
-    public ResponseEntity<List<ResponseGroupDto>> searchGroupsByName(@PathVariable String name) {
+    public ResponseEntity<List<ResponseGroupFullInfoDto>> searchGroupsByName(@PathVariable String name) {
         List<Group> groups = groupService.searchGroupsByName(name);
 
         if (groups.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
 
-        List<ResponseGroupDto> responseGroupsDto = groups.stream()
-                .map(GroupMapper.INSTANCE::groupToResponseGroupDTO)
+        List<ResponseGroupFullInfoDto> responseGroupFullInfoDto = groups.stream()
+                .map(GroupMapper.INSTANCE::groupToResponseGroupFullInfoDTO)
                 .toList();
 
-        return ResponseEntity.ok(responseGroupsDto);
+        return ResponseEntity.ok(responseGroupFullInfoDto);
     }
 }
