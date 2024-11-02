@@ -1,4 +1,4 @@
-.container {
+.container {  
   display: flex;
   padding: 30px;
   background: linear-gradient(to bottom, #141e30, #243b55);
@@ -58,7 +58,7 @@
 }
 
 .form {
-  width: 98%;
+  width: 100%;
   padding: 20px;
   background-color: rgba(20, 30, 48, 0.8);
   border-radius: 10px;
@@ -126,4 +126,99 @@
 
 .profileMenu a:hover {
   color: #4a90e2;
+}
+
+/* Медиазапросы для планшетов */
+@media (max-width: 1024px) {
+  .container {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .sidebar {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+
+  .avatar {
+    width: 120px;
+    height: 120px;
+  }
+
+  .userInfo {
+    font-size: 0.85rem;
+  }
+
+  .form {
+    padding: 15px;
+  }
+
+  .label {
+    font-size: 1rem;
+  }
+
+  .input {
+    padding: 8px;
+    margin-bottom: 15px;
+  }
+
+  .button {
+    padding: 10px 15px;
+    margin: 10px 5px;
+  }
+
+  .profileMenu {
+    flex-direction: column;
+    padding: 10px;
+  }
+}
+
+/* Медиазапросы для мобильных устройств */
+@media (max-width: 767px) {
+  .container {
+    padding: 15px;
+  }
+
+  .sidebar {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .avatar {
+    width: 100px;
+    height: 100px;
+  }
+
+  .userInfo {
+    font-size: 0.8rem;
+    padding: 8px;
+  }
+
+  .form {
+    padding: 10px;
+  }
+
+  .label {
+    font-size: 0.9rem;
+  }
+
+  .input {
+    padding: 8px;
+    margin-bottom: 15px;
+  }
+
+  .button {
+    padding: 8px 12px;
+    margin: 8px 4px;
+  }
+
+  .profileMenu {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .profileMenu a {
+    margin: 5px 0;
+  }
 }

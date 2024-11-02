@@ -20,6 +20,20 @@
   font-size: 1.8rem;
   margin-bottom: 1rem;
   color: #ffffff;
+  text-align: center;
+}
+
+.section {
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: rgba(30, 40, 60, 0.8);
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #ffffff;
 }
 
 .hobbyList {
@@ -36,6 +50,11 @@
   border-radius: 8px;
   background-color: #1c2a3e;
   border: 1px solid #394a6d;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #253243;
+  }
 }
 
 .hobbyInput {
@@ -45,6 +64,12 @@
   background-color: #1c2a3e;
   color: #ffffff;
   border: 1px solid #394a6d;
+  transition: border-color 0.3s;
+
+  &:focus {
+    border-color: #4a90e2;
+    outline: none;
+  }
 }
 
 .hobbyText {
@@ -64,13 +89,19 @@
   cursor: pointer;
   border: none;
   transition: background-color 0.3s, transform 0.2s;
+
+  &:hover {
+    background-color: #4a90e2;
+    transform: scale(1.05);
+  }
 }
 
-.addButton:hover,
-.editButton:hover,
-.removeButton:hover {
-  background-color: #4a90e2;
-  transform: scale(1.05);
+.removeButton {
+  background-color: #ff6b6b;
+
+  &:hover {
+    background-color: #ff4d4d;
+  }
 }
 
 .editButton {

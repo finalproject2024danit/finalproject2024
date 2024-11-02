@@ -1,57 +1,92 @@
 @import '../../App.scss';
 
-// ChatPage.module.scss
 .layout {
-    display: flex;
-    // height: 100vh;
+  display: flex;
+  // height: 100vh;
+}
+
+.mainContent {
+  flex: 1;
+  padding: 25px;
+  background-color: #1c1f2a; /* Adjust this according to your theme */
+  color: white;
+}
+
+.rightSidebar {
+  width: 250px;
+  background-color: #282c34;
+  padding: 10px;
+  color: white;
+}
+
+.mainBox {
+  // position: fixed;
+  margin-top: 180px;
+  width: 85%;
+  height: 100%;
+  padding: 0 10px;
+  overflow-y: auto; /* вертикальний скрол */
+  overflow-x: hidden; /* приховати горизонтальний скрол (опціонально) */
+}
+
+.mainBox::-webkit-scrollbar {
+  width: 8px; /* Вузький скролбар */
+}
+
+.mainBox::-webkit-scrollbar-track {
+  background: #2f2f2f; /* Темний фон для скролбару */
+}
+
+.mainBox::-webkit-scrollbar-thumb {
+  background-color: #555; /* Темніший "повзунок" */
+  border-radius: 10px; /* Закруглені кути */
+  border: 2px solid #2f2f2f; /* Простір між скролом і треком */
+}
+
+/* Стиль для Firefox */
+.mainBox {
+  scrollbar-width: thin; /* Вузький скролбар */
+  scrollbar-color: #555 #2f2f2f; /* Темний повзунок і темний трек */
+}
+
+/* Media Queries for Responsive Design */
+@media (max-width: 1024px) {
+  .layout {
+    flex-direction: column; /* Stack items vertically */
   }
-  
+
   .mainContent {
-    flex: 1;
-    padding: 25px;
-    background-color: #1c1f2a; /* Adjust this according to your theme */
-    color: white;
+    padding: 20px; /* Reduce padding for smaller screens */
   }
-  
+
   .rightSidebar {
-    width: 250px;
-    background-color: #282c34;
-    padding: 10px;
-    color: white;
+    width: 100%; /* Full width on smaller screens */
+    padding: 15px; /* Adjust padding */
   }
 
   .mainBox {
-    // position: fixed;
-    margin-top: 180px;
-    width: 85%;
-    height: 100%;
-    padding: 0 10px;
-    // top: 180px;
-    // right: 11%;
+    width: 90%; /* Increase width slightly */
+    margin-top: 150px; /* Adjust margin to keep it centered */
+  }
+}
 
-    // width: 300px; /* ширина блока */
-    // height: 200px; /* висота блока */
-    overflow-y: scroll; /* вертикальний скрол */
-    overflow-x: hidden; /* приховати горизонтальний скрол (опціонально) */
-    overflow: auto;
+@media (max-width: 767px) {
+  .layout {
+    flex-direction: column; /* Stack items vertically */
   }
 
-  .mainBox::-webkit-scrollbar {
-    width: 8px; /* Вузький скролбар */
+  .mainContent {
+    padding: 15px; /* Further reduce padding */
   }
-  
-  .mainBox::-webkit-scrollbar-track {
-    background: #2f2f2f; /* Темний фон для скролбару */
+
+  .rightSidebar {
+    width: 100%; /* Full width for mobile */
+    padding: 10px; /* Reduce padding */
+    margin-bottom: 20px; /* Add margin at the bottom for spacing */
   }
-  
-  .mainBox::-webkit-scrollbar-thumb {
-    background-color: #555; /* Темніший "повзунок" */
-    border-radius: 10px; /* Закруглені кути */
-    border: 2px solid #2f2f2f; /* Простір між скролом і треком */
-  }
-  
-  /* Стиль для Firefox */
+
   .mainBox {
-    scrollbar-width: thin; /* Вузький скролбар */
-    scrollbar-color: #555 #2f2f2f; /* Темний повзунок і темний трек */
+    width: 95%; /* Almost full width */
+    margin-top: 120px; /* Adjust margin to keep it centered */
   }
+}
