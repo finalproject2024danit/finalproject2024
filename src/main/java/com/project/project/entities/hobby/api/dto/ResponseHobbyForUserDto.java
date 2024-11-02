@@ -1,7 +1,7 @@
-package com.project.project.entities.residence.api;
+package com.project.project.entities.hobby.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.project.project.entities.user.api.dto.View;
+import com.project.project.dto.AbstractDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,19 +10,20 @@ import lombok.experimental.FieldDefaults;
 
 import static lombok.AccessLevel.PRIVATE;
 
-
 @FieldDefaults(level = PRIVATE)
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ResponseResidenceForUserDto {
-    @JsonView(View.Admin.class)
-    String planet;
+public class ResponseHobbyForUserDto extends AbstractDto {
 
     @JsonView(View.Admin.class)
-    String country;
+    String language;
 
     @JsonView(View.Admin.class)
-    String city;
+    String pet;
+
+    @JsonView(View.Admin.class)
+    String interest;
+
 }
