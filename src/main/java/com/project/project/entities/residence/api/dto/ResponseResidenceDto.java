@@ -8,6 +8,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDateTime;
+
 import static lombok.AccessLevel.PRIVATE;
 
 
@@ -18,6 +20,9 @@ import static lombok.AccessLevel.PRIVATE;
 @Data
 public class ResponseResidenceDto extends AbstractDto {
     @JsonView(View.Admin.class)
+    Long id;
+
+    @JsonView(View.Admin.class)
     String planet;
 
     @JsonView(View.Admin.class)
@@ -25,4 +30,10 @@ public class ResponseResidenceDto extends AbstractDto {
 
     @JsonView(View.Admin.class)
     String city;
+
+    @JsonView(com.project.project.entities.hobby.api.dto.View.Admin.class)
+    LocalDateTime createdDate;
+
+    @JsonView(com.project.project.entities.hobby.api.dto.View.Admin.class)
+    LocalDateTime lastModifiedDate;
 }

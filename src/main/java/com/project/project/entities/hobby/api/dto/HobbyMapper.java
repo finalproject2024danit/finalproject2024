@@ -9,7 +9,9 @@ import org.mapstruct.factory.Mappers;
 public interface HobbyMapper {
     HobbyMapper INSTANCE = Mappers.getMapper(HobbyMapper.class);
 
-    @Mapping(target = "id", ignore = true)
+    @Mapping(source = "language", target = "language")
+    @Mapping(source = "pet", target = "pet")
+    @Mapping(source = "interest", target = "interest")
     Hobby requestHobbyDtoToHobby(RequestHobbyDto requestHobbyDto);
 
     @Mapping(source = "id", target = "id")
