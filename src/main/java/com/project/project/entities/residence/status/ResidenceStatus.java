@@ -1,13 +1,13 @@
-package com.project.project.entities.hobby.status;
+package com.project.project.entities.residence.status;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Getter
-public enum HobbyStatus {
+public enum ResidenceStatus {
     SUCCESS("Success operation."),
-    HOBBY_NOT_FOUND("Hobby not found."),
+    RESIDENCE_NOT_FOUND("Residence not found."),
     UNEXPECTED("An unexpected error occurred.");
 
     private final String message;

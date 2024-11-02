@@ -2,11 +2,12 @@ package com.project.project.entities.user.db;
 
 import com.project.project.entities.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
     @Query(value = "SELECT * FROM users WHERE first_name ILIKE CONCAT('%', ?1, '%')", nativeQuery = true)
     List<User> searchByFirstName(String firstName);
 
