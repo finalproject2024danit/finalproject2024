@@ -1,7 +1,6 @@
-package com.project.project.entities.residence.api;
+package com.project.project.entities.residence.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.project.project.dto.AbstractDto;
 import com.project.project.entities.user.api.dto.View;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,7 +16,7 @@ import static lombok.AccessLevel.PRIVATE;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ResponseResidenceDto extends AbstractDto {
+public class ResponseResidenceForUserDto {
     @JsonView(View.Admin.class)
     String planet;
 

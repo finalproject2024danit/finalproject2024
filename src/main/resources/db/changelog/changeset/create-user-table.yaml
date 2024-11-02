@@ -56,6 +56,9 @@ databaseChangeLog:
                   name: residence_id
                   type: BIGINT
               - column:
+                  name: hobby_id
+                  type: BIGINT
+              - column:
                   name: created_date
                   type: TIMESTAMP
                   defaultValueComputed: CURRENT_TIMESTAMP

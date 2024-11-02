@@ -65,6 +65,8 @@ public class UserController {
     @GetMapping("/create")
     @JsonView(View.Admin.class)
     public ResponseEntity<ResponseUserDto> addUser(@Valid @RequestBody AddUserModel addUserModel) {
+        log.info("Trying to create new user");
+
         User user = new User();
         user.setFirstName(addUserModel.firstName());
         user.setLastName(addUserModel.lastName());
@@ -124,7 +126,7 @@ public class UserController {
 
         String lastName = nameParts.length > 1 ? nameParts[1] : "";
 
-        if (lastName == "") {
+        if (lastName.isEmpty()) {
             List<User> users = userService.searchByFirstName(firstName);
             return users.stream()
                     .map(UserMapper.INSTANCE::userToUserDto)
@@ -137,7 +139,6 @@ public class UserController {
     }
 
     @GetMapping("/user_all_info/{id}")
-    @JsonView(View.Admin.class)
     public ResponseEntity<ResponseUserAllDataDto> getAllUserInformationById(@PathVariable long id) {
         log.info("Trying to get all information about user id: {}", id);
 
