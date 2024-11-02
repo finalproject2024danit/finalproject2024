@@ -139,6 +139,7 @@ public class UserController {
     }
 
     @GetMapping("/user_all_info/{id}")
+//    @JsonView(View.Admin.class)
     public ResponseEntity<ResponseUserAllDataDto> getAllUserInformationById(@PathVariable long id) {
         log.info("Trying to get all information about user id: {}", id);
 
