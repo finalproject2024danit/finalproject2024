@@ -15,5 +15,9 @@ import static lombok.AccessLevel.PRIVATE;
 @Data
 public class RequestHobbyDto {
 
-    Long id;
+    String language;
+
+    String pet;
+
+    String interest;
 }
