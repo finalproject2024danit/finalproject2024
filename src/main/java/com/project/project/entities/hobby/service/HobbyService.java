@@ -7,9 +7,6 @@ import org.springframework.stereotype.Repository;
 public interface HobbyService {
     Hobby getHobbyById(Long id);
 
-    Hobby updateHobbyLanguage(Long id, String language);
+    Hobby updateHobby(Long id, String language, String pet, String interest);
 
-    Hobby updateHobbyPet(Long id, String pet);
-
-    Hobby updateHobbyInterest(Long id, String interest);
 }

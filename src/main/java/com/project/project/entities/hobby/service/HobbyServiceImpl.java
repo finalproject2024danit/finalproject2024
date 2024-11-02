@@ -21,23 +21,19 @@ public class HobbyServiceImpl implements HobbyService {
     }
 
     @Override
-    public Hobby updateHobbyLanguage(Long id, String language) {
+    public Hobby updateHobby(Long id, String language, String pet, String interest) {
         Hobby hobby = getHobbyById(id);
-        hobby.setLanguage(language);
-        return hobbyRepository.save(hobby);
-    }
 
-    @Override
-    public Hobby updateHobbyPet(Long id, String pet) {
-        Hobby hobby = getHobbyById(id);
-        hobby.setPet(pet);
-        return hobbyRepository.save(hobby);
-    }
+        if (language != null) {
+            hobby.setLanguage(language);
+        }
+        if (pet != null) {
+            hobby.setPet(pet);
+        }
+        if (interest != null) {
+            hobby.setInterest(interest);
+        }
 
-    @Override
-    public Hobby updateHobbyInterest(Long id, String interest) {
-        Hobby hobby = getHobbyById(id);
-        hobby.setInterest(interest);
         return hobbyRepository.save(hobby);
     }
 }
