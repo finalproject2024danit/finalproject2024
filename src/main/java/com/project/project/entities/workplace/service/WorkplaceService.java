@@ -7,10 +7,12 @@ import java.util.List;
 
 @Repository
 public interface WorkplaceService {
-    Workplace addWorkplace(Workplace workplace);
+    Workplace addWorkplace(String name);
 
     Workplace getWorkplaceById(long id);
 
     List<Workplace> getAllWorkplaces();
+
+    Workplace updateWorkplace(long userId, long id, String name);
 
 }

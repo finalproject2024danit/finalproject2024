@@ -62,7 +62,7 @@ public class UserController {
         return ResponseEntity.ok(responseDto);
     }
 
-    @GetMapping("/create")
+    @PostMapping("/create")
     @JsonView(View.Admin.class)
     public ResponseEntity<ResponseUserDto> addUser(@Valid @RequestBody AddUserModel addUserModel) {
         log.info("Trying to create new user");
