@@ -1,6 +1,7 @@
 package com.project.project.entities.workplace.api;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.project.project.entities.workplace.api.dto.RequestUpdateWorkplaceDto;
 import com.project.project.entities.workplace.api.dto.View;
 import com.project.project.entities.workplace.Workplace;
 import com.project.project.entities.workplace.api.dto.ResponseWorkplaceDto;
@@ -38,14 +39,12 @@ public class WorkplaceController {
         return ResponseEntity.ok(responseWorkplaceDto);
     }
 
-    @GetMapping("/create")
+    @PostMapping("/create")
     @JsonView(View.Admin.class)
     public ResponseEntity<ResponseWorkplaceDto> addWorkplace(@Valid @RequestBody AddWorkplaceModel addWorkplaceModel) {
-        log.info("Trying to add workplace");
-        Workplace workplace = new Workplace();
-        workplace.setName(addWorkplaceModel.name());
+        log.info("Trying to create new workplace");
 
-        workplaceService.addWorkplace(workplace);
+        Workplace workplace = workplaceService.addWorkplace(addWorkplaceModel.name());
 
         ResponseWorkplaceDto responseWorkplaceDto = WorkplaceMapper.INSTANCE.workplaceToResponseWorkplaceDto(workplace);
 
@@ -65,4 +64,17 @@ public class WorkplaceController {
 
         return ResponseEntity.ok(workplacesDto);
     }
+
+    @PutMapping("/update")
+    @JsonView(View.Admin.class)
+    public ResponseEntity<ResponseWorkplaceDto> updateWorkplace(@Valid @RequestBody RequestUpdateWorkplaceDto requestUpdateWorkplaceDto) {
+        log.info("Trying to update workplace");
+
+        Workplace workplace = workplaceService.updateWorkplace(requestUpdateWorkplaceDto.getUserId(), requestUpdateWorkplaceDto.getId(), requestUpdateWorkplaceDto.getName());
+
+        ResponseWorkplaceDto responseWorkplaceDto = WorkplaceMapper.INSTANCE.workplaceToResponseWorkplaceDto(workplace);
+
+        return ResponseEntity.ok(responseWorkplaceDto);
+    }
+
 }
