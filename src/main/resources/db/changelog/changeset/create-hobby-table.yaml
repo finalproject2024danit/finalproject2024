@@ -1,0 +1,42 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-hobbies
+      author: Viktor Lytvynenko
+      changes:
+        - createTable:
+            tableName: hobbies
+            columns:
+              - column:
+                  name: id
+                  type: SERIAL
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: language
+                  type: TEXT
+                  constraints:
+                    nullable: true
+              - column:
+                  name: pet
+                  type: TEXT
+                  constraints:
+                    nullable: true
+              - column:
+                  name: interest
+                  type: TEXT
+                  constraints:
+                    nullable: true
+              - column:
+                  name: created_date
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_modified_date
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+                  constraints:
+                    nullable: false

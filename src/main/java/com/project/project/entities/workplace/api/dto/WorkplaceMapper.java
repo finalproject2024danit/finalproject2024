@@ -11,9 +11,12 @@ public interface WorkplaceMapper {
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "name", target = "name")
-    @Mapping(source = "users", target = "users")
     ResponseWorkplaceDto workplaceToResponseWorkplaceDto(Workplace workplace);
 
     @Mapping(source = "id", target = "id")
     Workplace requestWorkplaceDtoToWorkplace(RequestWorkplaceDto requestWorkplaceDto);
+
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "name", target = "name")
+    Workplace requestUpdateWorkplaceDtoToWorkplace(RequestUpdateWorkplaceDto requestUpdateWorkplaceDto);
 }

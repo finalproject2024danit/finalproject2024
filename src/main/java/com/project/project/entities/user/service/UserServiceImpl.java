@@ -64,17 +64,24 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    @Override
     public List<User> searchByFirstName(String firstName) {
         return userRepository.searchByFirstName(firstName);
     }
 
+    @Override
     public List<User> searchByFirstNameAndLastName(String firstName, String lastName) {
         return userRepository.searchByFirstNameAndLastName(firstName, lastName);
     }
 
+    @Override
     public List<User> findAllById(Iterable<Long> userIds) {
         return userRepository.findAllById(userIds);
     }
 
+    @Override
+    public List<User> getFriendsByUserId(Long userId) {
+        return userRepository.findFriendsByUserId(userId);
+    }
 
 }

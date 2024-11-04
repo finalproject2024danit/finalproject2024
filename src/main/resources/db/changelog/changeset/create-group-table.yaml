@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: create-group
+      id: create-groups
       author: Viktor Lytvynenko
       changes:
         - createTable:
@@ -23,6 +23,11 @@ databaseChangeLog:
                   type: BOOLEAN
                   constraints:
                     nullable: false
+              - column:
+                  name: photo
+                  type: VARCHAR(255)
+                  constraints:
+                    nullable: true
               - column:
                   name: created_date
                   type: TIMESTAMP

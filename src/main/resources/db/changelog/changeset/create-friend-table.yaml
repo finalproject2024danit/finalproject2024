@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: create-friend
+      id: create-friends
       author: Viktor Lytvynenko
       changes:
         - createTable:

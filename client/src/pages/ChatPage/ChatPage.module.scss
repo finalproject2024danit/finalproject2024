@@ -18,15 +18,15 @@
 
    /* === Tablet Styles === */
    @media (max-width: 1024px) {
-    height: auto; // Adjust height for tablet
-    padding: 10px; // Add padding for tablet
+    height: auto; 
+    padding: 10px; 
   }
 
   /* === iPhone Styles === */
   @media (max-width: 767px) {
-    height: auto; // Adjust height for iPhone
-    padding: 10px; // Add padding for iPhone
-    box-shadow: none; // Remove shadow for smaller screens
+    height: auto; 
+    padding: 10px; 
+    box-shadow: none; 
     display: flex;
     flex-direction: column;
   }
@@ -46,24 +46,24 @@
 
    /* === Tablet Styles === */
    @media (max-width: 1024px) {
-    width: 100%; // Full width on tablet
-    height: 500px; // Adjust height on tablet
-    margin-bottom: 20px; // Add space below discussions
+    width: 100%; 
+    height: 500px; 
+    margin-bottom: 20px; 
   }
 
   /* === iPhone Styles === */
   @media (max-width: 767px) {
-    width: 100%; // Full width on iPhone
-    height: 300px; // Adjust height on iPhone
-    margin-bottom: 15px; // Add space below discussions
+    width: 100%;
+    height: 300px; 
+    margin-bottom: 15px; 
 
 
     .discussion {
       width: 100%;
-    height: auto; // Allow height to adjust based on content
-    margin-bottom: 0; // Remove margin for better alignment
+    height: auto; 
+    margin-bottom: 0; 
     display: flex;
-    flex-direction: row; // Align discussions in a row
+    flex-direction: row; 
     overflow-x: auto;
     }
   }
@@ -84,9 +84,9 @@
   
   
     .discussions .discussion .photo {
-      margin-left: 5px; // Adjust margin for photo
-      width: 40px; // Adjust width
-      height: 40px; // Adjust height
+      margin-left: 5px; 
+      width: 40px; 
+      height: 40px; 
     }
   
     .discussions .discussion .name,
@@ -116,7 +116,7 @@
 
   @media (max-width: 767px){
     .search .searchbar {
-      width: 90%; // Wider search bar on iPhone
+      width: 90%;
     }
   }
 }
@@ -147,7 +147,7 @@
 .discussions .message-active {
   width: 98.5%;
   height: 90px;
-  background-color: $nodle-black-600; // Active message background
+  background-color: $nodle-black-600; 
   border-bottom: solid 1px $nodle-black-500;
 }
 
@@ -193,9 +193,9 @@
   font-family:'Open Sans', sans-serif;
   font-size: 11px;
   padding: 3px 8px;
-  color: $nodle-black-100; // Light color for timer
-  background-color: $nodle-black-500; // Dark background for timer
-  border: 1px solid $nodle-black-700; // Dark border
+  color: $nodle-black-100; 
+  background-color: $nodle-black-500;
+  border: 1px solid $nodle-black-700; 
   border-radius: 15px;
 }
 
@@ -211,8 +211,8 @@
   @media (max-width: 767px){
     .chat {
       width: 100%;
-      height: calc(100vh - 70px); // Make chat take the rest of the screen
-      margin-top: 10px; // Add some spacing above the chat
+      height: calc(100vh - 70px);
+      margin-top: 10px; 
     }
   }
 }
@@ -230,13 +230,13 @@
 
    /* === Tablet Styles === */
    @media (max-width: 1024px) {
-    padding: 0 10px; // Less padding on tablet
+    padding: 0 10px; 
   }
 
   /* === iPhone Styles === */
   @media (max-width: 767px) {
-    padding: 0 10px; // Less padding on iPhone
-    height: 70px; // Smaller height on iPhone
+    padding: 0 10px; 
+    height: 70px;
   }
 }
 
@@ -258,12 +258,12 @@
 
    /* === Tablet Styles === */
    @media (max-width: 1024px) {
-    font-size: 12pt; // Adjust font size on tablet
+    font-size: 12pt; 
   }
 
   /* === iPhone Styles === */
   @media (max-width: 767px) {
-    font-size: 10pt; // Adjust font size on iPhone
+    font-size: 10pt; 
   }
 }
 
@@ -282,12 +282,12 @@
 
     /* === Tablet Styles === */
     @media (max-width: 1024px) {
-      padding: 15px; // Adjust padding on tablet
+      padding: 15px; 
     }
   
     /* === iPhone Styles === */
     @media (max-width: 767px) {
-      padding: 10px; // Adjust padding on iPhone
+      padding: 10px; 
     }
 }
 
@@ -313,8 +313,8 @@
   align-items: center;
 
   @media (max-width: 767px) {
-    font-size: 9pt; // Smaller font size on iPhone
-    padding: 8px; // Less padding on iPhone
+    font-size: 9pt; 
+    padding: 8px; 
   }
 }
 
@@ -323,85 +323,3 @@
   display: inline;
 }
 
-
-
-// // === Tablet Styles (768px - 1024px) ===
-// @media (max-width: 1024px) {
-//   .container {
-//     height: auto;
-//     padding: 10px;
-//   }
-
-//   .discussions {
-//     width: 100%;
-//     height: 500px;
-//     margin-bottom: 20px;
-//   }
-
-//   .chat {
-//     width: 100%;
-//     height: 500px;
-//   }
-
-//   .headerChat {
-//     padding: 0 10px;
-//   }
-
-//   .headerChat .name {
-//     font-size: 12pt;
-//   }
-
-//   .headerChat .icon {
-//     font-size: 12pt;
-//     margin-left: 15px;
-//   }
-// }
-
-// // === iPhone Styles (max-width: 767px) ===
-// @media (max-width: 767px) {
-//   .container {
-//     height: auto;
-//     padding: 10px;
-//     box-shadow: none;
-//   }
-
-//   .discussions {
-//     width: 100%;
-//     height: 300px;
-//     margin-bottom: 15px;
-//   }
-
-//   .discussions .discussion {
-//     height: 70px;
-//   }
-
-//   .discussions .search .searchbar {
-//     width: 90%;
-//   }
-
-  // .chat {
-  //   width: 100%;
-  //   height: 300px;
-  // }
-
-  // .headerChat {
-  //   padding: 0 10px;
-  //   height: 70px;
-  // }
-
-  // .headerChat .name {
-  //   font-size: 10pt;
-  // }
-
-  // .headerChat .icon {
-  //   font-size: 10pt;
-  // }
-
-  // .messagesHistory {
-  //   padding: 10px;
-  // }
-
-  // .messageItem {
-  //   font-size: 9pt;
-  //   padding: 8px;
-  // }

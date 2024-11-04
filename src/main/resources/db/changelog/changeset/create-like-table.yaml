@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
-      id: 1
-      author: yourname
+      id: create-likes
+      author: Viktor Lytvynenko
       changes:
         - createTable:
             tableName: likes

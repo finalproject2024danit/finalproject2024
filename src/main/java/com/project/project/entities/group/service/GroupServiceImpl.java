@@ -9,6 +9,8 @@ import com.project.project.entities.user.status.UserStatus;
 import com.project.project.exceptions.GroupNotFoundException;
 import com.project.project.exceptions.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,6 +21,11 @@ public class GroupServiceImpl implements GroupService {
 
     private final GroupRepository groupRepository;
     private final UserRepository userRepository;
+
+    @Override
+    public Page<Group> findAllFiltered(Pageable pageable) {
+        return groupRepository.findAll(pageable);
+    }
 
     @Override
     public Group getGroupById(Long groupId) {

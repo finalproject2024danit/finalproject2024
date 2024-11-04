@@ -3,10 +3,7 @@ package com.project.project.entities.user.api;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.project.project.dto.BaseResponseDto;
 import com.project.project.entities.user.User;
-import com.project.project.entities.user.api.dto.RequestPatchUserDto;
-import com.project.project.entities.user.api.dto.ResponseUserDto;
-import com.project.project.entities.user.api.dto.UserMapper;
-import com.project.project.entities.user.api.dto.View;
+import com.project.project.entities.user.api.dto.*;
 import com.project.project.entities.user.model.AddUserModel;
 import com.project.project.entities.user.service.UserServiceImpl;
 import com.project.project.entities.user.status.UserStatus;
@@ -65,9 +62,11 @@ public class UserController {
         return ResponseEntity.ok(responseDto);
     }
 
-    @GetMapping("/create")
+    @PostMapping("/create")
     @JsonView(View.Admin.class)
     public ResponseEntity<ResponseUserDto> addUser(@Valid @RequestBody AddUserModel addUserModel) {
+        log.info("Trying to create new user");
+
         User user = new User();
         user.setFirstName(addUserModel.firstName());
         user.setLastName(addUserModel.lastName());
@@ -91,6 +90,7 @@ public class UserController {
     }
 
     @PatchMapping("/patch/{id}")
+    @JsonView(View.Admin.class)
     public ResponseEntity<BaseResponseDto<ResponseUserDto>> patchUser(
             @PathVariable Long id,
             @Valid @RequestBody RequestPatchUserDto requestPatchUserDto) {
@@ -118,6 +118,7 @@ public class UserController {
     }
 
     @GetMapping("/search")
+    @JsonView(View.Admin.class)
     public List<ResponseUserDto> searchByFullName(@RequestParam String fullName) {
         log.info("Trying to search users by name and surname");
         String[] nameParts = fullName.trim().split("\\s+");
@@ -125,7 +126,7 @@ public class UserController {
 
         String lastName = nameParts.length > 1 ? nameParts[1] : "";
 
-        if (lastName == "") {
+        if (lastName.isEmpty()) {
             List<User> users = userService.searchByFirstName(firstName);
             return users.stream()
                     .map(UserMapper.INSTANCE::userToUserDto)
@@ -136,4 +137,29 @@ public class UserController {
                 .map(UserMapper.INSTANCE::userToUserDto)
                 .toList();
     }
+
+    @GetMapping("/user_all_info/{id}")
+//    @JsonView(View.Admin.class)
+    public ResponseEntity<ResponseUserAllDataDto> getAllUserInformationById(@PathVariable long id) {
+        log.info("Trying to get all information about user id: {}", id);
+
+        User user = userService.getUserById(id);
+
+        ResponseUserAllDataDto responseUserAllDataDto = UserMapper.INSTANCE.userToUserAllDataDto(user);
+
+        return ResponseEntity.ok(responseUserAllDataDto);
+    }
+
+    @GetMapping("/{userId}/friends")
+    @JsonView(View.Admin.class)
+    public List<ResponseUserDto> getFriendsByUserId(@PathVariable Long userId) {
+        log.info("Trying to get all friends by user id: {}", userId);
+
+        List<User> friendsByUserId = userService.getFriendsByUserId(userId);
+
+        return friendsByUserId.stream()
+                .map(UserMapper.INSTANCE::userToUserDto)
+                .toList();
+    }
+
 }

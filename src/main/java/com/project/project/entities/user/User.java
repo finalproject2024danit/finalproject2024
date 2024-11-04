@@ -1,14 +1,15 @@
 package com.project.project.entities.user;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.project.AbstractEntity;
 import com.project.project.entities.group.Group;
+import com.project.project.entities.hobby.Hobby;
+import com.project.project.entities.residence.Residence;
+import com.project.project.entities.workplace.Workplace;
 import com.project.project.util.Gender;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -62,7 +63,34 @@ public class User extends AbstractEntity {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "group_id")
     )
-    private Set<Group> groups;
+    Set<Group> groups;
+
+    @ManyToOne(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    }, fetch = FetchType.EAGER)
+    @JsonIgnore
+    @ToString.Exclude
+    @JoinColumn(name = "workplace_id")
+    Workplace workplace;
+
+    @ManyToOne(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    }, fetch = FetchType.EAGER)
+    @JsonIgnore
+    @ToString.Exclude
+    @JoinColumn(name = "residence_id")
+    Residence residence;
+
+    @ManyToOne(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    }, fetch = FetchType.EAGER)
+    @JsonIgnore
+    @ToString.Exclude
+    @JoinColumn(name = "hobby_id")
+    Hobby hobby;
 
     @CreatedDate
     @Temporal(TIMESTAMP)

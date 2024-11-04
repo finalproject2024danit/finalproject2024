@@ -26,8 +26,7 @@ public class Workplace extends AbstractEntity {
     @Column
     String name;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "workplace_id")
+    @OneToMany(mappedBy = "workplace", fetch = FetchType.LAZY)
     Set<User> users;
 
 }

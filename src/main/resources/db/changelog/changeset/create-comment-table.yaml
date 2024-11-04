@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
-      id: 1
-      author: yourname
+      id: create-comments
+      author: Viktor Lytvynenko
       changes:
         - createTable:
             tableName: comments
