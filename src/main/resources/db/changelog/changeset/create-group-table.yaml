@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: create-group
+      id: create-groups
       author: Viktor Lytvynenko
       changes:
         - createTable:

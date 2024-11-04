@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: create-workplace
+      id: create-workplaces
       author: Viktor Lytvynenko
       changes:
         - createTable:

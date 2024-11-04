@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: create-message
+      id: create-messages
       author: Viktor Lytvynenko
       changes:
         - createTable:
