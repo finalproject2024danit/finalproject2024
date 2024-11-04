@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getUserData, updateUser } from "../../api/requests.js";
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import {getUserAllData, updateUser} from "../../api/users/requests.js";
 
 const initialState = {
     id: 1,
@@ -17,6 +17,11 @@ const initialState = {
         country: "USA",
         city: "New York"
     },
+    hobby: {
+        language: "English",
+        pet: "Dog",
+        interest: "Reading"
+    },
     createdDate: "2024-11-01T19:50:19.65788",
     lastModifiedDate: "2024-11-01T19:50:19.65788",
     status: 'idle',
@@ -27,7 +32,7 @@ export const fetchUserData = createAsyncThunk(
     'user/fetchUserData',
     async (userId, { rejectWithValue }) => {
         try {
-            const response = await getUserData(userId);
+            const response = await getUserAllData(userId);
             return response.data;
         } catch (error) {
             return rejectWithValue(error.message);
@@ -39,8 +44,7 @@ export const updateUserData = createAsyncThunk(
     'user/updateUserData',
     async ({ userId, userData }, { rejectWithValue }) => {
         try {
-            const updatedData = await updateUser(userId, userData);
-            return updatedData;
+            return await updateUser(userId, userData);
         } catch (error) {
             if (error.response) {
                 return rejectWithValue(error.response.data.message || "Failed to update user data");

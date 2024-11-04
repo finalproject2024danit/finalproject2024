@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: create-user
+      id: create-users
       author: Viktor Lytvynenko
       changes:
         - createTable:

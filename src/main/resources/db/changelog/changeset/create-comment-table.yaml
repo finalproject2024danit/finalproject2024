@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 1
+      id: create-comments
       author: Viktor Lytvynenko
       changes:
         - createTable:
