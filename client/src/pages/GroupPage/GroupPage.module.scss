@@ -1,6 +1,8 @@
 @import "../../App.scss";
 
 .groupContainer {
+  // display: flex;
+  // flex-direction: column;  
   background: rgb(62, 62, 65);
   background: linear-gradient(
     90deg,
@@ -8,46 +10,45 @@
     rgba(32, 32, 60, 1) 35%,
     rgba(0, 15, 18, 1) 100%
   );
-  border-radius: 10px;
-  padding: 20px 10px;
-  height: 100%;
-
-  .groupHeader {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-  }
-
-  .groupMain li {
-    display: none; /* Сховати всі елементи за замовчуванням */
-  }
-
-  .groupMain li.active {
-    display: block; /* Показати лише активний елемент */
-  }
-
-  .groupMain li.hidden {
-    display: none; /* Приховані елементи */
-  }
-
-  .contentItem {
-    padding: 20px;
-    border: 1px solid #ddd;
-  }
-  
-  .contentItem img {
-    width: 25%;
-    height: auto;
-    margin-bottom: 15px;
-  }
-  
-  .contentItem h2 {
-    font-size: 24px;
-    margin-bottom: 10px;
-  }
-  
-  .contentItem p {
-    font-size: 16px;
-    margin-bottom: 8px;
-  }
+  padding: 20px 30px;
 }
+
+.groupHeader {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;  
+  border-radius: 10px;
+  // padding: 20px 10px;
+  width: 100%;
+  margin-bottom: 50px;
+  
+}
+
+.groupRender {
+  // padding: 20px;  /* Додаємо відступ для groupRender */
+  width: 100%;    /* Забезпечуємо, що контейнер займає всю ширину */
+}
+
+.groupRender h3 {
+  font-size: 30px;
+  font-weight: 500;
+  margin-bottom: 20px;
+  color: yellow;
+}
+
+.post {
+  display: flex;
+  column-gap: 20px; 
+  flex-direction: column;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.1);  /* Додаємо фон для постів */
+  border-radius: 8px;  /* Зробимо кут округленими */
+  margin-bottom: 10px;  /* Відступ між постами */
+  color: orange;
+}
+
+.post p {
+  word-wrap: break-word; /* Перенос слів */
+  margin: 0;             /* Прибираємо відступи */
+}
+

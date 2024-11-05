@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import MainContent from "../../../components/MainContent/MainContent";
 import Layout from './UI/Layout/Layout.jsx';
 import Field from './UI/Field/Field.jsx';
-import ControllPanel from './UI/ControllPanel/ControllPanel.jsx';
+import ControlPanel from './UI/ControlPanel/ControlPanel.jsx';
 import Button from './UI/Button/Button.jsx';
 import Score from './UI/Score/Score.jsx';
+import styles from "./Game1.module.scss";
 import {
   moveCells,
   directions,
@@ -77,11 +78,17 @@ class Game1 extends Component {
 
     return (
       <MainContent title="">
+        <ul className={styles.boxArrow}>
+          <li className={styles.arrowUp}>↑ W</li>
+          <li className={styles.arrowLeft}>← A</li>
+          <li className={styles.arrowRight}>→ D</li>
+          <li className={styles.arrowDown}>↓ S</li>
+          </ul>
         <Layout>
-          <ControllPanel>
+          <ControlPanel>
             <Button onClick={this.newGame}>New Game</Button>
             <Score>{score}</Score>
-          </ControllPanel>
+          </ControlPanel>
           <Field cells={cells} />
         </Layout>
       </MainContent>
