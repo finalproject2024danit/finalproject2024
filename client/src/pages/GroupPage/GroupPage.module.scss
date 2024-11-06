@@ -17,7 +17,7 @@
 .groupHeader {
   display: flex;
   flex-wrap: nowrap; /* Вимкнути перенос елементів */
-  gap: 20px;  
+  gap: 10px;  
   // border-radius: 10px;
   overflow-x: auto; /* Додати горизонтальний скрол */ 
   width: 60vw; /* Змінено на 100% для адаптивності */
@@ -50,10 +50,17 @@
   width: 100%;    /* Забезпечуємо, що контейнер займає всю ширину */
 }
 
-.groupRender h3 {
+.groupLink h2 {
+  font-size: 18px;
+  font-weight: 600; 
+  margin-bottom: 5px; 
+  color: green;
+}
+
+.groupDetails h2 {
   font-size: 30px;
   font-weight: 500;
-  margin-bottom: 20px;
+  margin: 30px;
   color: yellow;
 }
 
@@ -74,3 +81,8 @@
   margin: 0;             /* Прибираємо відступи */
 }
 
+.avatar {
+  width: 15vw; // Встановіть бажану ширину
+  height: auto; // Встановіть бажану висоту
+  object-fit: cover; // Щоб зображення не спотворювалося
+}
