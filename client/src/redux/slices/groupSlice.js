@@ -5,63 +5,52 @@ const initialState = {
   groups: [],
   selectedGroup: null,
   loading: false,
-  error: null,
   page: 0,
-  size: 10, // Розмір сторінки
+  size: 10,
 };
 
 export const fetchGroups = createAsyncThunk('groups/fetchGroups', async ({ page, size }) => {
-  try {
-    const data = await getAllGroupsFiltered(page, size); // Передайте size до API
-    return data; 
-  } catch (error) {
-    throw new Error('Не вдалося отримати групи');
-  }
+  const data = await getAllGroupsFiltered(page, size);
+  return { data, page };
 });
 
-// Додатковий код не змінюється
-
-
 export const fetchGroupById = createAsyncThunk('groups/fetchGroupById', async (id) => {
-  try {
-    const group = await getGroupById(id);
-    return group; // Повертаємо отримані дані
-  } catch (error) {
-    throw new Error('Не вдалося отримати дані про групу');
-  }
+  const group = await getGroupById(id);
+  return group;
 });
 
 const groupSlice = createSlice({
   name: 'group',
   initialState,
-  reducers: {
-    incrementPage(state) {
-      state.page += 1; // Збільшуємо номер сторінки
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(fetchGroups.pending, (state) => {
-        state.loading = true;
-        state.error = null;
+        state.loading = true; // Залишаємо статус завантаження
       })
       .addCase(fetchGroups.fulfilled, (state, action) => {
-        state.groups.push(...action.payload); // Додаємо масив груп
+        const newGroups = action.payload.data.filter(group =>
+          !state.groups.some(existingGroup => existingGroup.id === group.id)
+        );
+        state.groups.push(...newGroups);
         state.loading = false;
+
+        if (newGroups.length > 0) {
+          state.page += 1; // Збільшуємо номер сторінки
+        }
       })
-      .addCase(fetchGroups.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message;
+      .addCase(fetchGroups.rejected, (state) => {
+        state.loading = false; // Просто зупиняємо завантаження
       })
       .addCase(fetchGroupById.fulfilled, (state, action) => {
         state.selectedGroup = action.payload; // Зберігаємо вибрану групу
       })
-      .addCase(fetchGroupById.rejected, (state, action) => {
-        state.error = action.error.message; // Обробка помилки
+      .addCase(fetchGroupById.rejected, () => {
+        // Обробка помилки без state
       });
   },
 });
 
-export const { incrementPage } = groupSlice.actions;
-
 export default groupSlice.reducer;
+
+

@@ -4,27 +4,32 @@ import { fetchGroups, fetchGroupById } from "../../redux/slices/groupSlice.js";
 import styles from "./GroupPage.module.scss";
 import MainContent from "../../components/MainContent/MainContent";
 
+const defaultAvatarGroup =
+  "https://res.cloudinary.com/dsr6kwzrr/image/upload/w_200,ar_16:9,c_fill,g_auto,e_sharpen/v1729669892/photo_2024-10-23_10-30-18_nmluce.jpg";
+
+
 const GroupPage = () => {
   const dispatch = useDispatch();
   const { groups, loading, error, page, size, selectedGroup } = useSelector((state) => state.group);
   const observer = useRef();
 
   useEffect(() => {
-    dispatch(fetchGroups({ page, size })); // Передайте page і size
+    // Завантажуємо групи при первинному рендерингу
+    dispatch(fetchGroups({ page, size }));
   }, [dispatch, page, size]);
 
-  const lastGroupElementRef = (node) => {
-    if (loading) return;
-    if (observer.current) observer.current.disconnect();
+const lastGroupElementRef = (node) => {
+  if (loading) return; // Якщо завантажується, нічого не робимо
+  if (observer.current) observer.current.disconnect();
 
-    observer.current = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        dispatch(fetchGroups({ page, size }));
-      }
-    });
+  observer.current = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting) {
+      dispatch(fetchGroups({ page, size }));
+    }
+  });
 
-    if (node) observer.current.observe(node);
-  };
+  if (node) observer.current.observe(node);
+};
 
   const handleGroupClick = (groupId) => {
     dispatch(fetchGroupById(groupId));
@@ -60,8 +65,8 @@ const GroupPage = () => {
         <div className={styles.groupHeader}>
           {groups.map((group, index) => (
             <div
-              key={`${group.id}-${index}`}
-              ref={groups.length === index + 1 ? lastGroupElementRef : null}
+              key={group.id}
+              ref={groups.length === index + 1 ? lastGroupElementRef : null} // Останній елемент для спостереження
               className={styles.groupLink}
               onClick={() => handleGroupClick(group.id)}
             >
