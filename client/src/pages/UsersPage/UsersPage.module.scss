@@ -41,7 +41,10 @@
     flex-direction: column; // Располагаем элементы в колонну
     align-items: center; // Центрируем элементы внутри
     width: 100%; // Ширина на 100%
+    height: 200px;
     text-align: center; // Центрируем текст
+    gap: 10px;
+    padding-top: 20px;
   }
 
   .front .inner h2 {
@@ -65,9 +68,14 @@
   }
 
   .userPhoto {
-    width: 200px;
-    height: auto;
+    width: 90%; /* Ширина 100% від контейнера */
+    height: 80%; /* Висота 100% від контейнера */
+    object-fit: cover; /* Зберігає пропорції і заповнює контейнер */
+    object-position: top; /* Вирівнює зображення по верхньому краю */
+    border-radius: 20px; /* Додає закруглені кути до зображення */
   }
+  
+
   .link {
     text-decoration: none;
     color: #ffffff; // Цвет текста ссылки

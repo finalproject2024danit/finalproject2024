@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types'; // Імпорт PropTypes
 
-class ControllPanel extends PureComponent {
+class ControlPanel extends PureComponent {
   render() {
     const { children } = this.props;
     return <Container>{children}</Container>;
@@ -10,7 +10,7 @@ class ControllPanel extends PureComponent {
 }
 
 // Додайте валідацію PropTypes для children
-ControllPanel.propTypes = {
+ControlPanel.propTypes = {
   children: PropTypes.node, // Вказує, що children можуть бути будь-яким валідним елементом React
 };
 
@@ -23,4 +23,4 @@ const Container = styled.div`
   align-items: center;
 `;
 
-export default ControllPanel;
+export default ControlPanel;
