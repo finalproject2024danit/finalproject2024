@@ -2,20 +2,30 @@
 
 .userBox {
   display: flex;
+  flex-wrap: wrap;
+  padding: 10px 20px;
   // flex-direction: column;
   gap: 20px;
 
   .userPhoto {   
-    width: 80%; /* Ширина фото 100% від контейнера */
+    width: 70%; /* Ширина фото 100% від контейнера */
     height: auto; /* Висота для збереження пропорцій */
     border-radius: 5px; 
     
   }  
 }
 
+.userDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  
+}
+
 .userDetails h2 {
   font-size: $font-size-title;    
   color: $border-color-yellow;
+  padding-bottom: 20px;
 }
 
 .userDetails p {

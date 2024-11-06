@@ -51,7 +51,7 @@ const UserPage = () => {
         src={user.avatar || "default_avatar_url"} // Змінити на URL за замовчуванням
         alt={`${user.firstName} ${user.lastName}`}
       />
-      <div className={styles.mainContent}>
+      {/* <div className={styles.mainContent}> */}
         <div title={`${user.firstName} ${user.lastName}`}>
           <div className={styles.userDetails}>
             <h2>{`${user.firstName} ${user.lastName}`}</h2> {/* Відображення імені */}
@@ -62,7 +62,7 @@ const UserPage = () => {
             <p>Created Date: {formatDate(user.createdDate)}</p>
           </div>
         </div>
-      </div>
+      {/* </div> */}
     </div>
     </MainContent>
   );  

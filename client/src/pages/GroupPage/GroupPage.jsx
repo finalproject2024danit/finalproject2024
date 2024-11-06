@@ -12,12 +12,7 @@ const GroupPage = () => {
   const [error, setError] = useState(null);
   const [selectedGroup, setSelectedGroup] = useState(null);
 
-
-  // const usersPerPage = 10;
-  // const sortBy = "firstName";
-  // const sortDirection = "asc";
-  // const currentPage = 0;
-  
+ 
   useEffect(() => {
     const fetchGroups = async () => {
       try {
