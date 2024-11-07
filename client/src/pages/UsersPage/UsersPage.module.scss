@@ -74,7 +74,6 @@
     object-position: top; /* Вирівнює зображення по верхньому краю */
     border-radius: 20px; /* Додає закруглені кути до зображення */
   }
-  
 
   .link {
     text-decoration: none;
@@ -118,7 +117,7 @@
   padding: 10px;
   border-radius: 25px;
   border: 1px solid #cababa;
-  background-color: #363A3D;
+  background-color: #363a3d;
   outline: none;
   font-size: 16px;
   transition: all 0.3s ease;
@@ -130,16 +129,13 @@
   }
 }
 
-
-
-       
 // .userBox {
 //     display: flex;
 //     flex-wrap: wrap;
 //     gap: 30px;
 //     padding: 0 20px;
 //     justify-content: space-between; // Додає рівномірне розміщення карток
-  
+
 //     .userCard {
 //       display: flex;
 //       flex-direction: column;
@@ -151,37 +147,34 @@
 //       width: calc(25% - 30px); // 4 колонки на великих екранах
 //       min-width: 250px;
 //       box-sizing: border-box;
-  
+
 //       // Висота для однакових карток
-//       min-height: 200px; 
+//       min-height: 200px;
 //     }
-  
+
 //     .userPhoto {
 //       width: 200px;
 //       height: auto;
 //     }
 //   }
-  
+
 //   // Адаптивність для середніх екранів
 //   @media (max-width: 1200px) {
 //     .userCard {
 //       width: calc(33.33% - 30px); // 3 колонки на середніх екранах
 //     }
 //   }
-  
+
 //   // Адаптивність для маленьких екранів
 //   @media (max-width: 768px) {
 //     .userCard {
 //       width: calc(50% - 30px); // 2 колонки на маленьких екранах
 //     }
 //   }
-  
+
 //   // Для мобільних пристроїв
 //   @media (max-width: 480px) {
 //     .userCard {
 //       width: 100%; // 1 колонка на мобільних екранах
 //     }
 //   }
-  
-
-

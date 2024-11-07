@@ -1,33 +1,34 @@
-import ProfileMenu from "../ProfileMenu/ProfileMenu.jsx"; 
+import ProfileMenu from "../ProfileMenu/ProfileMenu.jsx";
 import styles from "./Workplace.module.scss";
 import MainContent from "../../../components/MainContent/MainContent.jsx";
 import axios from "axios";
 import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux"; // Импортируйте useDispatch
+import { useDispatch, useSelector } from "react-redux";
 import { updateUserData } from "../../../redux/slices/userSlice.js";
 
+// Validation schema
 const validationSchema = Yup.object().shape({
-  workplaceId: Yup.string().required("Select a workplace"), // Валидация для выбора рабочего места
+  workplaceId: Yup.string().required("Select a workplace"),
 });
 
 const Workplace = () => {
-  const dispatch = useDispatch(); // Создание экземпляра dispatch
-  const user = useSelector((state) => state.user); // Получение данных пользователя из Redux
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user); // Get user data from Redux
   const [loading, setLoading] = useState(false);
-  const [workplaces, setWorkplaces] = useState([]); // Состояние для рабочих мест
-  const [isLoadingWorkplaces, setIsLoadingWorkplaces] = useState(true); // Состояние загрузки рабочих мест
+  const [workplaces, setWorkplaces] = useState([]);
+  const [isLoadingWorkplaces, setIsLoadingWorkplaces] = useState(true);
 
   useEffect(() => {
     const fetchWorkplaces = async () => {
       try {
         const response = await axios.get("/api/v1/workplace");
-        setWorkplaces(response.data); // Установка полученных рабочих мест
+        setWorkplaces(response.data); // Set fetched workplaces
       } catch (error) {
         console.error("Error fetching workplaces", error);
       } finally {
-        setIsLoadingWorkplaces(false); // Завершение загрузки
+        setIsLoadingWorkplaces(false);
       }
     };
 
@@ -37,16 +38,15 @@ const Workplace = () => {
   const handleSubmit = async (values, { resetForm }) => {
     setLoading(true);
     try {
-      // Создание объекта с обновленными данными
       const updatedData = {
         ...user,
-        workplace: values.workplaceId, // Обновление места работы
+        workplace: values.workplaceId,
       };
-      
-      // Диспатч обновленных данных пользователя
-      await dispatch(updateUserData({ userId: user.id, userData: updatedData }));
+      await dispatch(
+        updateUserData({ userId: user.id, userData: updatedData })
+      );
       console.log("Selected Workplace ID:", values.workplaceId);
-      resetForm(); // Очистить форму после успешного добавления
+      resetForm();
     } catch (error) {
       console.error("Error processing workplace", error);
     } finally {
@@ -55,7 +55,7 @@ const Workplace = () => {
   };
 
   const formik = useFormik({
-    initialValues: { workplaceId: "" }, // Установлено начальное значение
+    initialValues: { workplaceId: user.workplace || "" }, // Pre-fill with user's current workplace
     validationSchema: validationSchema,
     onSubmit: handleSubmit,
   });
@@ -66,6 +66,20 @@ const Workplace = () => {
         <ProfileMenu />
         <div className={styles.content}>
           <h2 className={styles.title}>Select Workplace</h2>
+
+          {/* Display current workplace */}
+          <div className={styles.currentWorkplace}>
+            <h3 className={styles.subtitle}>Current Workplace</h3>
+            <p
+              className={`${styles.workplaceText} ${
+                !user.workplace ? styles.noWorkplace : ""
+              }`}
+            >
+              {user.workplace || "No workplace selected"}
+            </p>
+          </div>
+
+          {/* Form to select and update workplace */}
           <form className={styles.form} onSubmit={formik.handleSubmit}>
             <div className={styles.inputGroup}>
               <label className={styles.label}>Select Workplace:</label>
@@ -78,7 +92,7 @@ const Workplace = () => {
               >
                 <option value="" label="Select a workplace" />
                 {isLoadingWorkplaces ? (
-                  <option disabled>Loading...</option> // Показать индикатор загрузки
+                  <option disabled>Loading...</option>
                 ) : (
                   workplaces.map((workplace) => (
                     <option key={workplace.id} value={workplace.id}>
