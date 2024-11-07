@@ -6,15 +6,15 @@ export const getAllGroupsFiltered = async (page = 0, size = 10, sortBy = 'id', s
             page,
             size,
             sortBy,
-            sortDirection
+            sortDirection,
         },
     });
-    return response.data
-}
+    return response.data;
+};
 
 export const getGroupById = async (id) => {
-    const response = await axiosInstance.get(`/groups/${id}`)
-    return response.data
+    const response = await axiosInstance.get(`/groups/${id}`);
+    return response.data;
 }
 
 export const createGroup = async (requestGroupDto) => {
