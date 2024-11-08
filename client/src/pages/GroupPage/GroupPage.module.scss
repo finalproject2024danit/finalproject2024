@@ -16,38 +16,34 @@
 
 .groupHeader {
   display: flex;
-  flex-wrap: nowrap; /* Вимкнути перенос елементів */
+  flex-wrap: nowrap;
   gap: 10px;  
-  // border-radius: 10px;
-  overflow-x: auto; /* Додати горизонтальний скрол */ 
-  width: 60vw; /* Змінено на 100% для адаптивності */
-  margin-bottom: 50px;
-  // border: 4px solid orange;
-  padding: 20px 10px; /* Адаптуйте паддінги за потреби */
-  // box-sizing: border-box; /* Включити паддінги в ширину */
+  overflow-x: auto; 
+  width: 60vw; 
+  margin-bottom: 20px;
+  padding: 20px 10px; 
   margin: 0 auto;
 }
 
-// .groupHeader::-webkit-scrollbar {
-//   height: 8px !important;
-// }
+.loadMoreContainer {
+  display: flex;
+  justify-content: center; 
+  margin-top: 20px; 
+}
 
-// .groupHeader::-webkit-scrollbar-track {
-//   background: #2f2f2f !important;
-// }
+.loadMoreButton {
+  background-color: #28a745; 
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 16px;
+}
 
-// .groupHeader::-webkit-scrollbar-thumb {
-//   background-color: #555 !important;
-//   border-radius: 10px !important;
-//   border: 2px solid #2f2f2f !important;
-// }
-
-.groupRender {
-  margin-top: 20px;
-  text-align: center;
-  // padding: 20px;  /* Додаємо відступ для groupRender */
-  // padding-right: 20px;
-  width: 100%;    /* Забезпечуємо, що контейнер займає всю ширину */
+.loadMoreButton:disabled {
+  background-color: #ccc; 
+  cursor: not-allowed;
 }
 
 .groupLink h2 {
@@ -69,20 +65,20 @@
   column-gap: 20px; 
   flex-direction: column;
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.1);  /* Додаємо фон для постів */
-  border-radius: 8px;  /* Зробимо кут округленими */
-  margin-bottom: 10px;  /* Відступ між постами */
+  background-color: rgba(255, 255, 255, 0.1);  
+  border-radius: 8px;  
+  margin-bottom: 10px;  
   color: orange;
 }
 
 .post p {
-  // width: 97%;
-  word-wrap: break-word; /* Перенос слів */
-  margin: 0;             /* Прибираємо відступи */
+  word-wrap: break-word; 
+  margin: 0;             
 }
 
 .avatar {
-  width: 13vw; // Встановіть бажану ширину
-  height: auto; // Встановіть бажану висоту
-  object-fit: cover; // Щоб зображення не спотворювалося
+  width: 13vw; 
+  height: auto; 
+  object-fit: cover; 
 }
+

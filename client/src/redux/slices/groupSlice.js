@@ -5,6 +5,7 @@ const initialState = {
   groups: [],
   selectedGroup: null,
   loading: false,
+  error: null,
   page: 0,
   size: 10,
 };
@@ -26,7 +27,8 @@ const groupSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchGroups.pending, (state) => {
-        state.loading = true; // Залишаємо статус завантаження
+        state.loading = true;
+        state.error = null;
       })
       .addCase(fetchGroups.fulfilled, (state, action) => {
         const newGroups = action.payload.data.filter(group =>
@@ -36,21 +38,20 @@ const groupSlice = createSlice({
         state.loading = false;
 
         if (newGroups.length > 0) {
-          state.page += 1; // Збільшуємо номер сторінки
+          state.page += 1; // Увеличиваем номер страницы для загрузки новых данных
         }
       })
-      .addCase(fetchGroups.rejected, (state) => {
-        state.loading = false; // Просто зупиняємо завантаження
+      .addCase(fetchGroups.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       })
       .addCase(fetchGroupById.fulfilled, (state, action) => {
-        state.selectedGroup = action.payload; // Зберігаємо вибрану групу
+        state.selectedGroup = action.payload;
       })
-      .addCase(fetchGroupById.rejected, () => {
-        // Обробка помилки без state
+      .addCase(fetchGroupById.rejected, (state, action) => {
+        state.error = action.error.message;
       });
   },
 });
 
 export default groupSlice.reducer;
-
-

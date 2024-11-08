@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 import styles from "./UsersPage.module.scss";
 import MainContent from "../../components/MainContent/MainContent";
 import axiosInstance from "../../api/axiosInstance.js";
-import { NavLink } from "react-router-dom";
 import ButtonAddFriend from "../../components/ButtonAddFriend/index.jsx";
+import { addFriendThunk } from "../../redux/slices/friendsSlice.js"; // Імпортуємо дію для додавання друга
 
 const UsersPage = () => {
+  const dispatch = useDispatch();
   const [users, setUsers] = useState([]);
-  const [searchTerm, setSearchTerm] = useState(""); // Состояние для поиска
+  const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [flippedCards, setFlippedCards] = useState({});
@@ -15,6 +18,7 @@ const UsersPage = () => {
   const sortBy = "firstName";
   const sortDirection = "asc";
   const currentPage = 0;
+  const userFromId = 1; // Припустимо, що це ID поточного користувача
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -45,7 +49,6 @@ const UsersPage = () => {
     fetchUsers();
   }, []);
 
-  // Фильтруем пользователей на основе введённого текста
   const filteredUsers = users.filter((user) =>
     `${user.firstName} ${user.lastName}`
       .toLowerCase()
@@ -66,28 +69,9 @@ const UsersPage = () => {
     }, 5000);
   };
 
-  const addFriend = async (userId) => {
-    const userFromId = 1;
-
-    if (typeof userFromId !== "number" || typeof userId !== "number") {
-      console.error("Invalid user ID(s)");
-      return;
-    }
-
-    try {
-      const response = await axiosInstance.post(`/api/v1/friends/add`, {
-        userFromId,
-        userToId: userId,
-      });
-
-      console.log("Friend added successfully:", response.data);
-    } catch (error) {
-      console.error("Помилка при додаванні у друзі:", error.message);
-    }
+  const handleAddFriend = (userId) => {
+    dispatch(addFriendThunk({ userFromId, userToId: userId }));
   };
-
-  const defaultAvatar =
-    "https://res.cloudinary.com/dsr6kwzrr/image/upload/w_1000,ar_16:9,c_fill,g_auto,e_sharpen/v1729669892/photo_2024-10-23_10-30-18_nmluce.jpg";
 
   return (
     <MainContent title="">
@@ -133,7 +117,7 @@ const UsersPage = () => {
                   <NavLink to={`/user/${user.id}`} className={styles.link}>
                     <h3 className={styles.infoUser}>Info user</h3>
                   </NavLink>
-                  <ButtonAddFriend onClick={() => addFriend(user.id)} />
+                  <ButtonAddFriend onClick={() => handleAddFriend(user.id)} />
                   <h2 className={styles.clickToFlip}>Click to flip back</h2>
                 </div>
               </div>

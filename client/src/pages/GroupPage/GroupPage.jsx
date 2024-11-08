@@ -4,9 +4,9 @@ import { fetchGroups, fetchGroupById } from "../../redux/slices/groupSlice.js";
 import styles from "./GroupPage.module.scss";
 import MainContent from "../../components/MainContent/MainContent";
 
+
 const defaultAvatarGroup =
   "https://res.cloudinary.com/dsr6kwzrr/image/upload/w_200,ar_16:9,c_fill,g_auto,e_sharpen/v1729669892/photo_2024-10-23_10-30-18_nmluce.jpg";
-
 
 const GroupPage = () => {
   const dispatch = useDispatch();
@@ -14,31 +14,34 @@ const GroupPage = () => {
   const observer = useRef();
 
   useEffect(() => {
-    // Завантажуємо групи при первинному рендерингу
+    // Загрузка начальной страницы групп при первичном рендере
     dispatch(fetchGroups({ page, size }));
   }, [dispatch, page, size]);
 
-const lastGroupElementRef = (node) => {
-  if (loading) return; // Якщо завантажується, нічого не робимо
-  if (observer.current) observer.current.disconnect();
+  // Функция для отслеживания последнего элемента списка
+  const lastGroupElementRef = (node) => {
+    if (loading) return; // Если идет загрузка, ничего не делаем
+    if (observer.current) observer.current.disconnect(); // Отключаем наблюдателя от предыдущего элемента
 
-  observer.current = new IntersectionObserver((entries) => {
-    if (entries[0].isIntersecting) {
-      dispatch(fetchGroups({ page, size }));
-    }
-  });
+    observer.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        dispatch(fetchGroups({ page, size })); // Загружаем следующую страницу, когда элемент пересечен
+      }
+    });
 
-  if (node) observer.current.observe(node);
-};
+    if (node) observer.current.observe(node); // Начинаем наблюдение за новым элементом
+  };
 
+  // Обработчик для загрузки данных выбранной группы
   const handleGroupClick = (groupId) => {
     dispatch(fetchGroupById(groupId));
   };
 
+  // Рендеринг в зависимости от состояния
   if (loading && page === 0) {
     return (
       <MainContent title="">
-        <p>Завантаження...</p>
+        <p>Загрузка...</p>
       </MainContent>
     );
   }
@@ -54,7 +57,7 @@ const lastGroupElementRef = (node) => {
   if (!groups.length) {
     return (
       <MainContent title="">
-        <p>Групи не знайдено.</p>
+        <p>Группы не найдены.</p>
       </MainContent>
     );
   }
@@ -66,7 +69,7 @@ const lastGroupElementRef = (node) => {
           {groups.map((group, index) => (
             <div
               key={group.id}
-              ref={groups.length === index + 1 ? lastGroupElementRef : null} // Останній елемент для спостереження
+              ref={groups.length === index + 1 ? lastGroupElementRef : null} // Назначаем последний элемент для отслеживания
               className={styles.groupLink}
               onClick={() => handleGroupClick(group.id)}
             >
@@ -93,7 +96,7 @@ const lastGroupElementRef = (node) => {
                   </div>
                 ))
               ) : (
-                <p>Постів не знайдено.</p>
+                <p>Постов не найдено.</p>
               )}
             </div>
           </div>
