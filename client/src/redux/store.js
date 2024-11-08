@@ -3,6 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import chatReducer from "./slices/chatSlice.js";
 import userReducer from "./slices/userSlice.js";
 import groupReducer from "./slices/groupSlice.js";
+import friendsReducer from "./slices/friendsSlice.js";
 
 export const store = configureStore({
     reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
         chat: chatReducer,
         user: userReducer,
         group: groupReducer,
+        friends: friendsReducer,
     },
 });
 

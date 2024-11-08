@@ -6,8 +6,8 @@ import PenIcon from "../../svg/Header/Pen";
 import { useSelector } from "react-redux";
 
 // Default avatar URL if the user doesn't have one
-const defaultAvatarProfile =
-  "https://res.cloudinary.com/dsr6kwzrr/image/upload/w_30,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1728939216/photo_2024-10-14_23-52-52_zg5tc7.jpg";
+
+const defaultAvatarProfile = "https://res.cloudinary.com/dsr6kwzrr/image/upload/w_30,c_fill,ar_1:1,g_auto,r_max,bo_5px_solid_red,b_rgb:262c35/v1728939216/photo_2024-10-14_23-52-52_zg5tc7.jpg"
 
 const LeftSidebar = () => {
   // Access the user's avatar and name from Redux state
@@ -44,24 +44,31 @@ const LeftSidebar = () => {
       </div>
 
       <div className={styles.gamesLink}>
-        <NavLink
-          className={({ isActive }) => (isActive ? styles.active : "")}
-          to="/game1"
-        >
-          Game 1
-        </NavLink>
-        <NavLink
-          className={({ isActive }) => (isActive ? styles.active : "")}
-          to="/game2"
-        >
-          Game 2
-        </NavLink>
-        <NavLink
-          className={({ isActive }) => (isActive ? styles.active : "")}
-          to="/game3"
-        >
-          Game 3
-        </NavLink>
+      <NavLink
+        className={({ isActive }) => (isActive ? styles.active : "")}
+        to="/game1"
+      >
+        Game 1
+      </NavLink>
+      <NavLink
+        className={({ isActive }) => (isActive ? styles.active : "")}
+        to="/game2"
+      >
+       Game 2
+      </NavLink>
+      <NavLink
+        className={({ isActive }) => (isActive ? styles.active : "")}
+        to="/game3"
+      >
+      Game 3
+      </NavLink>
+
+      <NavLink
+        className={({ isActive }) => (isActive ? styles.active : "")}
+        to="/gallery"
+      >
+      Gallery
+      </NavLink>
       </div>
 
       <div className={styles.exit}>

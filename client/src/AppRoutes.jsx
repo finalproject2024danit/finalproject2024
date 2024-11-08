@@ -19,6 +19,7 @@ import PhotoLibrary from "./pages/ProfilePage/PhotoLibrary/PhotoLibrary.jsx";
 import Game1 from "./pages/Games/Game1/Game1.jsx";
 import Game2 from "./pages/Games/Game2/Game2.jsx";
 import Game3 from "./pages/Games/Game3/Game3.jsx";
+import GalleryPage from "./pages/GalleryPage/GalleryPage.jsx";
 
 const AppRoutes = () => {
   return (
@@ -101,6 +102,15 @@ const AppRoutes = () => {
         element={
           // <PrivateRoute>
           <Game3 />
+          // </PrivateRoute>
+        }
+      />
+
+      <Route
+        path="/gallery"
+        element={
+          // <PrivateRoute>
+          <GalleryPage />
           // </PrivateRoute>
         }
       />
