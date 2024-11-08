@@ -1,13 +1,13 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+// import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
+// const initialState = {
   
-};
+// };
 
-const testSlice = createSlice({
-  name: 'test',
-  initialState,
-  reducers: {},  
-});
+// const testSlice = createSlice({
+//   name: 'test',
+//   initialState,
+//   reducers: {},  
+// });
 
-export default testSlice.reducer;
+// export default testSlice.reducer;

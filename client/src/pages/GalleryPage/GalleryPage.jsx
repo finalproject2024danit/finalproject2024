@@ -22,9 +22,9 @@ const GalleryPage = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % photos.length);
   };
 
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + photos.length) % photos.length);
-  };
+  // const prevSlide = () => {
+  //   setCurrentIndex((prevIndex) => (prevIndex - 1 + photos.length) % photos.length);
+  // };
 
   const goToSlide = (index) => {
     setCurrentIndex(index);
