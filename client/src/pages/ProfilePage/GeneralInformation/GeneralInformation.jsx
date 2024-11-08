@@ -6,16 +6,15 @@ import MainContent from "../../../components/MainContent/MainContent.jsx";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { updateUserData } from "../../../redux/slices/userSlice.js";
-import axios from "axios";
 
-// Enum для Gender
+// Gender Enum
 const Gender = Object.freeze({
   MALE: "MALE",
   FEMALE: "FEMALE",
   NOT_SPECIFIED: "NOT_SPECIFIED",
 });
 
-// Обновленная схема валидации
+// Validation schema
 const validationSchema = Yup.object().shape({
   firstName: Yup.string().max(100, "Max 100 characters").required("Required"),
   lastName: Yup.string().max(100, "Max 100 characters").required("Required"),
@@ -25,7 +24,7 @@ const validationSchema = Yup.object().shape({
     .required("Required"),
   phones: Yup.string()
     .matches(
-      /^\+?[1-9]\d{1,14}$/, // Общее регулярное выражение для международных номеров
+      /^\+?[1-9]\d{1,14}$/,
       "Phone number must be in international format, e.g., +12345678901234"
     )
     .required("Phone is required"),
@@ -33,15 +32,9 @@ const validationSchema = Yup.object().shape({
     .oneOf(Object.values(Gender), "Invalid gender")
     .required("Required"),
   dateOfBirth: Yup.string().required("Required"),
-  password: Yup.string()
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z]).{5,20}$/,
-      "Password must be 5-20 characters and include at least one uppercase and lowercase letter"
-    )
-    .optional(),
 });
 
-// Функция для форматирования даты
+// Date formatting helper
 const formatDate = (timestamp) => {
   const date = new Date(timestamp);
   return date.toLocaleDateString("uk-UA", {
@@ -51,22 +44,16 @@ const formatDate = (timestamp) => {
   });
 };
 
+// Convert date from string (DD.MM.YYYY) back to Unix timestamp
+const convertToUnixTimestamp = (dateStr) => {
+  const [day, month, year] = dateStr.split(".");
+  return new Date(`${month}/${day}/${year}`).getTime();
+};
+
 const GeneralInformation = () => {
   const [isEditing, setIsEditing] = useState(false);
-  const [avatar, setAvatar] = useState(null);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-
-  const handleAvatarChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setAvatar(reader.result);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
 
   const formik = useFormik({
     initialValues: {
@@ -74,47 +61,43 @@ const GeneralInformation = () => {
       lastName: user.lastName || "",
       email: user.email || "",
       gender: user.gender || "",
+      // Преобразуем дату рождения, если она есть
       dateOfBirth: user.dateOfBirth ? formatDate(user.dateOfBirth) : "",
       phones: user.phones || "",
       password: "",
     },
     validationSchema,
     onSubmit: (values) => {
+      // Преобразуем дату обратно в Unix timestamp
       const updatedValues = {
         ...values,
-        dateOfBirth: values.dateOfBirth ? new Date(values.dateOfBirth).getTime() : null,
-        avatar,
+        dateOfBirth: values.dateOfBirth
+          ? convertToUnixTimestamp(values.dateOfBirth)
+          : null,
+        avatar: user.avatar,
         password: values.password ? btoa(values.password) : undefined,
       };
+      // Отправляем данные для обновления
       dispatch(updateUserData({ userId: user.id, userData: updatedValues }));
       setIsEditing(false);
     },
   });
 
+  // Обновление значений формы при изменении данных пользователя
   useEffect(() => {
-    if (user && user.id) {
-      (async () => {
-        try {
-          const response = await axios.get(`/api/v1/user_all_info/${user.id}`);
-          const userData = response.data;
-  
-          // Установка полученных данных в formik
-          formik.setValues({
-            firstName: userData.firstName || "",
-            lastName: userData.lastName || "",
-            email: userData.email || "",
-            gender: userData.gender || "",
-            dateOfBirth: userData.dateOfBirth ? formatDate(userData.dateOfBirth) : "",
-            phones: Array.isArray(userData.phones) ? userData.phones.join(", ") : userData.phones || "",
-            password: "",
-          });
-          setAvatar(userData.avatar || null);
-        } catch (error) {
-          console.error("Error fetching user data:", error);
-        }
-      })(); // Immediately Invoked Function Expression (IIFE)
+    // Если дата рождения изменена в Redux, обновляем поле
+    if (user.dateOfBirth) {
+      formik.setFieldValue("dateOfBirth", formatDate(user.dateOfBirth));
     }
-  }, [user, formik]);
+    formik.setValues({
+      firstName: user.firstName || "",
+      lastName: user.lastName || "",
+      email: user.email || "",
+      gender: user.gender || "",
+      phones: user.phones || "",
+      password: "",
+    });
+  }, [user]);
 
   return (
     <MainContent title="">
@@ -122,26 +105,10 @@ const GeneralInformation = () => {
         <div className={styles.sidebar}>
           <div className={styles.avatarSection}>
             <img
-              src={avatar || "default-avatar.png"}
+              src={user.avatar || "default-avatar.png"}
               alt="User Avatar"
               className={styles.avatar}
             />
-            {isEditing && (
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleAvatarChange}
-                className={styles.avatarInput}
-              />
-            )}
-          </div>
-          <div className={styles.userInfo}>
-            <p><strong>First Name:</strong> {formik.values.firstName}</p>
-            <p><strong>Last Name:</strong> {formik.values.lastName}</p>
-            <p><strong>Email:</strong> {formik.values.email}</p>
-            <p><strong>Gender:</strong> {formik.values.gender}</p>
-            <p><strong>Date of Birth:</strong> {formik.values.dateOfBirth}</p>
-            <p><strong>Phones:</strong> {formik.values.phones}</p>
           </div>
         </div>
         <div className={styles.content}>
@@ -157,6 +124,7 @@ const GeneralInformation = () => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.firstName}
+                disabled={!isEditing}
               />
               {formik.touched.firstName && formik.errors.firstName && (
                 <div className={styles.error}>{formik.errors.firstName}</div>
@@ -173,6 +141,7 @@ const GeneralInformation = () => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.lastName}
+                disabled={!isEditing}
               />
               {formik.touched.lastName && formik.errors.lastName && (
                 <div className={styles.error}>{formik.errors.lastName}</div>
@@ -189,6 +158,7 @@ const GeneralInformation = () => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.email}
+                disabled={!isEditing}
               />
               {formik.touched.email && formik.errors.email && (
                 <div className={styles.error}>{formik.errors.email}</div>
@@ -204,10 +174,12 @@ const GeneralInformation = () => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.gender}
+                disabled={!isEditing}
               >
-                <option value={Gender.MALE} label="MALE" />
-                <option value={Gender.FEMALE} label="FEMALE" />
-                <option value={Gender.NOT_SPECIFIED} label="NOT SPECIFIED" />
+                <option value="">Select gender</option>
+                <option value="MALE">MALE</option>
+                <option value="FEMALE">FEMALE</option>
+                <option value="NOT_SPECIFIED">NOT_SPECIFIED</option>
               </select>
               {formik.touched.gender && formik.errors.gender && (
                 <div className={styles.error}>{formik.errors.gender}</div>
@@ -224,6 +196,7 @@ const GeneralInformation = () => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.dateOfBirth}
+                disabled={!isEditing}
               />
               {formik.touched.dateOfBirth && formik.errors.dateOfBirth && (
                 <div className={styles.error}>{formik.errors.dateOfBirth}</div>
@@ -231,16 +204,16 @@ const GeneralInformation = () => {
             </div>
 
             <div>
-              <label htmlFor="phones" className={styles.label}>Phones</label>
+              <label htmlFor="phones" className={styles.label}>Phone</label>
               <input
                 id="phones"
                 name="phones"
                 type="text"
                 className={styles.input}
-                placeholder="+12345678901234" // Общий образец международного номера
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.phones}
+                disabled={!isEditing}
               />
               {formik.touched.phones && formik.errors.phones && (
                 <div className={styles.error}>{formik.errors.phones}</div>
@@ -257,6 +230,7 @@ const GeneralInformation = () => {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.password}
+                disabled={!isEditing}
               />
               {formik.touched.password && formik.errors.password && (
                 <div className={styles.error}>{formik.errors.password}</div>
