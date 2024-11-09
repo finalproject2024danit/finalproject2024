@@ -14,13 +14,16 @@ const RightSidebar = () => {
 
   return (
     <div className={`${styles.rightMenu} ${styles.shinyCta}`}>
-      {status === 'loading' && <p>Завантаження...</p>}
-      {status === 'failed' && <p>Помилка: {error}</p>}
+      {status === 'loading' && <p>Loading...</p>}
+      {status === 'failed' && <p className={styles.error}>Error: {error}</p>}
       {status === 'succeeded' && (
         <ul>
           {friends.map((friend) => (
             <li key={friend.id}>
-              <img src={friend.avatar} alt={`${friend.firstName} ${friend.lastName}`} style={{ width: '40px', height: '40px', borderRadius: '50%' }} />
+              <img 
+                src={friend.avatar} 
+                alt={`${friend.firstName} ${friend.lastName}`} 
+                style={{ width: '40px', height: '40px', borderRadius: '50%' }} />
               {friend.firstName} {friend.lastName}
             </li>
           ))}

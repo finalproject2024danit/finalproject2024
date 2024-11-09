@@ -98,11 +98,11 @@ const friendsSlice = createSlice({
       })
       .addCase(searchFriendsThunk.fulfilled, (state, action) => {
         state.friends = action.payload; // Оновлюємо список друзів на основі результатів пошуку
-      });
+      })
       .addCase(searchFriendsThunk.rejected, (state, action) => {
         state.error = action.payload;
       });
-},
+  },
 });
 
 export default friendsSlice.reducer;
