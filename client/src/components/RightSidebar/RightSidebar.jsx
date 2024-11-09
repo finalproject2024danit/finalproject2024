@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from "react-router-dom";
 import { fetchFriends } from '../../redux/slices/friendsSlice.js';
 import styles from './RightSidebar.module.scss';
 
@@ -14,14 +15,19 @@ const RightSidebar = () => {
 
   return (
     <div className={`${styles.rightMenu} ${styles.shinyCta}`}>
-      {status === 'loading' && <p>Завантаження...</p>}
-      {status === 'failed' && <p>Помилка: {error}</p>}
+      {status === 'loading' && <p>Loading...</p>}
+      {status === 'failed' && <p className={styles.error}>Error: {error}</p>}
       {status === 'succeeded' && (
         <ul>
           {friends.map((friend) => (
             <li key={friend.id}>
-              <img src={friend.avatar} alt={`${friend.firstName} ${friend.lastName}`} style={{ width: '40px', height: '40px', borderRadius: '50%' }} />
+             <NavLink to={`/user/${friend.id}`} className={styles.friendLink}>
+              <img 
+                src={friend.avatar} 
+                alt={`${friend.firstName} ${friend.lastName}`} 
+                style={{ width: '40px', height: '40px', borderRadius: '50%' }} />
               {friend.firstName} {friend.lastName}
+            </NavLink>
             </li>
           ))}
         </ul>

@@ -41,7 +41,7 @@ const UserPage = () => {
   };
 
   if (loading) {
-    return <p>Завантаження...</p>; // Якщо завантаження, відображаємо повідомлення
+    return <p>Loading...</p>;
   }
 
   if (error) {

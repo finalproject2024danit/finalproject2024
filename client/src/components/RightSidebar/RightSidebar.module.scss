@@ -1,27 +1,31 @@
-@import '../../App.scss';
+@import "../../App.scss";
 
 .rightMenu {
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-    width: 10%;
-    height: 79%;
-    padding-top: 20px;
-    background-color: $nodle-black-800;
-    border-radius: 10px;
-    // border: 1px solid $nodle-black-500;
-    
-    position: fixed;  
-    top: 180px;
-    right: 10px;
-    transition: 1.5s;
-      
-    li {
-      display: flex;
-      align-items: center;      
-      gap: 10px;      
-    }
-  
-  }
-  
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 10%;
+  height: 79%;
+  padding-top: 20px;
+  background-color: $nodle-black-800;
+  border-radius: 10px;
+  // border: 1px solid $nodle-black-500;
+
+  position: fixed;
+  top: 180px;
+  right: 10px;
+  transition: 1.5s;
+}
+
+.friendLink {
+  display: flex;
+  align-items: center;      
+  gap: 10px;
+  text-decoration: none;
+  color: green;
+
+}
+
+
+
+
