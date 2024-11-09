@@ -32,7 +32,7 @@ const UserPage = () => {
   };
 
   if (loading) {
-    return <p>Завантаження...</p>;
+    return <p>Loading...</p>;
   }
 
   if (error) {
