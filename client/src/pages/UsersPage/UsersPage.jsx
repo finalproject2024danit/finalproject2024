@@ -7,8 +7,8 @@ import axiosInstance from "../../api/axiosInstance.js";
 import ButtonAddFriend from "../../components/ButtonAddFriend/index.jsx";
 import { addFriendThunk } from "../../redux/slices/friendsSlice.js"; // Імпортуємо дію для додавання друга
 
-
-const defaultAvatar = "https://res.cloudinary.com/dsr6kwzrr/image/upload/v1729669892/photo_2024-10-23_10-30-18_nmluce.jpg"
+const defaultAvatar =
+  "https://res.cloudinary.com/dsr6kwzrr/image/upload/v1729669892/photo_2024-10-23_10-30-18_nmluce.jpg";
 
 const UsersPage = () => {
   const dispatch = useDispatch();
@@ -135,7 +135,3 @@ const UsersPage = () => {
 };
 
 export default UsersPage;
-
-
-
-
