@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axiosInstance from '../../api/axiosInstance.js';
+// import axiosInstance from '../../api/axiosInstance.js';
+import { getResidenceById} from '../../api/residences/requests.js';
 
-export const getResidenceById = async (id) => {
-  const response = await axiosInstance.get(`/residences/${id}`);
-  return response.data;
-};
+// export const getResidenceById = async (id) => {
+//   const response = await axiosInstance.get(`/residences/${id}`);
+//   return response.data;
+// };
 
 export const fetchResidencesByUserId = createAsyncThunk(
   'residences/fetchResidencesByUserId',

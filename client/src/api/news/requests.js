@@ -1,7 +1,7 @@
 import axiosInstance from '../axiosInstance.js';
 
 export const getNews = async (startPage = 0, perPage = 10, sortBy = 'id', sortDirection = 'asc') => {
-    const response = await axiosInstance.get('/filter', {
+    const response = await axiosInstance.get('/news/filter', {
         params: {
             startPage,
             perPage,

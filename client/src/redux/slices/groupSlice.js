@@ -6,13 +6,13 @@ const initialState = {
   selectedGroup: null,
   loading: false,
   error: null,
-  page: 0,
-  size: 10,
+  startPage: 0,
+  perPage: 10,
 };
 
-export const fetchGroups = createAsyncThunk('groups/fetchGroups', async ({ page, size }) => {
-  const data = await getAllGroupsFiltered(page, size);
-  return { data, page };
+export const fetchGroups = createAsyncThunk('groups/fetchGroups', async ({ startPage, perPage }) => {
+  const data = await getAllGroupsFiltered(startPage, perPage);
+  return { data, startPage };
 });
 
 export const fetchGroupById = createAsyncThunk('groups/fetchGroupById', async (id) => {
