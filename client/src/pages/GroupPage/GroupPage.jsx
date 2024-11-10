@@ -10,13 +10,13 @@ const defaultAvatarGroup =
 
 const GroupPage = () => {
   const dispatch = useDispatch();
-  const { groups, loading, error, page, size, selectedGroup } = useSelector((state) => state.group);
+  const { groups, loading, error, startPage, perPage, selectedGroup } = useSelector((state) => state.group);
   const observer = useRef();
 
   useEffect(() => {
     // Загрузка начальной страницы групп при первичном рендере
-    dispatch(fetchGroups({ page, size }));
-  }, [dispatch, page, size]);
+    dispatch(fetchGroups({ startPage, perPage }));
+  }, [dispatch, startPage, perPage]);
 
   // Функция для отслеживания последнего элемента списка
   const lastGroupElementRef = (node) => {
@@ -25,7 +25,7 @@ const GroupPage = () => {
 
     observer.current = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting) {
-        dispatch(fetchGroups({ page, size })); // Загружаем следующую страницу, когда элемент пересечен
+        dispatch(fetchGroups({ startPage, perPage })); // Загружаем следующую страницу, когда элемент пересечен
       }
     });
 
@@ -38,7 +38,7 @@ const GroupPage = () => {
   };
 
   // Рендеринг в зависимости от состояния
-  if (loading && page === 0) {
+  if (loading && startPage === 0) {
     return (
       <MainContent title="">
         <p>Загрузка...</p>

@@ -6,6 +6,7 @@ import groupReducer from "./slices/groupSlice.js";
 import friendsReducer from "./slices/friendsSlice.js";
 import hobbiesReducer from "./slices/hobbiesSlice.js";
 import residencesReducer from "./slices/residencesSlice.js";
+import newsReducer from "./slices/newsSlice.js";
 
 
 export const store = configureStore({
@@ -16,7 +17,8 @@ export const store = configureStore({
         group: groupReducer,
         friends: friendsReducer,
         hobbies: hobbiesReducer,
-        residences: residencesReducer,        
+        residences: residencesReducer,   
+        news: newsReducer,    
     },
 });
 
