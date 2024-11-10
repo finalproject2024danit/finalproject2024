@@ -6,8 +6,9 @@ import com.project.project.entities.hobby.Hobby;
 import com.project.project.entities.hobby.api.dto.HobbyMapper;
 import com.project.project.entities.hobby.api.dto.RequestHobbyDto;
 import com.project.project.entities.hobby.api.dto.ResponseHobbyDto;
+import com.project.project.entities.hobby.api.dto.View;
 import com.project.project.entities.hobby.service.HobbyServiceImpl;
-import com.project.project.entities.user.api.dto.View;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.ResponseEntity;
