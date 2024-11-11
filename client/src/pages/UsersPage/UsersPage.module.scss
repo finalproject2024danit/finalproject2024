@@ -47,6 +47,7 @@
 
      // Adjust text size for smaller screens
   h2 {
+    font-family: $primary-font;
     font-size: $font-size-medium;
   }
   }
@@ -68,7 +69,7 @@
 
   .front .inner h2 {
     color: grey;
-    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+    font-family: $heading-font;
     font-weight: 300;
     font-size: 18px;
   }
