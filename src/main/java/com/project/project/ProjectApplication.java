@@ -21,7 +21,7 @@ public class ProjectApplication implements ApplicationRunner {
     public void run(ApplicationArguments args) throws SQLException {
         System.out.println("http://localhost:9000");
         System.out.println("http://134.209.246.21:9000");
-        System.out.println("finalproject2024.vercel.app");
-        System.out.println("finalproject2024-description.vercel.app");
+        System.out.println("https://finalproject2024.vercel.app");
+        System.out.println("https://finalproject2024-description.vercel.app");
     }
 }

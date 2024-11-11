@@ -1,6 +1,7 @@
 package com.project.project.entities.friend.api;
 
 import com.project.project.entities.friend.Friend;
+import com.project.project.entities.friend.api.dto.RequestDeleteFriendDto;
 import com.project.project.entities.friend.service.FriendServiceImpl;
 import com.project.project.entities.user.User;
 import com.project.project.entities.user.api.dto.ResponseUserDto;
@@ -35,13 +36,17 @@ public class FriendController {
         return ResponseEntity.ok(friend);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<String> deleteFriend(@PathVariable Long id) {
-        log.info("Trying to delete friend");
+    @DeleteMapping("/delete")
+    public ResponseEntity<String> deleteFriend(@RequestBody RequestDeleteFriendDto requestDeleteFriendDto) {
+        Long idFrom = requestDeleteFriendDto.getUserFromId();
+        Long idTo = requestDeleteFriendDto.getUserToId();
+        log.info("Trying to delete friendship between user {} and user {}",
+                idFrom, idTo);
 
-        friendService.deleteFriend(id);
-        return ResponseEntity.ok("Friend has been successfully deleted.");
+        friendService.deleteFriend(idFrom, idTo);
+        return ResponseEntity.ok("Friendship has been successfully deleted.");
     }
+
 
     @GetMapping("/search")
     public List<ResponseUserDto> searchFriendsByFullName(
