@@ -52,10 +52,12 @@ const UserPage = () => {
   const formatPhones = (phones) => {
     return phones || "Немає телефонів"; // Якщо немає телефонів, виводимо повідомлення
   };
+  
 
   return (
     <MainContent title="">
       <div className={styles.userBox}>
+      
         <img
           className={styles.userPhoto}
           src={user.avatar || "default_avatar_url"} // Замінимо на URL за замовчуванням для аватара

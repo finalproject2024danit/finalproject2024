@@ -17,7 +17,7 @@ const UsersPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [flippedCards, setFlippedCards] = useState({});
-  const usersPerPage = 10;
+  const usersPerPage = 300;
   const sortBy = "firstName";
   const sortDirection = "asc";
   const currentPage = 0;
@@ -27,13 +27,14 @@ const UsersPage = () => {
     const fetchUsers = async () => {
       try {
         const response = await axiosInstance.get("/users/filter", {
-          params: {
+                   params: {
             startPage: currentPage,
             perPage: usersPerPage,
             sortBy,
             sortDirection,
-          },
+          },         
         });
+        console.log(response);
 
         const usersData = response.data || [];
         if (usersData.length > 0) {

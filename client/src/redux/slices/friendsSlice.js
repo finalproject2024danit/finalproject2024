@@ -35,16 +35,17 @@ export const addFriendThunk = createAsyncThunk(
 // Створимо асинхронне діяння для видалення друга
 export const deleteFriendThunk = createAsyncThunk(
   'friends/deleteFriend',
-  async (friendId, { rejectWithValue }) => {
+  async ({ userFromId, userToId }, { rejectWithValue }) => {
     try {
-      await deleteFriend(friendId); // Виконуємо видалення
-      return friendId; // Повертаємо ID видаленого друга
+      await deleteFriend(userFromId, userToId); // Виконуємо видалення за userToId
+      return userToId; // Повертаємо ID видаленого друга     
     } catch (error) {
       console.error("Failed to delete friend:", error);
       return rejectWithValue(error.response?.data || error.message);
     }
   }
 );
+
 
 // Створимо асинхронне діяння для пошуку друзів
 export const searchFriendsThunk = createAsyncThunk(

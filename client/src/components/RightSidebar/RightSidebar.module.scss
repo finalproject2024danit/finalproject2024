@@ -4,28 +4,39 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 10%;
+  width: 10%; // Збільшена ширина
   height: 79%;
   padding-top: 20px;
   background-color: $nodle-black-800;
   border-radius: 10px;
-  // border: 1px solid $nodle-black-500;
-
   position: fixed;
   top: 180px;
   right: 10px;
   transition: 1.5s;
 }
 
+.friendItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; // Розташовує елементи на протилежних сторонах
+  padding: 5px;
+  width: 100%;
+}
+
 .friendLink {
   display: flex;
-  align-items: center;      
+  align-items: center;
   gap: 10px;
   text-decoration: none;
   color: green;
-
+  flex-grow: 1; // Розтягує блок з ім'ям для заповнення простору
 }
 
+.friendName {
+  display: flex;
+  flex-direction: column; // Ім'я та прізвище в два рядки
+}
 
-
-
+.deleteButton {
+  margin-left: auto; // Зміщує кнопку видалення до правого краю
+}
