@@ -7,31 +7,73 @@
   // flex-direction: column;
   gap: 20px;
 
+  @media (max-width: 1024px) and (min-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  // Styles for mobile screens
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+}
+}
+
   .userPhoto {   
     width: 70%; /* Ширина фото 100% від контейнера */
     height: auto; /* Висота для збереження пропорцій */
     border-radius: 5px; 
     
+    @media (max-width: 1024px) and (min-width: 768px) {
+      width: 60%; /* Slightly narrower for tablet screens */
+    }
+  
+    // Styles for mobile screens
+    @media (max-width: 768px) {
+      width: 90%; /* Wider for smaller screen */
+  }
   }  
-}
+
 
 .userDetails {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  
 }
 
 .userDetails h2 {
+  font-family: $heading-font;
   font-size: $font-size-title;    
   color: $border-color-yellow;
   padding-bottom: 20px;
+
+
+  @media (max-width: 1024px) and (min-width: 768px) {
+    font-size: $font-size-title * 0.9; /* Slightly smaller font */
+  }
+
+  // Styles for mobile screens
+  @media (max-width: 768px) {
+    font-size: $font-size-title * 0.8; /* Smaller title font for iPhone */
+  }
 }
 
 .userDetails p {
+  font-family: $primary-font;
   font-size: $font-size-text;
   color: $nodle-black-100;
+
+
+  @media (max-width: 1024px) and (min-width: 768px) {
+    font-size: $font-size-text * 0.9; /* Slightly smaller font */
+  }
+
+  // Styles for mobile screens
+  @media (max-width: 768px) {
+    font-size: $font-size-text * 0.8; /* Smaller paragraph font for iPhone */
+  }
 }
+
   
   
   
