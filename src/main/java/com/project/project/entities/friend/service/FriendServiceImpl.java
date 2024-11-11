@@ -7,6 +7,7 @@ import com.project.project.entities.user.status.UserStatus;
 import com.project.project.exceptions.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -31,12 +32,16 @@ public class FriendServiceImpl implements FriendService {
     }
 
     @Override
-    public void deleteFriend(Long id) {
-        userRepository.findById(id)
+    @Transactional
+    public void deleteFriend(long userFromId, long userToId) {
+        userRepository.findById(userFromId)
+                .orElseThrow(() -> new UserNotFoundException(UserStatus.USER_NOT_FOUND.getMessage()));
+        userRepository.findById(userToId)
                 .orElseThrow(() -> new UserNotFoundException(UserStatus.USER_NOT_FOUND.getMessage()));
 
-        friendRepository.deleteById(id);
+        friendRepository.deleteFriend(userFromId, userToId);
     }
+
 
     @Override
     public List<Friend> findFriendsByNameExcludingSelf(String firstName, String lastName, Long currentUserId) {
