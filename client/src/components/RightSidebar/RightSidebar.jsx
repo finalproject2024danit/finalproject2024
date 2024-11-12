@@ -1,10 +1,9 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { fetchFriends } from "../../redux/slices/friendsSlice.js";
+import { fetchFriends, deleteFriendThunk } from "../../redux/slices/friendsSlice.js";
 import styles from "./RightSidebar.module.scss";
 import ButtonDeleteFriend from "../../components/ButtonDeleteFriend/index.jsx";
-import { deleteFriendThunk } from "../../redux/slices/friendsSlice.js";
 
 const RightSidebar = () => {
   const dispatch = useDispatch();
