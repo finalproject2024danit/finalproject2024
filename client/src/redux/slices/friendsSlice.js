@@ -1,7 +1,8 @@
 // src/slices/friendsSlice.js
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { addFriend, deleteFriend, searchFriendsByFullName } from '../../api/friends/requests.js';
+import { addFriend, searchFriendsByFullName } from '../../api/friends/requests.js';
 import axiosInstance from '../../api/axiosInstance.js';
+import axios from 'axios'; 
 
 // Створимо асинхронне діяння для отримання друзів
 export const fetchFriends = createAsyncThunk(
@@ -34,17 +35,25 @@ export const addFriendThunk = createAsyncThunk(
 
 // Створимо асинхронне діяння для видалення друга
 export const deleteFriendThunk = createAsyncThunk(
-  'friends/deleteFriend',
+  "friends/deleteFriend",
   async ({ userFromId, userToId }, { rejectWithValue }) => {
     try {
-      await deleteFriend(userFromId, userToId); // Виконуємо видалення за userToId
-      return userToId; // Повертаємо ID видаленого друга     
+      console.log("Attempting to delete friend:", { userFromId, userToId });
+
+      // Оновлення шляху та передача правильних даних
+      const response = await axios.delete('/api/v1/friends/delete', {
+        data: { userFromId, userToId }  // передаємо обидва ID у тілі запиту
+      });
+
+      console.log("Friend deleted successfully:", response.data);
+      return response.data;  // повертаємо дані відповіді сервера
     } catch (error) {
       console.error("Failed to delete friend:", error);
-      return rejectWithValue(error.response?.data || error.message);
+      return rejectWithValue(error.message);  // повертаємо повідомлення про помилку
     }
   }
 );
+
 
 
 // Створимо асинхронне діяння для пошуку друзів

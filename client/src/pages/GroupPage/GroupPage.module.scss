@@ -136,6 +136,45 @@
   z-index: -1;
 }
 
+.postFeedback {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.likes, .comments {
+  font-size: 14px;
+  color: #555;
+}
+
+.commentForm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.commentForm textarea {
+  width: 95%;
+  resize: none;
+  height: 80px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+}
+
+.commentForm button {
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.commentForm button:hover {
+  background-color: #45a049;
+}
+
 
 // @import "../../App.scss";
 

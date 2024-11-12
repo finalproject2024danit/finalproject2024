@@ -7,6 +7,7 @@ import friendsReducer from "./slices/friendsSlice.js";
 import hobbiesReducer from "./slices/hobbiesSlice.js";
 import residencesReducer from "./slices/residencesSlice.js";
 import newsReducer from "./slices/newsSlice.js";
+import commentsReducer from "./slices/commentsSlice.js";
 
 
 export const store = configureStore({
@@ -18,7 +19,8 @@ export const store = configureStore({
         friends: friendsReducer,
         hobbies: hobbiesReducer,
         residences: residencesReducer,   
-        news: newsReducer,    
+        news: newsReducer,  
+        comments: commentsReducer,
     },
 });
 
