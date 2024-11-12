@@ -8,10 +8,13 @@ const initialState = {
   error: null,
 };
 
-export const fetchGroups = createAsyncThunk('groups/fetchGroups', async () => {
-  const data = await getAllGroupsFiltered();
-  return data;  // Повертаємо одразу всі групи
-});
+export const fetchGroups = createAsyncThunk(
+  'groups/fetchGroups',
+  async ({ startPage = 0, perPage = 5 }) => {
+    const data = await getAllGroupsFiltered(startPage, perPage);
+    return data;
+  }
+);
 
 export const fetchGroupById = createAsyncThunk('groups/fetchGroupById', async (id) => {
   const group = await getGroupById(id);
@@ -29,7 +32,7 @@ const groupSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchGroups.fulfilled, (state, action) => {
-        state.groups = action.payload;  // Завантажуємо всі групи
+        state.groups = [...state.groups, ...action.payload];
         state.loading = false;
       })
       .addCase(fetchGroups.rejected, (state, action) => {

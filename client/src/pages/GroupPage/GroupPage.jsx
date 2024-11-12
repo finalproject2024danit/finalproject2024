@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGroups, fetchGroupById } from "../../redux/slices/groupSlice.js";
 import { useFormik } from "formik";
@@ -8,29 +8,33 @@ import { setComments, addComment } from "../../redux/slices/commentsSlice.js";
 
 const GroupPage = () => {
   const dispatch = useDispatch();
+  const userFromId = useSelector((state) => state.user.id);
   const { groups, loading, error, selectedGroup } = useSelector(
     (state) => state.group
   );
 
-  // Перевірка на undefined для comments
   const { comments = {} } = useSelector((state) => state.comments || {});
-
   const observer = useRef();
-  const hasMore = groups.length < 100;
+  const [page, setPage] = useState(0);
+  const perPage = 5;
+  const hasMore = groups.length % perPage === 0 && groups.length < 100;
 
   useEffect(() => {
-    dispatch(fetchGroups());
-  }, [dispatch]);
+    if (!hasMore) return; // Якщо більше груп немає, не робимо запит
+    dispatch(fetchGroups({ startPage: page, perPage }));
+  }, [dispatch, page, hasMore]);
 
   useEffect(() => {
     const storedComments = JSON.parse(localStorage.getItem("comments")) || {};
     for (const groupId in storedComments) {
       for (const postId in storedComments[groupId]) {
-        dispatch(setComments({
-          groupId,
-          postId,
-          comments: storedComments[groupId][postId],
-        }));
+        dispatch(
+          setComments({
+            groupId,
+            postId,
+            comments: storedComments[groupId][postId],
+          })
+        );
       }
     }
   }, [dispatch]);
@@ -41,7 +45,7 @@ const GroupPage = () => {
 
     observer.current = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting && hasMore) {
-        dispatch(fetchGroups());
+        setPage((prevPage) => prevPage + 1);
       }
     });
 
@@ -57,22 +61,24 @@ const GroupPage = () => {
       comment: "",
     },
     onSubmit: (values, { resetForm }) => {
+      if (values.comment.trim() === "") return;
+
       const newComment = {
         content: values.comment,
-        postId: formik.values.postId,  // Використовуємо ID поточного поста
-        groupId: formik.values.groupId, // Використовуємо ID поточної групи
-        userId: 1,
+        postId: formik.values.postId,
+        groupId: formik.values.groupId,
+        userId: userFromId,
         createdDate: new Date().toISOString(),
       };
 
-      // Додаємо коментар до відповідного поста цієї групи
-      dispatch(addComment({
-        groupId: newComment.groupId,
-        postId: newComment.postId,
-        comment: newComment,
-      }));
+      dispatch(
+        addComment({
+          groupId: newComment.groupId,
+          postId: newComment.postId,
+          comment: newComment,
+        })
+      );
 
-      // Збереження коментарів в localStorage
       const updatedComments = JSON.parse(localStorage.getItem("comments")) || {};
       if (!updatedComments[newComment.groupId]) {
         updatedComments[newComment.groupId] = {};
@@ -81,7 +87,6 @@ const GroupPage = () => {
         updatedComments[newComment.groupId][newComment.postId] = [];
       }
       updatedComments[newComment.groupId][newComment.postId].push(newComment);
-
       localStorage.setItem("comments", JSON.stringify(updatedComments));
 
       resetForm();
@@ -142,7 +147,6 @@ const GroupPage = () => {
             <div className={styles.groupRender}>
               {selectedGroup.posts && selectedGroup.posts.length > 0 ? (
                 selectedGroup.posts.map((post, index) => {
-                  // Отримуємо коментарі для поточного поста в обраній групі
                   const postComments = comments[selectedGroup.id]?.[post.id] || [];
 
                   return (
@@ -170,16 +174,16 @@ const GroupPage = () => {
                         className={styles.commentForm}
                       >
                         <div className={styles.commentsList}>
-                        {postComments.length > 0 ? (
-                          postComments.map((comment, idx) => (
-                            <div key={idx} className={styles.comment}>
-                              <p>{comment.content}</p>
-                            </div>
-                          ))
-                        ) : (
-                          <p>Коментарів ще немає.</p>
-                        )}
-                      </div>
+                          {postComments.length > 0 ? (
+                            postComments.map((comment, idx) => (
+                              <div key={idx} className={styles.comment}>
+                                <p>{comment.content}</p>
+                              </div>
+                            ))
+                          ) : (
+                            <p>Коментарів ще немає.</p>
+                          )}
+                        </div>
                         <textarea
                           name="comment"
                           onChange={formik.handleChange}
@@ -188,8 +192,6 @@ const GroupPage = () => {
                         />
                         <button type="submit">Відправити коментар</button>
                       </form>
-
-                      
                     </div>
                   );
                 })
@@ -205,6 +207,7 @@ const GroupPage = () => {
 };
 
 export default GroupPage;
+
 
 
 
