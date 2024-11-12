@@ -2,13 +2,12 @@ package com.project.project.security;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.project.project.security.SysUser.SysUser;
+import com.project.project.entities.user.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.crypto.spec.SecretKeySpec;
@@ -25,21 +24,21 @@ public final class JwtUtils {
 
     public static String generate() {
         Key hmacKey = new SecretKeySpec(Base64.getDecoder().decode(secret),
-            SignatureAlgorithm.HS256.getJcaName());
+                SignatureAlgorithm.HS256.getJcaName());
 
         final LocalDateTime now = LocalDateTime.now();
         final Instant accessExpirationInstant = now.plusMinutes(5).atZone(ZoneId.systemDefault()).toInstant();
         final Date accessExpiration = Date.from(accessExpirationInstant);
         return Jwts.builder()
-            .setSubject("User1")
-            .setExpiration(accessExpiration)
-            .signWith(hmacKey)
-            .claim("roles", "USER")
-            .claim("firstName", "User1")
-            .compact();
+                .setSubject("User1")
+                .setExpiration(accessExpiration)
+                .signWith(hmacKey)
+                .claim("roles", "USER")
+                .claim("firstName", "User1")
+                .compact();
     }
 
-    public static JwtAuthentication generate(Claims claims, SysUser user) {
+    public static JwtAuthentication generate(Claims claims, User user) {
         JwtAuthentication jwtInfoToken = new JwtAuthentication();
         jwtInfoToken.setRoles(getRoles(claims));
         jwtInfoToken.setPrincipal(user);

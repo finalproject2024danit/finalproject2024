@@ -2,11 +2,10 @@ package com.project.project.security.refreshToken;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.project.project.AbstractEntity;
-import com.project.project.security.SysUser.SysUser;
+import com.project.project.entities.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -29,5 +28,5 @@ public class RefreshToken extends AbstractEntity {
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    SysUser sysUser;
+    User user;
 }

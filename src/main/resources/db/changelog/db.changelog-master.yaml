@@ -1,11 +1,5 @@
 databaseChangeLog:
   - include:
-      file: db/changelog/changeset/security/create-member-table.yaml
-  - include:
-      file: db/changelog/changeset/security/create-role-table.yaml
-  - include:
-      file: db/changelog/changeset/security/create-refreshtoken-table.yaml
-  - include:
       file: db/changelog/changeset/create-workplace-table.yaml
   - include:
       file: db/changelog/changeset/create-residence-table.yaml
@@ -13,6 +7,10 @@ databaseChangeLog:
       file: db/changelog/changeset/create-hobby-table.yaml
   - include:
       file: db/changelog/changeset/create-user-table.yaml
+  - include:
+      file: db/changelog/changeset/security/create-role-table.yaml
+  - include:
+      file: db/changelog/changeset/security/create-refreshtoken-table.yaml
   - include:
       file: db/changelog/changeset/create-message-table.yaml
   - include:

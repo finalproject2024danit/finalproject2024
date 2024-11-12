@@ -1,7 +1,7 @@
 package com.project.project.security;
 
 
-import com.project.project.security.SysUser.SysUser;
+import com.project.project.entities.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,27 +11,27 @@ import java.util.stream.Collectors;
 
 public class MyUserDetails implements UserDetails {
 
-    private SysUser sysUser;
+    private User user;
 
-    public MyUserDetails(SysUser sysUser) {
-        this.sysUser = sysUser;
+    public MyUserDetails(User user) {
+        this.user = user;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return sysUser.getSysRoles().stream()
+        return user.getSysRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getRoleName()))
                 .collect(Collectors.toList());
     }
 
     @Override
     public String getPassword() {
-        return sysUser.getEncryptedPassword();
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return sysUser.getUserName();
+        return user.getFirstName();
     }
 
     @Override

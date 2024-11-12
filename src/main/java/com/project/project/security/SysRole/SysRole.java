@@ -2,7 +2,7 @@ package com.project.project.security.SysRole;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.project.project.security.SysUser.SysUser;
+import com.project.project.entities.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -29,6 +29,6 @@ public class SysRole {
     @JsonIgnore
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "member_id")
-    private SysUser sysUser;
+    @JoinColumn(name = "user_id")
+    private User user;
 }

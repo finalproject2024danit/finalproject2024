@@ -8,6 +8,7 @@ import com.project.project.entities.user.model.AddUserModel;
 import com.project.project.entities.user.service.UserServiceImpl;
 import com.project.project.entities.user.status.UserStatus;
 import com.project.project.exceptions.UserNotFoundException;
+import com.project.project.security.SysUser.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -30,6 +31,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
     private final UserServiceImpl userService;
+    private final AuthService authService;
 
     @GetMapping("/filter")
     @JsonView(View.Admin.class)
@@ -77,8 +79,11 @@ public class UserController {
         user.setAvatar(addUserModel.avatar());
         user.setPhones(addUserModel.phones());
         user.setPhotoData(addUserModel.photoData());
+        user.setEnabled(true);
 
         User savedUser = userService.addUser(user);
+
+        authService.generateTokensForUser(savedUser);
 
         ResponseUserDto responseUserDto = new ResponseUserDto();
         responseUserDto.setId(savedUser.getId());

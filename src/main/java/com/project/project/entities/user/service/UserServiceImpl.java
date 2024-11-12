@@ -8,10 +8,14 @@ import com.project.project.exceptions.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -82,6 +86,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getFriendsByUserId(Long userId) {
         return userRepository.findFriendsByUserId(userId);
+    }
+
+    @Override
+    public UserDetails getUserByEmail(String email) throws UsernameNotFoundException {
+
+        Optional<User> user = userRepository.findByUserEmail(email);
+        if (user.isEmpty()) {
+            throw new UsernameNotFoundException(email);
+        }
+        List<SimpleGrantedAuthority> authorities = user.get().getSysRoles().stream()
+                .map(r -> new SimpleGrantedAuthority(r.getRoleName()))
+                .toList();
+        return new org.springframework.security.core.userdetails.User(user.get().getEmail(), user.get().getPassword(), authorities);
     }
 
 }
