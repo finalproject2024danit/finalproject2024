@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificationExecutor<User> {
     @Query(value = "SELECT * FROM users WHERE first_name ILIKE CONCAT('%', ?1, '%')", nativeQuery = true)
@@ -19,4 +20,7 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
             "UNION " +
             "SELECT f.userFromId FROM Friend f WHERE f.userToId = :userId)")
     List<User> findFriendsByUserId(Long userId);
+
+    @Query("SELECT u FROM User u WHERE u.email = :email")
+    Optional<User> findByUserEmail(String email);
 }

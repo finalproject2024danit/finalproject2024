@@ -35,14 +35,14 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: member_id
+                  name: user_id
                   type: INT
                   constraints:
                     nullable: false
         - addForeignKeyConstraint:
             baseTableName: refresh_tokens
-            baseColumnNames: member_id
-            constraintName: fk_refresh_tokens_member
-            referencedTableName: members
+            baseColumnNames: user_id
+            constraintName: fk_refresh_tokens_user
+            referencedTableName: users
             referencedColumnNames: id
             onDelete: CASCADE

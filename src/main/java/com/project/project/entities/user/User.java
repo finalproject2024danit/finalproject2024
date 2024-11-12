@@ -7,6 +7,7 @@ import com.project.project.entities.group.Group;
 import com.project.project.entities.hobby.Hobby;
 import com.project.project.entities.residence.Residence;
 import com.project.project.entities.workplace.Workplace;
+import com.project.project.security.SysRole.SysRole;
 import com.project.project.util.Gender;
 import jakarta.persistence.*;
 import lombok.*;
@@ -15,6 +16,8 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import static jakarta.persistence.TemporalType.TIMESTAMP;
@@ -91,6 +94,12 @@ public class User extends AbstractEntity {
     @ToString.Exclude
     @JoinColumn(name = "hobby_id")
     Hobby hobby;
+
+    @Column(name = "enabled", length = 1, nullable = true)
+    boolean enabled;
+
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
+    List<SysRole> sysRoles = new ArrayList<>();
 
     @CreatedDate
     @Temporal(TIMESTAMP)

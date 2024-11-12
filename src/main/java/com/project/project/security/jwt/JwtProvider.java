@@ -1,12 +1,11 @@
 package com.project.project.security.jwt;
 
-import com.project.project.security.SysUser.SysUser;
+import com.project.project.entities.user.User;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
 import lombok.NonNull;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -34,25 +33,25 @@ public class JwtProvider {
         this.jwtRefreshSecret = Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtRefreshSecret));
     }
 
-    public String generateAccessToken(SysUser user) {
+    public String generateAccessToken(User user) {
         final LocalDateTime now = LocalDateTime.now();
         final Instant accessExpirationInstant = now.plusMinutes(ACCESS_LEAVE_MINUTES).atZone(ZoneId.systemDefault()).toInstant();
         final Date accessExpiration = Date.from(accessExpirationInstant);
         return Jwts.builder()
-                .setSubject(user.getUserName())
+                .setSubject(user.getEmail())
                 .setExpiration(accessExpiration)
                 .signWith(jwtAccessSecret)
                 .claim("roles", user.getSysRoles())
-                .claim("userName", user.getUserName())
+                .claim("userEmail", user.getEmail())
                 .compact();
     }
 
-    public String generateRefreshToken(SysUser user) {
+    public String generateRefreshToken(User user) {
         final LocalDateTime now = LocalDateTime.now();
         final Instant refreshExpirationInstant = now.plusDays(REFRESH_LEAVE_DAYS).atZone(ZoneId.systemDefault()).toInstant();
         final Date refreshExpiration = Date.from(refreshExpirationInstant);
         return Jwts.builder()
-                .setSubject(user.getUserName())
+                .setSubject(user.getEmail())
                 .setExpiration(refreshExpiration)
                 .signWith(jwtRefreshSecret)
                 .compact();

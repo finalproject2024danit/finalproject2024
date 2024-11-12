@@ -1,9 +1,9 @@
 package com.project.project.security.filter;
 
+import com.project.project.entities.user.User;
+import com.project.project.entities.user.service.UserServiceImpl;
 import com.project.project.security.JwtAuthentication;
 import com.project.project.security.JwtUtils;
-import com.project.project.security.SysUser.SysUser;
-import com.project.project.security.SysUser.service.MemberService;
 import com.project.project.security.jwt.JwtProvider;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
@@ -13,7 +13,6 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -29,7 +28,7 @@ public class JwtFilter extends GenericFilterBean {
     private static final String AUTHORIZATION = "Authorization";
 
     private final JwtProvider jwtProvider;
-    private final MemberService memberService;
+    private final UserServiceImpl userService;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain fc)
@@ -42,10 +41,10 @@ public class JwtFilter extends GenericFilterBean {
         try {
             if (jwtProvider.validateAccessToken(token)) {
                 final Claims claims = jwtProvider.getAccessClaims(token);
-                final String login = claims.getSubject();
+                final String email = claims.getSubject();
 
 
-                SysUser user = memberService.getUserByLogin(login).orElse(null);
+                User user = (User) userService.getUserByEmail(email);
                 if (user != null) {
                     final JwtAuthentication jwtInfoToken = JwtUtils.generate(claims, user);
                     jwtInfoToken.setAuthenticated(true);

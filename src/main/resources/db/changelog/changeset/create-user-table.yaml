@@ -59,6 +59,11 @@ databaseChangeLog:
                   name: hobby_id
                   type: BIGINT
               - column:
+                  name: enabled
+                  type: boolean
+                  constraints:
+                    nullable: true
+              - column:
                   name: created_date
                   type: TIMESTAMP
                   defaultValueComputed: CURRENT_TIMESTAMP
