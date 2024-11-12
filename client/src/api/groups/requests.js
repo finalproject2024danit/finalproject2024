@@ -1,6 +1,6 @@
 import axiosInstance from '../axiosInstance.js'
 
-export const getAllGroupsFiltered = async (startPage = 0, perPage = 10, sortBy = 'id', sortDirection = 'asc') => {
+export const getAllGroupsFiltered = async (startPage = 0, perPage = 27, sortBy = 'id', sortDirection = 'asc') => {
     const response = await axiosInstance.get('/groups/filter', {
         params: {
             startPage,
