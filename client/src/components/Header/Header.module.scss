@@ -36,9 +36,9 @@ header {
   .headerNav li a::after {
     content: "";
     position: absolute;
-    left: 0;
+    left: -14px;
     bottom: -10px; /* Положення лінії */
-    width: 100%; /* Ширина лінії */
+    width: 200%; /* Ширина лінії */
     height: 3px; /* Висота лінії */
     background-color: grey; /* Сірий колір для неактивних сторінок */
     transition: background-color 0.3s ease;
@@ -48,10 +48,28 @@ header {
     background-color: green; /* Зелений колір для активної сторінки */
   }
 
+  .logoBox{
+    display: flex;
+  }
+
+  .header {
+    display: flex;
+    flex-direction: column;
+  }
+
   .headerTop {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
     padding: 20px;
     box-sizing: border-box;
     border-bottom: 1px solid $nodle-black-700;
+  }
+
+  .imgLogo {
+    width: 250px;
+    height: 150px;
   }
 
   .headerBottom {
