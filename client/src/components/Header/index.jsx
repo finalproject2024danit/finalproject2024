@@ -10,6 +10,7 @@ import styles from "./Header.module.scss";
 const Header = () => {
   return (
     <div className={styles.headerBox}>
+      
       <header className={styles.shinyCta}>
         {/* <div className={styles.skyContainer}>
         <span className={styles.star}></span>
@@ -23,18 +24,16 @@ const Header = () => {
         <span className={styles.star}></span>
         <span className={styles.star}></span>
       </div> */}
-
+           <div className={styles.logoBox}>
+         <img
+            className={styles.imgLogo}
+            src="/logoGif.gif"
+            alt="Galactic Connections Logo"
+          />
+          <div className={styles.header} >
         <div className={styles.headerTop}>
-          <NavLink
-            className={({ isActive }) => (isActive ? styles.active : "")}
-            to="/"
-          >
-            <div className={styles.iconWrapper}>
-              <h1>
-                Galactic Connections &quot;Reach for the and connect!&quot;
-              </h1>
-            </div>
-          </NavLink>
+         
+          <h1>Galactic Connections &quot;Reach for the and connect!&quot;</h1>
         </div>
         <div className={styles.headerBottom}>
           <nav>
@@ -78,6 +77,8 @@ const Header = () => {
             </ul>
           </nav>
         </div>
+        </div>
+        </div> 
       </header>
     </div>
   );
