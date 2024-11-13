@@ -20,7 +20,7 @@ export const updateUser = async (userId, userData) => {
 }
 
 export const getUsers = async (startPage = 0, perPage = 10, sortBy = 'id', sortDirection = 'asc') => {
-    const response = await axiosInstance.get('/filter', {
+    const response = await axiosInstance.get('/users/filter', {
         params: {
             startPage,
             perPage,
@@ -32,12 +32,17 @@ export const getUsers = async (startPage = 0, perPage = 10, sortBy = 'id', sortD
 }
 
 export const createUser = async (userData) => {
-    const response = await axiosInstance.post('/create', userData)
+    const response = await axiosInstance.post('/users/create', userData)
     return response.data
 }
 
 export const getFriendsByUserId = async (userId) => {
     const response = await axiosInstance.get(`/${userId}/friends`)
+    return response.data
+}
+
+export const loginByEmail = async (userData) => {
+    const response = await axiosInstance.post('users/login', userData)
     return response.data
 }
 

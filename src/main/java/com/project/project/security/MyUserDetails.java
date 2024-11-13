@@ -1,6 +1,5 @@
 package com.project.project.security;
 
-
 import com.project.project.entities.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -11,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class MyUserDetails implements UserDetails {
 
-    private User user;
+    private final User user;
 
     public MyUserDetails(User user) {
         this.user = user;
@@ -31,7 +30,7 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public String getUsername() {
-        return user.getFirstName();
+        return user.getEmail();
     }
 
     @Override
