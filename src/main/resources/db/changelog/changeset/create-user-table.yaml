@@ -62,7 +62,7 @@ databaseChangeLog:
                   name: enabled
                   type: boolean
                   constraints:
-                    nullable: true
+                    nullable: false
               - column:
                   name: created_date
                   type: TIMESTAMP

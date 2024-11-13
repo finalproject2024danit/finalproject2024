@@ -95,7 +95,7 @@ public class User extends AbstractEntity {
     @JoinColumn(name = "hobby_id")
     Hobby hobby;
 
-    @Column(name = "enabled", length = 1, nullable = true)
+    @Column(name = "enabled", length = 1, nullable = false)
     boolean enabled;
 
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
