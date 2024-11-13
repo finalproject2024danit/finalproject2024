@@ -10,6 +10,7 @@ import {Helmet} from "react-helmet-async";
 
 const App = () => {
     return (
+        
         <div className="container">
             <Helmet>
                 <title>Galactic Connections</title>

@@ -38,6 +38,7 @@ const LeftSidebar = () => {
         <NavLink className={({ isActive }) => (isActive ? styles.active : "")} to="/game2">Game 2</NavLink>
         <NavLink className={({ isActive }) => (isActive ? styles.active : "")} to="/game3">Game 3</NavLink>
         <NavLink className={({ isActive }) => (isActive ? styles.active : "")} to="/gallery">Gallery</NavLink>
+        <NavLink className={({ isActive }) => (isActive ? styles.active : "")} to="/login">Login</NavLink>
       </div>
     </aside>
   );

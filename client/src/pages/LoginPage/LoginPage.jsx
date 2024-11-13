@@ -1,60 +1,115 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { loginFailure, loginSuccess } from "../../redux/slices/authSlice.js";
+import React, { useState } from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import MainContent from "../../components/MainContent/MainContent";
 import styles from "./LoginPage.module.scss";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const authState = useSelector((state) => state.auth);
+  const [isLoginActive, setIsLoginActive] = useState(false);
 
-  useEffect(() => {
-    if (authState.isLoggedIn) {
-      navigate("/");
-    }
-  }, [authState.isLoggedIn, navigate]);
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-
-    // Simple authentication logic
-    if (email === "user@example.com" && password === "password") {
-      dispatch(loginSuccess({ email }));
-      navigate("/");
-    } else {
-      dispatch(loginFailure("Invalid credentials"));
-    }
+  const handleLoginClick = () => {
+    setIsLoginActive(true);
   };
 
+  const handleSignupClick = () => {
+    setIsLoginActive(false);
+  };
+
+  // Валідаційна схема для форми реєстрації
+  const SignupSchema = Yup.object().shape({
+    fullName: Yup.string().required("Full name is required"),
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    password: Yup.string().min(6, "Password too short").required("Password is required"),
+    terms: Yup.boolean().oneOf([true], "You must accept the terms and conditions"),
+  });
+
+  // Валідаційна схема для форми входу
+  const LoginSchema = Yup.object().shape({
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    password: Yup.string().required("Password is required"),
+  });
+
   return (
-    <div className={styles.loginContainer}>
-      <h1 className={styles.title}>Facebook Login</h1>
-      <form onSubmit={handleLogin} className={styles.loginForm}>
-        <input
-          type="email"
-          placeholder="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className={styles.inputField}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className={styles.inputField}
-        />
-        <button type="submit" className={styles.loginButton}>
-          Login
-        </button>
-        {authState.error && <p className={styles.error}>{authState.error}</p>}
-      </form>
-      <div className={styles.createAccount}>Create New Account</div>
-    </div>
+    <MainContent title="">
+      <div className={styles.loginBox}>
+        <ul className={styles.circles}>
+          {Array.from({ length: 10 }).map((_, i) => (
+            <li key={i}></li>
+          ))}
+        </ul>
+        <div className={`${styles.wrapper} ${isLoginActive ? styles.active : ""}`}>
+          <div className={`${styles.form} ${styles.signup}`}>
+            <header onClick={handleSignupClick}>Signup</header>
+            <Formik
+              initialValues={{
+                fullName: "",
+                email: "",
+                password: "",
+                terms: false,
+              }}
+              validationSchema={SignupSchema}
+              onSubmit={(values) => {
+                console.log("Signup values", values);
+              }}
+            >
+              {({ isSubmitting }) => (
+                <Form>
+                  <Field type="text" name="fullName" placeholder="Full name" />
+                  <ErrorMessage name="fullName" component="div" className={styles.error} />
+                  
+                  <Field type="text" name="email" placeholder="Email address" />
+                  <ErrorMessage name="email" component="div" className={styles.error} />
+
+                  <Field type="password" name="password" placeholder="Password" />
+                  <ErrorMessage name="password" component="div" className={styles.error} />
+
+                  <div className={styles.checkbox}>
+                    <Field type="checkbox" name="terms" id="signupCheck" />
+                    <label htmlFor="signupCheck">I accept all terms & conditions</label>
+                  </div>
+                  <ErrorMessage name="terms" component="div" className={styles.error} />
+
+                  <button type="submit" disabled={isSubmitting}>
+                    Signup
+                  </button>
+                </Form>
+              )}
+            </Formik>
+          </div>
+          
+          <div className={`${styles.form} ${styles.login}`}>
+            <header onClick={handleLoginClick}>Login</header>
+            <Formik
+              initialValues={{
+                email: "",
+                password: "",
+              }}
+              validationSchema={LoginSchema}
+              onSubmit={(values) => {
+                console.log("Login values", values);
+              }}
+            >
+              {({ isSubmitting }) => (
+                <Form>
+                  <Field type="text" name="email" placeholder="Email address" />
+                  <ErrorMessage name="email" component="div" className={styles.error} />
+
+                  <Field type="password" name="password" placeholder="Password" />
+                  <ErrorMessage name="password" component="div" className={styles.error} />
+
+                  <a href="#">Forgot password?</a>
+                  <button type="submit" disabled={isSubmitting}>
+                    Login
+                  </button>
+                </Form>
+              )}
+            </Formik>
+          </div>
+        </div>
+      </div>
+    </MainContent>
   );
 };
 
 export default LoginPage;
+

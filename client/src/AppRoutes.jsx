@@ -20,6 +20,7 @@ import Game1 from "./pages/Games/Game1/Game1.jsx";
 import Game2 from "./pages/Games/Game2/Game2.jsx";
 import Game3 from "./pages/Games/Game3/Game3.jsx";
 import GalleryPage from "./pages/GalleryPage/GalleryPage.jsx";
+import LoginPage from "./pages/LoginPage/LoginPage.jsx";
 
 const AppRoutes = () => {
   return (
@@ -111,6 +112,15 @@ const AppRoutes = () => {
         element={
           // <PrivateRoute>
           <GalleryPage />
+          // </PrivateRoute>
+        }
+      />
+
+      <Route
+        path="/login"
+        element={
+          // <PrivateRoute>
+          <LoginPage />
           // </PrivateRoute>
         }
       />
