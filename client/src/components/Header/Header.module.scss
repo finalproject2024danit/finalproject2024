@@ -2,7 +2,7 @@
 
 .headerBox {
   position: fixed;
-  width: 85%;  
+  width: 85%;
   border-radius: 10px;
   overflow: hidden;
   padding-right: 5px;
@@ -12,16 +12,21 @@
 
 header {
   padding: 20px;
-  background-color: $nodle-black-800; 
+  background-color: $nodle-black-800;
   position: absolute;
   top: 0;
   // right: -320px;
-  width: 100%;  
-  
+  width: 100%;
+
   h1 {
-    color: $nodle-black-0;
+    background: #00ff00;
+    background: linear-gradient(to left, #00ff00 0%, #ff0000 100%);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
     font-size: $font-size-title;
     font-weight: $font-weight-bold;
+    cursor: pointer;
   }
 
   a {
@@ -32,7 +37,7 @@ header {
     position: relative;
     display: inline-block;
   }
-  
+
   .headerNav li a::after {
     content: "";
     position: absolute;
@@ -43,12 +48,12 @@ header {
     background-color: grey; /* Сірий колір для неактивних сторінок */
     transition: background-color 0.3s ease;
   }
-  
+
   .headerNav li a.active::after {
     background-color: green; /* Зелений колір для активної сторінки */
   }
 
-  .logoBox{
+  .logoBox {
     display: flex;
   }
 
@@ -70,6 +75,8 @@ header {
   .imgLogo {
     width: 250px;
     height: 150px;
+    border-radius: 50%;
+    cursor: pointer;
   }
 
   .headerBottom {
@@ -87,7 +94,7 @@ header {
 //   width: 100vw;
 //   height: 100vh;
 //   transform: rotateZ(45deg);
-//   position: fixed; 
+//   position: fixed;
 //   top: -50px; // Початок зірок вище вікна
 // }
 
@@ -185,11 +192,11 @@ header {
 //   0% {
 //     width: 0;
 //   }
-  
+
 //   30% {
 //     width: 100px;
 //   }
-  
+
 //   100% {
 //     width: 0;
 //   }
@@ -215,4 +222,3 @@ header {
 //     transform: translateX(320px);
 //   }
 // }
-
