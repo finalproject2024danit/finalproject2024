@@ -39,7 +39,7 @@ const LoginPage = () => {
         </ul>
         <div className={`${styles.wrapper} ${isLoginActive ? styles.active : ""}`}>
           <div className={`${styles.form} ${styles.signup}`}>
-            <header onClick={handleSignupClick}>Signup</header>
+            <header className={styles.logHeader} onClick={handleSignupClick}>Signup</header>
             <Formik
               initialValues={{
                 fullName: "",
@@ -69,7 +69,7 @@ const LoginPage = () => {
                   </div>
                   <ErrorMessage name="terms" component="div" className={styles.error} />
 
-                  <button type="submit" disabled={isSubmitting}>
+                  <button className={styles.signUpBtn} type="submit" disabled={isSubmitting}>
                     Signup
                   </button>
                 </Form>
@@ -78,7 +78,7 @@ const LoginPage = () => {
           </div>
           
           <div className={`${styles.form} ${styles.login}`}>
-            <header onClick={handleLoginClick}>Login</header>
+            <header className={styles.logHeader} onClick={handleLoginClick}>Login</header>
             <Formik
               initialValues={{
                 email: "",
@@ -98,7 +98,7 @@ const LoginPage = () => {
                   <ErrorMessage name="password" component="div" className={styles.error} />
 
                   <a href="#">Forgot password?</a>
-                  <button type="submit" disabled={isSubmitting}>
+                  <button className={styles.loginBtn} type="submit" disabled={isSubmitting}>
                     Login
                   </button>
                 </Form>
