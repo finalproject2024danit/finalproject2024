@@ -1,26 +1,27 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchGroups, fetchGroupById } from "../../redux/slices/groupSlice.js";
-import { useFormik } from "formik";
 import styles from "./GroupPage.module.scss";
 import MainContent from "../../components/MainContent/MainContent";
 import { setComments, addComment } from "../../redux/slices/commentsSlice.js";
+import LikeIcon from "../../svg/Header/Like/index.jsx";
 
 const GroupPage = () => {
   const dispatch = useDispatch();
   const userFromId = useSelector((state) => state.user.id);
-  const { groups, loading, error, selectedGroup } = useSelector(
-    (state) => state.group
-  );
-
+  const { groups, loading, error, selectedGroup } = useSelector((state) => state.group);
   const { comments = {} } = useSelector((state) => state.comments || {});
   const observer = useRef();
   const [page, setPage] = useState(0);
+  const [commentValues, setCommentValues] = useState({});
+  const [likeStates, setLikeStates] = useState({});
   const perPage = 5;
   const hasMore = groups.length % perPage === 0 && groups.length < 100;
 
+  const getRandomLikes = () => Math.floor(Math.random() * 1000) + 1;
+
   useEffect(() => {
-    if (!hasMore) return; // Якщо більше груп немає, не робимо запит
+    if (!hasMore) return;
     dispatch(fetchGroups({ startPage: page, perPage }));
   }, [dispatch, page, hasMore]);
 
@@ -28,13 +29,11 @@ const GroupPage = () => {
     const storedComments = JSON.parse(localStorage.getItem("comments")) || {};
     for (const groupId in storedComments) {
       for (const postId in storedComments[groupId]) {
-        dispatch(
-          setComments({
-            groupId,
-            postId,
-            comments: storedComments[groupId][postId],
-          })
-        );
+        dispatch(setComments({
+          groupId,
+          postId,
+          comments: storedComments[groupId][postId],
+        }));
       }
     }
   }, [dispatch]);
@@ -56,44 +55,56 @@ const GroupPage = () => {
     dispatch(fetchGroupById(groupId));
   };
 
-  const formik = useFormik({
-    initialValues: {
-      comment: "",
-    },
-    onSubmit: (values, { resetForm }) => {
-      if (values.comment.trim() === "") return;
+  const handleCommentChange = (postId, event) => {
+    setCommentValues((prevValues) => ({
+      ...prevValues,
+      [postId]: event.target.value,
+    }));
+  };
 
-      const newComment = {
-        content: values.comment,
-        postId: formik.values.postId,
-        groupId: formik.values.groupId,
-        userId: userFromId,
-        createdDate: new Date().toISOString(),
+  const handleSubmitComment = (postId, groupId) => {
+    const commentContent = commentValues[postId]?.trim();
+    if (!commentContent) return;
+
+    const newComment = {
+      content: commentContent,
+      postId,
+      groupId,
+      userId: userFromId,
+      createdDate: new Date().toISOString(),
+    };
+
+    dispatch(addComment({
+      groupId,
+      postId,
+      comment: newComment,
+    }));
+
+    const updatedComments = JSON.parse(localStorage.getItem("comments")) || {};
+    if (!updatedComments[groupId]) updatedComments[groupId] = {};
+    if (!updatedComments[groupId][postId]) updatedComments[groupId][postId] = [];
+    updatedComments[groupId][postId].push(newComment);
+    localStorage.setItem("comments", JSON.stringify(updatedComments));
+
+    setCommentValues((prevValues) => ({
+      ...prevValues,
+      [postId]: "",
+    }));
+  };
+
+  const handleLikeClick = (postId) => {
+    setLikeStates((prevStates) => {
+      const isLiked = prevStates[postId]?.liked || false;
+      const likes = prevStates[postId]?.likes || getRandomLikes();
+      return {
+        ...prevStates,
+        [postId]: {
+          liked: !isLiked,
+          likes: isLiked ? likes - 1 : likes + 1,
+        },
       };
-
-      dispatch(
-        addComment({
-          groupId: newComment.groupId,
-          postId: newComment.postId,
-          comment: newComment,
-        })
-      );
-
-      const updatedComments = JSON.parse(localStorage.getItem("comments")) || {};
-      if (!updatedComments[newComment.groupId]) {
-        updatedComments[newComment.groupId] = {};
-      }
-      if (!updatedComments[newComment.groupId][newComment.postId]) {
-        updatedComments[newComment.groupId][newComment.postId] = [];
-      }
-      updatedComments[newComment.groupId][newComment.postId].push(newComment);
-      localStorage.setItem("comments", JSON.stringify(updatedComments));
-
-      resetForm();
-    },
-  });
-
-  const getRandomLikes = () => Math.floor(Math.random() * 1000) + 1;
+    });
+  };
 
   if (loading && !groups.length) {
     return (
@@ -148,6 +159,7 @@ const GroupPage = () => {
               {selectedGroup.posts && selectedGroup.posts.length > 0 ? (
                 selectedGroup.posts.map((post, index) => {
                   const postComments = comments[selectedGroup.id]?.[post.id] || [];
+                  const { liked = false, likes = getRandomLikes() } = likeStates[post.id] || {};
 
                   return (
                     <div key={index} className={styles.post}>
@@ -155,7 +167,7 @@ const GroupPage = () => {
                       <p>{post.content}</p>
                       <div className={styles.postFeedback}>
                         <div className={styles.likes}>
-                          Лайки: {getRandomLikes()}
+                          <LikeIcon liked={liked} onClick={() => handleLikeClick(post.id)} /> {likes}
                         </div>
                         <div className={styles.comments}>
                           Коментарі: {postComments.length}
@@ -164,12 +176,7 @@ const GroupPage = () => {
                       <form
                         onSubmit={(event) => {
                           event.preventDefault();
-                          formik.setValues({ 
-                            ...formik.values, 
-                            groupId: selectedGroup.id, 
-                            postId: post.id 
-                          });
-                          formik.handleSubmit();
+                          handleSubmitComment(post.id, selectedGroup.id);
                         }}
                         className={styles.commentForm}
                       >
@@ -185,9 +192,9 @@ const GroupPage = () => {
                           )}
                         </div>
                         <textarea
-                          name="comment"
-                          onChange={formik.handleChange}
-                          value={formik.values.comment}
+                          name={`comment-${post.id}`}
+                          onChange={(e) => handleCommentChange(post.id, e)}
+                          value={commentValues[post.id] || ""}
                           placeholder="Напишіть коментар..."
                         />
                         <button type="submit">Відправити коментар</button>
@@ -207,6 +214,7 @@ const GroupPage = () => {
 };
 
 export default GroupPage;
+
 
 
 
