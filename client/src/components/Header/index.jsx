@@ -44,6 +44,15 @@ const Header = () => {
                   Galactic Connections &quot;Reach for the and connect!&quot;
                 </h1>
               </NavLink>
+              <div className={styles.radioBtn}>
+                <input
+                  type="checkbox"
+                  defaultChecked
+                  id="radioBtn"
+                  name="check"
+                />
+                <label htmlFor="radioBtn"></label>
+              </div>
             </div>
             <div className={styles.headerBottom}>
               <nav>
