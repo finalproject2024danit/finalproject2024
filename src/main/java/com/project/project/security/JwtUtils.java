@@ -2,13 +2,13 @@ package com.project.project.security;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.project.project.entities.user.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
@@ -38,10 +38,10 @@ public final class JwtUtils {
                 .compact();
     }
 
-    public static JwtAuthentication generate(Claims claims, User user) {
+    public static JwtAuthentication generate(Claims claims, UserDetails userDetails) {
         JwtAuthentication jwtInfoToken = new JwtAuthentication();
         jwtInfoToken.setRoles(getRoles(claims));
-        jwtInfoToken.setPrincipal(user);
+        jwtInfoToken.setPrincipal(userDetails);
         jwtInfoToken.setAuthenticated(true);
         return jwtInfoToken;
     }

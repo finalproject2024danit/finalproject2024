@@ -1,11 +1,11 @@
 package com.project.project.security;
 
-import com.project.project.entities.user.User;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Set;
@@ -16,7 +16,7 @@ import java.util.Set;
 public class JwtAuthentication implements Authentication {
 
     private boolean authenticated;
-    private User principal;
+    private UserDetails principal;
     private Set<JwtUtils.Roles> roles;
 
     @Override
@@ -35,7 +35,7 @@ public class JwtAuthentication implements Authentication {
     }
 
     @Override
-    public User getPrincipal() {
+    public UserDetails getPrincipal() {
         return principal;
     }
 
@@ -51,6 +51,6 @@ public class JwtAuthentication implements Authentication {
 
     @Override
     public String getName() {
-        return principal != null ? principal.getEmail() : null;
+        return principal != null ? principal.getUsername() : null;
     }
 }

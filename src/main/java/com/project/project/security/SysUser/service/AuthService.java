@@ -2,6 +2,7 @@ package com.project.project.security.SysUser.service;
 
 
 import com.project.project.entities.user.User;
+import com.project.project.entities.user.db.UserRepository;
 import com.project.project.entities.user.service.UserServiceImpl;
 import com.project.project.security.SysUser.api.dto.JwtRequest;
 import com.project.project.security.SysUser.api.dto.JwtResponse;
@@ -11,20 +12,40 @@ import com.project.project.security.refreshToken.db.RefreshTokenRepository;
 import io.jsonwebtoken.Claims;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class AuthService {
 
+    private final UserRepository userRepository;
     private final UserServiceImpl userService;
     private final RefreshTokenRepository refreshTokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
 
+
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+
+        Optional<User> user = userRepository.findByUserEmail(email);
+        if (user.isEmpty()) {
+            throw new UsernameNotFoundException(email);
+        }
+        List<SimpleGrantedAuthority> authorities = user.get().getSysRoles().stream()
+                .map(r -> new SimpleGrantedAuthority(r.getRoleName()))
+                .toList();
+        return new org.springframework.security.core.userdetails.User(user.get().getEmail(), user.get().getPassword(), authorities);
+    }
+
     public JwtResponse login(JwtRequest jwtRequest) {
-        User user = (User) userService.getUserByEmail(jwtRequest.getLogin());
+        User user = userService.getUserByEmail(jwtRequest.getLogin());
 
         if (user == null) {
             return null;
@@ -53,7 +74,7 @@ public class AuthService {
                     .findRefreshTokenByRefreshToken(refreshToken).orElse(null);
 
             if (saveRefreshToken != null && saveRefreshToken.getRefreshToken().equals(refreshToken) && saveRefreshToken.getIsValid()) {
-                final User user = (User) userService.getUserByEmail(email);
+                final User user = userService.getUserByEmail(email);
                 if (user == null) {
                     return null;
                 }
