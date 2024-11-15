@@ -39,8 +39,8 @@ const GalleryPage = () => {
     <MainContent title="">
       <div className={styles.galleryPage}>
         <h2>Gallery Page</h2>
-        {status === "loading" && <p>Завантаження...</p>}
-        {status === "failed" && <p>Помилка завантаження даних</p>}
+        {status === "loading" && <p>Loading...</p>}
+        {status === "failed" && <p>Error loading data</p>}
         {status === "succeeded" && photos.length > 0 && (
           <div className={styles.slider}>
             {/* <button className={styles.prev} onClick={prevSlide}>❮</button>

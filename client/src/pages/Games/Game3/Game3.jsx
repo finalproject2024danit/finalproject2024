@@ -81,11 +81,11 @@ export default function Game3() {
         }}
       >
         <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-          <h1 style={{ color: "green", fontSize: "30px" }}>Гра &lsquo;Збери планети&lsquo;</h1>
+          <h1 style={{ color: "green", fontSize: "30px" }}>Гра &lsquo;Collect the planets&lsquo;</h1>
           <h2 style={{ color: "red", fontSize: "24px" }}>
-            Час: {isGameActive ? "30 секунд" : "Гра закінчена"}
+            Time: {isGameActive ? "30 секунд" : "Гра закінчена"}
           </h2>
-          <h3 style={{ color: "white", fontSize: "24px" }}>Бали: {score}</h3>
+          <h3 style={{ color: "white", fontSize: "24px" }}>Points: {score}</h3>
         </div>
         {isGameActive ? (
           <Planet position={planetPosition} onClick={handlePlanetClick} />
@@ -111,7 +111,7 @@ export default function Game3() {
               transform: isHovered ? "scale(1.05)" : "scale(1)",
             }}
           >
-            Розпочати гру
+            Strart the game
           </button>
         )}
       </div>
