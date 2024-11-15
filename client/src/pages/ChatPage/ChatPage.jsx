@@ -4,6 +4,8 @@ import { fetchMessages, selectUser, sendMessage, fetchTalks } from "../../redux/
 import NewMessageForm from "./NewMessageForm/NewMessageForm";
 import MainContent from "../../components/MainContent/MainContent";
 import styles from "./ChatPage.module.scss";
+import SockJS from "sockjs-client";
+import {Stomp} from "@stomp/stompjs";
 
 
 const ChatPage = () => {
@@ -12,6 +14,35 @@ const ChatPage = () => {
   const {currentUser} = useState({id: 1}); 
 
   // , setCurrentUser я тут убрал эту переменную отсюда   const {currentUser, setCurrentUser} = useState({id: 1}); она нигде не используется и ругается lint
+
+    useEffect(() => {
+        // Инициализация WebSocket соединения
+        const socket = new SockJS('http://localhost:9000/ws');
+        const client = Stomp.over(socket);
+
+        client.connect({}, () => {
+            console.log('Connected to WebSocket');
+
+            // Подписка на общую тему
+            client.subscribe('/topic/messages', (message) => {
+                console.log(message)
+            });
+
+            // Подписка на личные сообщения
+            client.subscribe('/user/queue/reply', (message) => {
+                console.log('Private message:', JSON.parse(message.body));
+            });
+
+        });
+
+        return () => {
+            if (client) {
+                client.disconnect(() => {
+                    console.log('Disconnected from WebSocket');
+                });
+            }
+        };
+    }, []);
 
   useEffect(() => {
     if (window.particlesJS) {

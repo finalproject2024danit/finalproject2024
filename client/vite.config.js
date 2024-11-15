@@ -13,5 +13,12 @@ export default defineConfig({
     },
     historyApiFallback: true,
   },
+  optimizeDeps: {
+    esbuildOptions: {
+      define: {
+        global: 'globalThis'
+      }
+    }
+  }
 })
 
