@@ -12,4 +12,6 @@ public interface MessageService {
     Message getMessageById(long id);
 
     List<Message> getMessagesBetweenUsers(Long userFromId, Long userToId);
+
+    List<List<Message>> getAllConversationsForUser(Long userId);
 }

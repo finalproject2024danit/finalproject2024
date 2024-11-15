@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.FieldDefaults;
 
+import java.util.List;
+
 import static lombok.AccessLevel.PRIVATE;
 
 
@@ -14,12 +16,15 @@ import static lombok.AccessLevel.PRIVATE;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @Data
-public class ResponseMessageDto extends AbstractDto {
+public class ResponseConversationDto extends AbstractDto {
 
     @JsonView(View.Admin.class)
     Long userFromId;
 
     @JsonView(View.Admin.class)
-    String content;
+    Long userToId;
+
+    @JsonView(View.Admin.class)
+    List<ResponseMessageForConversationDto> messages;
 
 }
