@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.FieldDefaults;
 
+import java.time.LocalDateTime;
+
 import static lombok.AccessLevel.PRIVATE;
 
 
@@ -14,12 +16,15 @@ import static lombok.AccessLevel.PRIVATE;
 @EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
 @Data
-public class ResponseMessageDto extends AbstractDto {
+public class ResponseMessageForConversationDto extends AbstractDto {
 
     @JsonView(View.Admin.class)
     Long userFromId;
 
     @JsonView(View.Admin.class)
     String content;
+
+    @JsonView(View.Admin.class)
+    LocalDateTime messageTime;
 
 }

@@ -7,7 +7,10 @@ import com.project.project.exceptions.MessageNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,5 +33,19 @@ public class MessageServiceImpl implements MessageService {
     @Override
     public List<Message> getMessagesBetweenUsers(Long userFromId, Long userToId) {
         return messageRepository.findMessagesBetweenUsers(userFromId, userToId);
+    }
+
+    @Override
+    public List<List<Message>> getAllConversationsForUser(Long userId) {
+        List<Message> messages = messageRepository.findAllMessagesForUser(userId);
+
+        Map<String, List<Message>> groupedMessages = messages.stream()
+                .collect(Collectors.groupingBy(message -> {
+                    Long userFromId = message.getUserFrom().getId();
+                    Long userToId = message.getUserTo().getId();
+                    return userFromId < userToId ? userFromId + "-" + userToId : userToId + "-" + userFromId;
+                }));
+
+        return new ArrayList<>(groupedMessages.values());
     }
 }
