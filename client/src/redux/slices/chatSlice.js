@@ -4,6 +4,7 @@ import axios from 'axios';
 // Initial chat state
 const initialState = {
     messages: [],
+    talks: [],
     loading: true,
     error: null,
     selectedUser: null,
