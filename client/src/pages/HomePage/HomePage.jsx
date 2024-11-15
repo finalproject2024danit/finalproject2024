@@ -18,7 +18,7 @@ const HomePage = () => {
     <MainContent title="">
       <div className={styles.newsBox}>
         {loading ? (
-          <p>Завантаження...</p>
+          <p>Loading...</p>
         ) : error ? (
           <p>{error}</p>
         ) : news.length > 0 ? (
@@ -27,14 +27,14 @@ const HomePage = () => {
               <img
                 className={styles.newsImage}
                 src={item.photo || defaultImage}
-                alt={item.name || "Без назви"}
+                alt={item.name || "Untitled"}
                 onError={(e) => {
                   e.target.src = defaultImage;
                 }}
               />
               <div className={styles.newsContent}>
-                <h2>{item.name || "Без назви"}</h2> 
-                <p>{item.text || "Без опису"}</p> 
+                <h2>{item.name || "Untitled"}</h2> 
+                <p>{item.text || "No description"}</p> 
                 <p className={styles.date}>
                   {item.createdDate ? new Date(item.createdDate).toLocaleDateString() : ""}
                 </p>
@@ -42,7 +42,7 @@ const HomePage = () => {
             </div>
           ))
         ) : (
-          <p>Новини не знайдені.</p>
+          <p>News not found.</p>
         )}
       </div>
     </MainContent>

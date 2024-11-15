@@ -28,7 +28,7 @@ const LeftSidebar = () => {
       
       <div>
         <form className={styles.menuForm}>
-          <input type="text" placeholder="Search" />
+          <input type="text" placeholder="Search..." />
           <button type="submit">Search</button>
         </form>
       </div>
