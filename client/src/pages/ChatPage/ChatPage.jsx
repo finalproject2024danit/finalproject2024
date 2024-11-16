@@ -215,11 +215,20 @@ const ChatPage = () => {
   // };
 
   // Filter talks based on searchTerm
-  const filteredTalks = conversations.filter(
+  const filteredConversations = conversations.filter(
     (conv) => true
     //   conv.userToId.toLowerCase()
     // .includes(searchTerm.toLowerCase())
   );
+  const lastUserMessages = filteredConversations
+    .map((conv) => [findPartnerUser(conv), findLastMessage(conv)])
+    .map(([partner, message]) => ({
+      userId: partner.id,
+      userName: partner.name,
+      userImage: "no image",
+      lastMessage: message.text,
+      lastMessageDate: message.time,
+    }));
 
   const filteredMessages = messages; /* .filter(
     (msg) => msg.userFrom === currentUser || msg.userTo === currentUser); */
