@@ -94,7 +94,7 @@ const Header = () => {
                       className={({ isActive }) =>
                         isActive ? styles.active : ""
                       }
-                      to="/group"
+                      to="/groups"
                     >
                       <div className={styles.iconWrapper}>
                         <GroupIcon />

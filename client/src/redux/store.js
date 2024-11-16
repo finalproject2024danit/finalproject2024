@@ -8,20 +8,21 @@ import hobbiesReducer from "./slices/hobbiesSlice.js";
 import residencesReducer from "./slices/residencesSlice.js";
 import newsReducer from "./slices/newsSlice.js";
 import commentsReducer from "./slices/commentsSlice.js";
-
+import globalsearchReducer from "./slices/searchSlice.js";
 
 export const store = configureStore({
-    reducer: {
-        // auth: authReducer,
-        chat: chatReducer,
-        user: userReducer,
-        group: groupReducer,
-        friends: friendsReducer,
-        hobbies: hobbiesReducer,
-        residences: residencesReducer,   
-        news: newsReducer,  
-        comments: commentsReducer,
-    },
+  reducer: {
+    // auth: authReducer,
+    chat: chatReducer,
+    user: userReducer,
+    group: groupReducer,
+    friends: friendsReducer,
+    hobbies: hobbiesReducer,
+    residences: residencesReducer,
+    news: newsReducer,
+    comments: commentsReducer,
+    globalsearch: globalsearchReducer,
+  },
 });
 
 export default store;

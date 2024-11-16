@@ -205,7 +205,7 @@ console.log('Filtered Messages:', filteredMessages);
 // ).filter((user) => user !== currentUser);
 
   return (
-    <MainContent title="Chat">
+    <MainContent title="">
     <div className={styles.container}>
         
         {/* Discussions Section */}
