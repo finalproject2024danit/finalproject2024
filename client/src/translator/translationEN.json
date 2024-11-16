@@ -1,0 +1,10 @@
+{
+  "users": {
+    "searchPlaceholder": "Search friends...",
+    "loading": "Loading...",
+    "loadError": "Error loading data: {{message}}",
+    "notFound": "No users found.",
+    "infoUser": "User info",
+    "clickToFlip": "Click to flip back"
+  }
+}
