@@ -276,7 +276,7 @@ console.log('Filtered Messages:', filteredMessages);
             {chatLoading ? (
           <p>Loading...</p>
         ) : (
-            {filteredMessages.map((msg) => (
+            filteredMessages.map((msg) => (
                             <div key={msg.id} className={styles.messageItem}>
                                 <p>
                                   <strong>
@@ -284,7 +284,7 @@ console.log('Filtered Messages:', filteredMessages);
                                     </strong> {msg.content}
                                     </p>
                             </div>
-                        ))}
+                        ))
                       )}
           </div>
            
