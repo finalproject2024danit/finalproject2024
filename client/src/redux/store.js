@@ -9,6 +9,7 @@ import residencesReducer from "./slices/residencesSlice.js";
 import newsReducer from "./slices/newsSlice.js";
 import commentsReducer from "./slices/commentsSlice.js";
 import globalsearchReducer from "./slices/searchSlice.js";
+import conversationReducer from "./slices/conversationsSlice.js";
 
 export const store = configureStore({
   reducer: {
@@ -22,6 +23,8 @@ export const store = configureStore({
     news: newsReducer,
     comments: commentsReducer,
     globalsearch: globalsearchReducer,
+    conversation: conversationReducer,
+
   },
 });
 
