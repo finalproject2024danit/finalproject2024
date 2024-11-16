@@ -16,9 +16,11 @@ import { Stomp } from "@stomp/stompjs";
 const ChatPage = () => {
   const dispatch = useDispatch();
 
-  const { messages, selectedUser: selectedConversation, chatLoading } = useSelector(
-    (state) => state.chat
-  );
+  const {
+    messages,
+    selectedUser: selectedConversation,
+    chatLoading,
+  } = useSelector((state) => state.chat);
   const { conversations, loading: conversationsLoading } = useSelector(
     (state) => {
       console.log("Redux state:", state);
@@ -185,7 +187,10 @@ const ChatPage = () => {
   useEffect(() => {
     if (selectedConversation) {
       dispatch(
-        fetchMessages({ userFrom: currentUser, userTo: selectedConversation.id })
+        fetchMessages({
+          userFrom: currentUser,
+          userTo: selectedConversation.id,
+        })
       );
     }
   }, [selectedConversation, dispatch]);
@@ -226,11 +231,7 @@ const ChatPage = () => {
 
   return (
     <MainContent title="">
-    <div className={styles.container}>
-    <div className={styles.container}>
-        
       <div className={styles.container}>
-        
         {/* Conversations Section */}
         <section className={styles.discussions}>
           <div className={`${styles.discussion} ${styles.search}`}>
@@ -250,29 +251,38 @@ const ChatPage = () => {
           ) : (
             lastUserMessages.map((userMassage) => (
               <div
-                  key={userMassage.userId}
-                  className={`${styles.discussion} ${ selectedConversation?.userId === conv.userId ? styles.messageActive : "" }`}
-                  onClick={() =>
-                    handleConversationSelect({
+                key={userMassage.userId}
+                className={`${styles.discussion} ${
+                  selectedConversation?.userId === userMassage.userId
+                    ? styles.messageActive
+                    : ""
+                }`}
+                onClick={() =>
+                  handleConversationSelect(
+                    {
                       id: userMassage.userId,
-                      userName: conv.userName,
+                      userName: userMassage.userName,
                     }, // <-- unneccessary
-                    userMassage.userId)
-                  }
-                >  
-                <div className={styles.photo} style={{ backgroundImage: `url(${userMassage.userImage})` }} >
-                  {userMassage.isOnline && <div className={styles.online}></div>}
+                    userMassage.userId
+                  )
+                }
+              >
+                <div
+                  className={styles.photo}
+                  style={{ backgroundImage: `url(${userMassage.userImage})` }}
+                >
+                  {userMassage.isOnline && (
+                    <div className={styles.online}></div>
+                  )}
                 </div>
                 <div className={styles.descContact}>
-                  <p className={styles.name}>{conv.userName}</p>
-                  <p className={styles.message}>{conv.lastMessage}</p>
+                  <p className={styles.name}>{userMassage.userName}</p>
+                  <p className={styles.message}>{userMassage.lastMessage}</p>
                 </div>
                 <div className={styles.timer}>
-                  {new Date(conv.lastMessageDate).toLocaleTimeString()}
+                  {new Date(userMassage.lastMessageDate).toLocaleTimeString()}
                 </div>
               </div>
-
-            
             ))
           )}
         </section>
@@ -295,18 +305,22 @@ const ChatPage = () => {
           {/* Messages History */}
           <div className={styles.messagesHistory}>
             {chatLoading ? (
-          <p>Loading...</p>
-        ) : (
-            filteredMessages.map((msg) => (
-                            <div key={msg.id} className={styles.messageItem}>
-                                <p>
-                                  <strong>
-                                    {msg.userFrom === currentUser ? "You" : selectedConversation.firstName}:
-                                    </strong> {msg.content}
-                                    </p>
-                            </div>
-                        ))
-                      )}
+              <p>Loading...</p>
+            ) : (
+              filteredMessages.map((msg) => (
+                <div key={msg.id} className={styles.messageItem}>
+                  <p>
+                    <strong>
+                      {msg.userFrom === currentUser
+                        ? "You"
+                        : selectedConversation.firstName}
+                      :
+                    </strong>{" "}
+                    {msg.content}
+                  </p>
+                </div>
+              ))
+            )}
           </div>
 
           {/* New Message Form for Responding to Messages */}
