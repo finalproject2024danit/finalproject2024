@@ -50,7 +50,7 @@ const UserPage = () => {
 
   // Форматування номерів телефонів
   const formatPhones = (phones) => {
-    return phones || "Немає телефонів"; // Якщо немає телефонів, виводимо повідомлення
+    return phones || "No phones"; // Якщо немає телефонів, виводимо повідомлення
   };
   
 
@@ -74,17 +74,17 @@ const UserPage = () => {
 
             {/* Рендер місця проживання користувача */}
             <div className={styles.residencesList}>
-              <h3>Місце проживання:</h3>
+              <h3>Place of residence:</h3>
               {residences ? (
                 <p>{`Planet: ${residences.planet}, Country: ${residences.country}, City: ${residences.city}`}</p>
               ) : (
-                <p>Місце проживання не знайдено</p>
+                <p>Place of residence not found</p>
               )}
             </div>
 
             {/* Рендер хобі користувача */}
             <div className={styles.hobbiesList}>
-              <h3>Хобі:</h3>
+              <h3>Hobby:</h3>
               {hobbies && hobbies.length > 0 ? (
                 <ul>
                   {hobbies.map((hobby) => (
@@ -94,7 +94,7 @@ const UserPage = () => {
                   ))}
                 </ul>
               ) : (
-                <p>Хобі не знайдені</p>
+                <p>Hobbies not found</p>
               )}
             </div>
           </div>

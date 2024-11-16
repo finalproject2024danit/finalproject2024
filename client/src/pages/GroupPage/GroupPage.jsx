@@ -134,7 +134,7 @@ const GroupPage = () => {
   if (!groups.length) {
     return (
       <MainContent title="">
-        <p>Групи не знайдені.</p>
+        <p>Groups not found.</p>
       </MainContent>
     );
   }
@@ -182,7 +182,7 @@ const GroupPage = () => {
                           <LikeIcon liked={liked} onClick={() => handleLikeClick(post.id)} /> {likes}
                         </div>
                         <div className={styles.comments}>
-                          Коментарі: {postComments.length}
+                          Comments: {postComments.length}
                         </div>
                       </div>
                       <form
@@ -200,22 +200,22 @@ const GroupPage = () => {
                               </div>
                             ))
                           ) : (
-                            <p>Коментарів ще немає.</p>
+                            <p>No comments yet.</p>
                           )}
                         </div>
                         <textarea
                           name={`comment-${post.id}`}
                           onChange={(e) => handleCommentChange(post.id, e)}
                           value={commentValues[post.id] || ""}
-                          placeholder="Напишіть коментар..."
+                          placeholder="Write a comment..."
                         />
-                        <button type="submit">Відправити коментар</button>
+                        <button type="submit">Send the comment</button>
                       </form>
                     </div>
                   );
                 })
               ) : (
-                <p>Постів не знайдено.</p>
+                <p>No posts foundо.</p>
               )}
             </div>
           </div>

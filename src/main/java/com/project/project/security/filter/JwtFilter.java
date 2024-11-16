@@ -1,9 +1,8 @@
 package com.project.project.security.filter;
 
-import com.project.project.entities.user.User;
-import com.project.project.entities.user.service.UserServiceImpl;
 import com.project.project.security.JwtAuthentication;
 import com.project.project.security.JwtUtils;
+import com.project.project.security.SysUser.service.AuthService;
 import com.project.project.security.jwt.JwtProvider;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.FilterChain;
@@ -14,6 +13,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.GenericFilterBean;
@@ -28,7 +28,7 @@ public class JwtFilter extends GenericFilterBean {
     private static final String AUTHORIZATION = "Authorization";
 
     private final JwtProvider jwtProvider;
-    private final UserServiceImpl userService;
+    private final AuthService authService;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain fc)
@@ -44,9 +44,9 @@ public class JwtFilter extends GenericFilterBean {
                 final String email = claims.getSubject();
 
 
-                User user = (User) userService.getUserByEmail(email);
-                if (user != null) {
-                    final JwtAuthentication jwtInfoToken = JwtUtils.generate(claims, user);
+                UserDetails userDetails = authService.loadUserByUsername(email);
+                if (userDetails != null) {
+                    final JwtAuthentication jwtInfoToken = JwtUtils.generate(claims, userDetails);
                     jwtInfoToken.setAuthenticated(true);
                     SecurityContextHolder.getContext().setAuthentication(jwtInfoToken);
                 }

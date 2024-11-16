@@ -4,14 +4,47 @@ import { fetchMessages, selectUser, sendMessage, fetchTalks } from "../../redux/
 import NewMessageForm from "./NewMessageForm/NewMessageForm";
 import MainContent from "../../components/MainContent/MainContent";
 import styles from "./ChatPage.module.scss";
+import SockJS from "sockjs-client";
+import {Stomp} from "@stomp/stompjs";
+
 
 
 const ChatPage = () => {
   const dispatch = useDispatch();
   const { messages, selectedUser, loading , talks} = useSelector((state) => state.chat);
   const {currentUser} = useState({id: 1}); 
+  const [searchTerm, setSearchTerm] = useState("");
 
   // , setCurrentUser я тут убрал эту переменную отсюда   const {currentUser, setCurrentUser} = useState({id: 1}); она нигде не используется и ругается lint
+
+    useEffect(() => {
+        // Инициализация WebSocket соединения
+        const socket = new SockJS('http://localhost:9000/ws');
+        const client = Stomp.over(socket);
+
+        client.connect({}, () => {
+            console.log('Connected to WebSocket');
+
+            // Подписка на общую тему
+            client.subscribe('/topic/messages', (message) => {
+                console.log(message)
+            });
+
+            // Подписка на личные сообщения
+            client.subscribe('/user/queue/reply', (message) => {
+                console.log('Private message:', JSON.parse(message.body));
+            });
+
+        });
+
+        return () => {
+            if (client) {
+                client.disconnect(() => {
+                    console.log('Disconnected from WebSocket');
+                });
+            }
+        };
+    }, []);
 
   useEffect(() => {
     if (window.particlesJS) {
@@ -158,6 +191,11 @@ useEffect(() => {
   //   dispatch(sendMessage(newMessage));
   // };
 
+    // Filter talks based on searchTerm
+    const filteredTalks = talks.filter((talk) =>
+      talk.user.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
   const filteredMessages = messages.filter(
     (msg) => msg.userFrom === currentUser || msg.userTo === currentUser);
 console.log('Filtered Messages:', filteredMessages);
@@ -175,7 +213,11 @@ console.log('Filtered Messages:', filteredMessages);
           <div className={`${styles.discussion} ${styles.search}`}>
             <div className={styles.searchbar}>
               <i className="fa fa-search" aria-hidden="true"></i>
-              <input type="text" placeholder="Search..." />
+              <input 
+              type="text" 
+              placeholder="Search..." 
+              onChange={(e) => setSearchTerm(e.target.value)}
+              />
             </div>
           </div>
           
@@ -183,22 +225,28 @@ console.log('Filtered Messages:', filteredMessages);
           {loading ? (
           <p>Loading...</p>
         ) : (
-          talks.map((talk) => {
+          filteredTalks.map((talk) => {
             // Find the latest message with this user
             return (
               <div
                 key={talk.id}
-                className={`${styles.discussion} ${talk.id === selectedUser?.id ? styles.messageActive : ''}`}
+                className={`${styles.discussion} ${
+                  talk.id === selectedUser?.id ? styles.messageActive : ''}`}
                 onClick={() => handleUserSelect({ id: talk.id })}
               >
-                <div className={styles.photo} style={{ backgroundImage: `url(${talk.userImage})` }}>
+                <div 
+                className={styles.photo} 
+                style={{ backgroundImage: `url(${talk.userImage})` }}>
                   {talk.isOnline && <div className={styles.online}></div>}
                 </div>
                 <div className={styles.descContact}>
                   <p className={styles.name}>{talk.user}</p>
                   <p className={styles.message}>{talk.content}</p>
                 </div>
-                <div className={styles.timer}>{new Date(talk.date).toLocaleTimeString()}</div>
+                <div 
+                className={styles.timer}>
+                  {new Date(talk.date).toLocaleTimeString()}
+                  </div>
               </div>
             );
           })
@@ -217,7 +265,11 @@ console.log('Filtered Messages:', filteredMessages);
             <div className={styles.messagesHistory}>
             {filteredMessages.map((msg) => (
                             <div key={msg.id} className={styles.messageItem}>
-                                <p><strong>{msg.userFrom === currentUser ? "You" : selectedUser.firstName}:</strong> {msg.content}</p>
+                                <p>
+                                  <strong>
+                                    {msg.userFrom === currentUser ? "You" : selectedUser.firstName}:
+                                    </strong> {msg.content}
+                                    </p>
                             </div>
                         ))}
           </div>

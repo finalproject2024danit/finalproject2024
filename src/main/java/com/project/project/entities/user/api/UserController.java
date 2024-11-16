@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,6 +33,7 @@ import java.util.List;
 public class UserController {
     private final UserServiceImpl userService;
     private final AuthService authService;
+    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/filter")
     @JsonView(View.Admin.class)
@@ -69,18 +71,9 @@ public class UserController {
     public ResponseEntity<ResponseUserDto> addUser(@Valid @RequestBody AddUserModel addUserModel) {
         log.info("Trying to create new user");
 
-        User user = new User();
-        user.setFirstName(addUserModel.firstName());
-        user.setLastName(addUserModel.lastName());
-        user.setEmail(addUserModel.email());
-        user.setPassword(addUserModel.password());
-        user.setGender(addUserModel.gender());
-        user.setDateOfBirth(addUserModel.dateOfBirth());
-        user.setAvatar(addUserModel.avatar());
-        user.setPhones(addUserModel.phones());
-        user.setPhotoData(addUserModel.photoData());
+        User user = UserMapper.INSTANCE.registationDtoTOUser(addUserModel);
         user.setEnabled(true);
-
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         User savedUser = userService.addUser(user);
 
         authService.generateTokensForUser(savedUser);

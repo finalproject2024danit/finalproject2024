@@ -4,7 +4,6 @@ import com.project.project.entities.user.User;
 import com.project.project.entities.user.api.dto.RequestPatchUserDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -27,5 +26,6 @@ public interface UserService {
 
     List<User> getFriendsByUserId(Long userId);
 
-    UserDetails getUserByEmail(String email);
+    User getUserByEmail(String email);
+
 }

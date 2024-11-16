@@ -82,7 +82,7 @@ const UsersPage = () => {
       <div className={styles.searchContainer}>
         <input
           type="text"
-          placeholder="Пошук друзів..."
+          placeholder="Friend search..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className={styles.searchInput}
@@ -91,7 +91,7 @@ const UsersPage = () => {
 
       <div className={styles.userBox}>
         {loading ? (
-          <p>Завантаження...</p>
+          <p>Loading...</p>
         ) : error ? (
           <p>{error}</p>
         ) : filteredUsers.length > 0 ? (
@@ -128,7 +128,7 @@ const UsersPage = () => {
             </div>
           ))
         ) : (
-          <p>Користувачі не знайдені.</p>
+          <p>Users not found.</p>
         )}
       </div>
     </MainContent>
