@@ -12,7 +12,7 @@ const handleError = (error) => {
 // Fetch all conversations
 export const getAllConversations = async () => {
     try {
-        const response = await axiosInstance.get('/messages/conversations');
+        const response = await axiosInstance.get('/messages/conversations/{userId}');
         return response.data;
     } catch (error) {
         handleError(error);
@@ -22,7 +22,7 @@ export const getAllConversations = async () => {
 // Get a specific conversation by userFromId and userToId
 export const getConversation = async (userFromId, userToId) => {
     try {
-        const response = await axiosInstance.get('/messages/conversations/filter', {
+        const response = await axiosInstance.get('/messages/conversations/{userId}/filter', {
             params: { userFromId, userToId },
         });
         return response.data;
@@ -34,7 +34,7 @@ export const getConversation = async (userFromId, userToId) => {
 // Create a new conversation
 export const createConversation = async (conversationDto) => {
     try {
-        const response = await axiosInstance.post('/messages/conversations', conversationDto);
+        const response = await axiosInstance.post('/messages/conversations/{userId}', conversationDto);
         return response.data;
     } catch (error) {
         handleError(error);
@@ -44,7 +44,7 @@ export const createConversation = async (conversationDto) => {
 // Add a message to a conversation
 export const addMessageToConversation = async (userFromId, userToId, messageDto) => {
     try {
-        const response = await axiosInstance.post(`/messages/conversations/${userFromId}/${userToId}/add-message`, messageDto);
+        const response = await axiosInstance.post(`/messages/conversations/{userId}/${userFromId}/${userToId}/add-message`, messageDto);
         return response.data;
     } catch (error) {
         handleError(error);
@@ -54,7 +54,7 @@ export const addMessageToConversation = async (userFromId, userToId, messageDto)
 // Delete a conversation by userFromId and userToId
 export const deleteConversation = async (userFromId, userToId) => {
     try {
-        await axiosInstance.delete(`messages/conversations/${userFromId}/${userToId}`);
+        await axiosInstance.delete(`messages/conversations/{userId}/${userFromId}/${userToId}`);
     } catch (error) {
         handleError(error);
     }
