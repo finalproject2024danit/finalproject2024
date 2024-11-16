@@ -10,9 +10,9 @@ const handleError = (error) => {
 };
 
 // Fetch all conversations
-export const getAllConversations = async () => {
+export const getAllConversations = async (userId) => {
     try {
-        const response = await axiosInstance.get('/messages/conversations/{userId}');
+        const response = await axiosInstance.get(`/messages/conversations/${userId}`);
         return response.data;
     } catch (error) {
         handleError(error);
@@ -20,21 +20,21 @@ export const getAllConversations = async () => {
 };
 
 // Get a specific conversation by userFromId and userToId
-export const getConversation = async (userFromId, userToId) => {
-    try {
-        const response = await axiosInstance.get('/messages/conversations/{userId}/filter', {
-            params: { userFromId, userToId },
-        });
-        return response.data;
-    } catch (error) {
-        handleError(error);
-    }
-};
+// export const getConversation = async (userFromId, userToId) => {
+//     try {
+//         const response = await axiosInstance.get('/messages/conversations/{userId}/filter', {
+//             params: { userFromId, userToId },
+//         });
+//         return response.data;
+//     } catch (error) {
+//         handleError(error);
+//     }
+// };
 
 // Create a new conversation
-export const createConversation = async (conversationDto) => {
+export const createConversation = async (conversationDto, userId) => {
     try {
-        const response = await axiosInstance.post('/messages/conversations/{userId}', conversationDto);
+        const response = await axiosInstance.post(`/messages/conversations/${userId}`, conversationDto);
         return response.data;
     } catch (error) {
         handleError(error);
@@ -42,19 +42,19 @@ export const createConversation = async (conversationDto) => {
 };
 
 // Add a message to a conversation
-export const addMessageToConversation = async (userFromId, userToId, messageDto) => {
-    try {
-        const response = await axiosInstance.post(`/messages/conversations/{userId}/${userFromId}/${userToId}/add-message`, messageDto);
-        return response.data;
-    } catch (error) {
-        handleError(error);
-    }
-};
+// export const addMessageToConversation = async (userFromId, userToId, messageDto, userId) => {
+//     try {
+//         const response = await axiosInstance.post(`/messages/conversations/${userId}/${userFromId}/${userToId}/add-message`, messageDto);
+//         return response.data;
+//     } catch (error) {
+//         handleError(error);
+//     }
+// };
 
 // Delete a conversation by userFromId and userToId
-export const deleteConversation = async (userFromId, userToId) => {
+export const deleteConversation = async (userFromId, userToId, userId) => {
     try {
-        await axiosInstance.delete(`messages/conversations/{userId}/${userFromId}/${userToId}`);
+        await axiosInstance.delete(`messages/conversations/${userId}/${userFromId}/${userToId}`);
     } catch (error) {
         handleError(error);
     }

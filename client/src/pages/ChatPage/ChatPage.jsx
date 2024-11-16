@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchMessages, selectUser, sendMessage, fetchTalks } from "../../redux/slices/chatSlice";
+import { fetchConversations } from "../../redux/slices/conversationsSlice";
 import NewMessageForm from "./NewMessageForm/NewMessageForm";
 import MainContent from "../../components/MainContent/MainContent";
 import styles from "./ChatPage.module.scss";
@@ -12,46 +13,47 @@ import {Stomp} from "@stomp/stompjs";
 const ChatPage = () => {
   const dispatch = useDispatch();
 
-  const { messages, selectedUser, loading } = useSelector((state) => state.chat);
+  const { messages, selectedUser, chatLoading } = useSelector((state) => state.chat);
   const { conversations, loading: conversationsLoading } = useSelector((state) => {
     console.log('Redux state:', state);
     return state.conversations || {}; // Avoid destructuring undefined
 
   });
-  // const { messages, selectedUser, loading , talks} = useSelector((state) => state.chat);
+  // const { messages, selectedUser, chatLoading , talks} = useSelector((state) => state.chat);
+  // const { currentUser } = useSelector((state) => state.auth); // Fetch `currentUser` from Redux
   const {currentUser} = useState({id: 1}); 
   const [searchTerm, setSearchTerm] = useState("");
 
   // , setCurrentUser я тут убрал эту переменную отсюда   const {currentUser, setCurrentUser} = useState({id: 1}); она нигде не используется и ругается lint
 
-    useEffect(() => {
-        // Инициализация WebSocket соединения
-        const socket = new SockJS('http://localhost:9000/ws');
-        const client = Stomp.over(socket);
+    // useEffect(() => {
+    //     // Инициализация WebSocket соединения
+    //     const socket = new SockJS('http://134.209.246.21:9000/ws');
+    //     const client = Stomp.over(socket);
 
-        client.connect({}, () => {
-            console.log('Connected to WebSocket');
+    //     client.connect({}, () => {
+    //         console.log('Connected to WebSocket');
 
-            // Подписка на общую тему
-            client.subscribe('/topic/messages', (message) => {
-                console.log(message)
-            });
+    //         // Подписка на общую тему
+    //         client.subscribe('/topic/messages', (message) => {
+    //             console.log(message)
+    //         });
 
-            // Подписка на личные сообщения
-            client.subscribe('/user/queue/reply', (message) => {
-                console.log('Private message:', JSON.parse(message.body));
-            });
+    //         // Подписка на личные сообщения
+    //         client.subscribe('/user/queue/reply', (message) => {
+    //             console.log('Private message:', JSON.parse(message.body));
+    //         });
 
-        });
+    //     });
 
-        return () => {
-            if (client) {
-                client.disconnect(() => {
-                    console.log('Disconnected from WebSocket');
-                });
-            }
-        };
-    }, []);
+    //     return () => {
+    //         if (client) {
+    //             client.disconnect(() => {
+    //                 console.log('Disconnected from WebSocket');
+    //             });
+    //         }
+    //     };
+    // }, []);
 
   useEffect(() => {
     if (window.particlesJS) {
@@ -170,6 +172,7 @@ const ChatPage = () => {
 
 useEffect(() => {
   // Fetch conversations for the current user
+  
   dispatch(fetchConversations());
 }, [dispatch]); 
 
@@ -199,12 +202,12 @@ useEffect(() => {
   // };
 
     // Filter talks based on searchTerm
-    const filteredTalks = conversations.filter((conv) =>
-      conv.user.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    const filteredTalks = conversations/* .filter((conv) =>
+      conv.userToId.toLowerCase().includes(searchTerm.toLowerCase())
+    ); */
 
-  const filteredMessages = messages.filter(
-    (msg) => msg.userFrom === currentUser || msg.userTo === currentUser);
+  const filteredMessages = messages/* .filter(
+    (msg) => msg.userFrom === currentUser || msg.userTo === currentUser); */
 console.log('Filtered Messages:', filteredMessages);
 
 // const uniqueUsers = Array.from(
@@ -229,7 +232,7 @@ console.log('Filtered Messages:', filteredMessages);
           </div>
           
           {/* Unique User List */}
-          {loading ? (
+          {conversationsLoading ? (
           <p>Loading...</p>
         ) : (
           filteredTalks.map((conv) => {
@@ -270,6 +273,9 @@ console.log('Filtered Messages:', filteredMessages);
             
             {/* Messages History */}
             <div className={styles.messagesHistory}>
+            {chatLoading ? (
+          <p>Loading...</p>
+        ) : (
             {filteredMessages.map((msg) => (
                             <div key={msg.id} className={styles.messageItem}>
                                 <p>
@@ -279,6 +285,7 @@ console.log('Filtered Messages:', filteredMessages);
                                     </p>
                             </div>
                         ))}
+                      )}
           </div>
            
             {/* New Message Form for Responding to Messages */}

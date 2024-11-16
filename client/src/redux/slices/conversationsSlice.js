@@ -16,10 +16,12 @@ const initialState = {
 export const fetchConversations = createAsyncThunk(
     'conversation/fetchConversations',
     async (_, thunkAPI) => {
-        const { id: currentUserId } = thunkAPI.getState().auth.currentUser;
+        // const { id: currentUserId } = thunkAPI.getState().auth.currentUser; <-- fails the slice
+        const { id: currentUserId } = { id: 1, firstName: "conversationSlice", lastName: "fetchConversations", };
         try {
-            const response = await getAllConversations();
-            return response.filter(conversation => conversation.userId === currentUserId);
+            // const response = await getAllConversations(currentUserId);
+            // return response.filter(conversation => conversation.userId === currentUserId); <-- we already queryed conversations by the user, no need to filter
+            return await getAllConversations(currentUserId);
         } catch (error) {
             console.error('Failed to fetch conversations:', error);
             return thunkAPI.rejectWithValue(error.message);
