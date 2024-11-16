@@ -5,6 +5,7 @@ import styles from "./GroupPage.module.scss";
 import MainContent from "../../components/MainContent/MainContent";
 import { setComments, addComment } from "../../redux/slices/commentsSlice.js";
 import LikeIcon from "../../svg/Header/Like/index.jsx";
+import { useParams } from "react-router-dom";
 
 const GroupPage = () => {
   const dispatch = useDispatch();
@@ -17,8 +18,15 @@ const GroupPage = () => {
   const [likeStates, setLikeStates] = useState({});
   const perPage = 5;
   const hasMore = groups.length % perPage === 0 && groups.length < 100;
+  const { id } = useParams(); 
 
   const getRandomLikes = () => Math.floor(Math.random() * 1000) + 1;
+  useEffect(() => {
+    if (id) {
+      dispatch(fetchGroupById(id)); // Викликаємо action для отримання групи за ID
+    }
+  }, [dispatch, id]);
+ 
 
   useEffect(() => {
     if (!hasMore) return;
@@ -96,6 +104,7 @@ const GroupPage = () => {
     setLikeStates((prevStates) => {
       const isLiked = prevStates[postId]?.liked || false;
       const likes = prevStates[postId]?.likes || getRandomLikes();
+      
       return {
         ...prevStates,
         [postId]: {
@@ -132,12 +141,14 @@ const GroupPage = () => {
 
   return (
     <MainContent title="">
-      <div className={styles.groupContainer}>
-        <div className={styles.groupHeader}>
-          {groups.map((group, index) => (
+    <div className={styles.groupContainer}>
+      <div className={styles.groupHeader}>
+        {/* Фільтруємо унікальні групи лише для рендерингу */}
+        {Array.from(new Map(groups.map((group) => [group.id, group])).values()).map(
+          (group, index) => (
             <div
               key={group.id}
-              ref={groups.length === index + 1 ? lastGroupElementRef : null}
+              ref={groups.length === index + 1 ? lastGroupElementRef : null} // Перевіряємо останній елемент з оригінального масиву
               className={styles.groupLink}
               onClick={() => handleGroupClick(group.id)}
             >
@@ -148,8 +159,9 @@ const GroupPage = () => {
                 className={styles.avatar}
               />
             </div>
-          ))}
-        </div>
+          )
+        )}
+      </div>
 
         {selectedGroup && (
           <div className={styles.groupDetails}>

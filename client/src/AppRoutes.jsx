@@ -21,6 +21,7 @@ import Game2 from "./pages/Games/Game2/Game2.jsx";
 import Game3 from "./pages/Games/Game3/Game3.jsx";
 import GalleryPage from "./pages/GalleryPage/GalleryPage.jsx";
 import LoginPage from "./pages/LoginPage/LoginPage.jsx";
+import SolarSystem from "./pages/SolarSystemPage/SolarSystem.jsx";
 
 const AppRoutes = () => {
   return (
@@ -58,13 +59,16 @@ const AppRoutes = () => {
       </Route>
 
       <Route
-        path="/group"
+        path="/groups"
         element={
           // <PrivateRoute>
           <GroupPage />
           // </PrivateRoute>
         }
       />
+      <Route path="/group/:id" element={<GroupPage />} />
+
+
       <Route
         path="/chat"
         element={
@@ -121,6 +125,15 @@ const AppRoutes = () => {
         element={
           // <PrivateRoute>
           <LoginPage />
+          // </PrivateRoute>
+        }
+      />
+
+      <Route
+        path="/solar"
+        element={
+          // <PrivateRoute>
+          <SolarSystem />
           // </PrivateRoute>
         }
       />
