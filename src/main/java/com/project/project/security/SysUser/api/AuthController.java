@@ -1,17 +1,16 @@
 package com.project.project.security.SysUser.api;
 
+import com.project.project.entities.user.User;
+import com.project.project.entities.user.api.dto.ResponseUserAllDataDto;
+import com.project.project.entities.user.api.dto.UserMapper;
 import com.project.project.security.SysUser.api.dto.JwtRefreshTokenDto;
 import com.project.project.security.SysUser.api.dto.JwtRequest;
 import com.project.project.security.SysUser.api.dto.JwtResponse;
 import com.project.project.security.SysUser.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -29,5 +28,15 @@ public class AuthController {
     @PostMapping("/refresh")
     public ResponseEntity<JwtResponse> refresh(@RequestBody JwtRefreshTokenDto refreshTokenDto) {
         return ResponseEntity.ok(authService.refreshToken(refreshTokenDto.getRefreshToken()));
+    }
+
+    @PostMapping("/get_user")
+    public ResponseEntity<ResponseUserAllDataDto> getUser(@RequestHeader("Authorization") String token) {
+        String accessToken = token.startsWith("Bearer ") ? token.substring(7) : token;
+
+        User user = authService.getUserByToken(accessToken);
+
+        ResponseUserAllDataDto responseUserAllDataDto = UserMapper.INSTANCE.userToUserAllDataDto(user);
+        return ResponseEntity.ok(responseUserAllDataDto);
     }
 }
