@@ -11,7 +11,14 @@ import {Stomp} from "@stomp/stompjs";
 
 const ChatPage = () => {
   const dispatch = useDispatch();
-  const { messages, selectedUser, loading , talks} = useSelector((state) => state.chat);
+
+  const { messages, selectedUser, loading } = useSelector((state) => state.chat);
+  const { conversations, loading: conversationsLoading } = useSelector((state) => {
+    console.log('Redux state:', state);
+    return state.conversations || {}; // Avoid destructuring undefined
+
+  });
+  // const { messages, selectedUser, loading , talks} = useSelector((state) => state.chat);
   const {currentUser} = useState({id: 1}); 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -162,9 +169,9 @@ const ChatPage = () => {
 }, [dispatch]); // This is where the useEffect closing brace goes
 
 useEffect(() => {
-  // Fetch talks when the component mounts
-  dispatch(fetchTalks());
-}, [dispatch]);  
+  // Fetch conversations for the current user
+  dispatch(fetchConversations());
+}, [dispatch]); 
 
 useEffect(() => {
   if (selectedUser) {
@@ -192,8 +199,8 @@ useEffect(() => {
   // };
 
     // Filter talks based on searchTerm
-    const filteredTalks = talks.filter((talk) =>
-      talk.user.toLowerCase().includes(searchTerm.toLowerCase())
+    const filteredTalks = conversations.filter((conv) =>
+      conv.user.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
   const filteredMessages = messages.filter(
@@ -208,7 +215,7 @@ console.log('Filtered Messages:', filteredMessages);
     <MainContent title="">
     <div className={styles.container}>
         
-        {/* Discussions Section */}
+        {/* Conversations Section */}
         <section className={styles.discussions}>
           <div className={`${styles.discussion} ${styles.search}`}>
             <div className={styles.searchbar}>
@@ -225,27 +232,27 @@ console.log('Filtered Messages:', filteredMessages);
           {loading ? (
           <p>Loading...</p>
         ) : (
-          filteredTalks.map((talk) => {
+          filteredTalks.map((conv) => {
             // Find the latest message with this user
             return (
               <div
-                key={talk.id}
+                key={conv.id}
                 className={`${styles.discussion} ${
-                  talk.id === selectedUser?.id ? styles.messageActive : ''}`}
-                onClick={() => handleUserSelect({ id: talk.id })}
+                  selectedUser?.id === conv.userId ? styles.messageActive : ''}`}
+                onClick={() => handleUserSelect({ id: conv.id, userNane: conv.userName })}
               >
                 <div 
                 className={styles.photo} 
-                style={{ backgroundImage: `url(${talk.userImage})` }}>
-                  {talk.isOnline && <div className={styles.online}></div>}
+                style={{ backgroundImage: `url(${conv.userImage})` }}>
+                  {conv.isOnline && <div className={styles.online}></div>}
                 </div>
                 <div className={styles.descContact}>
-                  <p className={styles.name}>{talk.user}</p>
-                  <p className={styles.message}>{talk.content}</p>
+                  <p className={styles.name}>{conv.userName}</p>
+                  <p className={styles.message}>{conv.lastMessage}</p>
                 </div>
                 <div 
                 className={styles.timer}>
-                  {new Date(talk.date).toLocaleTimeString()}
+                  {new Date(conv.date).toLocaleTimeString()}
                   </div>
               </div>
             );

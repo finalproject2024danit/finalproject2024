@@ -1,5 +1,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import {
+    getAllConversations,
+    createConversation as createNewConversation,
+    deleteConversation as removeConversation,
+} from '../../api/messages/conversations/request.js';
 
 // Initial conversation state
 const initialState = {
@@ -12,10 +16,12 @@ const initialState = {
 export const fetchConversations = createAsyncThunk(
     'conversation/fetchConversations',
     async (_, thunkAPI) => {
+        const { id: currentUserId } = thunkAPI.getState().auth.currentUser;
         try {
-            const response = await axios.get('/api/v1/conversations');
-            return response.data;
+            const response = await getAllConversations();
+            return response.filter(conversation => conversation.userId === currentUserId);
         } catch (error) {
+            console.error('Failed to fetch conversations:', error);
             return thunkAPI.rejectWithValue(error.message);
         }
     }
@@ -26,9 +32,10 @@ export const createConversation = createAsyncThunk(
     'conversation/createConversation',
     async (conversationDto, thunkAPI) => {
         try {
-            const response = await axios.post('/api/v1/conversations', conversationDto);
-            return response.data;
+            const response = await createNewConversation(conversationDto);
+            return response;
         } catch (error) {
+            console.error('Failed to create conversation:', error);
             return thunkAPI.rejectWithValue(error.message);
         }
     }
@@ -39,9 +46,10 @@ export const deleteConversation = createAsyncThunk(
     'conversation/deleteConversation',
     async ({ userFromId, userToId }, thunkAPI) => {
         try {
-            await axios.delete(`/api/v1/conversations/${userFromId}/${userToId}`);
+            await removeConversation(userFromId, userToId);
             return { userFromId, userToId };
         } catch (error) {
+            console.error('Failed to delete conversation:', error);
             return thunkAPI.rejectWithValue(error.message);
         }
     }

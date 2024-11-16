@@ -23,7 +23,7 @@ export const store = configureStore({
     news: newsReducer,
     comments: commentsReducer,
     globalsearch: globalsearchReducer,
-    conversation: conversationReducer,
+    conversations: conversationReducer,
 
   },
 });
