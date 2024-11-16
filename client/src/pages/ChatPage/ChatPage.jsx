@@ -220,6 +220,24 @@ const ChatPage = () => {
     //   conv.userToId.toLowerCase()
     // .includes(searchTerm.toLowerCase())
   );
+
+  // find partner from conversation
+  const { friends } = useSelector((state) => state.friends);
+  const findPartnerUser = (conv) => {
+    const partner = friends.find(
+      (friend) => friend.id === conv.userFromId || friend.id === conv.userToId
+    );
+    return { id, name: `${partner.firstName} ${partner.lastName}` };
+  };
+
+  // find last message in conversation
+  const findLastMessage = (conv) => {
+    const last = conv.messages.reduce(
+      (last, msg) => (last.messageTime > msg.messageTime ? last : msg),
+      conv.messages[0]
+    );
+    return { text: last.content, time: last.messageTime };
+  };
   const lastUserMessages = filteredConversations
     .map((conv) => [findPartnerUser(conv), findLastMessage(conv)])
     .map(([partner, message]) => ({
