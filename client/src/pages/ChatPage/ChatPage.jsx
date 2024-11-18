@@ -196,6 +196,7 @@ const ChatPage = () => {
 
   // While we don't have usersSlice, just duplicating effect from UsersPage
   const [users, setUsers] = useState([]);
+  const [usersLoading, setUsersLoading] = useState([]);
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -214,7 +215,7 @@ const ChatPage = () => {
       } catch (err) {
         console.error(t("users.loadError", { message: err.message }));
       } finally {
-        setLoading(false);
+        setUsersLoading(false);
       }
     };
 
