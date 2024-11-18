@@ -198,14 +198,12 @@ const ChatPage = () => {
   const [users, setUsers] = useState([]);
   const [usersLoading, setUsersLoading] = useState([]);
   useEffect(() => {
-    const fetchUsers = async () => {
+    const fetchAllUsers = async () => {
       try {
         const response = await axiosInstance.get("/users/filter", {
           params: {
-            startPage: currentPage,
-            perPage: usersPerPage,
-            sortBy,
-            sortDirection,
+            startPage: 0,
+            perPage: 100_000,
           },
         });
         console.log(response);
@@ -213,14 +211,14 @@ const ChatPage = () => {
         const usersData = response.data || [];
         setUsers(usersData);
       } catch (err) {
-        console.error(t("users.loadError", { message: err.message }));
+        console.error(err);
       } finally {
         setUsersLoading(false);
       }
     };
 
-    fetchUsers();
-  }, [dispatch]);
+    fetchAllUsers();
+  }, []);
 
   const handleConversationSelect = (user) => {
     dispatch(selectUser(user));
