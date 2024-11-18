@@ -11,15 +11,14 @@ import MainContent from "../../components/MainContent/MainContent";
 import styles from "./ChatPage.module.scss";
 import SockJS from "sockjs-client";
 import { Stomp } from "@stomp/stompjs";
+import axiosInstance from "../../api/axiosInstance.js";
 
 const ChatPage = () => {
   const dispatch = useDispatch();
 
-  const {
-    messages,
-    selectedUser: selectedConversation,
-    chatLoading,
-  } = useSelector((state) => state.chat);
+  const { messages, selectedUser, chatLoading } = useSelector(
+    (state) => state.chat
+  );
   const { conversations, loading: conversationsLoading } = useSelector(
     (state) => {
       console.log("Redux state:", state);
@@ -28,7 +27,7 @@ const ChatPage = () => {
   );
   // const { messages, selectedUser, chatLoading , talks} = useSelector((state) => state.chat);
   // const { currentUser } = useSelector((state) => state.auth); // Fetch `currentUser` from Redux
-  const { currentUser } = useState({ id: 1 });
+  const [currentUser] = useState({ id: 1 });
   const [searchTerm, setSearchTerm] = useState("");
 
   // , setCurrentUser я тут убрал эту переменную отсюда   const {currentUser, setCurrentUser} = useState({id: 1}); она нигде не используется и ругается lint
@@ -184,15 +183,15 @@ const ChatPage = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    if (selectedConversation) {
+    if (selectedUser) {
       dispatch(
         fetchMessages({
-          userFrom: currentUser,
-          userTo: selectedConversation.id,
+          userFrom: currentUser.id,
+          userTo: selectedUser.id,
         })
       );
     }
-  }, [selectedConversation, dispatch]);
+  }, [selectedUser, dispatch]);
 
   // While we don't have usersSlice, just duplicating effect from UsersPage
   const [users, setUsers] = useState([]);
@@ -218,7 +217,7 @@ const ChatPage = () => {
     };
 
     fetchAllUsers();
-  }, []);
+  }, [dispatch]);
 
   const handleConversationSelect = (user) => {
     dispatch(selectUser(user));
@@ -248,11 +247,14 @@ const ChatPage = () => {
 
   // find partner from conversation
   const findPartnerUser = (conv) => {
-    const partner = users.find(
-      (user) => user.id === conv.userFromId || user.id === conv.userToId
-    );
+    const partner = users.find((user) => {
+      const isMe = currentUser.id === user.id;
+      const isParticipant =
+        user.id === conv.userFromId || user.id === conv.userToId;
+      return !isMe && isParticipant;
+    });
     if (!partner) {
-      console.error("No partner for conversation", conv);
+      console.error("No partner for conversation", conv, users);
       return undefined;
     }
     return {
@@ -282,16 +284,19 @@ const ChatPage = () => {
     return { text: last.content, time: last.messageTime };
   };
 
-  const lastUserMessages = filteredConversations
-    .map((conv) => [findPartnerUser(conv), findLastMessage(conv)])
-    .filter(([partner, message]) => !!partner && !!message)
-    .map(([partner, message]) => ({
-      userId: partner.id,
-      userName: partner.name,
-      userImage: partner.photoData,
-      lastMessage: message.text,
-      lastMessageDate: message.time,
-    }));
+  const lastUserMessages =
+    conversationsLoading || usersLoading
+      ? []
+      : filteredConversations
+          .map((conv) => [findPartnerUser(conv), findLastMessage(conv)])
+          .filter(([partner, message]) => !!partner && !!message)
+          .map(([partner, message]) => ({
+            userId: partner.id,
+            userName: partner.name,
+            userImage: partner.photoData,
+            lastMessage: message.text,
+            lastMessageDate: message.time,
+          }));
 
   const filteredMessages = messages; /* .filter(
     (msg) => msg.userFrom === currentUser || msg.userTo === currentUser); */
@@ -325,7 +330,7 @@ const ChatPage = () => {
               <div
                 key={lastUserMassage.userId}
                 className={`${styles.discussion} ${
-                  selectedConversation?.userId === lastUserMassage.userId
+                  selectedUser?.userId === lastUserMassage.userId
                     ? styles.messageActive
                     : ""
                 }`}
@@ -369,9 +374,9 @@ const ChatPage = () => {
         <section className={styles.chat}>
           <div id="particles-js" className={styles.headerChat}>
             <i className={`fa fa-user-o ${styles.icon}`} aria-hidden="true"></i>
-            {selectedConversation && (
+            {selectedUser && (
               <p className={styles.name}>
-                {selectedConversation.firstName} {selectedConversation.lastName}
+                {selectedUser.firstName} {selectedUser.lastName}
               </p>
             )}
             <i
@@ -391,7 +396,7 @@ const ChatPage = () => {
                     <strong>
                       {msg.userFrom === currentUser
                         ? "You"
-                        : selectedConversation.firstName}
+                        : selectedUser.firstName}
                       :
                     </strong>{" "}
                     {msg.content}
@@ -402,10 +407,10 @@ const ChatPage = () => {
           </div>
 
           {/* New Message Form for Responding to Messages */}
-          {selectedConversation && (
+          {selectedUser && (
             <NewMessageForm
               onSendMessage={handleSendMessage}
-              selectedUser={selectedConversation}
+              selectedUser={selectedUser}
               filteredMessages={filteredMessages}
             />
           )}
