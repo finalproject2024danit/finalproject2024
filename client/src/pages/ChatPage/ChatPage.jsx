@@ -252,7 +252,7 @@ const ChatPage = () => {
       (user) => user.id === conv.userFromId || user.id === conv.userToId
     );
     if (!partner) {
-      console.err("No partner for conversation", conv);
+      console.error("No partner for conversation", conv);
       return undefined;
     }
     return {
@@ -265,7 +265,7 @@ const ChatPage = () => {
   // find last message in conversation
   const findLastMessage = (conv) => {
     if (!conv.messages) {
-      console.err("No messages for a last one", conv);
+      console.error("No messages for a last one", conv);
       return undefined;
     }
     const last = conv.messages.reduce(
@@ -273,7 +273,7 @@ const ChatPage = () => {
       conv.messages[0]
     );
     if (!last) {
-      console.err(
+      console.error(
         "Stupid error! How could we not find the last message?!",
         conv
       );
