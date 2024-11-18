@@ -4,7 +4,6 @@ import {
   fetchMessages,
   selectUser,
   sendMessage,
-  fetchTalks,
 } from "../../redux/slices/chatSlice";
 import { fetchConversations } from "../../redux/slices/conversationsSlice";
 import NewMessageForm from "./NewMessageForm/NewMessageForm";
@@ -194,6 +193,33 @@ const ChatPage = () => {
       );
     }
   }, [selectedConversation, dispatch]);
+
+  // While we don't have usersSlice, just duplicating effect from UsersPage
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    const fetchUsers = async () => {
+      try {
+        const response = await axiosInstance.get("/users/filter", {
+          params: {
+            startPage: currentPage,
+            perPage: usersPerPage,
+            sortBy,
+            sortDirection,
+          },
+        });
+        console.log(response);
+
+        const usersData = response.data || [];
+        setUsers(usersData);
+      } catch (err) {
+        console.error(t("users.loadError", { message: err.message }));
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchUsers();
+  }, [dispatch]);
 
   const handleConversationSelect = (user) => {
     dispatch(selectUser(user));
