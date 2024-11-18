@@ -6,6 +6,7 @@ import AppRoutes from "./AppRoutes";
 import LeftSidebar from "./components/LeftSidebar/LeftSidebar";
 import RightSidebar from "./components/RightSidebar/RightSidebar";
 import {Helmet} from "react-helmet-async";
+import './i18n.js';
 // import Footer from "./components/Footer/Footer";
 
 const App = () => {

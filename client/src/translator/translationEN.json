@@ -1,0 +1,20 @@
+{
+  "users": {
+    "searchPlaceholder": "Search friends...",
+    "loading": "Loading...",
+    "loadError": "Error loading data: {{message}}",
+    "notFound": "No users found.",
+    "infoUser": "User info",
+    "clickToFlip": "Click to flip back"
+  },
+  "leftSidebar": {
+    "profile": "Profile",
+    "game1": "Game 1",
+    "game2": "Game 2",
+    "game3": "Game 3",
+    "gallery": "Gallery",
+    "login": "Login",
+    "solarSystem": "Solar System",
+    "globalSearch": "Global Search"
+  }
+}

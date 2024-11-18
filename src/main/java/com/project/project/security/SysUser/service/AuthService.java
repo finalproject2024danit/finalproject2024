@@ -105,4 +105,14 @@ public class AuthService {
         return new JwtResponse(accessToken, refreshToken);
     }
 
+    public User getUserByToken(String token) {
+        if (jwtProvider.validateAccessToken(token)) {
+            Claims claims = jwtProvider.getAccessClaims(token);
+            String email = claims.getSubject();
+
+            return userService.getUserByEmail(email);
+        }
+        throw new IllegalArgumentException("Invalid or expired token");
+    }
+
 }
