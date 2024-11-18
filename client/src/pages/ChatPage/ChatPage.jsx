@@ -227,7 +227,10 @@ const ChatPage = () => {
     const partner = friends.find(
       (friend) => friend.id === conv.userFromId || friend.id === conv.userToId
     );
-    return { id, name: `${partner.firstName} ${partner.lastName}` };
+    return {
+      id: partner.id,
+      name: `${partner.firstName} ${partner.lastName}`,
+    };
   };
 
   // find last message in conversation
@@ -238,6 +241,7 @@ const ChatPage = () => {
     );
     return { text: last.content, time: last.messageTime };
   };
+
   const lastUserMessages = filteredConversations
     .map((conv) => [findPartnerUser(conv), findLastMessage(conv)])
     .map(([partner, message]) => ({
@@ -276,38 +280,44 @@ const ChatPage = () => {
           {conversationsLoading ? (
             <p>Loading...</p>
           ) : (
-            lastUserMessages.map((userMassage) => (
+            lastUserMessages.map((lastUserMassage) => (
               <div
-                key={userMassage.userId}
+                key={lastUserMassage.userId}
                 className={`${styles.discussion} ${
-                  selectedConversation?.userId === userMassage.userId
+                  selectedConversation?.userId === lastUserMassage.userId
                     ? styles.messageActive
                     : ""
                 }`}
                 onClick={() =>
                   handleConversationSelect(
                     {
-                      id: userMassage.userId,
-                      userName: userMassage.userName,
+                      id: lastUserMassage.userId,
+                      userName: lastUserMassage.userName,
                     }, // <-- unneccessary
-                    userMassage.userId
+                    lastUserMassage.userId
                   )
                 }
               >
                 <div
                   className={styles.photo}
-                  style={{ backgroundImage: `url(${userMassage.userImage})` }}
+                  style={{
+                    backgroundImage: `url(${lastUserMassage.userImage})`,
+                  }}
                 >
-                  {userMassage.isOnline && (
+                  {lastUserMassage.isOnline && (
                     <div className={styles.online}></div>
                   )}
                 </div>
                 <div className={styles.descContact}>
-                  <p className={styles.name}>{userMassage.userName}</p>
-                  <p className={styles.message}>{userMassage.lastMessage}</p>
+                  <p className={styles.name}>{lastUserMassage.userName}</p>
+                  <p className={styles.message}>
+                    {lastUserMassage.lastMessage}
+                  </p>
                 </div>
                 <div className={styles.timer}>
-                  {new Date(userMassage.lastMessageDate).toLocaleTimeString()}
+                  {new Date(
+                    lastUserMassage.lastMessageDate
+                  ).toLocaleTimeString()}
                 </div>
               </div>
             ))
