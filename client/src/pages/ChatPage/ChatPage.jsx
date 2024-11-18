@@ -247,32 +247,48 @@ const ChatPage = () => {
   );
 
   // find partner from conversation
-  const { friends } = useSelector((state) => state.friends);
   const findPartnerUser = (conv) => {
-    const partner = friends.find(
-      (friend) => friend.id === conv.userFromId || friend.id === conv.userToId
+    const partner = users.find(
+      (user) => user.id === conv.userFromId || user.id === conv.userToId
     );
+    if (!partner) {
+      console.err("No partner for conversation", conv);
+      return undefined;
+    }
     return {
       id: partner.id,
       name: `${partner.firstName} ${partner.lastName}`,
+      photoData: partner.photoData,
     };
   };
 
   // find last message in conversation
   const findLastMessage = (conv) => {
+    if (!conv.messages) {
+      console.err("No messages for a last one", conv);
+      return undefined;
+    }
     const last = conv.messages.reduce(
       (last, msg) => (last.messageTime > msg.messageTime ? last : msg),
       conv.messages[0]
     );
+    if (!last) {
+      console.err(
+        "Stupid error! How could we not find the last message?!",
+        conv
+      );
+      return undefined;
+    }
     return { text: last.content, time: last.messageTime };
   };
 
   const lastUserMessages = filteredConversations
     .map((conv) => [findPartnerUser(conv), findLastMessage(conv)])
+    .filter(([partner, message]) => !!partner && !!message)
     .map(([partner, message]) => ({
       userId: partner.id,
       userName: partner.name,
-      userImage: "no image",
+      userImage: partner.photoData,
       lastMessage: message.text,
       lastMessageDate: message.time,
     }));
