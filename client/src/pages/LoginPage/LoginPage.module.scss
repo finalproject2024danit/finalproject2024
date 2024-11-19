@@ -8,11 +8,12 @@
   left: 0;
   width: 100%;
   height: 100%;
-  overflow: hidden;
+  // overflow: hidden;
+  pointer-events: none; /* Вимикає взаємодію з елементами */
 }
 .circles li {
   position: absolute;
-  z-index: 9;
+  // z-index: 9;
   display: block;
   list-style: none;
   width: 20px;
@@ -107,6 +108,7 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 .logHeader {
   position: relative;
@@ -116,8 +118,9 @@
 }
 
 .loginBox {
-  width: 100%;
-  height: 750px;
+  width: 100vw;
+  height: 100vh;
+  // height: 750px;
   // min-height: 100vw;
   display: flex;
   align-items: center;
@@ -126,10 +129,13 @@
   background-size: cover;
   background-image: url(https://images.unsplash.com/photo-1618005198920-f0cb6201c115?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80);
   background-color: #ececec;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+  // margin: 0;
+  // padding: 0;
+  // box-sizing: border-box;
   position: relative;
+  overflow: hidden;
+  margin-left: -15px;
+  z-index: 200;
 }
 .wrapper {
   position: relative;
@@ -151,7 +157,7 @@
   left: 50%;
   bottom: -86%;
   transform: translateX(-50%);
-  width: calc(25% + 210px);
+  width: calc(25% + 425px);
   padding: 0px 140px;
   border-radius: 50%;
   height: 100%;

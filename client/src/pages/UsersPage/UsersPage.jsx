@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import styles from "./UsersPage.module.scss";
 import MainContent from "../../components/MainContent/MainContent";
@@ -7,9 +7,10 @@ import axiosInstance from "../../api/axiosInstance.js";
 import ButtonAddFriend from "../../components/ButtonAddFriend/index.jsx";
 import { addFriendThunk } from "../../redux/slices/friendsSlice.js"; // Імпортуємо дію для додавання друга
 import { useTranslation } from "react-i18next";
+import Modal from "../../components/Modal/Modal.jsx";
 
 const defaultAvatar =
-    "https://res.cloudinary.com/dsr6kwzrr/image/upload/v1729669892/photo_2024-10-23_10-30-18_nmluce.jpg";
+  "https://res.cloudinary.com/dsr6kwzrr/image/upload/v1729669892/photo_2024-10-23_10-30-18_nmluce.jpg";
 
 const UsersPage = () => {
   const { t } = useTranslation(); // Используем хук i18n
@@ -23,7 +24,12 @@ const UsersPage = () => {
   const sortBy = "firstName";
   const sortDirection = "asc";
   const currentPage = 0;
-  const userFromId = 1; // Припустимо, що це ID поточного користувача
+  const userFromId = useSelector((state) => state.user.id);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [onConfirmAction, setOnConfirmAction] = useState(() => () => {});
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  const [friends, setFriends] = useState([]);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -56,9 +62,9 @@ const UsersPage = () => {
   }, [t]);
 
   const filteredUsers = users.filter((user) =>
-      `${user.firstName} ${user.lastName}`
-          .toLowerCase()
-          .includes(searchTerm.toLowerCase())
+    `${user.firstName} ${user.lastName}`
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase())
   );
 
   const handleCardClick = (id) => {
@@ -76,66 +82,86 @@ const UsersPage = () => {
   };
 
   const handleAddFriend = (userId) => {
-    dispatch(addFriendThunk({ userFromId, userToId: userId }));
+    if (friends.includes(userId)) return; // Якщо користувач вже друг, нічого не робимо
+
+    setSelectedUserId(userId);
+    setModalMessage("Are you sure you want to add this friend?");
+    setOnConfirmAction(() => () => {
+      dispatch(addFriendThunk({ userFromId, userToId: userId }));
+      setFriends((prevFriends) => [...prevFriends, userId]); // Додаємо нового друга в список
+      setIsModalOpen(false);
+    });
+    setIsModalOpen(true);
   };
 
   return (
-      <MainContent title="">
-        <div className={styles.searchContainer}>
-          <input
-              type="text"
-              placeholder={t("users.searchPlaceholder")}
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className={styles.searchInput}
-          />
-        </div>
+    <MainContent title="">
+      <div className={styles.searchContainer}>
+        <input
+          type="text"
+          placeholder={t("users.searchPlaceholder")}
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className={styles.searchInput}
+        />
+      </div>
 
-        <div className={styles.userBox}>
-          {loading ? (
-              <p>{t("users.loading")}</p>
-          ) : error ? (
-              <p>{error}</p>
-          ) : filteredUsers.length > 0 ? (
-              filteredUsers.map((user) => (
-                  <div
-                      key={user.id}
-                      className={`${styles.userCard} ${
-                          flippedCards[user.id] ? styles.flipped : ""
-                      }`}
-                      onClick={() => handleCardClick(user.id)}
-                  >
-                    <div className={styles.front}>
-                      <div className={styles.inner}>
-                        <img
-                            className={styles.userPhoto}
-                            src={user.avatar || defaultAvatar}
-                            alt={`${user.firstName} ${user.lastName}`}
-                            onError={(e) => (e.target.src = defaultAvatar)}
-                        />
-                        <h2>
-                          {user.firstName} {user.lastName}
-                        </h2>
-                      </div>
-                    </div>
-                    <div className={styles.back}>
-                      <div className={styles.inner}>
-                        <NavLink to={`/user/${user.id}`} className={styles.link}>
-                          <h3 className={styles.infoUser}>{t("users.infoUser")}</h3>
-                        </NavLink>
-                        <ButtonAddFriend onClick={() => handleAddFriend(user.id)} />
-                        <h2 className={styles.clickToFlip}>
-                          {t("users.clickToFlip")}
-                        </h2>
-                      </div>
-                    </div>
-                  </div>
-              ))
-          ) : (
-              <p>{t("users.notFound")}</p>
-          )}
-        </div>
-      </MainContent>
+      <div className={styles.userBox}>
+        {loading ? (
+          <p>{t("users.loading")}</p>
+        ) : error ? (
+          <p>{error}</p>
+        ) : filteredUsers.length > 0 ? (
+          filteredUsers.map((user) => (
+            <div
+              key={user.id}
+              className={`${styles.userCard} ${
+                flippedCards[user.id] ? styles.flipped : ""
+              }`}
+              onClick={() => handleCardClick(user.id)}
+            >
+              <div className={styles.front}>
+                <div className={styles.inner}>
+                  <img
+                    className={styles.userPhoto}
+                    src={user.avatar || defaultAvatar}
+                    alt={`${user.firstName} ${user.lastName}`}
+                    onError={(e) => (e.target.src = defaultAvatar)}
+                  />
+                  <h2>
+                    {user.firstName} {user.lastName}
+                  </h2>
+                </div>
+              </div>
+              <div className={styles.back}>
+                <div className={styles.inner}>
+                  <NavLink to={`/user/${user.id}`} className={styles.link}>
+                    <h3 className={styles.infoUser}>{t("users.infoUser")}</h3>
+                  </NavLink>
+                  <ButtonAddFriend
+                    userId={user.id}
+                    onClick={handleAddFriend}
+                    isFriend={friends.includes(user.id)}
+                    disabled={selectedUserId === null}  // Заборонити додавати друга, поки не вибрано користувача
+                  />
+                  <h2 className={styles.clickToFlip}>
+                    {t("users.clickToFlip")}
+                  </h2>
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>{t("users.notFound")}</p>
+        )}
+        <Modal
+          isOpen={isModalOpen}
+          message={modalMessage}
+          onConfirm={onConfirmAction}
+          onClose={() => setIsModalOpen(false)}
+        />
+      </div>
+    </MainContent>
   );
 };
 

@@ -1,4 +1,5 @@
-import React from "react";
+// import React from "react";
+import React, { useState } from "react";
 import "./App.scss";
 // import "./variables.scss";
 import Header from "./components/Header";
@@ -7,9 +8,15 @@ import LeftSidebar from "./components/LeftSidebar/LeftSidebar";
 import RightSidebar from "./components/RightSidebar/RightSidebar";
 import {Helmet} from "react-helmet-async";
 import './i18n.js';
+import LoginPage from "./pages/LoginPage/LoginPage.jsx";
 // import Footer from "./components/Footer/Footer";
 
 const App = () => {
+    const [isAuthenticated, setIsAuthenticated] = useState(true);
+
+    const handleLogin = () => {
+        setIsAuthenticated(true);
+    };
 
     return (
         
@@ -21,11 +28,17 @@ const App = () => {
             </Helmet>
             <LeftSidebar/>
             <div className="inner">
+            {/* <LeftSidebar/> */}
                 <Header/>
                 <div>
                     <div className="mainContainer">
                         <div className="menuSocial">
-                            <AppRoutes/>
+                        {!isAuthenticated ? (
+                <LoginPage onLoginSuccess={handleLogin} /> // Виправлення: LoginPage
+            ) : (
+                <AppRoutes />
+            )}
+
                         </div>
                         <RightSidebar/>
                     </div>
