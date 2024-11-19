@@ -5,7 +5,7 @@ import styles from "./UsersPage.module.scss";
 import MainContent from "../../components/MainContent/MainContent";
 import axiosInstance from "../../api/axiosInstance.js";
 import ButtonAddFriend from "../../components/ButtonAddFriend/index.jsx";
-import { addFriendThunk } from "../../redux/slices/friendsSlice.js"; // Імпортуємо дію для додавання друга
+import { addFriendThunk, fetchFriends } from "../../redux/slices/friendsSlice.js"; // Імпортуємо дію для додавання друга та завантаження друзів
 import { useTranslation } from "react-i18next";
 import Modal from "../../components/Modal/Modal.jsx";
 
@@ -13,7 +13,7 @@ const defaultAvatar =
   "https://res.cloudinary.com/dsr6kwzrr/image/upload/v1729669892/photo_2024-10-23_10-30-18_nmluce.jpg";
 
 const UsersPage = () => {
-  const { t } = useTranslation(); // Используем хук i18n
+  const { t } = useTranslation(); // Використовуємо хук i18n
   const dispatch = useDispatch();
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -29,7 +29,7 @@ const UsersPage = () => {
   const [modalMessage, setModalMessage] = useState("");
   const [onConfirmAction, setOnConfirmAction] = useState(() => () => {});
   const [selectedUserId, setSelectedUserId] = useState(null);
-  const [friends, setFriends] = useState([]);
+  const { friends } = useSelector((state) => state.friends); // Отримуємо список друзів з Redux
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -82,17 +82,25 @@ const UsersPage = () => {
   };
 
   const handleAddFriend = (userId) => {
-    if (friends.includes(userId)) return; // Якщо користувач вже друг, нічого не робимо
-
+    // Перевіряємо, чи цей користувач вже друг
+    if (friends.some(friend => friend.id === userId)) return; 
+  
     setSelectedUserId(userId);
     setModalMessage("Are you sure you want to add this friend?");
     setOnConfirmAction(() => () => {
-      dispatch(addFriendThunk({ userFromId, userToId: userId }));
-      setFriends((prevFriends) => [...prevFriends, userId]); // Додаємо нового друга в список
-      setIsModalOpen(false);
+      dispatch(addFriendThunk({ userFromId, userToId: userId })) // Додаємо друга
+        .then(() => {
+          // Після додавання друга, оновлюємо список друзів з Redux
+          dispatch(fetchFriends(userFromId)); // Оновлюємо список друзів з Redux
+        })
+        .finally(() => {
+          setIsModalOpen(false);  // Закриваємо модалку після додавання
+        });
     });
     setIsModalOpen(true);
   };
+  
+  
 
   return (
     <MainContent title="">
@@ -141,7 +149,7 @@ const UsersPage = () => {
                   <ButtonAddFriend
                     userId={user.id}
                     onClick={handleAddFriend}
-                    isFriend={friends.includes(user.id)}
+                    isFriend={friends.includes(user.id)} // Перевіряємо, чи цей користувач вже друг
                     disabled={selectedUserId === null}  // Заборонити додавати друга, поки не вибрано користувача
                   />
                   <h2 className={styles.clickToFlip}>
