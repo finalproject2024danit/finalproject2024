@@ -2,19 +2,23 @@ import styles from "./ButtonAddFriend.module.scss";
 import React from "react";
 import PropTypes from "prop-types";
 
-const ButtonAddFriend = ({ id, onClick, children }) => {
+const ButtonAddFriend = ({ userId, onClick, isFriend }) => {
   return (
-    <button className={styles.btn} id={id} onClick={onClick}>
-      Add Friend
-      {children}
+    <button
+      className={styles.btn}
+      onClick={() => !isFriend && onClick(userId)} // Кнопка не буде працювати, якщо вже друг
+      disabled={isFriend} // Якщо користувач вже друг, кнопка стає неактивною
+    >
+      {isFriend ? "Friend" : "Add Friend"}
     </button>
   );
 };
 
 ButtonAddFriend.propTypes = {
-  id: PropTypes.string, // Идентификатор (необязательно)
-  onClick: PropTypes.func.isRequired, // Функция-обработчик (обязательная)
-  children: PropTypes.node, // Дочерние элементы
+  userId: PropTypes.number.isRequired, 
+  onClick: PropTypes.func.isRequired, 
+  isFriend: PropTypes.bool.isRequired, 
 };
 
 export default ButtonAddFriend;
+

@@ -7,6 +7,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { updateUserData } from "../../../redux/slices/userSlice.js";
 
+
 // Gender Enum
 const Gender = Object.freeze({
   MALE: "MALE",
@@ -37,38 +38,43 @@ const validationSchema = Yup.object().shape({
 // Date formatting helper
 const formatDate = (timestamp) => {
   const date = new Date(timestamp);
-  return date.toLocaleDateString("uk-UA", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  });
+  return date.toISOString().split('T')[0]; // Format as yyyy-MM-dd
 };
 
 // Convert date from string (DD.MM.YYYY) back to Unix timestamp
-const convertToUnixTimestamp = (dateStr) => {
-  const [day, month, year] = dateStr.split(".");
-  return new Date(`${month}/${day}/${year}`).getTime();
+// const formatDateForInput = (dateStr) => {
+//   const [day, month, year] = dateStr.split(".");
+//   return `${day}-${month}-${year}`; 
+// };
+
+const convertToUnixTimestamp = (dateString) => {
+  return new Date(dateString).getTime();
 };
+
 
 const GeneralInformation = () => {
   const [isEditing, setIsEditing] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
 
+  useEffect(() => {
+    if (user) {
+      console.log("User data:", user); // Вивести об'єкт користувача в консоль
+    }
+  }, [user]);
+
   const formik = useFormik({
     initialValues: {
-      firstName: user.firstName || "",
-      lastName: user.lastName || "",
-      email: user.email || "",
-      gender: user.gender || "",
-      // Преобразуем дату рождения, если она есть
-      dateOfBirth: user.dateOfBirth ? formatDate(user.dateOfBirth) : "",
-      phones: user.phones || "",
+      firstName: user.firstName || "", // ініціалізуємо порожнім рядком, якщо значення немає
+      lastName: user.lastName || "", // ініціалізуємо порожнім рядком, якщо значення немає
+      email: user.email || "", // ініціалізуємо порожнім рядком, якщо значення немає
+      gender: user.gender || "", // ініціалізуємо порожнім рядком, якщо значення немає
+      dateOfBirth: user.dateOfBirth ? formatDate(user.dateOfBirth) : "", // Перевірка наявності дати народження
+      phones: user.phones || "", // ініціалізуємо порожнім рядком, якщо значення немає
       password: "",
     },
     validationSchema,
     onSubmit: (values) => {
-      // Преобразуем дату обратно в Unix timestamp
       const updatedValues = {
         ...values,
         dateOfBirth: values.dateOfBirth
@@ -77,7 +83,6 @@ const GeneralInformation = () => {
         avatar: user.avatar,
         password: values.password ? btoa(values.password) : undefined,
       };
-      // Отправляем данные для обновления
       dispatch(updateUserData({ userId: user.id, userData: updatedValues }));
       setIsEditing(false);
     },
@@ -85,10 +90,10 @@ const GeneralInformation = () => {
 
   // Обновление значений формы при изменении данных пользователя
   useEffect(() => {
-    // Если дата рождения изменена в Redux, обновляем поле
-    if (user.dateOfBirth) {
-      formik.setFieldValue("dateOfBirth", formatDate(user.dateOfBirth));
-    }
+    // if (user.dateOfBirth) {
+    //   formik.setFieldValue("dateOfBirth", formatDate(user.dateOfBirth));
+    // }
+    
     formik.setValues({
       firstName: user.firstName || "",
       lastName: user.lastName || "",
@@ -96,12 +101,14 @@ const GeneralInformation = () => {
       gender: user.gender || "",
       phones: user.phones || "",
       password: "",
+      dateOfBirth: formatDate(user.dateOfBirth) || "",      
     });
   }, [user]);
+  
 
   return (
     <MainContent title="">
-      <div className={styles.container}>
+      <div className={styles.generalContainer}>
         <div className={styles.sidebar}>
           <div className={styles.avatarSection}>
             <img
@@ -123,7 +130,7 @@ const GeneralInformation = () => {
                 className={styles.input}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                value={formik.values.firstName}
+                value={formik.values.firstName} // забезпечуємо, що значення завжди є
                 disabled={!isEditing}
               />
               {formik.touched.firstName && formik.errors.firstName && (
@@ -140,7 +147,7 @@ const GeneralInformation = () => {
                 className={styles.input}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                value={formik.values.lastName}
+                value={formik.values.lastName} // забезпечуємо, що значення завжди є
                 disabled={!isEditing}
               />
               {formik.touched.lastName && formik.errors.lastName && (
@@ -157,11 +164,28 @@ const GeneralInformation = () => {
                 className={styles.input}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                value={formik.values.email}
+                value={formik.values.email} // забезпечуємо, що значення завжди є
                 disabled={!isEditing}
               />
               {formik.touched.email && formik.errors.email && (
                 <div className={styles.error}>{formik.errors.email}</div>
+              )}
+            </div>
+
+            <div>
+              <label htmlFor="password" className={styles.label}>Password</label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                className={styles.input}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.password} // забезпечуємо, що значення завжди є
+                disabled={!isEditing}
+              />
+              {formik.touched.password && formik.errors.password && (
+                <div className={styles.error}>{formik.errors.password}</div>
               )}
             </div>
 
@@ -173,7 +197,7 @@ const GeneralInformation = () => {
                 className={styles.input}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                value={formik.values.gender}
+                value={formik.values.gender} // забезпечуємо, що значення завжди є
                 disabled={!isEditing}
               >
                 <option value="">Select gender</option>
@@ -195,7 +219,7 @@ const GeneralInformation = () => {
                 className={styles.input}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                value={formik.values.dateOfBirth}
+                value={formik.values.dateOfBirth} // забезпечуємо, що значення завжди є
                 disabled={!isEditing}
               />
               {formik.touched.dateOfBirth && formik.errors.dateOfBirth && (
@@ -212,28 +236,11 @@ const GeneralInformation = () => {
                 className={styles.input}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                value={formik.values.phones}
+                value={formik.values.phones} // забезпечуємо, що значення завжди є
                 disabled={!isEditing}
               />
               {formik.touched.phones && formik.errors.phones && (
                 <div className={styles.error}>{formik.errors.phones}</div>
-              )}
-            </div>
-
-            <div>
-              <label htmlFor="password" className={styles.label}>Password</label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                className={styles.input}
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.password}
-                disabled={!isEditing}
-              />
-              {formik.touched.password && formik.errors.password && (
-                <div className={styles.error}>{formik.errors.password}</div>
               )}
             </div>
 

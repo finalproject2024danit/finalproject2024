@@ -5,7 +5,7 @@ import { Formik, Form } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";  // Import the hook
 import styles from "./LeftSidebar.module.scss";
-import PenIcon from "../../svg/Header/Pen";
+import Exit from "../../svg/Header/Exit";
 import { fetchSearchResults } from "../../redux/slices/searchSlice";
 
 const defaultAvatarProfile =
@@ -43,16 +43,16 @@ const LeftSidebar = () => {
 
   return (
       <aside className={`${styles.leftMenu} ${styles.shinyCta}`}>
-        <div>
+        <div className={styles.functionBlock}>
           <NavLink
               className={({ isActive }) => (isActive ? styles.active : "")}
               to="/profile/general_information"
           >
             <div className={styles.iconWrapper}>
-              <img alt="User Avatar" src={userAvatar} />
-              <PenIcon />
+              <img alt="User Avatar" src={userAvatar} />              
             </div>
           </NavLink>
+          <Exit />
         </div>
 
         <div>
@@ -90,9 +90,9 @@ const LeftSidebar = () => {
           <NavLink className={({ isActive }) => (isActive ? styles.active : "")} to="/gallery">
             {t("leftSidebar.gallery")}
           </NavLink>
-          <NavLink className={({ isActive }) => (isActive ? styles.active : "")} to="/login">
+          {/* <NavLink className={({ isActive }) => (isActive ? styles.active : "")} to="/login">
             {t("leftSidebar.login")}
-          </NavLink>
+          </NavLink> */}
           <NavLink className={({ isActive }) => (isActive ? styles.active : "")} to="/solar">
             {t("leftSidebar.solarSystem")}
           </NavLink>

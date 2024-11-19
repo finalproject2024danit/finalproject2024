@@ -13,7 +13,10 @@
   position: fixed;
   top: 180px;
   right: 10px;
-  transition: 1.5s;
+  // position: sticky;
+  // margin-top: 180px;
+  // margin-right: 10px;
+  // transition: 1.5s;
   
   // Додаємо прокручування, якщо вміст виводиться за межі
   overflow-y: auto;
