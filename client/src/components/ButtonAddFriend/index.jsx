@@ -15,9 +15,9 @@ const ButtonAddFriend = ({ userId, onClick, isFriend }) => {
 };
 
 ButtonAddFriend.propTypes = {
-  userId: PropTypes.number.isRequired, 
-  onClick: PropTypes.func.isRequired, 
-  isFriend: PropTypes.bool.isRequired, 
+  userId: PropTypes.number.isRequired,
+  onClick: PropTypes.func.isRequired,
+  isFriend: PropTypes.bool.isRequired,
 };
 
 export default ButtonAddFriend;

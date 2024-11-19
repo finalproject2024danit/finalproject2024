@@ -36,7 +36,11 @@ const RightSidebar = () => {
   // Confirm friend deletion
   const handleConfirmDelete = () => {
     if (selectedFriendId !== null) {
-      dispatch(deleteFriendThunk({ userFromId, userToId: selectedFriendId }));
+      dispatch(deleteFriendThunk({ userFromId, userToId: selectedFriendId }))
+        .then(() => {
+          // Повторно завантажуємо список друзів після видалення
+          dispatch(fetchFriends(userFromId));
+        });
       handleCloseModal();
     }
   };
