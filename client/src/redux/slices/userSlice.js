@@ -30,6 +30,9 @@ const initialState = {
   error: null,
 };
 
+// fetchUserDataByToken createAsyncThunk
+
+
 export const fetchUserData = createAsyncThunk(
   "user/fetchUserData",
   async (userId, { rejectWithValue }) => {
@@ -61,7 +64,11 @@ export const updateUserData = createAsyncThunk(
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    setUserData(state, action) {
+      return { ...state, ...action.payload };
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchUserData.pending, (state) => {
@@ -89,4 +96,5 @@ const userSlice = createSlice({
   },
 });
 
+export const { setUserData } = userSlice.actions;
 export default userSlice.reducer;

@@ -12,12 +12,14 @@ import LoginPage from "./pages/LoginPage/LoginPage.jsx";
 // import Footer from "./components/Footer/Footer";
 
 const App = () => {
-    const [isAuthenticated, setIsAuthenticated] = useState(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     const handleLogin = () => {
         setIsAuthenticated(true);
     };
 
+    // localStorage.getItem
+    
     return (
         
         <div className="container">
@@ -34,7 +36,7 @@ const App = () => {
                     <div className="mainContainer">
                         <div className="menuSocial">
                         {!isAuthenticated ? (
-                <LoginPage onLoginSuccess={handleLogin} /> // Виправлення: LoginPage
+                <LoginPage onLoginSuccess={handleLogin} /> 
             ) : (
                 <AppRoutes />
             )}

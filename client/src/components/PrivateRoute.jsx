@@ -1,15 +1,10 @@
-// import PropTypes from 'prop-types';
-// import { Navigate } from 'react-router-dom';
-// import { useSelector } from 'react-redux';
+import React from "react";
+import { Navigate, Outlet } from "react-router-dom";
 
-// const PrivateRoute = ({ children }) => {
-//     const isLoggedIn = useSelector(state => state.auth.isLoggedIn);
+const PrivateRoute = ({ isAuthenticated }) => {
+  // Якщо користувач автентифікований, то рендеримо дочірні маршрути (Outlet)
+  // Якщо ні, перенаправляємо на сторінку логіну
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
+};
 
-//     return isLoggedIn ? children : <Navigate to="/login" />;
-// };
-
-// PrivateRoute.propTypes = {
-//     children: PropTypes.node.isRequired, // 'children' can be any renderable node
-// };
-
-// export default PrivateRoute;
+export default PrivateRoute;

@@ -437,6 +437,38 @@ body {
     scale: 1.2;
   }
 }
+//////////////////////////////////////////////////////////////////////////////////////
+// АДАПТИВНИЙ ДИЗАЙН
+/////////////////////////////////////////////////////////////////////////////////////////
+// Мобільні телефони (480px–767px)
+@media (min-width: 481px) and (max-width: 767px) {
+  // .container {
+  //   padding: 15px;
+  //   font-size: 16px;
+  // }
+}
 
+// Планшети (768px–1023px)
+@media (min-width: 768px) and (max-width: 1023px) {
+  // .container {
+  //   padding: 20px;
+  //   font-size: 18px;
+  // }
+}
 
+// Ноутбуки та маленькі екрани (1024px–1399px)
+@media (min-width: 1024px) and (max-width: 1399px) {
+  // .container {
+  //   padding: 25px;
+  //   font-size: 20px;
+  // }
+}
+
+// Великі екрани (1400px+)
+@media (min-width: 1400px) {
+  // .container {
+  //   padding: 30px;
+  //   font-size: 22px;
+  // }
+}
 
