@@ -15,32 +15,37 @@ import Game2 from "./pages/Games/Game2/Game2.jsx";
 import Game3 from "./pages/Games/Game3/Game3.jsx";
 import GalleryPage from "./pages/GalleryPage/GalleryPage.jsx";
 import SolarSystem from "./pages/SolarSystemPage/SolarSystem.jsx";
+import PrivateRoute from "./components/PrivateRoute.jsx";
 
 const AppRoutes = () => {
+  // Перевіряємо чи є токен у LocalStorage для автентифікації
+  const isAuthenticated = !!localStorage.getItem("authToken");
+
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/users" element={<UsersPage />} />
-      <Route path="/profile">
-        <Route path="general_information" element={<GeneralInformation />} />
-        <Route path="place_of_residence" element={<PlaceOfResidence />} />
-        <Route path="hobbies" element={<Hobbies />} />
-        <Route path="workplace" element={<Workplace />} />
-        <Route path="photo_library" element={<PhotoLibrary />} />
+      <Route path="/login" element={<LoginPage />} />
+      
+      {/* Захищені маршрути */}
+      <Route element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
+        <Route path="/users" element={<UsersPage />} />
+        <Route path="/profile">
+          <Route path="general_information" element={<GeneralInformation />} />
+          <Route path="place_of_residence" element={<PlaceOfResidence />} />
+          <Route path="hobbies" element={<Hobbies />} />
+          <Route path="workplace" element={<Workplace />} />
+          <Route path="photo_library" element={<PhotoLibrary />} />
+        </Route>
+        <Route path="/groups" element={<GroupPage />} />
+        <Route path="/group/:id" element={<GroupPage />} />
+        <Route path="/chat" element={<ChatPage />} />
+        <Route path="/user/:id" element={<UserPage />} />
+        <Route path="/game1" element={<Game1 />} />
+        <Route path="/game2" element={<Game2 />} />
+        <Route path="/game3" element={<Game3 />} />
+        <Route path="/gallery" element={<GalleryPage />} />
+        <Route path="/solar" element={<SolarSystem />} />
       </Route>
-      <Route path="/groups" element={<GroupPage />} />
-      <Route path="/group/:id" element={<GroupPage />} />
-      <Route path="/chat" element={<ChatPage />} />
-      <Route path="/user/:id" element={<UserPage />} />
-      <Route path="/game1" element={<Game1 />} />
-      <Route path="/game2" element={<Game2 />} />
-      <Route path="/game3" element={<Game3 />} />
-      <Route path="/gallery" element={<GalleryPage />} />
-      <Route
-        path="/login"
-        element={<LoginPage onLoginSuccess={() => console.log("Logged in!")} />}
-      />
-      <Route path="/solar" element={<SolarSystem />} />
     </Routes>
   );
 };

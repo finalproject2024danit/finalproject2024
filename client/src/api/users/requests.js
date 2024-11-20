@@ -1,5 +1,11 @@
 import axiosInstance from '../axiosInstance.js'
 
+// const userResponse = await axiosInstance.post('/auth/get_user', {}, { 
+//     headers: {
+//       Authorization: `Bearer ${token}`,
+//     },
+//   });
+
 export const getUserData = async (userId) => {
     const response = await axiosInstance.get(`/users/user/${userId}`)
     return response.data

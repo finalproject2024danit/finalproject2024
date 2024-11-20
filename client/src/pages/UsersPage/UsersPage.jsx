@@ -5,7 +5,10 @@ import styles from "./UsersPage.module.scss";
 import MainContent from "../../components/MainContent/MainContent";
 import axiosInstance from "../../api/axiosInstance.js";
 import ButtonAddFriend from "../../components/ButtonAddFriend/index.jsx";
-import { addFriendThunk, fetchFriends } from "../../redux/slices/friendsSlice.js"; // Імпортуємо дію для додавання друга та завантаження друзів
+import {
+  addFriendThunk,
+  fetchFriends,
+} from "../../redux/slices/friendsSlice.js"; // Імпортуємо дію для додавання друга та завантаження друзів
 import { useTranslation } from "react-i18next";
 import Modal from "../../components/Modal/Modal.jsx";
 
@@ -83,8 +86,8 @@ const UsersPage = () => {
 
   const handleAddFriend = (userId) => {
     // Перевіряємо, чи цей користувач вже друг
-    if (friends.some(friend => friend.id === userId)) return; 
-  
+    if (friends.some((friend) => friend.id === userId)) return;
+
     setSelectedUserId(userId);
     setModalMessage("Are you sure you want to add this friend?");
     setOnConfirmAction(() => () => {
@@ -94,13 +97,11 @@ const UsersPage = () => {
           dispatch(fetchFriends(userFromId)); // Оновлюємо список друзів з Redux
         })
         .finally(() => {
-          setIsModalOpen(false);  // Закриваємо модалку після додавання
+          setIsModalOpen(false); // Закриваємо модалку після додавання
         });
     });
     setIsModalOpen(true);
   };
-  
-  
 
   return (
     <MainContent title="">
@@ -150,7 +151,7 @@ const UsersPage = () => {
                     userId={user.id}
                     onClick={handleAddFriend}
                     isFriend={friends.includes(user.id)} // Перевіряємо, чи цей користувач вже друг
-                    disabled={selectedUserId === null}  // Заборонити додавати друга, поки не вибрано користувача
+                    disabled={selectedUserId === null} // Заборонити додавати друга, поки не вибрано користувача
                   />
                   <h2 className={styles.clickToFlip}>
                     {t("users.clickToFlip")}
