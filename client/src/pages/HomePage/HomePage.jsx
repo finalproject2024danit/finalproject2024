@@ -28,6 +28,7 @@ const HomePage = () => {
                 className={styles.newsImage}
                 src={item.photo || defaultImage}
                 alt={item.name || "Untitled"}
+                title={item.name || "Untitled"}
                 onError={(e) => {
                   e.target.src = defaultImage;
                 }}

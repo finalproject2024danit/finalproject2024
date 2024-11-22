@@ -57,6 +57,7 @@ const RightSidebar = () => {
                 <img
                   src={friend.avatar}
                   alt={`${friend.firstName} ${friend.lastName}`}
+                  title={`${friend.firstName} ${friend.lastName}`}
                   style={{ width: "30px", height: "30px", borderRadius: "50%" }}
                 />
                 <div className={styles.friendName}>

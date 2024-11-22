@@ -1,13 +1,13 @@
 /* ButtonDeleteFriend.module.scss */
+@import "../../App.scss";
 .btn {
   background-color: red; /* Червоний фон */
   color: white;           /* Білий колір тексту */
   border: none;           /* Без рамки */
-  padding: 0;             /* Без відступів */
-  width: 15px;            /* Ширина кнопки */
-  height: 15px;           /* Висота кнопки */
-  border-radius: 50%;     /* Кругла форма */
-  font-size: 18px;        /* Розмір шрифту для хрестика */
+  width: 20px;            /* Ширина кнопки */
+  height: 20px;           /* Висота кнопки */
+  border-radius: 50%;    /* Круглая форма */
+  font-size: $font-size-small-medium;       /* Размер шрифта */
   display: flex;          /* Використовуємо flex для центровання */
   justify-content: center; /* Центруємо контент по горизонталі */
   align-items: center;    /* Центруємо контент по вертикалі */

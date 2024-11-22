@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
 import UsersIcon from "../../svg/Header/Users";
@@ -9,12 +9,18 @@ import styles from "./Header.module.scss";
 
 const Header = () => {
   const { t, i18n } = useTranslation();
-  const [isChecked, setIsChecked] = useState(false);
+
+  // Устанавливаем начальное состояние в зависимости от текущего языка
+  const [isChecked, setIsChecked] = useState(i18n.language === 'ua');
+
+  useEffect(() => {
+    // Когда язык меняется, обновляем состояние isChecked
+    setIsChecked(i18n.language === 'ua');
+  }, [i18n.language]);
 
   const handleLanguageChange = () => {
-    const newLang = isChecked ? 'ua' : 'en';
-    i18n.changeLanguage(newLang);
-    setIsChecked(!isChecked);
+    const newLang = isChecked ? 'en' : 'ua'; // Переключаем между 'en' и 'ua'
+    i18n.changeLanguage(newLang); // Меняем язык
   };
 
   return (
@@ -29,6 +35,7 @@ const Header = () => {
                   className={styles.imgLogo}
                   src="/logoGif.gif"
                   alt="Galactic Connections Logo"
+                  title="Galactic Connections Logo"
               />
             </NavLink>
             <div className={styles.header}>
@@ -49,7 +56,7 @@ const Header = () => {
                       id="languageToggle"
                   />
                   <label htmlFor="languageToggle">
-                    {isChecked ? "UA" : "EN"} {/* Отображаем текущий язык */}
+                    {isChecked ? "UA" : "EN"}
                   </label>
                 </div>
               </div>
