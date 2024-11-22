@@ -170,6 +170,10 @@
   transition: all 0.3s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
+  &::placeholder {
+    color: gray;
+  }
+
   &:focus {
     border-color: #6a5acd;
     box-shadow: 0 2px 8px rgba(106, 90, 205, 0.3);

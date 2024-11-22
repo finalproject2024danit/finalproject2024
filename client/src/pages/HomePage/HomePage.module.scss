@@ -32,9 +32,15 @@
 }
 
 .newsContent p {
-  font-size: $font-size-text;
+  font-size: $font-size-text-news;
+  line-height: 1.5;
   color: $nodle-black-200;
    }
+
+.date {
+  font-size: $font-size-small-medium !important;
+  text-align: right;
+}
 
 
 

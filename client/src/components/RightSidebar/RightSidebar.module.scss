@@ -17,11 +17,11 @@
   // margin-top: 180px;
   // margin-right: 10px;
   // transition: 1.5s;
-  
+
   // Додаємо прокручування, якщо вміст виводиться за межі
   overflow-y: auto;
   padding-right: 10px; // Додаємо відступ для скроллбару, щоб він не накладався на вміст
-  
+
   // Кастомний скроллбар
   &::-webkit-scrollbar {
     width: 6px; // Встановлює ширину скролбару
@@ -46,13 +46,13 @@
   align-items: center;
   justify-content: space-between; // Розташовує елементи на протилежних сторонах
   gap: 5px;
-  padding: 5px;
+  padding: 10px;
   width: 100%;
 }
 
 .friendLink {
   display: flex;
-  align-items: center; 
+  align-items: center;
   gap: 5px;
   text-decoration: none;
   color: yellow;
@@ -60,6 +60,11 @@
   border-radius: 20px;
   padding: 5px;
   flex-grow: 1; // Розтягує блок з ім'ям для заповнення простору
+  &:hover {
+    background-color: darkblue;
+    color: white;
+    border-color: white;
+  }
 }
 
 .friendName {
