@@ -35,13 +35,14 @@ public class MySecurityConfig {
 //                                .requestMatchers("/**").permitAll()
 //                                .requestMatchers("/").permitAll()
                                 .requestMatchers("/login").permitAll()
+                                .requestMatchers("/:9000/login").permitAll()
+                                .requestMatchers("http://134.209.246.21:9000/login").permitAll()
                                 .requestMatchers("/css/**").permitAll()
                                 .requestMatchers("/js/**").permitAll()
                                 .requestMatchers("/images/**").permitAll()
                                 .requestMatchers("/auth/**").permitAll()
                                 .requestMatchers("/ws/**").authenticated()
                                 .requestMatchers("/api/v1/**").authenticated()
-
                 )
 
                 .addFilterAfter(jwtFilter, UsernamePasswordAuthenticationFilter.class)
