@@ -32,21 +32,16 @@ public class MySecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(requests ->
                         requests
-                                .requestMatchers("/**").permitAll()
-                                .requestMatchers("/").permitAll()
-//                                .requestMatchers("/css/**").permitAll()
-//                                .requestMatchers("/js/**").permitAll()
-//                                .requestMatchers("/images/**").permitAll()
-//                                .requestMatchers("/h2-console/**").permitAll()
-//                                .requestMatchers("/auth/**").permitAll()
-//                                .requestMatchers("/ws/**").permitAll()
-//                                .requestMatchers("/dashboard").authenticated()
-//                                .requestMatchers("/api/v1/**").authenticated()
-//                                .requestMatchers("/registration").hasAuthority("ADMIN")
-//                                .requestMatchers("/create").hasAuthority("ADMIN")
+//                                .requestMatchers("/**").permitAll()
+//                                .requestMatchers("/").permitAll()
+                                .requestMatchers("/css/**").permitAll()
+                                .requestMatchers("/js/**").permitAll()
+                                .requestMatchers("/images/**").permitAll()
+                                .requestMatchers("/auth/**").permitAll()
+                                .requestMatchers("/ws/**").authenticated()
+                                .requestMatchers("/api/v1/**").authenticated()
+
                 )
-//                 only for mvc
-//                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
 
                 .addFilterAfter(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
