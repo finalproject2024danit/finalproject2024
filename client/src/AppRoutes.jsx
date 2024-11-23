@@ -21,11 +21,15 @@ const AppRoutes = () => {
   // Перевіряємо чи є токен у LocalStorage для автентифікації
   const isAuthenticated = !!localStorage.getItem("authToken");
 
+  const handleLoginSuccess = () => {
+    console.log("Login successful!");    
+  };
+
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
-      <Route path="/login" element={<LoginPage />} />
-      
+      <Route path="/login" element={<LoginPage onLoginSuccess={handleLoginSuccess} />} />
+
       {/* Захищені маршрути */}
       <Route element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
         <Route path="/users" element={<UsersPage />} />

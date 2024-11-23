@@ -8,15 +8,23 @@ const GalleryPage = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const { photoData, status } = user;
-
+  
   useEffect(() => {
     if (status === "idle") {
       dispatch(fetchUserData(1));
     }
   }, [status, dispatch]);
 
-  const photos = photoData ? photoData.split(", ") : [];
+  // Розділення photoData у масив URL
+  const photos = photoData
+    ? photoData
+        .replace(/\n/g, "") // Видалення символів нового рядка
+        .split(",")         // Розділення за комами
+        .map((url) => url.trim()) // Видалення зайвих пробілів
+    : [];
   const [currentIndex, setCurrentIndex] = useState(0);
+  
+// console.log("Photos Array:", photos);
 
   const nextSlide = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % photos.length);

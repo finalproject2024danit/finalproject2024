@@ -4,9 +4,10 @@ import PropTypes from "prop-types";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axiosInstance from "../../api/axiosInstance"; // Використовуємо axiosInstance
-import { fetchUserData } from "../../redux/slices/userSlice.js";
+import { fetchUserDataByToken } from "../../redux/slices/userSlice.js";
 import styles from "./LoginPage.module.scss";
 import axios from "axios";
+
 
 const LoginPage = ({ onLoginSuccess }) => {
   const [isLoginActive, setIsLoginActive] = useState(false);
@@ -31,7 +32,9 @@ const LoginPage = ({ onLoginSuccess }) => {
 
   const RegistrationSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email").required("Email is required"),
-    password: Yup.string().min(6, "Password too short").required("Password is required"),
+    password: Yup.string()
+      .min(6, "Password too short")
+      .required("Password is required"),
     confirmPassword: Yup.string()
       .oneOf([Yup.ref("password"), null], "Passwords must match")
       .required("Confirm your password"),
@@ -43,56 +46,66 @@ const LoginPage = ({ onLoginSuccess }) => {
         login: values.email, // Передаємо "email" як "login"
         password: values.password,
       };
-  
+
       // Надсилаємо запит на логін
-      const loginResponse = await axios.post('http://134.209.246.21:9000/auth/login', loginPayload);
-      
+      const loginResponse = await axios.post(
+        "http://134.209.246.21:9000/auth/login",
+        loginPayload
+      );
+
       // Логування для перевірки відповіді
-      console.log('Login Response:', loginResponse);
-  
+      console.log("Login Response:", loginResponse);
+
       const token = loginResponse.data.accessToken; // Перевірте правильність поля, де зберігається токен
-      console.log('Access Token:', token); // Для перевірки, чи отримуємо правильний токен
+      console.log("Access Token:", token); // Для перевірки, чи отримуємо правильний токен
 
       if (token) {
-        // Логування перед записом в localStorage
-        console.log('Saving token to localStorage:', token);
-        
-        // Записуємо токен в localStorage
-        localStorage.setItem('authToken', token);
-        // dispatch
-  
-        // Перевірка, чи записався токен в localStorage
-        console.log('Token from localStorage:', localStorage.getItem('authToken'));
-  
-        // Отримання даних користувача після логіну
-        const userResponse = await axios.post('http://134.209.246.21:9000/auth/get_user', {}, { 
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-  
-        const userData = userResponse.data;
-  
-        // Логування даних користувача
-        console.log('User data:', userData);
-  
-        // Збереження даних користувача в LocalStorage
-        localStorage.setItem('userData', JSON.stringify(userData));
-  
-        // Збереження даних користувача в Redux
-        // dispatch(fetchUserData(userData.id)); видалити
-        // dispatch - fetchUserDataByToken -userData
-  
-        // Перехід до головної сторінки або інша дія після успішного логіну
+        localStorage.setItem("authToken", token);
+        dispatch(fetchUserDataByToken(token));
         onLoginSuccess();
       } else {
-        setErrorMessage('Token not found in response!');
+        setErrorMessage("Failed to retrieve token. Please try again.");
       }
     } catch (error) {
-      setErrorMessage(error.response?.data?.message || 'Failed to login. Try again.');
+      setErrorMessage(error.response?.data?.message || "Failed to login.");
     }
+
+    //   if (token) {
+    //     // Логування перед записом в localStorage
+    //     console.log("Saving token to localStorage:", token);
+
+    //     // Записуємо токен в localStorage
+    //     localStorage.setItem("authToken", token);
+    //     // dispatch
+
+    //     // Перевірка, чи записався токен в localStorage
+    //     console.log(
+    //       "Token from localStorage:",
+    //       localStorage.getItem("authToken")
+    //     );
+
+    //     const userData = fetchUserDataByToken.data;
+
+    //     // Зберігаємо дані користувача в Redux
+    //     dispatch(fetchUserDataByToken(token));
+
+    //     // Логування даних користувача
+    //     console.log("User data:", userData);
+
+    //     // Збереження даних користувача в LocalStorage
+    //     localStorage.setItem("userData", JSON.stringify(userData));
+
+    //     // Перехід до головної сторінки або інша дія після успішного логіну
+    //     onLoginSuccess();
+    //   } else {
+    //     setErrorMessage("Token not found in response!");
+    //   }
+    // } catch (error) {
+    //   setErrorMessage(
+    //     error.response?.data?.message || "Failed to login. Try again."
+    //   );
+    // }
   };
-  
 
   const handleRegister = async (values, { resetForm }) => {
     try {
@@ -116,28 +129,47 @@ const LoginPage = ({ onLoginSuccess }) => {
           <li key={i}></li>
         ))}
       </ul>
-      <div className={`${styles.wrapper} ${isLoginActive ? styles.active : ""}`}>
+      <div
+        className={`${styles.wrapper} ${isLoginActive ? styles.active : ""}`}
+      >
         {/* Форма входу */}
         <div className={`${styles.form} ${styles.login}`}>
           <header className={styles.logHeader} onClick={handleLoginClick}>
             Login
           </header>
           <Formik
-            initialValues={{ email: "alice.johnson@example.com", password: "password123" }}
+            initialValues={{
+              email: "alice.johnson@example.com",
+              password: "password123",
+            }}
             validationSchema={LoginSchema}
             onSubmit={handleLogin}
           >
             {({ isSubmitting }) => (
               <Form>
                 <Field type="text" name="email" placeholder="Email address" />
-                <ErrorMessage name="email" component="div" className={styles.error} />
+                <ErrorMessage
+                  name="email"
+                  component="div"
+                  className={styles.error}
+                />
 
                 <Field type="password" name="password" placeholder="Password" />
-                <ErrorMessage name="password" component="div" className={styles.error} />
+                <ErrorMessage
+                  name="password"
+                  component="div"
+                  className={styles.error}
+                />
 
-                {errorMessage && <div className={styles.error}>{errorMessage}</div>}
+                {errorMessage && (
+                  <div className={styles.error}>{errorMessage}</div>
+                )}
 
-                <button className={styles.loginBtn} type="submit" disabled={isSubmitting}>
+                <button
+                  className={styles.loginBtn}
+                  type="submit"
+                  disabled={isSubmitting}
+                >
                   Login
                 </button>
               </Form>
@@ -148,7 +180,7 @@ const LoginPage = ({ onLoginSuccess }) => {
         {/* Форма реєстрації */}
         <div className={`${styles.form} ${styles.signUp}`}>
           <header className={styles.logHeader} onClick={handleRegisterClick}>
-          Signup
+            Signup
           </header>
           <Formik
             initialValues={{ email: "", password: "", confirmPassword: "" }}
@@ -158,20 +190,40 @@ const LoginPage = ({ onLoginSuccess }) => {
             {({ isSubmitting }) => (
               <Form>
                 <Field type="text" name="email" placeholder="Email address" />
-                <ErrorMessage name="email" component="div" className={styles.error} />
+                <ErrorMessage
+                  name="email"
+                  component="div"
+                  className={styles.error}
+                />
 
                 <Field type="password" name="password" placeholder="Password" />
-                <ErrorMessage name="password" component="div" className={styles.error} />
+                <ErrorMessage
+                  name="password"
+                  component="div"
+                  className={styles.error}
+                />
 
-                <Field type="password" name="confirmPassword" placeholder="Confirm Password" />
-                <ErrorMessage name="confirmPassword" component="div" className={styles.error} />
+                <Field
+                  type="password"
+                  name="confirmPassword"
+                  placeholder="Confirm Password"
+                />
+                <ErrorMessage
+                  name="confirmPassword"
+                  component="div"
+                  className={styles.error}
+                />
 
                 {registrationMessage && (
                   <div className={styles.message}>{registrationMessage}</div>
                 )}
 
-                <button className={styles.signUpBtn} type="submit" disabled={isSubmitting}>
-                Signup
+                <button
+                  className={styles.signUpBtn}
+                  type="submit"
+                  disabled={isSubmitting}
+                >
+                  Signup
                 </button>
               </Form>
             )}
@@ -185,5 +237,6 @@ const LoginPage = ({ onLoginSuccess }) => {
 LoginPage.propTypes = {
   onLoginSuccess: PropTypes.func.isRequired,
 };
+
 
 export default LoginPage;
