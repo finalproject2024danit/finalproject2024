@@ -8,10 +8,6 @@ import org.springframework.web.bind.annotation.*;
 @Log4j2
 @RestController
 @RequestMapping("/api/v1/posts")
-@CrossOrigin(origins = {
-        "http://localhost:3000",
-        "http://localhost:3001",
-}, allowedHeaders = "*")
 @RequiredArgsConstructor
 public class PostController {
     private final PostServiceImpl postService;

@@ -18,10 +18,6 @@ import java.util.List;
 @Log4j2
 @RestController
 @RequestMapping("/api/v1/groups")
-@CrossOrigin(origins = {
-        "http://localhost:3000",
-        "http://localhost:3001",
-}, allowedHeaders = "*")
 @RequiredArgsConstructor
 public class GroupController {
     private final GroupServiceImpl groupService;
