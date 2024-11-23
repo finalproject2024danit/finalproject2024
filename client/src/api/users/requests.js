@@ -4,6 +4,7 @@ import axios from "axios";
 export const getToken = async (loginPayload) => {
     const response = await axios.post(
         "http://134.209.246.21:9000/auth/login", loginPayload);
+    console.log(response.data.accessToken)
     return response.data.accessToken;
 };
 
