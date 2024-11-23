@@ -14,15 +14,15 @@ const initialState = {
     phones: localStorage.getItem("phones") || "",
     photoData: localStorage.getItem("photoData") || "",
     workplace: localStorage.getItem("workplace") || "",
-    residence: JSON.parse(localStorage.getItem("residence")) || {
-        planet: "",
-        country: "",
-        city: "",
+    residence: {
+        planet: localStorage.getItem("residence.planet") || "",
+        country: localStorage.getItem("residence.country") || "",
+        city: localStorage.getItem("residence.city") || "",
     },
-    hobby: JSON.parse(localStorage.getItem("hobby")) || {
-        language: "",
-        pet: "",
-        interest: "",
+    hobby: {
+        language: localStorage.getItem("hobby.language") || "",
+        pet: localStorage.getItem("hobby.pet") || "",
+        interest: localStorage.getItem("hobby.interest") || "",
     },
     createdDate: localStorage.getItem("createdDate") || "",
     lastModifiedDate: localStorage.getItem("lastModifiedDate") || "",
@@ -30,7 +30,6 @@ const initialState = {
     error: null, // Для зберігання повідомлень про помилки
 };
 
-// Асинхронні дії
 export const fetchUserDataByToken = createAsyncThunk(
     "user/fetchUserDataByToken",
     async (token, {rejectWithValue}) => {
@@ -134,7 +133,62 @@ const userSlice = createSlice({
 
         builder
             .addCase(fetchUserDataByToken.pending, handlePending)
-            .addCase(fetchUserDataByToken.fulfilled, handleFulfilled)
+            .addCase(fetchUserDataByToken.fulfilled, (state, action) => {
+                const {
+                    id, firstName, lastName, email, gender, dateOfBirth, avatar, phones,
+                    photoData, workplace, residence, hobby, createdDate, lastModifiedDate
+                } = action.payload;
+
+                const localStorageData = {
+                    id: id || '',
+                    firstName: firstName || '',
+                    lastName: lastName || '',
+                    email: email || '',
+                    gender: gender || '',
+                    dateOfBirth: dateOfBirth || '',
+                    avatar: avatar || '',
+                    phones: phones || '',
+                    photoData: photoData || '',
+                    workplace: workplace || '',
+                    'residence.planet': residence?.planet || '',
+                    'residence.country': residence?.country || '',
+                    'residence.city': residence?.city || '',
+                    'hobby.language': hobby?.language || '',
+                    'hobby.pet': hobby?.pet || '',
+                    'hobby.interest': hobby?.interest || '',
+                    createdDate: createdDate || '',
+                    lastModifiedDate: lastModifiedDate || ''
+                };
+
+                Object.entries(localStorageData).forEach(([key, value]) => {
+                    localStorage.setItem(key, value);
+                });
+
+                Object.assign(state, {
+                    id: id || '',
+                    firstName: firstName || '',
+                    lastName: lastName || '',
+                    email: email || '',
+                    gender: gender || '',
+                    dateOfBirth: dateOfBirth || '',
+                    avatar: avatar || '',
+                    phones: phones || '',
+                    photoData: photoData || '',
+                    workplace: workplace || '',
+                    residence: {
+                        planet: residence?.planet || '',
+                        country: residence?.country || '',
+                        city: residence?.city || ''
+                    },
+                    hobby: {
+                        language: hobby?.language || '',
+                        pet: hobby?.pet || '',
+                        interest: hobby?.interest || ''
+                    },
+                    createdDate: createdDate || '',
+                    lastModifiedDate: lastModifiedDate || ''
+                });
+            })
             .addCase(fetchUserDataByToken.rejected, handleRejected)
             .addCase(fetchUserData.pending, handlePending)
             .addCase(fetchUserData.fulfilled, handleFulfilled)
