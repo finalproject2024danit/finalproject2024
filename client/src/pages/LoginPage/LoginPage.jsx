@@ -1,231 +1,217 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import PropTypes from "prop-types";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import React, {useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
-import axiosInstance from "../../api/axiosInstance"; // Використовуємо axiosInstance
-import { fetchUserDataByToken } from "../../redux/slices/userSlice.js";
+import {fetchRegister, fetchToken, fetchUserDataByToken} from "../../redux/slices/userSlice.js";
+import {useNavigate} from "react-router-dom";
+import bcrypt from "bcryptjs";
 import styles from "./LoginPage.module.scss";
-import axios from "axios";
 
 
 const LoginPage = () => {
-  const [isLoginActive, setIsLoginActive] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [registrationMessage, setRegistrationMessage] = useState("");
-  const dispatch = useDispatch();
+    const token = useSelector((state) => state.user.token);
+    const [isLoginActive, setIsLoginActive] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+    const [registrationMessage, setRegistrationMessage] = useState("");
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
-  const handleLoginClick = () => {
-    setIsLoginActive(true);
-    setErrorMessage("");
-  };
+    const handleLoginClick = () => {
+        setIsLoginActive(true);
+        setErrorMessage("");
+    };
 
-  const handleRegisterClick = () => {
-    setIsLoginActive(false);
-    setRegistrationMessage("");
-  };
+    const handleRegisterClick = () => {
+        setIsLoginActive(false);
+        setRegistrationMessage("");
+    };
 
-  const LoginSchema = Yup.object().shape({
-    email: Yup.string().email("Invalid email").required("Email is required"),
-    password: Yup.string().required("Password is required"),
-  });
+    const LoginSchema = Yup.object().shape({
+        email: Yup.string().email("Invalid email").required("Email is required"),
+        password: Yup.string().required("Password is required"),
+    });
 
-  const RegistrationSchema = Yup.object().shape({
-    email: Yup.string().email("Invalid email").required("Email is required"),
-    password: Yup.string()
-      .min(6, "Password too short")
-      .required("Password is required"),
-    confirmPassword: Yup.string()
-      .oneOf([Yup.ref("password"), null], "Passwords must match")
-      .required("Confirm your password"),
-  });
+    const RegistrationSchema = Yup.object().shape({
+        email: Yup.string().email("Invalid email").required("Email is required"),
+        password: Yup.string()
+            .min(6, "Password too short")
+            .required("Password is required"),
+        confirmPassword: Yup.string()
+            .oneOf([Yup.ref("password"), null], "Passwords must match")
+            .required("Confirm your password"),
+    });
 
-  const handleLogin = async (values) => {
-    try {
-      const loginPayload = {
-        login: values.email, // Передаємо "email" як "login"
-        password: values.password,
-      };
+    const handleLogin = async (values) => {
+        try {
+            const loginPayload = {
+                login: values.email,
+                password: values.password,
+            };
 
-      dispatch(fetchToken(loginPayload));     
-     
-      const token = useSelector(state =>state.user.token)      
+            dispatch(fetchToken(loginPayload));
 
-      if (token) {     
-        dispatch(fetchUserDataByToken(token));
-        
-      } else {
-        setErrorMessage("Failed to retrieve token. Please try again.");
-      }
-    } catch (error) {
-      setErrorMessage(error.response?.data?.message || "Failed to login.");
-    }
+            if (token) {
+                dispatch(fetchUserDataByToken(token));
+                navigate("/");
+            } else {
+                setErrorMessage("Failed to retrieve token. Please try again.");
+            }
+        } catch (error) {
+            setErrorMessage(error.response?.data?.message || "Failed to login.");
+        }
+    };
 
-    //   if (token) {
-    //     // Логування перед записом в localStorage
-    //     console.log("Saving token to localStorage:", token);
+    const handleRegister = async (values) => {
+        try {
+            const hashedPassword = bcrypt.hashSync(values.password, 10);
+            const registerPayload = {
+                firstName: values.firstName,
+                lastName: values.lastName,
+                email: values.email,
+                password: hashedPassword,
+            };
 
-    //     // Записуємо токен в localStorage
-    //     localStorage.setItem("authToken", token);
-    //     // dispatch
+            dispatch(fetchRegister(registerPayload));
 
-    //     // Перевірка, чи записався токен в localStorage
-    //     console.log(
-    //       "Token from localStorage:",
-    //       localStorage.getItem("authToken")
-    //     );
+            if (token) {
+                navigate("/");
+            } else {
+                setErrorMessage("Failed to retrieve token. Please try again.");
+            }
+        } catch (error) {
+            setRegistrationMessage(
+                error.response?.data?.message || "Registration failed. Try again."
+            );
+        }
+    };
 
-    //     const userData = fetchUserDataByToken.data;
+    return (
+        <div className={styles.loginBox}>
+            <ul className={styles.circles}>
+                {Array.from({length: 10}).map((_, i) => (
+                    <li key={i}></li>
+                ))}
+            </ul>
+            <div
+                className={`${styles.wrapper} ${isLoginActive ? styles.active : ""}`}
+            >
+                <div className={`${styles.form} ${styles.login}`}>
+                    <header className={styles.logHeader} onClick={handleLoginClick}>
+                        Login
+                    </header>
+                    <Formik
+                        initialValues={{
+                            email: "alice.johnson@example.com",
+                            password: "password123",
+                        }}
+                        validationSchema={LoginSchema}
+                        onSubmit={handleLogin}
+                    >
+                        {({isSubmitting}) => (
+                            <Form>
+                                <Field type="text" name="email" placeholder="Email address"/>
+                                <ErrorMessage
+                                    name="email"
+                                    component="div"
+                                    className={styles.error}
+                                />
 
-    //     // Зберігаємо дані користувача в Redux
-    //     dispatch(fetchUserDataByToken(token));
+                                <Field type="password" name="password" placeholder="Password"/>
+                                <ErrorMessage
+                                    name="password"
+                                    component="div"
+                                    className={styles.error}
+                                />
 
-    //     // Логування даних користувача
-    //     console.log("User data:", userData);
+                                {errorMessage && (
+                                    <div className={styles.error}>{errorMessage}</div>
+                                )}
 
-    //     // Збереження даних користувача в LocalStorage
-    //     localStorage.setItem("userData", JSON.stringify(userData));
+                                <button
+                                    className={styles.loginBtn}
+                                    type="submit"
+                                    disabled={isSubmitting}
+                                >
+                                    Login
+                                </button>
+                            </Form>
+                        )}
+                    </Formik>
+                </div>
 
-    //     // Перехід до головної сторінки або інша дія після успішного логіну
-    //     onLoginSuccess();
-    //   } else {
-    //     setErrorMessage("Token not found in response!");
-    //   }
-    // } catch (error) {
-    //   setErrorMessage(
-    //     error.response?.data?.message || "Failed to login. Try again."
-    //   );
-    // }
-  };
+                {/* Форма реєстрації */}
+                <div className={`${styles.form} ${styles.signUp}`}>
+                    <header className={styles.logHeader} onClick={handleRegisterClick}>
+                        Signup
+                    </header>
+                    <Formik
+                        initialValues={{
+                            firstName: "",
+                            lastName: "",
+                            email: "",
+                            password: "",
+                            confirmPassword: ""
+                        }}
+                        validationSchema={RegistrationSchema}
+                        onSubmit={handleRegister}
+                    >
+                        {({isSubmitting}) => (
+                            <Form>
+                                <Field type="text" name="firstName" placeholder="First name"/>
+                                <ErrorMessage
+                                    name="firstName"
+                                    component="div"
+                                    className={styles.error}
+                                />
+                                <Field type="text" name="lastName" placeholder="Last name"/>
+                                <ErrorMessage
+                                    name="lastName"
+                                    component="div"
+                                    className={styles.error}
+                                />
+                                <Field type="text" name="email" placeholder="Email address"/>
+                                <ErrorMessage
+                                    name="email"
+                                    component="div"
+                                    className={styles.error}
+                                />
 
-  const handleRegister = async (values, { resetForm }) => {
-    try {
-      await axiosInstance.post("/auth/register", {
-        email: values.email,
-        password: values.password,
-      });
-      setRegistrationMessage("Registration successful! You can now log in.");
-      resetForm();
-    } catch (error) {
-      setRegistrationMessage(
-        error.response?.data?.message || "Registration failed. Try again."
-      );
-    }
-  };
+                                <Field type="password" name="password" placeholder="Password"/>
+                                <ErrorMessage
+                                    name="password"
+                                    component="div"
+                                    className={styles.error}
+                                />
 
-  return (
-    <div className={styles.loginBox}>
-      <ul className={styles.circles}>
-        {Array.from({ length: 10 }).map((_, i) => (
-          <li key={i}></li>
-        ))}
-      </ul>
-      <div
-        className={`${styles.wrapper} ${isLoginActive ? styles.active : ""}`}
-      >
-        {/* Форма входу */}
-        <div className={`${styles.form} ${styles.login}`}>
-          <header className={styles.logHeader} onClick={handleLoginClick}>
-            Login
-          </header>
-          <Formik
-            initialValues={{
-              email: "alice.johnson@example.com",
-              password: "password123",
-            }}
-            validationSchema={LoginSchema}
-            onSubmit={handleLogin}
-          >
-            {({ isSubmitting }) => (
-              <Form>
-                <Field type="text" name="email" placeholder="Email address" />
-                <ErrorMessage
-                  name="email"
-                  component="div"
-                  className={styles.error}
-                />
+                                <Field
+                                    type="password"
+                                    name="confirmPassword"
+                                    placeholder="Confirm Password"
+                                />
+                                <ErrorMessage
+                                    name="confirmPassword"
+                                    component="div"
+                                    className={styles.error}
+                                />
 
-                <Field type="password" name="password" placeholder="Password" />
-                <ErrorMessage
-                  name="password"
-                  component="div"
-                  className={styles.error}
-                />
+                                {registrationMessage && (
+                                    <div className={styles.message}>{registrationMessage}</div>
+                                )}
 
-                {errorMessage && (
-                  <div className={styles.error}>{errorMessage}</div>
-                )}
-
-                <button
-                  className={styles.loginBtn}
-                  type="submit"
-                  disabled={isSubmitting}
-                >
-                  Login
-                </button>
-              </Form>
-            )}
-          </Formik>
+                                <button
+                                    className={styles.signUpBtn}
+                                    type="submit"
+                                    disabled={isSubmitting}
+                                >
+                                    Signup
+                                </button>
+                            </Form>
+                        )}
+                    </Formik>
+                </div>
+            </div>
         </div>
-
-        {/* Форма реєстрації */}
-        <div className={`${styles.form} ${styles.signUp}`}>
-          <header className={styles.logHeader} onClick={handleRegisterClick}>
-            Signup
-          </header>
-          <Formik
-            initialValues={{ email: "", password: "", confirmPassword: "" }}
-            validationSchema={RegistrationSchema}
-            onSubmit={handleRegister}
-          >
-            {({ isSubmitting }) => (
-              <Form>
-                <Field type="text" name="email" placeholder="Email address" />
-                <ErrorMessage
-                  name="email"
-                  component="div"
-                  className={styles.error}
-                />
-
-                <Field type="password" name="password" placeholder="Password" />
-                <ErrorMessage
-                  name="password"
-                  component="div"
-                  className={styles.error}
-                />
-
-                <Field
-                  type="password"
-                  name="confirmPassword"
-                  placeholder="Confirm Password"
-                />
-                <ErrorMessage
-                  name="confirmPassword"
-                  component="div"
-                  className={styles.error}
-                />
-
-                {registrationMessage && (
-                  <div className={styles.message}>{registrationMessage}</div>
-                )}
-
-                <button
-                  className={styles.signUpBtn}
-                  type="submit"
-                  disabled={isSubmitting}
-                >
-                  Signup
-                </button>
-              </Form>
-            )}
-          </Formik>
-        </div>
-      </div>
-    </div>
-  );
+    );
 };
-
-
-
 
 export default LoginPage;
