@@ -14,6 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
             @Override
             public void addCorsMappings(final CorsRegistry registry) {
                 registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:3000", "http://localhost:3001")
                         .allowedOrigins("*")
                         .allowedMethods(
                                 "GET",
@@ -23,6 +24,7 @@ public class WebConfig implements WebMvcConfigurer {
                                 "DELETE",
                                 "OPTIONS"
                         )
+                        .allowCredentials(true)
                         .allowedHeaders("*");
             }
         };

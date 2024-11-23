@@ -19,10 +19,6 @@ import java.util.Set;
 @Log4j2
 @RestController
 @RequestMapping("/api/v1/friends")
-@CrossOrigin(origins = {
-        "http://localhost:3000",
-        "http://localhost:3001",
-}, allowedHeaders = "*")
 @RequiredArgsConstructor
 public class FriendController {
     private final FriendServiceImpl friendService;

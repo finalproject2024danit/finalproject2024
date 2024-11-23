@@ -21,10 +21,6 @@ import java.util.stream.Collectors;
 @Log4j2
 @RestController
 @RequestMapping("/api/v1/residences")
-@CrossOrigin(origins = {
-        "http://localhost:3000",
-        "http://localhost:3001",
-}, allowedHeaders = "*")
 @RequiredArgsConstructor
 public class ResidenceController {
     private final ResidenceServiceImpl residenceService;

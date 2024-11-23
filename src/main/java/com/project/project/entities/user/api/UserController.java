@@ -25,10 +25,6 @@ import java.util.List;
 @Log4j2
 @RestController
 @RequestMapping("/api/v1/users")
-@CrossOrigin(origins = {
-        "http://localhost:3000",
-        "http://localhost:3001",
-}, allowedHeaders = "*")
 @RequiredArgsConstructor
 public class UserController {
     private final UserServiceImpl userService;
