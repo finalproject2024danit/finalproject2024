@@ -34,6 +34,7 @@ public class MySecurityConfig {
                         requests
 //                                .requestMatchers("/**").permitAll()
 //                                .requestMatchers("/").permitAll()
+                                .requestMatchers("/login").permitAll()
                                 .requestMatchers("/css/**").permitAll()
                                 .requestMatchers("/js/**").permitAll()
                                 .requestMatchers("/images/**").permitAll()
