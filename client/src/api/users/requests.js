@@ -1,5 +1,13 @@
 import axiosInstance from "../axiosInstance.js";
 
+export const getToken = async (loginPayload) => {
+  const response = await axios.post(
+    "http://134.209.246.21:9000/auth/login",
+    loginPayload
+  );
+  return response.data.accessToken;
+};
+
 export const getUserDataByToken = async (token) => {
   const response = await axiosInstance.post(
     "http://134.209.246.21:9000/auth/get_user",
@@ -12,7 +20,6 @@ export const getUserDataByToken = async (token) => {
   );
   return response.data;
 };
-
 
 export const getUserData = async (userId) => {
   const response = await axiosInstance.get(`/users/user/${userId}`);

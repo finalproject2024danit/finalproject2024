@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import HomePage from "./pages/HomePage/HomePage.jsx";
 import LoginPage from "./pages/LoginPage/LoginPage.jsx";
 import GroupPage from "./pages/GroupPage/GroupPage.jsx";
@@ -16,22 +16,27 @@ import Game3 from "./pages/Games/Game3/Game3.jsx";
 import GalleryPage from "./pages/GalleryPage/GalleryPage.jsx";
 import SolarSystem from "./pages/SolarSystemPage/SolarSystem.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
+import { useSelector } from "react-redux";
 
 const AppRoutes = () => {
-  // Перевіряємо чи є токен у LocalStorage для автентифікації
-  const isAuthenticated = !!localStorage.getItem("authToken");
-
-  const handleLoginSuccess = () => {
-    console.log("Login successful!");    
-  };
+  // Перевіряємо чи є токен у Redux
+  const token = useSelector((state) => state.user.token);
+  const isAuthenticated = !!token;
 
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/login" element={<LoginPage onLoginSuccess={handleLoginSuccess} />} />
+      {/* Публічні маршрути */}
+      <Route
+        path="/login"
+        element={<LoginPage />}
+      />
+
+      {/* Якщо користувач не авторизований, перенаправляємо його на /login */}
+      { !isAuthenticated && <Route path="*" element={<Navigate to="/login" replace />} /> }
 
       {/* Захищені маршрути */}
       <Route element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
+        <Route path="/" element={<HomePage />} />
         <Route path="/users" element={<UsersPage />} />
         <Route path="/profile">
           <Route path="general_information" element={<GeneralInformation />} />

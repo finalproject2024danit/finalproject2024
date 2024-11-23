@@ -12,7 +12,7 @@ import { fetchUserDataByToken, setToken } from "./redux/slices/userSlice";
 
 const App = () => {
   const [isCheckingAuth, setIsCheckingAuth] = useState(true); // Для перевірки токена
-  const isAuthenticated = useSelector((state) => !!state.user.id); // Якщо є користувач
+  // const isAuthenticated = useSelector((state) => !!state.user.id); // Якщо є користувач
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -39,13 +39,14 @@ const App = () => {
         />
         <meta name="keywords" content="space, earth, galaxy, connections" />
       </Helmet>
-      {isAuthenticated ? (
+      <AppRoutes />
+      {/* {isAuthenticated ? (
         <>
           <LeftSidebar />
           <div className="inner">
             <Header />
             <div className="mainContainer">
-              <div className="menuSocial">
+              <div className="menuSocial">                
                 <AppRoutes />
               </div>
             </div>
@@ -61,7 +62,7 @@ const App = () => {
             }
           }}
         />
-      )}
+      )} */}
     </div>
   );
 };

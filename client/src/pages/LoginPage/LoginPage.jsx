@@ -9,7 +9,7 @@ import styles from "./LoginPage.module.scss";
 import axios from "axios";
 
 
-const LoginPage = ({ onLoginSuccess }) => {
+const LoginPage = () => {
   const [isLoginActive, setIsLoginActive] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [registrationMessage, setRegistrationMessage] = useState("");
@@ -47,22 +47,13 @@ const LoginPage = ({ onLoginSuccess }) => {
         password: values.password,
       };
 
-      // Надсилаємо запит на логін
-      const loginResponse = await axios.post(
-        "http://134.209.246.21:9000/auth/login",
-        loginPayload
-      );
+      dispatch(fetchToken(loginPayload));     
+     
+      const token = useSelector(state =>state.user.token)      
 
-      // Логування для перевірки відповіді
-      console.log("Login Response:", loginResponse);
-
-      const token = loginResponse.data.accessToken; // Перевірте правильність поля, де зберігається токен
-      console.log("Access Token:", token); // Для перевірки, чи отримуємо правильний токен
-
-      if (token) {
-        localStorage.setItem("authToken", token);
+      if (token) {     
         dispatch(fetchUserDataByToken(token));
-        onLoginSuccess();
+        
       } else {
         setErrorMessage("Failed to retrieve token. Please try again.");
       }
@@ -234,9 +225,7 @@ const LoginPage = ({ onLoginSuccess }) => {
   );
 };
 
-LoginPage.propTypes = {
-  onLoginSuccess: PropTypes.func.isRequired,
-};
+
 
 
 export default LoginPage;

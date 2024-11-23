@@ -3,10 +3,12 @@ import {
   getUserAllData,
   updateUser,
   getUserDataByToken,
+  getToken,  
 } from "../../api/users/requests.js";
 
 // Початковий стан
 const initialState = {
+  token: localStorage.getItem("token") || "",
   id: null,
   firstName: "",
   lastName: "",
@@ -45,6 +47,20 @@ export const fetchUserDataByToken = createAsyncThunk(
     }
   }
 );
+
+export const fetchToken = createAsyncThunk(
+  "user/fetchToken",
+  async (loginPayload, { rejectWithValue }) => {
+    try {
+      const response = await getToken(loginPayload)
+      localStorage.setItem("authToken", response);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || error.message);
+    }
+  }
+);
+
 
 export const fetchUserData = createAsyncThunk(
   "user/fetchUserData",
@@ -118,7 +134,12 @@ const userSlice = createSlice({
       .addCase(fetchUserData.rejected, handleRejected)
       .addCase(updateUserData.pending, handlePending)
       .addCase(updateUserData.fulfilled, handleFulfilled)
-      .addCase(updateUserData.rejected, handleRejected);
+      .addCase(updateUserData.rejected, handleRejected)
+      .addCase(fetchToken.pending, handlePending)  // Обробка стану "pending" для fetchToken
+      .addCase(fetchToken.fulfilled, (state, action) => {
+        state.token = action.payload;  // Збереження токена в стані       
+      })
+      .addCase(fetchToken.rejected, handleRejected); 
   },
 });
 
