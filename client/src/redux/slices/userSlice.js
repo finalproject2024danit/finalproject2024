@@ -4,28 +4,28 @@ import {getToken, getUserAllData, getUserDataByToken, registerByEmail, updateUse
 // Початковий стан
 const initialState = {
     token: localStorage.getItem("token") || "",
-    id: null,
-    firstName: "",
-    lastName: "",
-    email: "",
-    gender: "",
-    dateOfBirth: null,
-    avatar: "",
-    phones: "",
-    photoData: "",
-    workplace: "",
-    residence: {
+    id: localStorage.getItem("id") || null,
+    firstName: localStorage.getItem("firstName") || "",
+    lastName: localStorage.getItem("lastName") || "",
+    email: localStorage.getItem("email") || "",
+    gender: localStorage.getItem("gender") || "",
+    dateOfBirth: localStorage.getItem("dateOfBirth") || null,
+    avatar: localStorage.getItem("avatar") || "",
+    phones: localStorage.getItem("phones") || "",
+    photoData: localStorage.getItem("photoData") || "",
+    workplace: localStorage.getItem("workplace") || "",
+    residence: JSON.parse(localStorage.getItem("residence")) || {
         planet: "",
         country: "",
         city: "",
     },
-    hobby: {
+    hobby: JSON.parse(localStorage.getItem("hobby")) || {
         language: "",
         pet: "",
         interest: "",
     },
-    createdDate: "",
-    lastModifiedDate: "",
+    createdDate: localStorage.getItem("createdDate") || "",
+    lastModifiedDate: localStorage.getItem("lastModifiedDate") || "",
     status: "idle", // "idle", "loading", "succeeded", "failed"
     error: null, // Для зберігання повідомлень про помилки
 };
@@ -47,6 +47,7 @@ export const fetchToken = createAsyncThunk(
     async (loginPayload, {rejectWithValue}) => {
         try {
             const response = await getToken(loginPayload)
+            console.log(typeof response, response)
             localStorage.setItem("authToken", response);
             return response;
         } catch (error) {
@@ -60,7 +61,7 @@ export const fetchRegister = createAsyncThunk(
     async (registerPayload, {rejectWithValue}) => {
         try {
             const response = await registerByEmail(registerPayload)
-            localStorage.setItem("authToken", response);
+            localStorage.setItem("authToken", response.accessToken);
             return response;
         } catch (error) {
             return rejectWithValue(error.response?.data?.message || error.message);
@@ -103,6 +104,7 @@ const userSlice = createSlice({
             state.token = action.payload;
         },
         clearUserData() {
+            localStorage.clear();
             return {...initialState};
         },
     },
@@ -141,7 +143,9 @@ const userSlice = createSlice({
             .addCase(updateUserData.fulfilled, handleFulfilled)
             .addCase(updateUserData.rejected, handleRejected)
             .addCase(fetchToken.pending, handlePending)
-            .addCase(fetchToken.fulfilled, handleFulfilled)
+            .addCase(fetchToken.fulfilled, (state, action) => {
+                state.token = action.payload
+            })
             .addCase(fetchToken.rejected, handleRejected)
             .addCase(fetchRegister.fulfilled, (state, action) => {
                 state.token = action.payload.accessToken;

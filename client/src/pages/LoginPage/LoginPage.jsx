@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
@@ -15,6 +15,13 @@ const LoginPage = () => {
     const [registrationMessage, setRegistrationMessage] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        if (token) {
+            dispatch(fetchUserDataByToken(token));
+            navigate("/");
+        }
+    }, [token, navigate, dispatch]);
 
     const handleLoginClick = () => {
         setIsLoginActive(true);
@@ -48,11 +55,13 @@ const LoginPage = () => {
                 password: values.password,
             };
 
-            dispatch(fetchToken(loginPayload));
+            // Ожидаем результат выполнения fetchToken
+            const result = await dispatch(fetchToken(loginPayload));
 
-            if (token) {
-                dispatch(fetchUserDataByToken(token));
-                navigate("/");
+            // После выполнения действия проверяем, есть ли токен
+            if (result.payload) {
+                // Делаем запрос на получение данных пользователя
+                await dispatch(fetchUserDataByToken(result.payload));
             } else {
                 setErrorMessage("Failed to retrieve token. Please try again.");
             }

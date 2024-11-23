@@ -1,14 +1,14 @@
 // newsSlice.js
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getNews } from '../../api/news/requests.js'; // Імпорт функції getNews з requests.js
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import {getNews} from '../../api/news/requests.js'; // Імпорт функції getNews з requests.js
 
 // Асинхронний екшен для завантаження новин
 export const fetchNews = createAsyncThunk(
   'news/fetchNews',
   async (_, { rejectWithValue }) => {
     try {
-      const newsData = await getNews(); // Виклик getNews замість axiosInstance
-      return newsData;
+       // Виклик getNews замість axiosInstance
+      return await getNews();
     } catch (error) {
       return rejectWithValue(error.message);
     }

@@ -5,7 +5,7 @@ import { Formik, Form } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next"; // Import the hook
 import styles from "./LeftSidebar.module.scss";
-import Exit from "../../svg/Header/Exit";
+import Exit from "../Exit";
 import { fetchSearchResults } from "../../redux/slices/searchSlice";
 
 const defaultAvatarProfile =

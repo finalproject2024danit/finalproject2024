@@ -1,4 +1,4 @@
-import { Route, Routes, Navigate } from "react-router-dom";
+import {Navigate, Route, Routes} from "react-router-dom";
 import HomePage from "./pages/HomePage/HomePage.jsx";
 import LoginPage from "./pages/LoginPage/LoginPage.jsx";
 import GroupPage from "./pages/GroupPage/GroupPage.jsx";
@@ -15,48 +15,49 @@ import Game2 from "./pages/Games/Game2/Game2.jsx";
 import Game3 from "./pages/Games/Game3/Game3.jsx";
 import GalleryPage from "./pages/GalleryPage/GalleryPage.jsx";
 import SolarSystem from "./pages/SolarSystemPage/SolarSystem.jsx";
-import PrivateRoute from "./components/PrivateRoute.jsx";
-import { useSelector } from "react-redux";
+import {useSelector} from "react-redux";
+import Layout from "./Layout.jsx";
+import {useEffect} from "react";
 
 const AppRoutes = () => {
-  // Перевіряємо чи є токен у Redux
-  const token = useSelector((state) => state.user.token);
-  const isAuthenticated = !!token;
+    const token = useSelector((state) => state.user.token);
 
-  return (
-    <Routes>
-      {/* Публічні маршрути */}
-      <Route
-        path="/login"
-        element={<LoginPage />}
-      />
+    useEffect(() => {
+        console.log("Token updated:", token);
+    }, [token]);
 
-      {/* Якщо користувач не авторизований, перенаправляємо його на /login */}
-      { !isAuthenticated && <Route path="*" element={<Navigate to="/login" replace />} /> }
+    return (
+        <Routes>
+            <Route path="/login" element={<LoginPage />} />
 
-      {/* Захищені маршрути */}
-      <Route element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/users" element={<UsersPage />} />
-        <Route path="/profile">
-          <Route path="general_information" element={<GeneralInformation />} />
-          <Route path="place_of_residence" element={<PlaceOfResidence />} />
-          <Route path="hobbies" element={<Hobbies />} />
-          <Route path="workplace" element={<Workplace />} />
-          <Route path="photo_library" element={<PhotoLibrary />} />
-        </Route>
-        <Route path="/groups" element={<GroupPage />} />
-        <Route path="/group/:id" element={<GroupPage />} />
-        <Route path="/chat" element={<ChatPage />} />
-        <Route path="/user/:id" element={<UserPage />} />
-        <Route path="/game1" element={<Game1 />} />
-        <Route path="/game2" element={<Game2 />} />
-        <Route path="/game3" element={<Game3 />} />
-        <Route path="/gallery" element={<GalleryPage />} />
-        <Route path="/solar" element={<SolarSystem />} />
-      </Route>
-    </Routes>
-  );
+            {!token ? (
+                <Route path="*" element={<Navigate to="/login" replace />} />
+            ) : (
+                <>
+                    <Route element={<Layout />}>
+                        <Route path="/" element={<HomePage />} />
+                        <Route path="/users" element={<UsersPage />} />
+                        <Route path="/profile">
+                            <Route path="general_information" element={<GeneralInformation />} />
+                            <Route path="place_of_residence" element={<PlaceOfResidence />} />
+                            <Route path="hobbies" element={<Hobbies />} />
+                            <Route path="workplace" element={<Workplace />} />
+                            <Route path="photo_library" element={<PhotoLibrary />} />
+                        </Route>
+                        <Route path="/groups" element={<GroupPage />} />
+                        <Route path="/group/:id" element={<GroupPage />} />
+                        <Route path="/chat" element={<ChatPage />} />
+                        <Route path="/user/:id" element={<UserPage />} />
+                        <Route path="/game1" element={<Game1 />} />
+                        <Route path="/game2" element={<Game2 />} />
+                        <Route path="/game3" element={<Game3 />} />
+                        <Route path="/gallery" element={<GalleryPage />} />
+                        <Route path="/solar" element={<SolarSystem />} />
+                    </Route>
+                </>
+            )}
+        </Routes>
+    );
 };
 
 export default AppRoutes;
