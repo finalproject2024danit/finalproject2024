@@ -5,7 +5,8 @@ import axiosInstance from "../../api/axiosInstance.js";
 import styles from "./UserPage.module.scss";
 import MainContent from "../../components/MainContent/MainContent";
 import { fetchHobbiesByUserId } from "../../redux/slices/hobbiesSlice.js";
-import { fetchResidencesByUserId } from "../../redux/slices/residencesSlice.js";
+import { fetchResidenceById } from '../../redux/slices/residencesSlice'; // Замість 'fetchResidencesByUserId' імпортуємо правильну функцію
+
 
 const UserPage = () => {
   const { id } = useParams(); // Отримуємо ID користувача з URL
@@ -31,7 +32,7 @@ const UserPage = () => {
 
     fetchUser();
     dispatch(fetchHobbiesByUserId(id)); // Відправляємо запит на отримання хобі користувача
-    dispatch(fetchResidencesByUserId(id)); // Відправляємо запит на отримання місця проживання
+    dispatch(fetchResidenceById(id)); // Відправляємо запит на отримання місця проживання
   }, [id, dispatch]);
 
   // Форматування дати

@@ -1,36 +1,65 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getUserAllData, updateUser } from "../../api/users/requests.js";
+import {
+  getUserAllData,
+  updateUser,
+  getUserDataByToken,
+  getToken,  
+} from "../../api/users/requests.js";
 
+// Початковий стан
 const initialState = {
-  id: 1,
-  firstName: "Alice",
-  lastName: "Johnson",
-  email: "alice.johnson@example.com",
-  gender: "FEMALE",
-  dateOfBirth: 631152000000,
-  avatar:
-    "https://res.cloudinary.com/dsr6kwzrr/image/upload/v1728655814/fitness_jump_health_woman_girl_healthy_fit_sportive-1103572_mshkng.jpg",
-  phones: "12345",
-  photoData:
-    "https://res.cloudinary.com/dsr6kwzrr/image/upload/v1728655814/fitness_jump_health_woman_girl_healthy_fit_sportive-1103572_mshkng.jpg, https://res.cloudinary.com/dsr6kwzrr/image/upload/v1728633405/cld-sample-4.jpg, https://res.cloudinary.com/dsr6kwzrr/image/upload/v1728633404/samples/dessert-on-a-plate.jpg, https://res.cloudinary.com/dsr6kwzrr/image/upload/v1728633404/samples/coffee.jpg, https://res.cloudinary.com/dsr6kwzrr/image/upload/v1728633403/samples/breakfast.jpg, https://res.cloudinary.com/dsr6kwzrr/image/upload/v1728633402/samples/balloons.jpg, https://res.cloudinary.com/dsr6kwzrr/image/upload/v1728633397/samples/landscapes/nature-mountains.jpg, https://res.cloudinary.com/dsr6kwzrr/image/upload/v1728633397/samples/food/spices.jpg, https://res.cloudinary.com/dsr6kwzrr/image/upload/v1728633397/samples/imagecon-group.jpg, https://res.cloudinary.com/dsr6kwzrr/image/upload/v1728633397/samples/cloudinary-group.jpg, https://res.cloudinary.com/dsr6kwzrr/image/upload/v1728633397/samples/landscapes/beach-boat.jpg, https://res.cloudinary.com/dsr6kwzrr/image/upload/v1728633396/samples/animals/three-dogs.jpg, https://res.cloudinary.com/dsr6kwzrr/image/upload/v1728633395/samples/food/fish-vegetables.jpg, https://res.cloudinary.com/dsr6kwzrr/image/upload/v1728633395/samples/people/kitchen-bar.jpg, https://res.cloudinary.com/dsr6kwzrr/image/upload/v1728633395/samples/food/pot-mussels.jpg, https://res.cloudinary.com/dsr6kwzrr/image/upload/v1728633395/samples/food/dessert.jpg, https://res.cloudinary.com/dsr6kwzrr/image/upload/v1728633395/samples/animals/cat.jpg",
-  workplace: "Space Exploration Technologies Corp (SpaceX)",
+  token: localStorage.getItem("token") || "",
+  id: null,
+  firstName: "",
+  lastName: "",
+  email: "",
+  gender: "",
+  dateOfBirth: null,
+  avatar: "",
+  phones: "",
+  photoData: "",
+  workplace: "",
   residence: {
-    planet: "Earth",
-    country: "USA",
-    city: "New York",
+    planet: "",
+    country: "",
+    city: "",
   },
   hobby: {
-    language: "English",
-    pet: "Dog",
-    interest: "Reading",
+    language: "",
+    pet: "",
+    interest: "",
   },
-  createdDate: "2024-11-01T19:50:19.65788",
-  lastModifiedDate: "2024-11-01T19:50:19.65788",
-  status: "idle",
-  error: null,
+  createdDate: "",
+  lastModifiedDate: "",
+  status: "idle", // "idle", "loading", "succeeded", "failed"
+  error: null, // Для зберігання повідомлень про помилки
 };
 
-// fetchUserDataByToken createAsyncThunk
+// Асинхронні дії
+export const fetchUserDataByToken = createAsyncThunk(
+  "user/fetchUserDataByToken",
+  async (token, { rejectWithValue }) => {
+    try {
+      const response = await getUserDataByToken(token);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || error.message);
+    }
+  }
+);
+
+export const fetchToken = createAsyncThunk(
+  "user/fetchToken",
+  async (loginPayload, { rejectWithValue }) => {
+    try {
+      const response = await getToken(loginPayload)
+      localStorage.setItem("authToken", response);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || error.message);
+    }
+  }
+);
 
 
 export const fetchUserData = createAsyncThunk(
@@ -38,7 +67,7 @@ export const fetchUserData = createAsyncThunk(
   async (userId, { rejectWithValue }) => {
     try {
       const response = await getUserAllData(userId);
-      return response.data;
+      return response;
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -49,52 +78,71 @@ export const updateUserData = createAsyncThunk(
   "user/updateUserData",
   async ({ userId, userData }, { rejectWithValue }) => {
     try {
-      return await updateUser(userId, userData);
+      const response = await updateUser(userId, userData);
+      return response;
     } catch (error) {
-      if (error.response) {
-        return rejectWithValue(
-          error.response.data.message || "Failed to update user data"
-        );
-      }
-      return rejectWithValue(error.message);
+      return rejectWithValue(error.response?.data?.message || error.message);
     }
   }
 );
 
+// Slice
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
     setUserData(state, action) {
-      return { ...state, ...action.payload };
+      Object.assign(state, action.payload);
+    },
+    setToken(state, action) {
+      state.token = action.payload;
+    },
+    clearUserData(state) {
+      return { ...initialState };
     },
   },
   extraReducers: (builder) => {
+    const handlePending = (state) => {
+      state.status = "loading";
+      state.error = null;
+    };
+
+    const handleFulfilled = (state, action) => {
+      // Глибоке оновлення вкладених об'єктів
+      if (action.payload.residence) {
+        state.residence = { ...state.residence, ...action.payload.residence };
+      }
+      if (action.payload.hobby) {
+        state.hobby = { ...state.hobby, ...action.payload.hobby };
+      }
+
+      Object.assign(state, action.payload);      
+      state.status = "succeeded";
+    };
+
+    const handleRejected = (state, action) => {
+      state.status = "failed";
+      state.error = action.payload;
+    };
+
     builder
-      .addCase(fetchUserData.pending, (state) => {
-        state.status = "loading";
+      .addCase(fetchUserDataByToken.pending, handlePending)
+      .addCase(fetchUserDataByToken.fulfilled, handleFulfilled)
+      .addCase(fetchUserDataByToken.rejected, handleRejected)
+      .addCase(fetchUserData.pending, handlePending)
+      .addCase(fetchUserData.fulfilled, handleFulfilled)
+      .addCase(fetchUserData.rejected, handleRejected)
+      .addCase(updateUserData.pending, handlePending)
+      .addCase(updateUserData.fulfilled, handleFulfilled)
+      .addCase(updateUserData.rejected, handleRejected)
+      .addCase(fetchToken.pending, handlePending)  // Обробка стану "pending" для fetchToken
+      .addCase(fetchToken.fulfilled, (state, action) => {
+        state.token = action.payload;  // Збереження токена в стані       
       })
-      .addCase(fetchUserData.fulfilled, (state, action) => {
-        Object.assign(state, action.payload);
-        state.status = "succeeded";
-      })
-      .addCase(fetchUserData.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload;
-      })
-      .addCase(updateUserData.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(updateUserData.fulfilled, (state, action) => {
-        Object.assign(state, action.payload);
-        state.status = "succeeded";
-      })
-      .addCase(updateUserData.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload;
-      });
+      .addCase(fetchToken.rejected, handleRejected); 
   },
 });
 
-export const { setUserData } = userSlice.actions;
+// Експортуємо дії та ред'юсер
+export const { setUserData, setToken, clearUserData } = userSlice.actions;
 export default userSlice.reducer;

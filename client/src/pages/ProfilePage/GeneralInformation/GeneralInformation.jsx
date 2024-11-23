@@ -3,10 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import ProfileMenu from "../ProfileMenu/ProfileMenu.jsx";
 import styles from "./generalInformation.module.scss";
 import MainContent from "../../../components/MainContent/MainContent.jsx";
+import EditButtons from "../../../components/ButtonEdit/index.jsx";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { updateUserData } from "../../../redux/slices/userSlice.js";
-
+import {
+  updateUserData,
+  fetchUserData,
+} from "../../../redux/slices/userSlice.js";
 
 // Gender Enum
 const Gender = Object.freeze({
@@ -38,19 +41,12 @@ const validationSchema = Yup.object().shape({
 // Date formatting helper
 const formatDate = (timestamp) => {
   const date = new Date(timestamp);
-  return date.toISOString().split('T')[0]; // Format as yyyy-MM-dd
+  return date.toISOString().split("T")[0]; // Format as yyyy-MM-dd
 };
-
-// Convert date from string (DD.MM.YYYY) back to Unix timestamp
-// const formatDateForInput = (dateStr) => {
-//   const [day, month, year] = dateStr.split(".");
-//   return `${day}-${month}-${year}`; 
-// };
 
 const convertToUnixTimestamp = (dateString) => {
   return new Date(dateString).getTime();
 };
-
 
 const GeneralInformation = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -58,9 +54,7 @@ const GeneralInformation = () => {
   const user = useSelector((state) => state.user);
 
   useEffect(() => {
-    if (user) {
-      console.log("User data:", user); // Вивести об'єкт користувача в консоль
-    }
+    console.log("User state updated:", user); // Перевіряйте зміни в стейті
   }, [user]);
 
   const formik = useFormik({
@@ -74,7 +68,7 @@ const GeneralInformation = () => {
       password: "",
     },
     validationSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const updatedValues = {
         ...values,
         dateOfBirth: values.dateOfBirth
@@ -83,17 +77,21 @@ const GeneralInformation = () => {
         avatar: user.avatar,
         password: values.password ? btoa(values.password) : undefined,
       };
-      dispatch(updateUserData({ userId: user.id, userData: updatedValues }));
+      // Оновлення даних користувача
+      await dispatch(
+        updateUserData({ userId: user.id, userData: updatedValues })
+      );
+
+      // Після оновлення даних — повторне отримання актуальної інформації про користувача
+      dispatch(fetchUserData(user.id));
+
+      // Закриття режиму редагування після збереження
       setIsEditing(false);
     },
   });
 
-  // Обновление значений формы при изменении данных пользователя
+  // Обновлення значень форми при зміні даних користувача
   useEffect(() => {
-    // if (user.dateOfBirth) {
-    //   formik.setFieldValue("dateOfBirth", formatDate(user.dateOfBirth));
-    // }
-    
     formik.setValues({
       firstName: user.firstName || "",
       lastName: user.lastName || "",
@@ -101,10 +99,9 @@ const GeneralInformation = () => {
       gender: user.gender || "",
       phones: user.phones || "",
       password: "",
-      dateOfBirth: formatDate(user.dateOfBirth) || "",      
+      dateOfBirth: formatDate(user.dateOfBirth) || "",
     });
   }, [user]);
-  
 
   return (
     <MainContent title="">
@@ -121,8 +118,11 @@ const GeneralInformation = () => {
         <div className={styles.content}>
           <ProfileMenu className={styles.profileMenu} />
           <form onSubmit={formik.handleSubmit} className={styles.form}>
+            {/* Поля для введення даних */}
             <div>
-              <label htmlFor="firstName" className={styles.label}>First Name</label>
+              <label htmlFor="firstName" className={styles.label}>
+                First Name
+              </label>
               <input
                 id="firstName"
                 name="firstName"
@@ -139,7 +139,9 @@ const GeneralInformation = () => {
             </div>
 
             <div>
-              <label htmlFor="lastName" className={styles.label}>Last Name</label>
+              <label htmlFor="lastName" className={styles.label}>
+                Last Name
+              </label>
               <input
                 id="lastName"
                 name="lastName"
@@ -156,7 +158,9 @@ const GeneralInformation = () => {
             </div>
 
             <div>
-              <label htmlFor="email" className={styles.label}>Email</label>
+              <label htmlFor="email" className={styles.label}>
+                Email
+              </label>
               <input
                 id="email"
                 name="email"
@@ -173,7 +177,9 @@ const GeneralInformation = () => {
             </div>
 
             <div>
-              <label htmlFor="password" className={styles.label}>Password</label>
+              <label htmlFor="password" className={styles.label}>
+                Password
+              </label>
               <input
                 id="password"
                 name="password"
@@ -190,7 +196,9 @@ const GeneralInformation = () => {
             </div>
 
             <div>
-              <label htmlFor="gender" className={styles.label}>Gender</label>
+              <label htmlFor="gender" className={styles.label}>
+                Gender
+              </label>
               <select
                 id="gender"
                 name="gender"
@@ -211,7 +219,9 @@ const GeneralInformation = () => {
             </div>
 
             <div>
-              <label htmlFor="dateOfBirth" className={styles.label}>Date of Birth</label>
+              <label htmlFor="dateOfBirth" className={styles.label}>
+                Date of Birth
+              </label>
               <input
                 id="dateOfBirth"
                 name="dateOfBirth"
@@ -228,7 +238,9 @@ const GeneralInformation = () => {
             </div>
 
             <div>
-              <label htmlFor="phones" className={styles.label}>Phone</label>
+              <label htmlFor="phones" className={styles.label}>
+                Phone
+              </label>
               <input
                 id="phones"
                 name="phones"
@@ -243,13 +255,11 @@ const GeneralInformation = () => {
                 <div className={styles.error}>{formik.errors.phones}</div>
               )}
             </div>
-
-            <button type="button" className={styles.button} onClick={() => setIsEditing(!isEditing)}>
-              {isEditing ? "Cancel" : "Edit"}
-            </button>
-            {isEditing && (
-              <button type="submit" className={styles.button}>Save</button>
-            )}
+            <EditButtons
+              isEditing={isEditing}
+              onEditClick={() => setIsEditing(!isEditing)}
+              onSaveClick={formik.handleSubmit}
+            />
           </form>
         </div>
       </div>
