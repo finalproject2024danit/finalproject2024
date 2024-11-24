@@ -1,0 +1,46 @@
+@use "../../App.scss" as *;
+
+.news-page {
+  padding: 20px;
+}
+
+.news-detail {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.news-detail__image {
+  max-width: 500px;
+  width: 100%;
+  height: auto;
+}
+
+.news-detail__content {
+  display: flex;
+  gap: 50px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.news-detail__text-container {
+  max-width: 600px;
+}
+
+.news-detail__title {
+  font-size: $font-size-title;
+  font-weight: bold;
+  color: $nodle-black-0;
+}
+
+.news-detail__text {
+  margin: 20px 0;
+  font-size: $font-size-text;
+  color: $nodle-black-200;
+  line-height: 1.5;
+}
+
+.news-detail__date {
+  font-size: 14px;
+  color: #777;
+}

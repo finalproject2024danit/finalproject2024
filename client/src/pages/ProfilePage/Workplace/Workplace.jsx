@@ -1,4 +1,4 @@
-import ProfileMenu from "../ProfileMenu/ProfileMenu.jsx";
+import ProfileMenu from "../ProfileMenu.jsx";
 import styles from "./Workplace.module.scss";
 import MainContent from "../../../components/MainContent/MainContent.jsx";
 import EditButtons from "../../../components/ButtonEdit/index.jsx";
