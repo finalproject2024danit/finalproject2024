@@ -1,5 +1,5 @@
 /* ButtonDeleteFriend.module.scss */
-@import "../../App.scss";
+@use "../../App.scss" as *;
 .btn {
   background-color: red; /* Червоний фон */
   color: white;           /* Білий колір тексту */

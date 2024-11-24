@@ -1,5 +1,4 @@
 import styles from "./ButtonDeleteFriend.module.scss";
-import React from "react";
 import PropTypes from "prop-types";
 
 const ButtonDeleteFriend = ({ userId, onClick, children }) => {
