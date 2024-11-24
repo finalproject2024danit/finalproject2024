@@ -1,84 +1,85 @@
-@import '../../App.scss';
+@use "../../App.scss" as *;
 
 .galleryPage {
-    margin: 0 auto;
-    width: 100vh;
-    text-align: center;
+  margin: 0 auto;
+  width: 100vh;
+  text-align: center;
+  color: white;
+
+  h2 {
+    color: #00bfff;
+    font-size: 2rem;
+    margin: 50px 0;
+  }
+}
+
+.slider {
+  position: relative;
+  overflow: hidden;
+  max-width: 80%;
+  margin: auto;
+
+  .sliderInner {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+
+  .sliderItem {
+    min-width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: 700px;
+      height: auto;
+      max-height: 500px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+  }
+
+  .prev,
+  .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
     color: white;
-  
-    h2 {
-      color: #00bfff;
-      font-size: 2rem;
-      margin: 50px 0;
-    }
+    border: none;
+    font-size: 2rem;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    z-index: 10; /* Ensure the arrows are above the image */
   }
-  
-  .slider {
-    position: relative;
-    overflow: hidden;
-    max-width: 80%;
-    margin: auto;
-  
-    .sliderInner {
-      display: flex;
-      transition: transform 0.5s ease-in-out;
-    }
-  
-    .sliderItem {
-      min-width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-  
-      img {
-        width: 700px;
-        height: auto;
-        max-height: 500px;
-        object-fit: cover;
-        border-radius: 10px;
-      }
-    }
-  
-    .prev, .next {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background-color: rgba(0, 0, 0, 0.5);
-      color: white;
-      border: none;
-      font-size: 2rem;
-      padding: 10px;
-      cursor: pointer;
+
+  .prev {
+    left: 10px;
+  }
+
+  .next {
+    right: 10px;
+  }
+
+  .sliderNav {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      margin: 5px;
+      background-color: #ddd;
       border-radius: 50%;
+      display: inline-block;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
     }
-  
-    .prev {
-      left: 10px;
-    }
-  
-    .next {
-      right: 10px;
-    }
-  
-    .sliderNav {
-      display: flex;
-      justify-content: center;
-      margin-top: 10px;
-  
-      .dot {
-        width: 10px;
-        height: 10px;
-        margin: 5px;
-        background-color: #ddd;
-        border-radius: 50%;
-        display: inline-block;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-      }
-  
-      .active {
-        background-color: #00bfff;
-      }
+
+    .active {
+      background-color: #00bfff;
     }
   }
-  
+}

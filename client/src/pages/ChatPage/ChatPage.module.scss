@@ -1,4 +1,4 @@
-@import "../../App.scss";
+@use "../../App.scss" as *;
 
 #particles-js {
   position: absolute;
@@ -39,7 +39,7 @@
   height: 700px;
   border: 1px solid $border-color-blue;
   border-radius: 10px;
-  box-shadow: 0px 8px 10px rgba(0,0,0,0.20);
+  box-shadow: 0 8px 10px rgba(0,0,0,0.20);
   overflow: hidden;
   background-color:$nodle-black-700;
   display: inline-block;
@@ -205,7 +205,7 @@
   display: inline-block;
   border-radius: 10px;
   background-color: $nodle-black-700;
-  box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.20);
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.20);
   position: relative; 
 
   @media (max-width: 767px){
@@ -226,7 +226,7 @@
   padding: 0 20px;
   height: 90px;
   border-bottom: solid 1px $nodle-black-500;
-  box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 3px 2px rgba(0, 0, 0, 0.15);
 
    /* === Tablet Styles === */
    @media (max-width: 1024px) {

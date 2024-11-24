@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react'
+import { PureComponent } from 'react'
 import Layout from './UI/Layout/Layout.jsx'
 import Field from './UI/Field/Field.jsx'
 

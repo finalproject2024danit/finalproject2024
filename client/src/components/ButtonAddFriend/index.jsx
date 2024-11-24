@@ -1,5 +1,4 @@
 import styles from "./ButtonAddFriend.module.scss";
-import React from "react";
 import PropTypes from "prop-types";
 
 const ButtonAddFriend = ({ userId, onClick, isFriend }) => {

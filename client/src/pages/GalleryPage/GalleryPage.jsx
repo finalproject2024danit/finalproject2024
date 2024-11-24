@@ -1,82 +1,61 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUserData } from "../../redux/slices/userSlice.js";
+import {useState} from "react";
+import {useSelector} from "react-redux";
 import styles from "./GalleryPage.module.scss";
 import MainContent from "../../components/MainContent/MainContent";
 
 const GalleryPage = () => {
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  const { photoData, status } = user;
-  
-  useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchUserData(1));
-    }
-  }, [status, dispatch]);
+    const user = useSelector((state) => state.user);
 
-  // Розділення photoData у масив URL
-  const photos = photoData
-    ? photoData
-        .replace(/\n/g, "") // Видалення символів нового рядка
-        .split(",")         // Розділення за комами
-        .map((url) => url.trim()) // Видалення зайвих пробілів
-    : [];
-  const [currentIndex, setCurrentIndex] = useState(0);
-  
-// console.log("Photos Array:", photos);
+    const photos = user.photoData
+        ? user.photoData
+            .replace(/\n/g, "")
+            .split(",")
+            .map((url) => url.trim())
+        : [];
 
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % photos.length);
-  };
+    const [currentIndex, setCurrentIndex] = useState(0);
 
-  // const prevSlide = () => {
-  //   setCurrentIndex((prevIndex) => (prevIndex - 1 + photos.length) % photos.length);
-  // };
+    const nextSlide = () => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % photos.length);
+    };
 
-  const goToSlide = (index) => {
-    setCurrentIndex(index);
-  };
+    const prevSlide = () => {
+        setCurrentIndex((prevIndex) => (prevIndex - 1 + photos.length) % photos.length);
+    };
 
-  useEffect(() => {
-    const timer = setInterval(nextSlide, 4000);
-    return () => clearInterval(timer);
-  }, [photos.length]);
+    const goToSlide = (index) => {
+        setCurrentIndex(index);
+    };
 
-  return (
-    <MainContent title="">
-      <div className={styles.galleryPage}>
-        <h2>Gallery Page</h2>
-        {status === "loading" && <p>Loading...</p>}
-        {status === "failed" && <p>Error loading data</p>}
-        {status === "succeeded" && photos.length > 0 && (
-          <div className={styles.slider}>
-            {/* <button className={styles.prev} onClick={prevSlide}>❮</button>
-            <button className={styles.next} onClick={nextSlide}>❯</button> */}
-            <div className={styles.sliderInner} style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
-              {photos.map((url, index) => (
-                <figure key={index} className={styles.sliderItem}>
-                  <img src={url} alt={`User photo ${index + 1}`} />
-                </figure>
-              ))}
+    return (
+        <MainContent title="">
+            <div className={styles.galleryPage}>
+                <h2>Gallery Page</h2>
+                {photos.length > 0 && (
+                    <div className={styles.slider}>
+                        <button className={styles.prev} onClick={prevSlide}>❮</button>
+                        <button className={styles.next} onClick={nextSlide}>❯</button>
+                        <div className={styles.sliderInner} style={{transform: `translateX(-${currentIndex * 100}%)`}}>
+                            {photos.map((url, index) => (
+                                <figure key={index} className={styles.sliderItem}>
+                                    <img src={url} alt={`User photo ${index + 1}`}/>
+                                </figure>
+                            ))}
+                        </div>
+                        <div className={styles.sliderNav}>
+                            {photos.map((_, index) => (
+                                <span
+                                    key={index}
+                                    className={`${styles.dot} ${currentIndex === index ? styles.active : ""}`}
+                                    onClick={() => goToSlide(index)}
+                                ></span>
+                            ))}
+                        </div>
+                    </div>
+                )}
             </div>
-            <div className={styles.sliderNav}>
-              {photos.map((_, index) => (
-                <span
-                  key={index}
-                  className={`${styles.dot} ${currentIndex === index ? styles.active : ""}`}
-                  onClick={() => goToSlide(index)}
-                ></span>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
-    </MainContent>
-  );
+        </MainContent>
+    );
 };
 
 export default GalleryPage;
-
-
-

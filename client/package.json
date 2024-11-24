@@ -41,7 +41,7 @@
     "react-text-mask": "^5.5.0",
     "redux-logger": "^3.0.6",
     "rss-parser": "^3.13.0",
-    "sass": "^1.79.4",
+    "sass": "^1.81.0",
     "sockjs-client": "^1.6.1",
     "styled-components": "^6.1.13",
     "yup": "^1.4.0"
