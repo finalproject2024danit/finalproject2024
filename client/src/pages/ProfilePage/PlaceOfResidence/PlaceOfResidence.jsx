@@ -1,4 +1,4 @@
-import ProfileMenu from "../ProfileMenu/ProfileMenu.jsx";
+import ProfileMenu from "../ProfileMenu.jsx";
 import styles from "./PlaceOfResidence.module.scss";
 import MainContent from "../../../components/MainContent/MainContent.jsx";
 import EditButtons from "../../../components/ButtonEdit/index.jsx";
@@ -9,18 +9,11 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateResidenceData } from "../../../redux/slices/residencesSlice.js";
 
-// Валідація форми за допомогою Yup
-const validationSchema = Yup.object().shape({
-  country: Yup.string().required("Required"),
-  city: Yup.string().required("Required"),
-  galaxy: Yup.string().required("Required"),
-});
-
 const PlaceOfResidence = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const [suggestions, setSuggestions] = useState({
-    galaxy: [],
+    planet: [],
     country: [],
     city: [],
   });
@@ -53,15 +46,22 @@ const PlaceOfResidence = () => {
     }
   };
 
+  // Валідація форми за допомогою Yup
+  const validationSchema = Yup.object().shape({
+    country: Yup.string().required("Required"),
+    city: Yup.string().required("Required"),
+    planet: Yup.string().required("Required"),
+  });
+
   // Ефект для завантаження варіантів після завантаження сторінки
   useEffect(() => {
-    ["galaxy", "country", "city"].forEach((field) => fetchSuggestions(field));
+    ["planet", "country", "city"].forEach((field) => fetchSuggestions(field));
   }, []);
 
   // Налаштування Formik
   const formik = useFormik({
     initialValues: {
-      galaxy: user.residence.planet || "",
+      planet: user.residence.planet || "",
       country: user.residence.country || "",
       city: user.residence.city || "",
     },
@@ -70,7 +70,7 @@ const PlaceOfResidence = () => {
       const updatedData = {
         ...user,
         residence: {
-          planet: values.galaxy,
+          planet: values.planet,
           country: values.country,
           city: values.city,
         },
@@ -88,8 +88,7 @@ const PlaceOfResidence = () => {
         <div className={styles.content}>
           <h2 className={styles.title}>Place of Residence</h2>
           <form className={styles.form} onSubmit={formik.handleSubmit}>
-            {/* Поля для galaxy, country, city */}
-            {["galaxy", "country", "city"].map((field) => (
+            {["planet", "country", "city"].map((field) => (
               <div key={field} className={styles.inputGroup}>
                 <label className={styles.label}>
                   {field.charAt(0).toUpperCase() + field.slice(1)}:

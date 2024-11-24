@@ -13,6 +13,6 @@ export const getNews = async (startPage = 0, perPage = 10, sortBy = 'id', sortDi
 }
 
 export const getNewsById = async (id) => {
-    const response = await axiosInstance.get(`/${id}`);
+    const response = await axiosInstance.get(`/news/${id}`);
     return response.data;
 }

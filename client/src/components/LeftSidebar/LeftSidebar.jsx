@@ -73,12 +73,7 @@ const LeftSidebar = () => {
             </div>
 
             <div className={styles.gamesLink}>
-                <NavLink
-                    className={({isActive}) => (isActive ? styles.active : "")}
-                    to="/gallery"
-                >
-                    {t("leftSidebar.gallery")}
-                </NavLink>
+
                 <NavLink
                     className={({isActive}) => (isActive ? styles.active : "")}
                     to="/solar"

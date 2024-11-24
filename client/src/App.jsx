@@ -8,7 +8,6 @@ import {fetchUserDataByToken, setToken} from "./redux/slices/userSlice";
 
 const App = () => {
     const [isCheckingAuth, setIsCheckingAuth] = useState(true); // Для перевірки токена
-    // const isAuthenticated = useSelector((state) => !!state.user.id); // Якщо є користувач
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -36,29 +35,6 @@ const App = () => {
                 <meta name="keywords" content="space, earth, galaxy, connections"/>
             </Helmet>
             <AppRoutes/>
-            {/*/!* {isAuthenticated ? (*/}
-            {/*  <>*/}
-            {/*    <LeftSidebar />*/}
-            {/*    <div className="inner">*/}
-            {/*      <Header />*/}
-            {/*      <div className="mainContainer">*/}
-            {/*        <div className="menuSocial">                */}
-            {/*          <AppRoutes />*/}
-            {/*        </div>*/}
-            {/*      </div>*/}
-            {/*      <RightSidebar />*/}
-            {/*    </div>*/}
-            {/*  </>*/}
-            {/*) : (*/}
-            {/*  <LoginPage*/}
-            {/*    onLoginSuccess={() => {*/}
-            {/*      const token = localStorage.getItem("authToken");*/}
-            {/*      if (token) {*/}
-            {/*        dispatch(fetchUserDataByToken(token)); // Завантажуємо дані користувача після успішного входу*/}
-            {/*      }*/}
-            {/*    }}*/}
-            {/*  />*/}
-            {/*)} *!/*/}
         </div>
     );
 };
