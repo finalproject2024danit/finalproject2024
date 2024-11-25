@@ -251,6 +251,9 @@ const ChatPage = () => {
     // .includes(searchTerm.toLowerCase())
   );
 
+  const selectedConversation = conversations.find(
+    (conv) => conv.userToId === selectedUser.id
+  );
   // find partner from conversation
   const findPartnerUser = (conv) => {
     const partner = users.find((user) => {
@@ -396,8 +399,8 @@ const ChatPage = () => {
             {chatLoading ? (
               <p>Loading...</p>
             ) : (
-              filteredMessages.map((msg) => (
-                <div key={msg.id} className={styles.messageItem}>
+              selectedConversation.messages.map((msg) => (
+                <div key={msg.time} className={styles.messageItem}>
                   <p>
                     <strong>
                       {msg.userFrom === currentUser
