@@ -19,10 +19,6 @@ import java.util.List;
 @Log4j2
 @RestController
 @RequestMapping("/api/v1/workplace")
-@CrossOrigin(origins = {
-        "http://localhost:3000",
-        "http://localhost:3001",
-}, allowedHeaders = "*")
 @RequiredArgsConstructor
 public class WorkplaceController {
     private final WorkplaceServiceImpl workplaceService;

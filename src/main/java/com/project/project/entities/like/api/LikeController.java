@@ -14,10 +14,6 @@ import org.springframework.web.bind.annotation.*;
 @Log4j2
 @RestController
 @RequestMapping("/api/v1/likes")
-@CrossOrigin(origins = {
-        "http://localhost:3000",
-        "http://localhost:3001",
-}, allowedHeaders = "*")
 @RequiredArgsConstructor
 public class LikeController {
     private final LikeServiceImpl likeService;

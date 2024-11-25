@@ -1,6 +1,5 @@
 package com.project.project.entities.user.model;
 
-import com.project.project.util.Gender;
 import jakarta.validation.constraints.NotBlank;
 
 public record AddUserModel(
@@ -14,16 +13,6 @@ public record AddUserModel(
         String email,
 
         @NotBlank(message = "Password cannot be blank")
-        String password,
-
-        Gender gender,
-
-        Long dateOfBirth,
-
-        String avatar,
-
-        String phones,
-
-        String photoData
+        String password
 ) {
 }

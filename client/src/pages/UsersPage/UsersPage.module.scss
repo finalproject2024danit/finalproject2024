@@ -1,4 +1,4 @@
-@import "../../App.scss";
+@use "../../App.scss" as *;
 
 .userBox {
   display: flex;
@@ -169,6 +169,10 @@
   font-size: 16px;
   transition: all 0.3s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  &::placeholder {
+    color: gray;
+  }
 
   &:focus {
     border-color: #6a5acd;

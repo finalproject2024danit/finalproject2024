@@ -1,4 +1,4 @@
-@import "../../App.scss";
+@use "../../App.scss" as *;
 
 // @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
 
@@ -160,7 +160,7 @@
   bottom: -86%;
   transform: translateX(-50%);
   width: calc(25% + 425px);
-  padding: 0px 140px;
+  padding: 0 140px;
   border-radius: 50%;
   height: 100%;
   background: #030f4a;
@@ -199,7 +199,7 @@
 form input {
   height: 47px;
   outline: none;
-  margin: 6px 0px;
+  margin: 6px 0;
   padding: 0 15px;
   font-size: 15px;
   font-weight: 400;

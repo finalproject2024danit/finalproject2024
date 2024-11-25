@@ -1,4 +1,4 @@
-@import "../../App.scss";
+@use "../../App.scss" as *;
 
 .headerBox {
   position: fixed;
@@ -14,49 +14,63 @@ header {
   display: flex;
   padding: 20px;
   background-color: $nodle-black-800;
-  // position: absolute;
-  // top: 0;
-  // right: -320px;
   width: 100%;
 
   h1 {
-    background: #00ff00;
-    background: linear-gradient(to left, #00ff00 0%, #ff0000 100%);
+    background: linear-gradient(to right, #dcdcdc, $border-color-blue, #dcdcdc, $border-color-blue);
+    background-size: 300%;
     background-clip: text;
+    -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 
     font-size: $font-size-title;
     font-weight: $font-weight-bold;
     cursor: pointer;
+
+    animation: gradientMove 3s infinite;
+  }
+
+  @keyframes gradientMove {
+    0% {
+      background-position: 0 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0 50%;
+    }
   }
 
   .radioBtn {
     width: 80px;
     height: 26px;
     background: #333;
-    // margin: 20px auto;
     position: relative;
     border-radius: 50px;
-    box-shadow: inset 0px 1px 1px rgba(0,0,0,0.5), 0px 1px 0px rgba(255,255,255,0.2);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,0.5), 0 1px 0 rgba(255,255,255,0.2);
+
     &:after {
       content: 'UA';
-      color:green;
+      color: gray;
       position: absolute;
       right: 10px;
       z-index: 0;
       font: 12px/26px Arial, sans-serif;
       font-weight: bold;
-      text-shadow: 1px 1px 0px rgba(255,255,255,.15);
+      text-shadow: 1px 1px 0 rgba(255,255,255,.15);
     }
+
     &:before {
       content: 'EN';
-      color: green;
+      color: gray;
       position: absolute;
       left: 10px;
       z-index: 0;
-      font: 12px/26px Arial, sans-serif;
+      font: 12px/26px sans-serif;
       font-weight: bold;
     }
+
     label {
       display: block;
       width: 34px;
@@ -66,18 +80,19 @@ header {
       top: 3px;
       left: 3px;
       z-index: 1;
-      background:grey;
-      background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+      background: $border-color-blue;
       border-radius: 50px;
       transition: all 0.4s ease;
-      box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);
+      box-shadow: 0 2px 5px 0 rgba(0,0,0,0.3);
     }
+
     input[type=checkbox] {
       visibility: hidden;
+
       &:checked + label {
         left: 43px;
       }
-    }    
+    }
   }
 
   a {
@@ -119,7 +134,7 @@ header {
     justify-content: space-between;
     align-items: center;
     gap: 30px;
-    padding: 20px;    
+    padding: 20px;
     box-sizing: border-box;
     border-bottom: 1px solid $nodle-black-700;
   }

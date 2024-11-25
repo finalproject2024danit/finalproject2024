@@ -10,6 +10,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -24,25 +29,36 @@ public class MySecurityConfig {
         return http
                 .httpBasic(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(requests ->
                         requests
                                 .requestMatchers("/**").permitAll()
                                 .requestMatchers("/").permitAll()
+//                                .requestMatchers("/login").permitAll()
+//                                .requestMatchers("/:9000/login").permitAll()
+//                                .requestMatchers("http://134.209.246.21:9000/login").permitAll()
 //                                .requestMatchers("/css/**").permitAll()
 //                                .requestMatchers("/js/**").permitAll()
 //                                .requestMatchers("/images/**").permitAll()
-//                                .requestMatchers("/h2-console/**").permitAll()
 //                                .requestMatchers("/auth/**").permitAll()
-//                                .requestMatchers("/ws/**").permitAll()
-//                                .requestMatchers("/dashboard").authenticated()
+//                                .requestMatchers("/ws/**").authenticated()
 //                                .requestMatchers("/api/v1/**").authenticated()
-//                                .requestMatchers("/registration").hasAuthority("ADMIN")
-//                                .requestMatchers("/create").hasAuthority("ADMIN")
                 )
-//                 only for mvc
-//                .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
 
                 .addFilterAfter(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:3001", "http://134.209.246.21"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }

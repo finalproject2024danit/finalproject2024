@@ -10,10 +10,8 @@ export const fetchFriends = createAsyncThunk(
   async (userId, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get(`/users/${userId}/friends`);
-      console.log(response.data);
       return response.data; // Повертаємо отримані дані
     } catch (error) {
-      console.error("Failed to fetch friends:", error);
       return rejectWithValue(error.response?.data || error.message);
     }
   }

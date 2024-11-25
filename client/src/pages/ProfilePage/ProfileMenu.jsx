@@ -1,8 +1,10 @@
 import { NavLink } from "react-router-dom";
 import styles from "./ProfileMenu.module.scss";
+import MainContent from "../../components/MainContent/MainContent.jsx";
 
 const ProfileMenu = () => {
     return (
+        <MainContent title="">
         <nav className={styles.navContainer}>
             <ul className={styles.menu}>
                 <li>
@@ -47,6 +49,7 @@ const ProfileMenu = () => {
                 </li>
             </ul>
         </nav>
+        </MainContent>
     );
 };
 

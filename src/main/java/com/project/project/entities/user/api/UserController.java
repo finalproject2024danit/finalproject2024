@@ -8,6 +8,7 @@ import com.project.project.entities.user.model.AddUserModel;
 import com.project.project.entities.user.service.UserServiceImpl;
 import com.project.project.entities.user.status.UserStatus;
 import com.project.project.exceptions.UserNotFoundException;
+import com.project.project.security.SysUser.api.dto.JwtResponse;
 import com.project.project.security.SysUser.service.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,10 +26,6 @@ import java.util.List;
 @Log4j2
 @RestController
 @RequestMapping("/api/v1/users")
-@CrossOrigin(origins = {
-        "http://localhost:3000",
-        "http://localhost:3001",
-}, allowedHeaders = "*")
 @RequiredArgsConstructor
 public class UserController {
     private final UserServiceImpl userService;
@@ -68,23 +65,22 @@ public class UserController {
 
     @PostMapping("/create")
     @JsonView(View.Admin.class)
-    public ResponseEntity<ResponseUserDto> addUser(@Valid @RequestBody AddUserModel addUserModel) {
+    public ResponseEntity<ResponseUserWithTokenDto> addUser(@Valid @RequestBody AddUserModel addUserModel) {
         log.info("Trying to create new user");
 
-        User user = UserMapper.INSTANCE.registationDtoTOUser(addUserModel);
+        User user = UserMapper.INSTANCE.registrationDtoTOUser(addUserModel);
         user.setEnabled(true);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         User savedUser = userService.addUser(user);
 
-        authService.generateTokensForUser(savedUser);
+        JwtResponse jwtResponse = authService.generateTokensForUser(savedUser);
 
-        ResponseUserDto responseUserDto = new ResponseUserDto();
-        responseUserDto.setId(savedUser.getId());
-        responseUserDto.setFirstName(savedUser.getFirstName());
-        responseUserDto.setLastName(savedUser.getLastName());
-        responseUserDto.setEmail(savedUser.getEmail());
+        ResponseUserWithTokenDto responseUserWithTokenDto = UserMapper.INSTANCE.userToUserWithTokenDto(savedUser);
+        responseUserWithTokenDto.setType(jwtResponse.getType());
+        responseUserWithTokenDto.setAccessToken(jwtResponse.getAccessToken());
+        responseUserWithTokenDto.setRefreshToken(jwtResponse.getRefreshToken());
 
-        return ResponseEntity.ok(responseUserDto);
+        return ResponseEntity.ok(responseUserWithTokenDto);
     }
 
     @PatchMapping("/patch/{id}")

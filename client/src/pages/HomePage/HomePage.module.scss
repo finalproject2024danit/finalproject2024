@@ -1,4 +1,4 @@
-@import '../../App.scss';
+@use "../../App.scss" as *;
 
 .newsBox {
   display: flex;
@@ -9,7 +9,17 @@
     display: flex;
     gap: 20px;
     border: 1px solid black;
-    border-radius: 10px;      
+    border-radius: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;  // Smooth hover effects
+
+    &:hover {
+      transform: scale(1.05);  // Slight zoom effect
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);  // Add a shadow on hover
+    }
+
+    // Ensure the card looks clickable
+    cursor: pointer;
+    text-decoration: none; // Remove default link underline
   }
 
   .newsImage {
@@ -17,74 +27,34 @@
     height: auto;
     border-radius: 15px;
   }
- 
+
   .newsContent {
     display: flex;
     flex-direction: column;
     gap: 20px;
     padding: 20px 10px;
   }
-  
+
   .newsContent h2 {
-    font-size: $font-size-title;    
+    font-size: $font-size-title;
     color: $border-color-yellow;
-  }  
+  }
+
+  .newsContent p {
+    font-size: $font-size-text-news;
+    line-height: 1.5;
+    color: $nodle-black-200;
+  }
+
+  .date {
+    font-size: $font-size-small-medium !important;
+    text-align: right;
+  }
 }
 
-.newsContent p {
-  font-size: $font-size-text;
-  color: $nodle-black-200;
-   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// ________________Код для сторінки Group________________________
-
-// .article {
-//   margin-bottom: 20px;
-//   padding: 15px;
-//   // background-color: #ffffff;
-//   color: $nodle-black-300;
-//   border-radius: 8px;
-//   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-//   background-image: url(https://pixewall.com/wp-content/uploads/2023/10/4k-Space-Wallpaper-768x432.jpg);
-//   background-size: cover;
-//   background-repeat: no-repeat;
-// }
-
-// .articleTitle {
-//   font-size: 24px;
-//   font-weight: bold;
-//   margin-bottom: 10px;
-//   color: $nodle-black-green;
-// }
-
-// .articleSnippet {
-//   font-size: 16px;
-//   color: #555555;
-//   margin-bottom: 15px;
-// }
-
-// .articleContent {
-//   font-size: 16px;
-//   color: $nodle-black-200;
-//   margin-bottom: 10px;
-//   line-height: 25px;
-// }
-
-// .articleDate {
-//   font-size: 14px;
-//   color: #888888;
-//   text-align: right;
-// }
+// Make sure that Link has no underline and behaves like a block element
+.newsCardLink {
+  display: block;
+  text-decoration: none; // Remove default underline from link
+  color: inherit; // Inherit text color from parent (styles of .newsCard)
+}
