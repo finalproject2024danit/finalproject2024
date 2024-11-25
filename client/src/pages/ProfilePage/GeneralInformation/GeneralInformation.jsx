@@ -78,18 +78,19 @@ const GeneralInformation = () => {
 
     return (
         <MainContent title="">
-            <div className={styles.generalContainer}>
+            <div className={styles.container}>
+            <ProfileMenu className={styles.profileMenu}/>
+                
+                <div className={styles.content}>
                 <div className={styles.sidebar}>
                     <div className={styles.avatarSection}>
                         <img
                             src={user.avatar || "default-avatar.png"}
                             alt="User Avatar"
                             className={styles.avatar}
-                        />
+                        />                        
                     </div>
                 </div>
-                <div className={styles.content}>
-                    <ProfileMenu className={styles.profileMenu}/>
                     <form onSubmit={formik.handleSubmit} className={styles.form}>
                         <div>
                             <label htmlFor="firstName" className={styles.label}>

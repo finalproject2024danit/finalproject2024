@@ -82,7 +82,7 @@ const PlaceOfResidence = () => {
   });
 
   return (
-    <MainContent title="Place of Residence">
+    <MainContent title="">
       <div className={styles.container}>
         <ProfileMenu />
         <div className={styles.content}>

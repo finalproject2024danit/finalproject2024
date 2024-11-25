@@ -1,23 +1,23 @@
 @use "../../App.scss" as *;
 
-.layout {
-  display: flex;
-  // height: 100vh;
-}
+// .layout {
+//   display: flex;
+//   // height: 100vh;
+// }
 
-.mainContent {
-  flex: 1;
-  padding: 25px;
-  background-color: #1c1f2a; /* Adjust this according to your theme */
-  color: white;
-}
+// .mainContent {
+//   flex: 1;
+//   padding: 25px;
+//   background-color: #1c1f2a; /* Adjust this according to your theme */
+//   color: white;
+// }
 
-.rightSidebar {
-  width: 250px;
-  background-color: #282c34;
-  padding: 10px;
-  color: white;
-}
+// .rightSidebar {
+//   width: 250px;
+//   background-color: #282c34;
+//   padding: 10px;
+//   color: white;
+// }
 
 .mainBox {
   // position: fixed;
@@ -51,18 +51,18 @@
 
 /* Media Queries for Responsive Design */
 @media (max-width: 1024px) {
-  .layout {
-    flex-direction: column; /* Stack items vertically */
-  }
+  // .layout {
+  //   flex-direction: column; /* Stack items vertically */
+  // }
 
-  .mainContent {
-    padding: 20px; /* Reduce padding for smaller screens */
-  }
+  // .mainContent {
+  //   padding: 20px; /* Reduce padding for smaller screens */
+  // }
 
-  .rightSidebar {
-    width: 100%; /* Full width on smaller screens */
-    padding: 15px; /* Adjust padding */
-  }
+  // .rightSidebar {
+  //   width: 100%; /* Full width on smaller screens */
+  //   padding: 15px; /* Adjust padding */
+  // }
 
   .mainBox {
     width: 90%; /* Increase width slightly */
@@ -71,19 +71,19 @@
 }
 
 @media (max-width: 767px) {
-  .layout {
-    flex-direction: column; /* Stack items vertically */
-  }
+  // .layout {
+  //   flex-direction: column; /* Stack items vertically */
+  // }
 
-  .mainContent {
-    padding: 15px; /* Further reduce padding */
-  }
+  // .mainContent {
+  //   padding: 15px; /* Further reduce padding */
+  // }
 
-  .rightSidebar {
-    width: 100%; /* Full width for mobile */
-    padding: 10px; /* Reduce padding */
-    margin-bottom: 20px; /* Add margin at the bottom for spacing */
-  }
+  // .rightSidebar {
+  //   width: 100%; /* Full width for mobile */
+  //   padding: 10px; /* Reduce padding */
+  //   margin-bottom: 20px; /* Add margin at the bottom for spacing */
+  // }
 
   .mainBox {
     width: 95%; /* Almost full width */
