@@ -11,11 +11,12 @@ import {Gender} from "../../../utils/gender.js";
 import {unixToDate} from "../../../utils/unixToDate.js";
 import {dateToUnix} from "../../../utils/dateToUnix.js";
 
+
 const GeneralInformation = () => {
     const [isEditing, setIsEditing] = useState(false);
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user);
-
+    
     const validationSchema = Yup.object().shape({
         firstName: Yup.string().max(100, "Max 100 characters").required("Required"),
         lastName: Yup.string().max(100, "Max 100 characters").required("Required"),
@@ -72,7 +73,7 @@ const GeneralInformation = () => {
             gender: user.gender || "",
             phones: user.phones || "",
             password: "",
-            dateOfBirth: "",
+            dateOfBirth: user.dateOfBirth ? unixToDate(user.dateOfBirth) : "",
         });
     }, [user]);
 
@@ -231,7 +232,9 @@ const GeneralInformation = () => {
                         <EditButtons
                             isEditing={isEditing}
                             onEditClick={() => setIsEditing(!isEditing)}
-                            onSaveClick={formik.handleSubmit}
+                            onSaveClick={() => {
+                                formik.handleSubmit();
+                            }}
                         />
                     </form>
                 </div>
