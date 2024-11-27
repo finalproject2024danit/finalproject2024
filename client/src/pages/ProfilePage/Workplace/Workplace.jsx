@@ -60,6 +60,10 @@ const Workplace = () => {
     validationSchema: validationSchema,
     onSubmit: handleSubmit,
   });
+  
+  if (loading) {
+    return <div>Loading...</div>;
+}
 
   return (
     <MainContent title="">
@@ -67,7 +71,7 @@ const Workplace = () => {
         <ProfileMenu />
         <div className={styles.content}>
           <h2 className={styles.title}>Select Workplace</h2>
-      
+               
           <div className={styles.currentWorkplace}>
             <h3 className={styles.subtitle}>Current Workplace</h3>
             <p
