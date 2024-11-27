@@ -27,12 +27,12 @@ const Hobbies = () => {
             language: user.hobby.language || "",
             pet: user.hobby.pet || "",
             interest: user.hobby.interest || "",
-        },
+        },        
         validationSchema,
         onSubmit: async (values) => {
             const updatedHobby = {...values};
             try {
-                const response = await dispatch(updateHobbies({userId: user.id, updatedHobby}));
+                const response = await dispatch(updateHobbies({userId: user.id, updatedHobby}));                
                 if (response.meta.requestStatus === "fulfilled") {
                     console.log("Hobby updated successfully on the server");
                     await dispatch(fetchHobbiesByUserId(user.id));

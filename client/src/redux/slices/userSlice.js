@@ -118,18 +118,18 @@ const userSlice = createSlice({
       state.error = null;
     };
 
-    const handleFulfilled = (state, action) => {
-      // Глибоке оновлення вкладених об'єктів
-      if (action.payload.residence) {
-        state.residence = { ...state.residence, ...action.payload.residence };
-      }
-      if (action.payload.hobby) {
-        state.hobby = { ...state.hobby, ...action.payload.hobby };
-      }
+    // const handleFulfilled = (state, action) => {
+    //   // Глибоке оновлення вкладених об'єктів
+    //   if (action.payload.residence) {
+    //     state.residence = { ...state.residence, ...action.payload.residence };
+    //   }
+    //   if (action.payload.hobby) {
+    //     state.hobby = { ...state.hobby, ...action.payload.hobby };
+    //   }
 
-      Object.assign(state, action.payload);
-      state.status = "succeeded";
-    };
+    //   Object.assign(state, action.payload);
+    //   state.status = "succeeded";
+    // };
 
     const handleRejected = (state, action) => {
       state.status = "failed";
@@ -208,10 +208,10 @@ const userSlice = createSlice({
       })
       .addCase(fetchUserDataByToken.rejected, handleRejected)
       .addCase(fetchUserData.pending, handlePending)
-      .addCase(fetchUserData.fulfilled, handleFulfilled)
+      // .addCase(fetchUserData.fulfilled, handleFulfilled)
       .addCase(fetchUserData.rejected, handleRejected)
       .addCase(updateUserData.pending, handlePending)
-      .addCase(updateUserData.fulfilled, handleFulfilled)
+      // .addCase(updateUserData.fulfilled, handleFulfilled)
       .addCase(updateUserData.rejected, handleRejected)
       .addCase(fetchToken.pending, handlePending)
       .addCase(fetchToken.fulfilled, (state, action) => {

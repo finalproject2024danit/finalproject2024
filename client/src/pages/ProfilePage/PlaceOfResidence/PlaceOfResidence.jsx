@@ -87,45 +87,65 @@ const PlaceOfResidence = () => {
         <ProfileMenu />
         <div className={styles.content}>
           <h2 className={styles.title}>Place of Residence</h2>
-          <form className={styles.form} onSubmit={formik.handleSubmit}>
+  
+          <div className={styles.currentResidence}>
+            <h3 className={styles.subtitle}>Current Residence</h3>
             {["planet", "country", "city"].map((field) => (
-              <div key={field} className={styles.inputGroup}>
-                <label className={styles.label}>
-                  {field.charAt(0).toUpperCase() + field.slice(1)}:
-                </label>
-                <select
-                  className={styles.input}
-                  name={field}
-                  value={formik.values[field]} // Значення з Formik
-                  onChange={formik.handleChange} // Оновлення значення в Formik
-                  disabled={!isEditing} // Поле доступне тільки в режимі редагування
-                >
-                  <option value="" disabled>
-                    Select {field}
-                  </option>
-                  {suggestions[field].map((option, index) => (
-                    <option key={index} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
-                {formik.touched[field] && formik.errors[field] && (
-                  <div className={styles.error}>{formik.errors[field]}</div>
-                )}
-              </div>
+              <p
+                key={field}
+                className={`${styles.residenceText} ${
+                  !formik.values[field] ? styles.noResidence : ""
+                }`}
+              >
+                {formik.values[field] || `No ${field} selected`}
+              </p>
             ))}
-            {loading && <div className={styles.loading}>Loading options...</div>}
-            {/* Кнопки редагування та збереження */}
-            <EditButtons
-              isEditing={isEditing}
-              onEditClick={() => setIsEditing(!isEditing)}
-              onSaveClick={formik.handleSubmit}
-            />
-          </form>
+          </div>
+  
+          {isEditing ? (
+            <form className={styles.form} onSubmit={formik.handleSubmit}>
+              {["planet", "country", "city"].map((field) => (
+                <div key={field} className={styles.inputGroup}>
+                  <label className={styles.label}>
+                    {field.charAt(0).toUpperCase() + field.slice(1)}:
+                  </label>
+                  <select
+                    className={styles.input}
+                    name={field}
+                    value={formik.values[field]} // Значення з Formik
+                    onChange={formik.handleChange} // Оновлення значення в Formik
+                    onBlur={formik.handleBlur} // Валідація при втраті фокусу
+                  >
+                    <option value="" disabled>
+                      Select {field}
+                    </option>
+                    {loading ? (
+                      <option disabled>Loading options...</option>
+                    ) : (
+                      suggestions[field].map((option, index) => (
+                        <option key={index} value={option}>
+                          {option}
+                        </option>
+                      ))
+                    )}
+                  </select>
+                  {formik.touched[field] && formik.errors[field] && (
+                    <div className={styles.error}>{formik.errors[field]}</div>
+                  )}
+                </div>
+              ))}            
+            </form>
+          ) : null}  
+          <EditButtons
+            isEditing={isEditing}
+            onEditClick={() => setIsEditing((prev) => !prev)}
+            onSaveClick={formik.handleSubmit}
+          />
         </div>
       </div>
     </MainContent>
   );
+  
 };
 
 export default PlaceOfResidence;
