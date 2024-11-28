@@ -1,7 +1,7 @@
-// EditButtons.jsx
+import PropTypes from "prop-types";
 import styles from "./ButtonEdit.module.scss";
 
-const EditButtons = ({isEditing, onEditClick, onSaveClick}) => {
+const EditButtons = ({ isEditing, onEditClick, onSaveClick }) => {
     return (
         <div className={styles.buttonContainer}>
             <button type="button" className={styles.button} onClick={onEditClick}>
@@ -14,6 +14,12 @@ const EditButtons = ({isEditing, onEditClick, onSaveClick}) => {
             )}
         </div>
     );
+};
+
+EditButtons.propTypes = {
+    isEditing: PropTypes.bool.isRequired, 
+    onEditClick: PropTypes.func.isRequired, 
+    onSaveClick: PropTypes.func.isRequired, 
 };
 
 export default EditButtons;

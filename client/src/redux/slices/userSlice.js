@@ -1,5 +1,5 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {getToken, getUserAllData, getUserDataByToken, registerByEmail, updateUser,} from "../../api/users/requests.js";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { getToken, getUserAllData, getUserDataByToken, registerByEmail, updateUser, } from "../../api/users/requests.js";
 
 // Початковий стан
 const initialState = {
@@ -32,7 +32,7 @@ const initialState = {
 
 export const fetchUserDataByToken = createAsyncThunk(
     "user/fetchUserDataByToken",
-    async (token, {rejectWithValue}) => {
+    async (token, { rejectWithValue }) => {
         try {
             return await getUserDataByToken(token);
         } catch (error) {
@@ -43,7 +43,7 @@ export const fetchUserDataByToken = createAsyncThunk(
 
 export const fetchToken = createAsyncThunk(
     "user/fetchToken",
-    async (loginPayload, {rejectWithValue}) => {
+    async (loginPayload, { rejectWithValue }) => {
         try {
             const response = await getToken(loginPayload)
             console.log(typeof response, response)
@@ -57,7 +57,7 @@ export const fetchToken = createAsyncThunk(
 
 export const fetchRegister = createAsyncThunk(
     "user/fetchRegister",
-    async (registerPayload, {rejectWithValue}) => {
+    async (registerPayload, { rejectWithValue }) => {
         try {
             const response = await registerByEmail(registerPayload)
             localStorage.setItem("authToken", response.accessToken);
@@ -71,7 +71,7 @@ export const fetchRegister = createAsyncThunk(
 
 export const fetchUserData = createAsyncThunk(
     "user/fetchUserData",
-    async (userId, {rejectWithValue}) => {
+    async (userId, { rejectWithValue }) => {
         try {
             return await getUserAllData(userId);
         } catch (error) {
@@ -82,7 +82,7 @@ export const fetchUserData = createAsyncThunk(
 
 export const updateUserData = createAsyncThunk(
     "user/updateUserData",
-    async ({userId, userData}, {rejectWithValue}) => {
+    async ({ userId, userData }, { rejectWithValue }) => {
         try {
             return await updateUser(userId, userData);
         } catch (error) {
@@ -104,7 +104,7 @@ const userSlice = createSlice({
         },
         clearUserData() {
             localStorage.clear();
-            return {...initialState};
+            return { ...initialState };
         },
     },
     extraReducers: (builder) => {
@@ -116,10 +116,10 @@ const userSlice = createSlice({
         const handleFulfilled = (state, action) => {
             // Глибоке оновлення вкладених об'єктів
             if (action.payload.residence) {
-                state.residence = {...state.residence, ...action.payload.residence};
+                state.residence = { ...state.residence, ...action.payload.residence };
             }
             if (action.payload.hobby) {
-                state.hobby = {...state.hobby, ...action.payload.hobby};
+                state.hobby = { ...state.hobby, ...action.payload.hobby };
             }
 
             Object.assign(state, action.payload);
@@ -129,6 +129,7 @@ const userSlice = createSlice({
         const handleRejected = (state, action) => {
             state.status = "failed";
             state.error = action.payload;
+            console.error('Error fetching user data:', action.payload); // Log the error for better debugging
         };
 
         builder
@@ -212,5 +213,5 @@ const userSlice = createSlice({
     },
 });
 
-export const {setUserData, setToken, clearUserData} = userSlice.actions;
+export const { setUserData, setToken, clearUserData } = userSlice.actions;
 export default userSlice.reducer;

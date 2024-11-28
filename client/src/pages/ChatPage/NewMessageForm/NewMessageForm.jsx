@@ -29,44 +29,92 @@ const NewMessageForm = ({ onSendMessage, selectedUser, filteredMessages }) => {
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={validationSchema}
-      onSubmit={handleSubmit}
-    >
-      <Form className={styles.form}>
-        <div className={styles.formGroup}>
-          <Field
-            name="message"
-            as="textarea"
-            placeholder="Type your message..."
-          />
-          <ErrorMessage
-            name="message"
-            component="div"
-            className={styles.error}
-          />
-        </div>
-        <button type="submit" className={styles.submitBtn}>
-          &#8593;{/* Upward arrow */}
-        </button>
-      </Form>
-    </Formik>
-  );
-};
+    // <Formik
+    //   initialValues={initialValues}
+    //   validationSchema={validationSchema}
+    //   onSubmit={handleSubmit}
+    // >
+    //   <Form className={styles.form}>
+    //     <div className={styles.formGroup}>
+    //       <Field
+    //         name="message"
+    //         as="textarea"
+    //         placeholder="Type your message..."
+    //       />
+    //       <ErrorMessage
+    //         name="message"
+    //         component="div"
+    //         className={styles.error}
+    //       />
+    //     </div>
+    //     <button type="submit" className={styles.submitBtn}>
+    //       &#8593;{/* Upward arrow */}
+    //     </button>
+    //   </Form>
+    // </Formik>
 
-NewMessageForm.propTypes = {
-  onSendMessage: PropTypes.func.isRequired,
-  selectedUser: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    image: PropTypes.string.isRequired,
-    isOnline: PropTypes.bool.isRequired,
-  }).isRequired,
-  filteredMessages: PropTypes.arrayOf(
-    PropTypes.shape({
-      content: PropTypes.string.isRequired,
-    })
-  ).isRequired,
+    <div>
+      <div className={styles.messagesChat}>
+        {filteredMessages.map((msg, index) => {
+          // Assign a unique id dynamically if it's missing
+          const messageWithId = msg.id
+            ? msg
+            : { ...msg, id: Date.now() + index }; // Create a new object if id is missing
+
+          console.log("Message ID:", messageWithId.id); // Log the message ID
+          return (
+            <div
+              key={messageWithId.id}
+              className={`${styles.message} ${
+                messageWithId.isUser ? styles.textOnly : ""
+              }`}
+            >
+              {!messageWithId.isUser && (
+                <div
+                  className={styles.photo}
+                  style={{ backgroundImage: `url(${messageWithId.userImage})` }}
+                >
+                  {messageWithId.isOnline && (
+                    <div className={styles.online}></div>
+                  )}
+                </div>
+              )}
+              <p className={styles.text}>
+                {messageWithId.message || "No content available"}
+              </p>
+              {messageWithId.isUser && (
+                <p className={styles.responseTime}> {messageWithId.date}</p>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        <Form className={styles.form}>
+          <div className={styles.formGroup}>
+            <Field
+              name="message"
+              as="textarea"
+              placeholder="Type your message..."
+            />
+            <ErrorMessage
+              name="message"
+              component="div"
+              className={styles.error}
+            />
+          </div>
+          <button type="submit" className={styles.submitBtn}>
+            &#8593;{/* Upward arrow */}
+          </button>
+        </Form>
+      </Formik>
+    </div>
+  );
 };
 
 export default NewMessageForm;
@@ -81,6 +129,15 @@ NewMessageForm.propTypes = {
   filteredMessages: PropTypes.arrayOf(
     PropTypes.shape({
       content: PropTypes.string, // Changed to optional
+
+      id: PropTypes.number,
+      user: PropTypes.object, // Adjust as per user object structure
+      message: PropTypes.string,
+      date: PropTypes.string,
+      status: PropTypes.string,
+      isUser: PropTypes.bool,
+      userImage: PropTypes.string,
+      isOnline: PropTypes.bool,
     })
   ).isRequired,
 };
