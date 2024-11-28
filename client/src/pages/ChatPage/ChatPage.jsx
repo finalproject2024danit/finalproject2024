@@ -345,7 +345,7 @@ const ChatPage = () => {
           ) : (
             lastUserMessages.map((lastUserMassage) => (
               <div
-                key={lastUserMassage.userId} // Ensure the key is unique by combining userId with lastMessageDate
+                key={`user-${lastUserMassage.userId}`}
                 className={`${styles.discussion} ${
                   selectedUser?.userId === lastUserMassage.userId
                     ? styles.messageActive
@@ -408,7 +408,10 @@ const ChatPage = () => {
               <p>Loading...</p>
             ) : (
               filteredMessages.map((msg) => (
-                <div key={msg.id} className={styles.messageItem}>
+                <div
+                  key={`${msg.userFrom}-${msg.messageTime}`}
+                  className={styles.messageItem}
+                >
                   <p>
                     <strong>
                       {msg.userFrom === currentUser
