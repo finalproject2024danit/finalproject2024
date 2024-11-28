@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchMessages,
-  selectUser,
-  sendMessage,
-} from "../../redux/slices/chatSlice";
+import { fetchMessages } from "../../redux/slices/chatSlice";
 import { fetchConversations } from "../../redux/slices/conversationsSlice";
 import NewMessageForm from "./NewMessageForm/NewMessageForm";
 import MainContent from "../../components/MainContent/MainContent";
