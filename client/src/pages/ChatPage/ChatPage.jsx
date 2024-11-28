@@ -201,6 +201,7 @@ const ChatPage = () => {
   const [usersLoading, setUsersLoading] = useState([]);
   useEffect(() => {
     const fetchAllUsers = async () => {
+      setUsersLoading(true);
       try {
         const response = await axiosInstance.get("/users/filter", {
           params: {
@@ -208,7 +209,7 @@ const ChatPage = () => {
             perPage: 100_000,
           },
         });
-        console.log(response);
+        console.log("fetchAllUsers", response);
 
         const usersData = response.data || [];
         setUsers(usersData);
@@ -250,6 +251,19 @@ const ChatPage = () => {
 
   // find partner from conversation
   const findPartnerUser = (conv) => {
+    console.log("Current User in findPartnerUser:", currentUser);
+    console.log("Users in findPartnerUser:", users);
+    console.log("Conversation in findPartnerUser:", conv);
+
+    if (!users || !currentUser) {
+      console.error("Users or currentUser is not defined", {
+        users,
+        currentUser,
+      });
+      return {
+        undefined,
+      };
+    }
     const partner = users.find((user) => {
       const isMe = currentUser.id === user.id;
       const isParticipant =

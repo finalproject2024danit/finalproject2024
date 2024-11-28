@@ -4,7 +4,7 @@ import { getToken, getUserAllData, getUserDataByToken, registerByEmail, updateUs
 // Початковий стан
 const initialState = {
     token: localStorage.getItem("token") || "",
-    id: localStorage.getItem("id") || null,
+    id: localStorage.getItem("id") || "",
     firstName: localStorage.getItem("firstName") || "",
     lastName: localStorage.getItem("lastName") || "",
     email: localStorage.getItem("email") || "",
