@@ -11,46 +11,9 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 40px;
+  // gap: 20px;
   color:orange; 
-  margin-top: 40px;
-  font-size: 30px;
-
-  // display: grid;
-  // grid-template-columns: repeat(3, 100px);
-  // grid-template-rows: repeat(3, 100px);
-  // gap: 10px;
-  // justify-content: center;
-  // align-items: center;
-  // height: 100vh;
-
-  // .boxArrow li {
-  //     display: flex;
-  //     justify-content: center;
-  //     align-items: center;
-  //     font-size: 24px;
-  //     font-weight: bold;
-  //     color: white;
-  //     background-color: #4CAF50;
-  //     width: 100px;
-  //     height: 100px;
-  //     border-radius: 8px;
-  // }
+  // margin-top: 20px;
+  font-size: 30px; 
 }
 
-// .arrowUp {
-//   grid-column: 2;
-//   grid-row: 1;
-// }
-// .arrowLeft {
-//   grid-column: 1;
-//   grid-row: 2;
-// }
-// .arrowRight {
-//   grid-column: 3;
-//   grid-row: 2;
-// }
-// .arrowDown {
-//   grid-column: 2;
-//   grid-row: 3;
-// }

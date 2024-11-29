@@ -20,23 +20,20 @@ const PlaceOfResidence = () => {
   const [loading, setLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
-  // Функція для отримання варіантів місць проживання
   const fetchSuggestions = async (field) => {
     setLoading(true);
     try {
       const response = await axios.get(`/api/v1/residences/filter`, {
         params: {
-          page: 0, // Завантажуємо першу сторінку
-          size: 50, // Максимум 50 записів
+          page: 0,
+          size: 50,
         },
       });
 
-      // Збираємо унікальні значення для кожного поля
       const uniqueOptions = [
         ...new Set(response.data.map((item) => item[field])),
       ];
 
-      // Оновлюємо стан з варіантами
       setSuggestions((prev) => ({ ...prev, [field]: uniqueOptions }));
     } catch (error) {
       console.error(`Error fetching suggestions for ${field}:`, error);
@@ -46,19 +43,16 @@ const PlaceOfResidence = () => {
     }
   };
 
-  // Валідація форми за допомогою Yup
   const validationSchema = Yup.object().shape({
     country: Yup.string().required("Required"),
     city: Yup.string().required("Required"),
     planet: Yup.string().required("Required"),
   });
 
-  // Ефект для завантаження варіантів після завантаження сторінки
   useEffect(() => {
     ["planet", "country", "city"].forEach((field) => fetchSuggestions(field));
   }, []);
 
-  // Налаштування Formik
   const formik = useFormik({
     initialValues: {
       planet: user.residence.planet || "",
@@ -75,19 +69,21 @@ const PlaceOfResidence = () => {
           city: values.city,
         },
       };
-      dispatch(updateResidenceData({ userId: user.id, updateData: updatedData }));
+      dispatch(
+        updateResidenceData({ userId: user.id, updateData: updatedData })
+      );
       console.log("Form submitted:", values);
-      setIsEditing(false); // Вихід із режиму редагування після збереження
+      setIsEditing(false);
     },
   });
 
   return (
     <MainContent title="">
-      <div className={styles.container}>
+      <div className={styles.residenceBox}>
         <ProfileMenu />
         <div className={styles.content}>
           <h2 className={styles.title}>Place of Residence</h2>
-  
+
           <div className={styles.currentResidence}>
             <h3 className={styles.subtitle}>Current Residence</h3>
             {["planet", "country", "city"].map((field) => (
@@ -101,7 +97,7 @@ const PlaceOfResidence = () => {
               </p>
             ))}
           </div>
-  
+
           {isEditing ? (
             <form className={styles.form} onSubmit={formik.handleSubmit}>
               {["planet", "country", "city"].map((field) => (
@@ -112,9 +108,9 @@ const PlaceOfResidence = () => {
                   <select
                     className={styles.input}
                     name={field}
-                    value={formik.values[field]} // Значення з Formik
-                    onChange={formik.handleChange} // Оновлення значення в Formik
-                    onBlur={formik.handleBlur} // Валідація при втраті фокусу
+                    value={formik.values[field]}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
                   >
                     <option value="" disabled>
                       Select {field}
@@ -133,9 +129,9 @@ const PlaceOfResidence = () => {
                     <div className={styles.error}>{formik.errors[field]}</div>
                   )}
                 </div>
-              ))}            
+              ))}
             </form>
-          ) : null}  
+          ) : null}
           <EditButtons
             isEditing={isEditing}
             onEditClick={() => setIsEditing((prev) => !prev)}
@@ -145,7 +141,6 @@ const PlaceOfResidence = () => {
       </div>
     </MainContent>
   );
-  
 };
 
 export default PlaceOfResidence;

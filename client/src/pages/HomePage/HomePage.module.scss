@@ -8,18 +8,17 @@
   .newsCard {
     display: flex;
     gap: 20px;
-    border: 1px solid black;
+    border: 1px solid $fifth;
     border-radius: 10px;
-    transition: transform 0.2s, box-shadow 0.2s;  // Smooth hover effects
+    transition: transform 0.2s, box-shadow 0.2s;
 
     &:hover {
-      transform: scale(1.05);  // Slight zoom effect
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);  // Add a shadow on hover
+      transform: scale(1.05);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     }
 
-    // Ensure the card looks clickable
     cursor: pointer;
-    text-decoration: none; // Remove default link underline
+    text-decoration: none;
   }
 
   .newsImage {
@@ -36,25 +35,23 @@
   }
 
   .newsContent h2 {
-    font-size: $font-size-title;
-    color: $border-color-yellow;
+    font-size: $huge;    
   }
 
   .newsContent p {
-    font-size: $font-size-text-news;
+    font-size: $large;
     line-height: 1.5;
-    color: $nodle-black-200;
+    color: $seventh;
   }
 
   .date {
-    font-size: $font-size-small-medium !important;
+    font-size: $smaller !important;
     text-align: right;
   }
 }
 
-// Make sure that Link has no underline and behaves like a block element
 .newsCardLink {
   display: block;
-  text-decoration: none; // Remove default underline from link
-  color: inherit; // Inherit text color from parent (styles of .newsCard)
+  text-decoration: none;
+  color: inherit;
 }

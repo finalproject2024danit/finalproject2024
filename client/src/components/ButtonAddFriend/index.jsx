@@ -5,8 +5,8 @@ const ButtonAddFriend = ({ userId, onClick, isFriend }) => {
   return (
     <button
       className={styles.btn}
-      onClick={() => !isFriend && onClick(userId)} // Кнопка не буде працювати, якщо вже друг
-      disabled={isFriend} // Якщо користувач вже друг, кнопка стає неактивною
+      onClick={() => !isFriend && onClick(userId)}
+      disabled={isFriend}
     >
       {isFriend ? "Friend" : "Add Friend"}
     </button>
@@ -20,4 +20,3 @@ ButtonAddFriend.propTypes = {
 };
 
 export default ButtonAddFriend;
-

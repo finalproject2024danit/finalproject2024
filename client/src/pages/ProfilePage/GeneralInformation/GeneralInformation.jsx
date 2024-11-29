@@ -6,7 +6,10 @@ import MainContent from "../../../components/MainContent/MainContent.jsx";
 import EditButtons from "../../../components/ButtonEdit/index.jsx";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import { updateUserData, fetchUserData } from "../../../redux/slices/userSlice.js";
+import {
+  updateUserData,
+  fetchUserData,
+} from "../../../redux/slices/userSlice.js";
 import { Gender } from "../../../utils/gender.js";
 import { unixToDate } from "../../../utils/unixToDate.js";
 import { dateToUnix } from "../../../utils/dateToUnix.js";
@@ -35,10 +38,9 @@ const GeneralInformation = () => {
     dateOfBirth: Yup.string().required("Required"),
   });
 
-//   useEffect(() => {
-//     console.log("User state updated:", user); // Перевіряйте зміни в стейті
-//   }, [user]);
-
+  //   useEffect(() => {
+  //     console.log("User state updated:", user); // Перевіряйте зміни в стейті
+  //   }, [user]);
 
   const formik = useFormik({
     initialValues: {
@@ -62,7 +64,7 @@ const GeneralInformation = () => {
       await dispatch(
         updateUserData({ userId: user.id, userData: updatedValues })
       );
-      // Після оновлення даних — повторне отримання актуальної інформації про користувача
+
       dispatch(fetchUserData(user.id));
 
       setIsEditing(false);
@@ -83,7 +85,7 @@ const GeneralInformation = () => {
 
   return (
     <MainContent title="">
-      <div className={styles.container}>
+      <div className={styles.generalBox}>
         <ProfileMenu className={styles.profileMenu} />
 
         <div className={styles.content}>

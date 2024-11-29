@@ -1,85 +1,145 @@
-/* Colors */
-// $primary-color: #4267B2;
-// $secondary-color: #4a69bd;
-// $third-color: #f0f2f5;
-// $fourth-color: #252525;
-// $fifth-color: #333333;
-// $sixth-color: #000;
-// $seventh-color: #fff;
-// $hover-color: #37578a;
-$border-color-pink: rgba(242, 3, 246, 0.928);
-$border-color-green: rgba(6, 246, 54, 0.928);
+// Variables for Fonts
+$small: 12px; //
+$smaller: 14px;
+$normal: 16px;
+$medium: 18px;
+$large: 20px;
+$larger: 24px;
+$extra-large: 30px;
+$huge: 34px;
+$massive: 36px; //
+$ultra: 40px; //
+
+// Variables for Font Weights
+$font-weight-black: 900; //
+$font-weight-extra-bold: 800; //
+$font-weight-bold: 700;
+$font-weight-semi-bold: 600;
+$font-weight-medium: 500;
+$font-weight-normal: 400;
+$font-weight-light: 300; //
+$font-weight-extra-light: 200; //
+$font-weight-ultra-light: 100; //
+
+// Variables for Colors
+$primary: #ffffff;
+$secondary: grey;
+$third: yellow;
+$fourth: orange;
+$fifth: black;
+$sixth: #00ffea;
+$seventh: #ccc;
+$eighth: #31e5e4;
+$ninth: #333;
+$tenth: #afaeae;
+$eleventh: #777;
+$twelfth: #394a6d;
+$thirteenth: #ff6666;
+
+// Variables for Background-colors
+$background-primary: #131619;
+$background-secondary: grey;
+$background-third: green;
+$background-fourth: #0d0f10;
+$background-fifth: #2f2f2f;
+$background-sixth: #555;
+$background-seventh: rgba(0, 0, 0, 0.5);
+$background-eighth: #ff4d4f;
+$background-ninth: darkblue;
+$background-tenth: rgba(0, 0, 50, 0.6);
+$background-eleventh: rgba(255, 255, 255, 0.1);
+$background-twelfth: #ececec;
+$background-thirteenth: rgb(1 197 196 / 51%);
+$background-fourteenth: #030f4a;
+$background-fifteenth: rgba(20, 30, 48, 0.8);
+$background-sixteenth: rgba(30, 40, 60, 0.8);
+
+
+// Variables for Background-color-btn
+$background-btn-first: #4f36ee;
+$background-btn-hover-first: #331fcc;
+$background-btn-secondary: rgb(197, 127, 127);
+$background-btn-hover-secondary: rgb(105, 56, 56);
+$background-btn-third: #3b4e7e;
+$background-btn-hover-third: #4a90e2;
+$background-btn-fourth: #333;
+$background-btn-fifth: #4caf50;
+$background-btn-hover-fifth: #386c3a;
+$background-btn-sixth: #01c5c4;
+$background-btn-seventh: #1c2a3e;
+$background-btn-hover-seventh: #253243;
+
+// Variables for Border-color
+$border-color-pink: rgba(242, 3, 246, 0.928); //
+$border-color-green: rgba(6, 246, 54, 0.928); //
 $border-color-blue: rgba(3, 105, 249, 0.928);
-$border-color-yellow: rgba(246, 250, 4, 0.928);
-$shadow-color: rgba(0, 0, 0, 0.1);
+$border-color-yellow: rgba(246, 250, 4, 0.928); //
+$shadow-color: rgba(0, 0, 0, 0.1); //
 
-$nodle-black-0:#FFFFFF; // Этот цвет используется для заголовков h1//
-$nodle-black-100:#E8E9E9; // Этот цвет используется для заголовков h2 (можно использовать для текста в сообщениях)//
-$nodle-black-200:#CDCECF; // Этот цвет используется для заголовков h3//
-$nodle-black-300:#9B9C9E; // Этот цвет используется для обычного текста (но текст переписок или же после заглавных букв)//
-$nodle-black-400:#686B6E; // Этот цвет используется для текста возле иконок и иконок!!!//
-$nodle-black-500:#363A3D; // Этот цвет используется для незаметного текста по типу если не выбрана строка в сообщении и там написано (отправьте сообщение) (так же для отображения что человек не в сети) //
-$nodle-black-600:#1A1D21; // Єтот цвет для кнопок отправить фото или отправить сообщение или же написать сообщение, вообщем для таких кнопок
-$nodle-black-700:#131619; // Этот цвет используется для заднего фона, но я бы выбрал наверное 600 но мне кажется будет слишком светло//
-$nodle-black-800:#0D0F10; // Этот цвет используется для Хедера, Сайдбара и Для Сайдбара с друзьями и для места где писать сообщение//
+// Variables for linear-gradient
+$linear-gradient-header: linear-gradient(
+  to right,
+  #dcdcdc,
+  blue,
+  #dcdcdc,
+  blue
+);
+$linear-gradient-groupPage: linear-gradient(
+  135deg,
+  rgba(0, 0, 0, 0.8),
+  rgba(10, 10, 50, 0.7)
+);
 
-$day-blue-900:#0C1132; // Этот цвет используется для текста на зелёных кнопках //
+$linear-gradient-userInform: linear-gradient(to bottom, #141e30, #243b55);
 
-$stem-green-500:#B6F09C; //Этот цвет используется для кнопок, иконок(на вкладке которой вы находитесь), текста  выделенного и для подчеркивания выбранной вкладки на которой вы находитесь (но так-же предлагаю выбрать какой-то другой цвет для текста или же для кнопки, хотя на макете выглядит весьма приятно для зрения)//
-$stem-green-600:#9AD37F; // Этот цвет используется для обозначения что человек онлайн //
+h2,
+h3 {
+  color: $third;
+}
 
-$heisenberg-blue-500:#82DBF7; // Этот цвет испльзуется для пятиугольника на сайдбаре //
+/* Colors */
 
-$red-power-600:#D0302F; // Этот цвет используется для треугольника на сайдбаре //
+$nodle-black-0: #ffffff; // Этот цвет используется для заголовков h1//
+$nodle-black-100: #e8e9e9; // Этот цвет используется для заголовков h2 (можно использовать для текста в сообщениях)//
+$nodle-black-200: #cdcecf; // Этот цвет используется для заголовков h3//
+$nodle-black-300: #9b9c9e; // Этот цвет используется для обычного текста (но текст переписок или же после заглавных букв)//
+$nodle-black-400: #686b6e; // Этот цвет используется для текста возле иконок и иконок!!!//
+$nodle-black-500: #363a3d; // Этот цвет используется для незаметного текста по типу если не выбрана строка в сообщении и там написано (отправьте сообщение) (так же для отображения что человек не в сети) //
+$nodle-black-600: #1a1d21; // Єтот цвет для кнопок отправить фото или отправить сообщение или же написать сообщение, вообщем для таких кнопок
+$nodle-black-700: #131619; // Этот цвет используется для заднего фона, но я бы выбрал наверное 600 но мне кажется будет слишком светло//
+$nodle-black-800: #0d0f10; // Этот цвет используется для Хедера, Сайдбара и Для Сайдбара с друзьями и для места где писать сообщение//
 
-$happy-orange-600:#E26F20; // Этот цвет используется для 2-второго квадратика на сайдбаре //
-$sunglow-600:#E2B42B; // Этот цвет используется для 1-вого квадратика на сайдбаре //
+$day-blue-900: #0c1132; // Этот цвет используется для текста на зелёных кнопках //
 
-$background-button: linear-gradient(145deg, rgba(225, 215, 237, 0.16) 0%, rgba(235, 204, 217, 0.16) 100%); // тут не понятно но это стиль для сайдбара слева что бы знать на какой ты странице находишся, так же для отображения твоего аватара слева снизу //
+$stem-green-500: #b6f09c; //Этот цвет используется для кнопок, иконок(на вкладке которой вы находитесь), текста  выделенного и для подчеркивания выбранной вкладки на которой вы находитесь (но так-же предлагаю выбрать какой-то другой цвет для текста или же для кнопки, хотя на макете выглядит весьма приятно для зрения)//
+$stem-green-600: #9ad37f; // Этот цвет используется для обозначения что человек онлайн //
+
+$heisenberg-blue-500: #82dbf7; // Этот цвет испльзуется для пятиугольника на сайдбаре //
+
+$red-power-600: #d0302f; // Этот цвет используется для треугольника на сайдбаре //
+
+$happy-orange-600: #e26f20; // Этот цвет используется для 2-второго квадратика на сайдбаре //
+$sunglow-600: #e2b42b; // Этот цвет используется для 1-вого квадратика на сайдбаре //
+
+$background-button: linear-gradient(
+  145deg,
+  rgba(225, 215, 237, 0.16) 0%,
+  rgba(235, 204, 217, 0.16) 100%
+); // тут не понятно но это стиль для сайдбара слева что бы знать на какой ты странице находишся, так же для отображения твоего аватара слева снизу //
 $glass-stroke: rgba(255, 255, 255, 0.08);
 $glass-modal: rgba(26, 29, 33, 0.96);
 
-$nodle-black-green:#2a9d8f;
-$border-primary:#5cb85c;
+$nodle-black-green: #2a9d8f;
+$border-primary: #5cb85c;
 
 $font-size-title: 34px;
 $font-size-text: 24px;
 $font-size-text-news: 20px;
 
-$font-weight-black: 900; // h1 //
-$font-weight-extra-bold: 800; // h2 и даже для h3 //
-$font-weight-bold: 700; 
-$font-weight-semi-bold: 600; 
-$font-weight-medium: 500; 
-$font-weight-normal: 400; 
-$font-weight-light: 300; 
-$font-weight-extra-light: 200; 
-$font-weight-ultra-light: 100; 
-
-// 100 — очень тонкий шрифт (Ultra Light, Thin).
-// 200 — Extra Light (Ultra Light).
-// 300 — Light (Светлый).
-// 400 — Обычный шрифт (Normal, Regular).
-// 500 — Средний шрифт (Medium).
-// 600 — Полужирный шрифт (Semi Bold, Demi Bold).
-// 700 — Жирный шрифт (Bold).
-// 800 — Очень жирный (Extra Bold).
-// 900 — Чрезвычайно жирный (Black, Heavy).
-
-// xx-small
-// x-small
-// small
-// medium (по умолчанию)
-// large
-// x-large
-// xx-large
-
-
-
 /* Fonts */
-$primary-font: 'Roboto Slab', serif;
-$heading-font: 'Orbitron', sans-serif;
-$button-font: 'Audiowide', sans-serif;
+$primary-font: "Roboto Slab", serif;
+$heading-font: "Orbitron", sans-serif;
+$button-font: "Audiowide", sans-serif;
 $font-size-small: 12px;
 $font-size-small-medium: 14px;
 $font-size-medium: 16px;
@@ -106,10 +166,7 @@ $mobile-breakpoint: 768px;
 $tablet-breakpoint: 1024px;
 $large-screen-breakpoint: 1440px;
 
-
-
 // __________________________________________\\
-
 
 .container {
   display: flex;
@@ -121,14 +178,12 @@ $large-screen-breakpoint: 1440px;
   position: relative;
 }
 
-
-
 .inner {
   display: flex;
   flex-direction: column;
   position: relative;
   gap: 10px;
-  width: 100%;  
+  width: 100%;
 }
 
 .mainContainer {
@@ -138,8 +193,6 @@ $large-screen-breakpoint: 1440px;
   width: 100%;
   border-radius: 10px;
 }
-
-
 
 .menuSocial {
   background-color: $nodle-black-700;
@@ -164,7 +217,6 @@ body {
   // width: 100vh;
   // height: 100vh;
 }
-
 
 .logo {
   // font-size: $font-size-large;
@@ -191,9 +243,6 @@ body {
   transition: background-color 0.3s ease;
 }
 
-
-
-
 // .leftSidebar, .rightSidebar {
 //   width: 220px;
 
@@ -218,16 +267,13 @@ body {
   // margin: 0 $padding-medium;
 }
 
-
 .suggestions {
   font-weight: bold;
 }
 
-
-
-  .mainFeed {
-    margin: 0 $padding-small;
-  }
+.mainFeed {
+  margin: 0 $padding-small;
+}
 
 ////////////////////////////////////////////
 
@@ -315,14 +361,14 @@ body {
   --gradient-percent: 5%;
   --gradient-angle-offset: 0;
   --gradient-shine: var(--shiny-cta-bg-subtle);
-  
+
   /* Убираем включение анимации при наведении */
   &,
   &::before,
   &::after {
     animation-play-state: paused;
   }
-  
+
   span::before {
     opacity: 0;
   }
@@ -473,4 +519,3 @@ body {
   //   font-size: 22px;
   // }
 }
-

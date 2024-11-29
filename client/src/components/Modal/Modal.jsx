@@ -22,10 +22,10 @@ const Modal = ({ isOpen, onClose, onConfirm, message }) => {
 };
 
 Modal.propTypes = {
-  isOpen: PropTypes.bool.isRequired, 
-  onClose: PropTypes.func.isRequired, 
-  onConfirm: PropTypes.func.isRequired, 
-  message: PropTypes.string.isRequired, 
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onConfirm: PropTypes.func.isRequired,
+  message: PropTypes.string.isRequired,
 };
 
 export default Modal;

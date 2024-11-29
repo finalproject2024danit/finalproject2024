@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  comments: {}, // початкове значення
+  comments: {}, 
 };
 
 const commentsSlice = createSlice({

@@ -1,4 +1,6 @@
-.container {
+@use "../../../App.scss" as *;
+
+.residenceBox {
   display: flex;
   flex-direction: column;
   padding: 30px;
@@ -91,7 +93,7 @@
 
 /* Media Queries for Responsive Design */
 @media (max-width: 1024px) {
-  .container {
+  .residenceBox {
     padding: 20px; 
   }
 
@@ -109,7 +111,7 @@
 }
 
 @media (max-width: 767px) {
-  .container {
+  .residenceBox {
     padding: 15px; 
   }
 
