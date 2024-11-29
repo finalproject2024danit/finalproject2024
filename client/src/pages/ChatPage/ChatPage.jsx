@@ -32,39 +32,39 @@ const ChatPage = () => {
 
   const [wsClient, setWsClient] = useState(null);
 
-  useEffect(() => {
-    // Инициализация WebSocket соединения
-    const socket = new SockJS("http://134.209.246.21:9000/ws", null, {
-      withCredentials: false, // Do not include credentials - we face CORS issue runnning locally
-    });
-    const client = Stomp.over(socket);
+  // useEffect(() => {
+  // Инициализация WebSocket соединения
+  // const socket = new SockJS("http://134.209.246.21:9000/ws", null, {
+  //   withCredentials: false, // Do not include credentials - we face CORS issue runnning locally
+  // });
+  // const client = Stomp.over(socket);
 
-    client.connect({}, () => {
-      console.log("Connected to WebSocket");
+  // client.connect({}, () => {
+  //   console.log("Connected to WebSocket");
 
-      // Подписка на общую тему
-      // client.subscribe("/topic/messages", (message) => {
-      // console.log("WsClient received topic message", message);
-      // dispatch(receivedTopicMessage(message));
-      // });
+  // Подписка на общую тему
+  // client.subscribe("/topic/messages", (message) => {
+  // console.log("WsClient received topic message", message);
+  // dispatch(receivedTopicMessage(message));
+  // });
 
-      // Подписка на личные сообщения
-      client.subscribe("/user/queue/reply", (message) => {
-        console.log("Private message:", JSON.parse(message.body));
-        dispatch(receivedMessage(message));
-      });
-    });
+  // Подписка на личные сообщения
+  //   client.subscribe("/user/queue/reply", (message) => {
+  //     console.log("Private message:", JSON.parse(message.body));
+  //     dispatch(receivedMessage(message));
+  //   });
+  // });
 
-    setWsClient(client);
+  // setWsClient(client);
 
-    return () => {
-      if (client) {
-        client.disconnect(() => {
-          console.log("Disconnected from WebSocket");
-        });
-      }
-    };
-  }, []);
+  //   return () => {
+  //     if (client) {
+  //       client.disconnect(() => {
+  //         console.log("Disconnected from WebSocket");
+  //       });
+  //     }
+  //   };
+  // }, []);
 
   useEffect(() => {
     if (window.particlesJS) {
