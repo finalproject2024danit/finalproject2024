@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   fetchMessages,
   selectUser,
-  sendMessage,
+  receivedMessage,
 } from "../../redux/slices/chatSlice";
 import { fetchConversations } from "../../redux/slices/conversationsSlice";
 import NewMessageForm from "./NewMessageForm/NewMessageForm";
@@ -36,34 +36,41 @@ const ChatPage = () => {
 
   // , setCurrentUser я тут убрал эту переменную отсюда   const {currentUser, setCurrentUser} = useState({id: 1}); она нигде не используется и ругается lint
 
-  // useEffect(() => {
-  //     // Инициализация WebSocket соединения
-  //     const socket = new SockJS('http://134.209.246.21:9000/ws');
-  //     const client = Stomp.over(socket);
+  const [wsClient, setWsClient] = useState(null);
 
-  //     client.connect({}, () => {
-  //         console.log('Connected to WebSocket');
+  useEffect(() => {
+    // Инициализация WebSocket соединения
+    const socket = new SockJS("http://134.209.246.21:9000/ws", null, {
+      withCredentials: false, // Do not include credentials - we face CORS issue runnning locally
+    });
+    const client = Stomp.over(socket);
 
-  //         // Подписка на общую тему
-  //         client.subscribe('/topic/messages', (message) => {
-  //             console.log(message)
-  //         });
+    client.connect({}, () => {
+      console.log("Connected to WebSocket");
 
-  //         // Подписка на личные сообщения
-  //         client.subscribe('/user/queue/reply', (message) => {
-  //             console.log('Private message:', JSON.parse(message.body));
-  //         });
+      // Подписка на общую тему
+      // client.subscribe("/topic/messages", (message) => {
+      // console.log("WsClient received topic message", message);
+      // dispatch(receivedTopicMessage(message));
+      // });
 
-  //     });
+      // Подписка на личные сообщения
+      client.subscribe("/user/queue/reply", (message) => {
+        console.log("Private message:", JSON.parse(message.body));
+        dispatch(receivedMessage(message));
+      });
+    });
 
-  //     return () => {
-  //         if (client) {
-  //             client.disconnect(() => {
-  //                 console.log('Disconnected from WebSocket');
-  //             });
-  //         }
-  //     };
-  // }, []);
+    setWsClient(client);
+
+    return () => {
+      if (client) {
+        client.disconnect(() => {
+          console.log("Disconnected from WebSocket");
+        });
+      }
+    };
+  }, []);
 
   useEffect(() => {
     if (window.particlesJS) {
@@ -227,19 +234,18 @@ const ChatPage = () => {
     console.log("user in handleUserSelect", user);
   };
 
-  const handleSendMessage = (message) => {
-    dispatch(sendMessage(message));
-  };
-
-  // const handleSendMessage = (newMessageContent) => {
-  //   const newMessage = {
-  //     content: newMessageContent,
-  //     userFrom: currentUser,
-  //     userTo: selectedUser.id,
-  //   };
-  //   websocket.send(JSON.stringify(newMessage)); // Replace 'websocket' with your actual WebSocket instance
-  //   dispatch(sendMessage(newMessage));
+  // const handleSendMessage = (message) => {
+  // dispatch(sendMessage(message));
   // };
+
+  const handleSendMessage = (newMessageContent) => {
+    const newMessage = {
+      content: newMessageContent,
+      userFrom: currentUser.id,
+      userTo: selectedUser.id,
+    };
+    wsClient.send("/chat", {}, JSON.stringify(newMessage));
+  };
 
   // Filter talks based on searchTerm
   const filteredConversations = conversations.filter(
