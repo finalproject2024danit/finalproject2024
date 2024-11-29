@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {getNews, getNewsById} from '../../api/news/requests.js'; // Імпорт функції getNews з requests.js
+import {getNews, getNewsById} from '../../api/news/requests.js'; 
 
 const initialState = {
     news: [],
@@ -23,7 +23,7 @@ export const fetchNewsById = createAsyncThunk(
     'news/fetchNewsById',
     async (id, {rejectWithValue}) => {
         try {
-            return await getNewsById(id); // Вызов функции getNewsById
+            return await getNewsById(id); 
         } catch (error) {
             return rejectWithValue(error.message);
         }

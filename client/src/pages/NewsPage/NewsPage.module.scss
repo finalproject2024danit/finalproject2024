@@ -28,19 +28,19 @@
 }
 
 .news-detail__title {
-  font-size: $font-size-title;
-  font-weight: bold;
-  color: $nodle-black-0;
+  font-size: $huge;
+  font-weight: $font-weight-semi-bold;
+  color: $primary;
 }
 
 .news-detail__text {
   margin: 20px 0;
-  font-size: $font-size-text;
-  color: $nodle-black-200;
+  font-size: $larger;
+  color: $seventh;
   line-height: 1.5;
 }
 
 .news-detail__date {
-  font-size: 14px;
+  font-size: $smaller;
   color: #777;
 }

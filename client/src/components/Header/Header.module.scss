@@ -6,24 +6,22 @@
   border-radius: 10px;
   overflow: hidden;
   padding-right: 5px;
-  top: 0; // Додаємо top
-  z-index: 100; // Високий z-index для перекриття
+  top: 0; 
+  z-index: 100; 
 }
 
 header {
   display: flex;
-  padding: 20px;
-  background-color: $nodle-black-800;
+  padding: 20px; 
   width: 100%;
 
   h1 {
-    background: linear-gradient(to right, #dcdcdc, $border-color-blue, #dcdcdc, $border-color-blue);
+    background: $linear-gradient-header;
     background-size: 300%;
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-
-    font-size: $font-size-title;
+    font-size: $huge;
     font-weight: $font-weight-bold;
     cursor: pointer;
 
@@ -45,19 +43,19 @@ header {
   .radioBtn {
     width: 80px;
     height: 26px;
-    background: #333;
+    background: $background-btn-fourth;
     position: relative;
     border-radius: 50px;
     box-shadow: inset 0 1px 1px rgba(0,0,0,0.5), 0 1px 0 rgba(255,255,255,0.2);
 
     &:after {
       content: 'UA';
-      color: gray;
+      color: $secondary;
       position: absolute;
       right: 10px;
       z-index: 0;
       font: 12px/26px Arial, sans-serif;
-      font-weight: bold;
+      font-weight: $font-weight-bold;
       text-shadow: 1px 1px 0 rgba(255,255,255,.15);
     }
 
@@ -68,7 +66,7 @@ header {
       left: 10px;
       z-index: 0;
       font: 12px/26px sans-serif;
-      font-weight: bold;
+      font-weight: $font-weight-bold;
     }
 
     label {
@@ -108,15 +106,15 @@ header {
     content: "";
     position: absolute;
     left: -14px;
-    bottom: -10px; /* Положення лінії */
-    width: 200%; /* Ширина лінії */
-    height: 3px; /* Висота лінії */
-    background-color: grey; /* Сірий колір для неактивних сторінок */
+    bottom: -10px; 
+    width: 200%; 
+    height: 3px; 
+    background-color: $background-secondary; 
     transition: background-color 0.3s ease;
   }
 
   .headerNav li a.active::after {
-    background-color: green; /* Зелений колір для активної сторінки */
+    background-color: $background-third; 
   }
 
   .logoBox {
@@ -136,7 +134,7 @@ header {
     gap: 30px;
     padding: 20px;
     box-sizing: border-box;
-    border-bottom: 1px solid $nodle-black-700;
+    // border-bottom: 1px solid $fifth;
   }
 
   .imgLogo {
@@ -157,135 +155,3 @@ header {
   }
 }
 
-// .skyContainer {
-//   width: 100vw;
-//   height: 100vh;
-//   transform: rotateZ(45deg);
-//   position: fixed;
-//   top: -50px; // Початок зірок вище вікна
-// }
-
-// // Залишаємо існуючий стиль для зірок
-// .star {
-//   position: absolute;
-//   top: 50%;
-//   left: 50%;
-//   height: 1px;
-//   background: linear-gradient(-45deg, #5f91ff, rgba(0, 0, 255, 0));
-//   filter: drop-shadow(0 0 5px #2557bb);
-//   animation: tail 3000ms ease-in-out infinite, shooting 3000ms ease-in-out infinite;
-// }
-
-// .star::before, .star::after {
-//   position: absolute;
-//   content: '';
-//   top: calc(100% - 1px);
-//   right: 0;
-//   height: 2px;
-//   background: linear-gradient(-45deg, rgba(0, 0, 255, 0), #5f91ff, rgba(0, 0, 255, 0));
-//   border-radius: 100%;
-//   transform: translateX(50%) rotateZ(45deg);
-//   animation: shining 3000ms ease-in-out infinite;
-// }
-
-// .star::after {
-//   transform: translateX(50%) rotateZ(-45deg);
-// }
-
-// /* Позиції зірок */
-// .star:nth-child(1) {
-//   top: calc(10% - 100px);
-//   left: calc(80% - 300px);
-//   animation-delay: 1650ms;
-// }
-
-// .star:nth-child(2) {
-//   top: calc(20% - -50px);
-//   left: calc(60% - 190px);
-//   animation-delay: 350ms;
-// }
-
-// .star:nth-child(3) {
-//   top: calc(30% - -90px);
-//   left: calc(30% - 200px);
-//   animation-delay: 400ms;
-// }
-
-// .star:nth-child(4) {
-//   top: calc(40% - 50px);
-//   left: calc(30% - 250px);
-//   animation-delay: 4700ms;
-// }
-
-// .star:nth-child(5) {
-//   top: calc(50% - -190px);
-//   left: calc(16% - 200px);
-//   animation-delay: 2100ms;
-// }
-
-// /* Нові зірки */
-// .star:nth-child(6) {
-//   top: calc(60% - 20px);
-//   left: calc(10% - 50px);
-//   animation-delay: 1500ms;
-// }
-
-// .star:nth-child(7) {
-//   top: calc(70% - 40px);
-//   left: calc(20% - 100px);
-//   animation-delay: 800ms;
-// }
-
-// .star:nth-child(8) {
-//   top: calc(80% - 60px);
-//   left: calc(30% - 150px);
-//   animation-delay: 2000ms;
-// }
-
-// .star:nth-child(9) {
-//   top: calc(90% - 80px);
-//   left: calc(40% - 200px);
-//   animation-delay: 300ms;
-// }
-
-// .star:nth-child(10) {
-//   top: calc(100% - 100px);
-//   left: calc(50% - 250px);
-//   animation-delay: 600ms;
-// }
-
-// /* Animations */
-// @keyframes tail {
-//   0% {
-//     width: 0;
-//   }
-
-//   30% {
-//     width: 100px;
-//   }
-
-//   100% {
-//     width: 0;
-//   }
-// }
-
-// @keyframes shining {
-//   0% {
-//     width: 0;
-//   }
-//   50% {
-//     width: 30px;
-//   }
-//   100% {
-//     width: 0;
-//   }
-// }
-
-// @keyframes shooting {
-//   0% {
-//     transform: translateX(0);
-//   }
-//   100% {
-//     transform: translateX(320px);
-//   }
-// }

@@ -1,24 +1,20 @@
 @use "../../App.scss" as *;
 
-// @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
-
 .circles {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  // overflow: hidden;
-  pointer-events: none; /* Вимикає взаємодію з елементами */
+  pointer-events: none;
 }
 .circles li {
   position: absolute;
-  // z-index: 9;
   display: block;
   list-style: none;
   width: 20px;
   height: 20px;
-  background: rgba(255, 255, 255, 0.2);
+  background: $background-eleventh;
   animation: animate 25s linear infinite;
   bottom: -150px;
 }
@@ -101,39 +97,24 @@
     border-radius: 50%;
   }
 }
-/***********************************/
-
-/* Import Google font - Poppins */
-// @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
-
-// * {
-//   margin: 0;
-//   padding: 0;
-//   box-sizing: border-box;
-// }
 
 .logHeader {
   position: relative;
-    background-color: transparent !important;
-    margin-top: 15px;
-    padding: 0;
+  background-color: transparent !important;
+  margin-top: 15px;
+  padding: 0;
 }
 
 .loginBox {
   width: 100vw;
   height: 100vh;
-  // height: 750px;
-  // min-height: 100vw;
   display: flex;
   align-items: center;
   justify-content: center;
   background-position: center;
   background-size: cover;
   background-image: url(https://images.unsplash.com/photo-1618005198920-f0cb6201c115?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80);
-  background-color: #ececec;
-  // margin: 0;
-  // padding: 0;
-  // box-sizing: border-box;
+  background-color: $background-twelfth;
   position: relative;
   overflow: hidden;
   margin-left: -15px;
@@ -145,7 +126,7 @@
   width: 100%;
   border-radius: 12px;
   padding: 20px 30px 120px;
-  background: rgb(1 197 196 / 51%);
+  background: $background-thirteenth;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   backdrop-filter: saturate(180%) blur(8px);
@@ -163,10 +144,10 @@
   padding: 0 140px;
   border-radius: 50%;
   height: 100%;
-  background: #030f4a;
+  background: $background-fourteenth;
   transition: all 0.6s ease;
-  color: white;
-  border: 7px solid #31e5e4;
+  color: $primary;
+  border: 7px solid $eighth;
 }
 .wrapper.active .form.login {
   bottom: -15%;
@@ -174,14 +155,14 @@
   box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.1);
 }
 .form header {
-  font-size: 30px;
+  font-size: $extra-large;
   text-align: center;
-  color: #fff;
-  font-weight: 600;
+  color:$primary;
+  font-weight: $font-weight-semi-bold;
   cursor: pointer;
 }
 .form.login header {
-  color: #fff;
+  color:$primary;
   opacity: 0.6;
 }
 .wrapper.active .form.login header {
@@ -201,11 +182,11 @@ form input {
   outline: none;
   margin: 6px 0;
   padding: 0 15px;
-  font-size: 15px;
-  font-weight: 400;
-  color: #333;
+  font-size: $normal;
+  font-weight: $font-weight-normal;
+  color: $ninth;
   border-radius: 8px;
-  background: #fff;
+  background: $primary;
   box-shadow: -10px -10px 14px rgba(255, 255, 255, 0.3),
     10px 10px 15px rgba(70, 70, 70, 0.15),
     inset -10px -10px 15px rgba(255, 255, 255, 0.3),
@@ -213,7 +194,7 @@ form input {
   border: 1px solid #05b5b4de;
 }
 .form.login input {
-  border: 1px solid #303030;
+  border: 1px solid $ninth;
   box-shadow: -10px -10px 14px rgb(27 22 86 / 30%),
     10px 10px 15px rgb(61 88 151 / 15%),
     inset -10px -10px 15px rgb(108 136 233 / 30%),
@@ -230,15 +211,16 @@ form .checkbox {
 .checkbox input[type="checkbox"] {
   height: 16px;
   width: 16px;
-  accent-color: #fff;
+  accent-color: $primary;
   cursor: pointer;
 }
 form .checkbox label {
   cursor: pointer;
-  color: #fff;
+  color:$primary;
 }
 form a {
-  color: #afaeae;
+  color: $tenth;
+  ;
   text-decoration: none;
 }
 form a:hover {
@@ -247,22 +229,23 @@ form a:hover {
 form input[type="submit"] {
   margin-top: 15px;
   padding: none;
-  font-size: 18px;
-  font-weight: 500;
+  font-size: $medium;
+  font-weight: $font-weight-medium;
   cursor: pointer;
 }
 .form.login input[type="submit"] {
-  background: #01c5c4;
-  color: #fff;
+  background: $background-btn-sixth;
+  color: $primary;
   border: none;
 }
 
-.signUpBtn,.loginBtn {
+.signUpBtn,
+.loginBtn {
   padding: 15px;
-  background: #01c5c4;
-  color: white;
+  background: $background-btn-sixth;
+  color: $primary;
   border-radius: 8px;
-  font-size: 18px;
-  font-weight: 600;
+  font-size: $medium;
+  font-weight: $font-weight-semi-bold;
   cursor: pointer;
 }

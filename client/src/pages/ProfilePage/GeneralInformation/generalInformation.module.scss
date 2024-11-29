@@ -1,4 +1,6 @@
-.container {
+@use "../../../App.scss" as *;
+
+.generalBox {
   display: flex; 
   flex-direction: column;
   padding: 30px;
@@ -114,7 +116,7 @@ display: flex;
 
 /* Медиазапросы для планшетов */
 @media (max-width: 1024px) {
-  .container {
+  .generalBox {
     flex-direction: column;
     padding: 20px;
   }
@@ -160,7 +162,7 @@ display: flex;
 
 /* Медиазапросы для мобильных устройств */
 @media (max-width: 767px) {
-  .container {
+  .generalBox {
     padding: 15px;
   }
 

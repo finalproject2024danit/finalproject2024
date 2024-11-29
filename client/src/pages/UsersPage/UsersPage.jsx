@@ -24,7 +24,7 @@ const UsersPage = () => {
   const [error, setError] = useState(null);
   const [flippedCards, setFlippedCards] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true); // Для перевірки, чи є ще дані
+  const [hasMore, setHasMore] = useState(true);
   const usersPerPage = 10;
   const sortBy = "firstName";
   const sortDirection = "asc";
@@ -36,10 +36,10 @@ const UsersPage = () => {
   const { friends } = useSelector((state) => state.friends);
 
   const fetchUsers = useCallback(async () => {
-    if (!hasMore) return; // Зупиняємо завантаження, якщо даних більше немає
+    if (!hasMore) return;
     setLoading(true);
     setError(null);
-  
+
     try {
       const response = await axiosInstance.get("/users/filter", {
         params: {
@@ -49,16 +49,16 @@ const UsersPage = () => {
           sortDirection,
         },
       });
-  
+
       const usersData = response.data || [];
       if (usersData.length > 0) {
-        setUsers((prevUsers) => [...prevUsers, ...usersData]); // Додаємо нових користувачів
+        setUsers((prevUsers) => [...prevUsers, ...usersData]);
       } else {
-        setHasMore(false); // Даних більше немає
+        setHasMore(false);
       }
     } catch (err) {
       if (err.response?.status === 404) {
-        setHasMore(false); // Зупиняємо подальші запити
+        setHasMore(false);
       } else {
         setError(t("users.loadError", { message: err.message }));
       }
@@ -66,7 +66,6 @@ const UsersPage = () => {
       setLoading(false);
     }
   }, [currentPage, hasMore, t]);
-  
 
   useEffect(() => {
     fetchUsers();
@@ -77,15 +76,14 @@ const UsersPage = () => {
       window.innerHeight + document.documentElement.scrollTop >=
       document.documentElement.offsetHeight - 100
     ) {
-      setCurrentPage((prevPage) => prevPage + 1); // Завантажуємо наступну сторінку
+      setCurrentPage((prevPage) => prevPage + 1);
     }
   };
-  
+
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-  
 
   const filteredUsers = users.filter((user) =>
     `${user.firstName} ${user.lastName}`
@@ -168,9 +166,7 @@ const UsersPage = () => {
                   isFriend={friends.some((friend) => friend.id === user.id)}
                   disabled={selectedUserId === null}
                 />
-                <h2 className={styles.clickToFlip}>
-                  {t("users.clickToFlip")}
-                </h2>
+                <h2 className={styles.clickToFlip}>{t("users.clickToFlip")}</h2>
               </div>
             </div>
           </div>
@@ -189,10 +185,3 @@ const UsersPage = () => {
 };
 
 export default UsersPage;
-
-
-
-
-
-
-

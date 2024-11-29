@@ -15,17 +15,17 @@ const validationSchema = Yup.object().shape({
 
 const Workplace = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.user); 
+  const user = useSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
   const [workplaces, setWorkplaces] = useState([]);
   const [isLoadingWorkplaces, setIsLoadingWorkplaces] = useState(true);
-  const [isEditing, setIsEditing] = useState(false); 
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     const fetchWorkplaces = async () => {
       try {
         const response = await axios.get("/api/v1/workplace");
-        setWorkplaces(response.data); 
+        setWorkplaces(response.data);
       } catch (error) {
         console.error("Error fetching workplaces", error);
       } finally {
@@ -47,7 +47,7 @@ const Workplace = () => {
         updateUserData({ userId: user.id, userData: updatedData })
       );
       console.log("Selected Workplace ID:", values.workplaceId);
-      setIsEditing(false); 
+      setIsEditing(false);
     } catch (error) {
       console.error("Error processing workplace", error);
     } finally {
@@ -56,22 +56,22 @@ const Workplace = () => {
   };
 
   const formik = useFormik({
-    initialValues: { workplaceId: user.workplace || "" }, 
+    initialValues: { workplaceId: user.workplace || "" },
     validationSchema: validationSchema,
     onSubmit: handleSubmit,
   });
-  
+
   if (loading) {
     return <div>Loading...</div>;
-}
+  }
 
   return (
     <MainContent title="">
-      <div className={styles.container}>
+      <div className={styles.workplaceBox}>
         <ProfileMenu />
         <div className={styles.content}>
           <h2 className={styles.title}>Select Workplace</h2>
-               
+
           <div className={styles.currentWorkplace}>
             <h3 className={styles.subtitle}>Current Workplace</h3>
             <p
@@ -82,7 +82,7 @@ const Workplace = () => {
               {user.workplace || "No workplace selected"}
             </p>
           </div>
-         
+
           {isEditing ? (
             <form className={styles.form} onSubmit={formik.handleSubmit}>
               <div className={styles.inputGroup}>
@@ -112,11 +112,11 @@ const Workplace = () => {
                 )}
               </div>
             </form>
-          ) : null}        
+          ) : null}
           <EditButtons
             isEditing={isEditing}
-            onEditClick={() => setIsEditing((prev) => !prev)} 
-            onSaveClick={formik.handleSubmit} 
+            onEditClick={() => setIsEditing((prev) => !prev)}
+            onSaveClick={formik.handleSubmit}
           />
         </div>
       </div>

@@ -1,27 +1,29 @@
-// import { createSlice } from '@reduxjs/toolkit';
-import { createSlice } from "@reduxjs/toolkit";
+// import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = {
-    currentUser: {
-        id: 1, // Example ID for the current user
-        firstName: "John",
-        lastName: "Doe",
-    },
-    isAuthenticated: true, // Example additional state
-};
+// const initialState = {
+//     currentUser: {
+//         id: 1, 
+//         firstName: "John",
+//         lastName: "Doe",
+//     },
+//     isAuthenticated: true, 
+// };
 
-const authSlice = createSlice({
-    name: "auth",
-    initialState,
-    reducers: {
-        setCurrentUser(state, action) {
-            state.currentUser = action.payload;
-        },
-    },
-});
+// const authSlice = createSlice({
+//     name: "auth",
+//     initialState,
+//     reducers: {
+//         setCurrentUser(state, action) {
+//             state.currentUser = action.payload;
+//         },
+//     },
+// });
 
-export const { setCurrentUser } = authSlice.actions;
-export default authSlice.reducer;
+// export const { setCurrentUser } = authSlice.actions;
+// export default authSlice.reducer;
+
+
+
 
 // const initialState = {
 //     isLoggedIn: true,
