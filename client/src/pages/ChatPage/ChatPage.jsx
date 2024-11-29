@@ -14,12 +14,6 @@ import axiosInstance from "../../api/axiosInstance.js";
 const ChatPage = () => {
   const dispatch = useDispatch();
 
-  // Get current user from userSlice
-  const currentUser = useSelector((state) => {
-    state.user;
-    console.log("current user", state.user);
-  });
-
   const { messages, selectedUser, chatLoading } = useSelector(
     (state) => state.chat
   );
@@ -31,7 +25,7 @@ const ChatPage = () => {
   );
   // const { messages, selectedUser, chatLoading , talks} = useSelector((state) => state.chat);
   // const { currentUser } = useSelector((state) => state.auth); // Fetch `currentUser` from Redux
-  // const [currentUser] = useState({id: 1});
+  const [currentUser] = useState({ id: 1 });
   const [searchTerm, setSearchTerm] = useState("");
 
   // , setCurrentUser я тут убрал эту переменную отсюда   const {currentUser, setCurrentUser} = useState({id: 1}); она нигде не используется и ругается lint

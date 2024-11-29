@@ -29,6 +29,30 @@ const NewMessageForm = ({ onSendMessage, selectedUser, filteredMessages }) => {
   };
 
   return (
+    // <Formik
+    //   initialValues={initialValues}
+    //   validationSchema={validationSchema}
+    //   onSubmit={handleSubmit}
+    // >
+    //   <Form className={styles.form}>
+    //     <div className={styles.formGroup}>
+    //       <Field
+    //         name="message"
+    //         as="textarea"
+    //         placeholder="Type your message..."
+    //       />
+    //       <ErrorMessage
+    //         name="message"
+    //         component="div"
+    //         className={styles.error}
+    //       />
+    //     </div>
+    //     <button type="submit" className={styles.submitBtn}>
+    //       &#8593;{/* Upward arrow */}
+    //     </button>
+    //   </Form>
+    // </Formik>
+
     <div>
       <div className={styles.messagesChat}>
         {filteredMessages.map((msg, index) => {
@@ -104,6 +128,8 @@ NewMessageForm.propTypes = {
   }).isRequired,
   filteredMessages: PropTypes.arrayOf(
     PropTypes.shape({
+      content: PropTypes.string, // Changed to optional
+
       id: PropTypes.number,
       user: PropTypes.object, // Adjust as per user object structure
       message: PropTypes.string,
