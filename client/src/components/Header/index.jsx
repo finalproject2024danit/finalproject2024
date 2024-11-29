@@ -7,6 +7,7 @@ import HomeIcon from "../../svg/Header/Home";
 import ChatIcon from "../../svg/Header/Chat";
 import styles from "./Header.module.scss";
 
+
 const Header = () => {
   const { t, i18n } = useTranslation();
 
