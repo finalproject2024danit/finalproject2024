@@ -3,9 +3,11 @@
 .newsBox {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 20px;
 
   .newsCard {
+    width: 97%;
     display: flex;
     gap: 20px;
     border: 1px solid $fifth;

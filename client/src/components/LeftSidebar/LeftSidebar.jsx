@@ -39,7 +39,8 @@ const LeftSidebar = () => {
   };
 
   return (
-    <aside className={`${styles.leftMenu} ${styles.shinyCta}`}>
+    // <aside className={`${styles.leftMenu} ${styles.shinyCta}`}>
+    <aside className={`${styles.leftMenu} `}>
       <NavLink
         className={({ isActive }) => (isActive ? styles.active : "")}
         to="/profile/general_information"
@@ -71,7 +72,7 @@ const LeftSidebar = () => {
         </Formik>
       </div>
 
-      <div className={styles.gamesLink}>
+      {/* <div className={styles.gamesLink}>
         <NavLink
           className={({ isActive }) => (isActive ? styles.active : "")}
           to="/solar"
@@ -96,7 +97,7 @@ const LeftSidebar = () => {
         >
           {t("leftSidebar.game3")}
         </NavLink>
-      </div>
+      </div> */}
       <div className={styles.functionBlock}>
         <Exit />
       </div>
