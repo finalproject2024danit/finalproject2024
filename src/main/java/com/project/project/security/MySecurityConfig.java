@@ -34,6 +34,8 @@ public class MySecurityConfig {
                         requests
                                 .requestMatchers("/**").permitAll()
                                 .requestMatchers("/").permitAll()
+                                .requestMatchers("http://localhost:3000/*").permitAll()
+                                .requestMatchers("http://localhost:3000/**").permitAll()
 //                                .requestMatchers("/login").permitAll()
 //                                .requestMatchers("/:9000/login").permitAll()
 //                                .requestMatchers("http://134.209.246.21:9000/login").permitAll()

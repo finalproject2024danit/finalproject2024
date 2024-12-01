@@ -28,11 +28,8 @@ public class ResponsePostDto extends AbstractDto {
     @JsonView(View.Admin.class)
     String content;
 
-//    @JsonView(View.Admin.class)
-//    Set<ResponseCommentDto> comments;
-//
-//    @JsonView(View.Admin.class)
-//    Set<ResponseLikeDto> likes;
+    @JsonView(View.Admin.class)
+    Long groupId;
 
     @JsonView(View.Admin.class)
     LocalDateTime createdDate;

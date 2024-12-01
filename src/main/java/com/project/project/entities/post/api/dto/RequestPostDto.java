@@ -1,6 +1,7 @@
 package com.project.project.entities.post.api.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,6 +19,12 @@ import static lombok.AccessLevel.PRIVATE;
 public class RequestPostDto {
 
     @NotBlank(message = "Content must not be blank")
-    @Size(max = 10000, message = "Email must not exceed 100 characters")
+    @Size(max = 10000, message = "Content must not exceed 10000 characters")
     String content;
+
+    @NotNull(message = "User ID must not be null")
+    Long userId;
+
+    @NotNull(message = "Group ID must not be null")
+    Long groupId;
 }
