@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import UsersIcon from "../../svg/Header/Users";
 import GroupIcon from "../../svg/Header/Group";
@@ -7,11 +7,12 @@ import HomeIcon from "../../svg/Header/Home";
 import ChatIcon from "../../svg/Header/Chat";
 import styles from "./Header.module.scss";
 
-
 const Header = () => {
   const { t, i18n } = useTranslation();
+  const navigate = useNavigate(); // Для перенаправления при выборе игры
 
   const [isChecked, setIsChecked] = useState(i18n.language === "ua");
+  const [selectedGame, setSelectedGame] = useState(""); // Выбранная игра
 
   useEffect(() => {
     setIsChecked(i18n.language === "ua");
@@ -20,6 +21,14 @@ const Header = () => {
   const handleLanguageChange = () => {
     const newLang = isChecked ? "en" : "ua";
     i18n.changeLanguage(newLang);
+  };
+
+  const handleGameChange = (event) => {
+    const game = event.target.value;
+    setSelectedGame(game);
+    if (game) {
+      navigate(game); // Переход на страницу игры
+    }
   };
 
   return (
@@ -102,6 +111,22 @@ const Header = () => {
                     >
                       <GroupIcon />
                     </NavLink>
+                  </li>
+                  <li>
+                    <div className={styles.gamesSelect}>
+                      <select
+                        value={selectedGame}
+                        onChange={handleGameChange}
+                        className={styles.gameDropdown}
+                      >
+                        {/* <option value="">{t("header.selectGame")}</option> */}
+                        
+                        <option value="/game1">{t("leftSidebar.game1")}</option>
+                        <option value="/game2">{t("leftSidebar.game2")}</option>
+                        <option value="/game3">{t("leftSidebar.game3")}</option>
+                        <option value="/solar">{t("leftSidebar.solarSystem")}</option>
+                      </select>
+                    </div>
                   </li>
                 </ul>
               </nav>

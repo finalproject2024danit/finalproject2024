@@ -30,7 +30,7 @@ const ExitIcon = () => {
             <svg
                 className="exit-icon"
                 height="70px"
-                width="70px"
+                width="90px"
                 version="1.1"
                 id="Layer_1"
                 xmlns="http://www.w3.org/2000/svg"

@@ -2,11 +2,14 @@
 
 .mainBox {
   // margin-top: 180px;
-  width: 81%;
+  border-radius: 10px;
+  width: 99%;
   height: 100%;
   padding: 0 10px;
   overflow-y: auto;
   overflow-x: hidden;
+  background-color: $background-secondary;
+  
 }
 
 .mainBox::-webkit-scrollbar {
@@ -30,14 +33,14 @@
 
 @media (max-width: 1024px) {
   .mainBox {
-    width: 90%;
-    margin-top: 150px;
+    // width: 90%;
+    // margin-top: 150px;
   }
 }
 
 @media (max-width: 767px) {
   .mainBox {
-    width: 95%;
-    margin-top: 120px;
+    // width: 95%;
+    // margin-top: 120px;
   }
 }

@@ -1,9 +1,9 @@
 :root {
-    --shiny-cta-bg: #000000;
+    --shiny-cta-bg: #050505;
     --shiny-cta-bg-subtle: #1a1818;
     --shiny-cta-fg: #ffffff;
-    --shiny-cta-highlight: blue;
-    --shiny-cta-highlight-subtle: #8484ff;
+    --shiny-cta-highlight:#282f44;
+    --shiny-cta-highlight-subtle:#282f44;
   }
   
   @property --gradient-angle {
@@ -31,6 +31,7 @@
   }
   
   .shinyCta {
+    border-radius: 20px;
     --animation: gradient-angle linear infinite;
     --duration: 3s;
     --shadow-size: 2px;
