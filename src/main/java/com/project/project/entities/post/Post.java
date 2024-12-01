@@ -32,22 +32,22 @@ import static lombok.AccessLevel.PRIVATE;
 public class Post extends AbstractEntity {
 
     @Column(name = "user_id", nullable = false)
-    private Long userId;
+    Long userId;
 
     @Column(nullable = false)
-    private String content;
+    String content;
 
     @JsonManagedReference
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Comment> comments = new HashSet<>();
+    Set<Comment> comments = new HashSet<>();
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Like> likes = new HashSet<>();
+    Set<Like> likes = new HashSet<>();
 
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "group_id", nullable = false)
-    private Group group;
+    Group group;
 
     @CreatedDate
     @Temporal(TIMESTAMP)

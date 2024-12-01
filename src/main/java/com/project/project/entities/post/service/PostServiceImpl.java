@@ -22,8 +22,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Set<Post> getPostsByUserId(long id) {
-        return Set.of();
+    public Set<Post> getPostsByUserId(long userId) {
+        return postRepository.getPostsByUserId(userId);
     }
 
     @Override
@@ -32,8 +32,10 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post updatePost(long id, Post post) {
-        return null;
+    public Post patchPost(long id, String postContent) {
+        Post post = getPostById(id);
+        post.setContent(postContent);
+        return post;
     }
 
     @Override
