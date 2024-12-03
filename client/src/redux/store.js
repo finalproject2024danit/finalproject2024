@@ -13,7 +13,6 @@ import conversationReducer from "./slices/conversationsSlice.js";
 
 export const store = configureStore({
   reducer: {
-    // auth: authReducer,
     chat: chatReducer,
     user: userReducer,
     group: groupReducer,
@@ -24,7 +23,6 @@ export const store = configureStore({
     comments: commentsReducer,
     globalsearch: globalsearchReducer,
     conversations: conversationReducer,
-
   },
 });
 

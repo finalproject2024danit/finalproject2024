@@ -3,21 +3,34 @@
 .leftMenu {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  width: 16%;
-  height: 96vh;
-  background-color: $nodle-black-800;
+  // justify-content: space-between;
+  // width: 12%;
+  // height: 98vh;
+  background-color:$background-secondary;
   border-radius: 10px;
-  position: sticky;
-  top: 10px;
-  left: 10px;
+  // position: sticky;
+  // top: 10px;
+  // left: 10px;
+  opacity: 0.9;
+  border: 3px solid $twelfth;
 
   .functionBlock {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin-top: 20px;
+    // margin-top: 20px;
+    cursor: pointer;
+    
+
   }
+ 
+  // .functionBlock svg:hover {
+  //   // width: 200px;
+  //   border-radius: 50%;
+  //   color: $sixth;
+  //   transform: scale(1.1);
+  //   box-shadow: 0 0 15px rgba(0, 255, 234, 0.8), 0 0 25px rgba(0, 255, 234, 0.5);
+  // }
 
   .iconWrapper {
     display: flex;
@@ -34,9 +47,14 @@
     background-position: center;
   }
 
+  // .iconWrapper img:hover {
+  //   color: $sixth;
+  //   transform: scale(1.1);
+  //   box-shadow: 0 0 15px rgba(0, 255, 234, 0.8), 0 0 25px rgba(0, 255, 234, 0.5);
+  // }
+
   .menuForm {
     padding: 20px 10px;
-    background-color: $background-button;
     width: 80%;
     margin-left: 10px;
     border-radius: 10px;
@@ -50,44 +68,34 @@
     padding: 20px 5px;
   }
 
-  .menuForm button {
-    background-color: $border-primary;
-    color: $nodle-black-100;
-    border-radius: 5px;
-    padding: 5px;
-    cursor: pointer;
-  }
-
   a {
     cursor: pointer;
   }
 
-  .gamesLink {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 30px;
-  }
+  // .gamesLink {
+  //   display: flex;
+  //   flex-direction: column;
+  //   align-items: center;
+  //   gap: 30px;
+  // }
 }
 
+// .gamesLink a {
+//   text-decoration: none;
+//   color: $fourth;
+//   font-size: $larger;
+//   font-weight: $font-weight-semi-bold;
+//   padding: 10px 20px;
+//   border-radius: 5px;
+//   position: relative;
+//   transition: color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+// }
 
-.gamesLink a {
-  text-decoration: none; /* Remove underlining */
-  color: orange; /* White text for cosmic effect */
-  font-size: 24px; /* Font size */
-  font-weight: 600; /* Font weight */
-  padding: 10px 20px; /* Padding for clickable area */
-  border-radius: 5px; /* Rounded corners for buttons */
-  position: relative; /* For positioning glow effect */
-  transition: color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
-
-}
-
-.gamesLink a:hover {
-  color: #00ffea; /* Glow effect on hover */
-  transform: scale(1.1); /* Slight zoom effect on hover */
-  box-shadow: 0 0 15px rgba(0, 255, 234, 0.8), 0 0 25px rgba(0, 255, 234, 0.5); /* Glowing box shadow */
-}
+// .gamesLink a:hover {
+//   color: $sixth;
+//   transform: scale(1.1);
+//   box-shadow: 0 0 15px rgba(0, 255, 234, 0.8), 0 0 25px rgba(0, 255, 234, 0.5);
+// }
 
 @keyframes glow {
   0% {

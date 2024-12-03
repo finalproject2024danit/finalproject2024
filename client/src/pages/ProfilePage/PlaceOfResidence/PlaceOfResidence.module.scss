@@ -1,4 +1,6 @@
-.container {
+@use "../../../App.scss" as *;
+
+.residenceBox {
   display: flex;
   flex-direction: column;
   padding: 30px;
@@ -16,10 +18,31 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
+.currentResidence {  
+    background: rgba(20, 30, 48, 0.8);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+}
+
 .title {
   font-size: 1.8rem;
   margin-bottom: 1rem;
   color: #ffffff;
+}
+
+.subtitle {
+  font-size: 1.4rem;
+  color: #b0b0b0;
+  margin-bottom: 10px;
+}
+
+.residenceText {
+  font-size: 1.2rem;
+  color: #ffffff;
+  margin-top: 8px;
+  font-weight: 500;
 }
 
 .form {
@@ -70,7 +93,7 @@
 
 /* Media Queries for Responsive Design */
 @media (max-width: 1024px) {
-  .container {
+  .residenceBox {
     padding: 20px; 
   }
 
@@ -88,7 +111,7 @@
 }
 
 @media (max-width: 767px) {
-  .container {
+  .residenceBox {
     padding: 15px; 
   }
 

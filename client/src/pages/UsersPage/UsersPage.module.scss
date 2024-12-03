@@ -6,95 +6,95 @@
   gap: 50px 20px;
   padding: 0 20px;
   justify-content: space-between;
+  // height: 40vw;
 }
 
-  .userCard {
-    position: relative;
-    min-width: 295px;
-    width: 20%;
-    height: 200px;
-    transform-style: preserve-3d;
-    transition: transform 0.6s;
-    cursor: pointer;
+.userCard {
+  position: relative;
+  min-width: 295px;
+  width: 20%;
+  height: 200px;
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+  cursor: pointer;
 
-    @media (max-width: 1024px) and (min-width: 768px) {
-      width: 45%;
-    }
-  
-    // Styles for mobile screens
-    @media (max-width: 768px) {
-      width: 100%;
-      height: 180px;
-    }
-
-    &.flipped {
-      transform: rotateY(180deg);
-    }
+  @media (max-width: 1024px) and (min-width: 768px) {
+    width: 45%;
   }
 
-  .front,
-  .back {
-    position: absolute;
+  // Styles for mobile screens
+  @media (max-width: 768px) {
     width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    border: 1px solid #cababa;
-    border-radius: 20px;
-    display: flex; // Используем flex-контейнер
-    flex-direction: column; // Устанавливаем расположение в колонну
-    justify-content: center; // Центрируем элементы по вертикали
-    align-items: center; // Центрируем элементы по горизонтали
+    height: 180px;
+  }
 
-     // Adjust text size for smaller screens
+  &.flipped {
+    transform: rotateY(180deg);
+  }
+}
+
+.front,
+.back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border: 1px solid #cababa;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   h2 {
     font-family: $primary-font;
     font-size: $font-size-medium;
   }
-  }
+}
 
-  .back {
-    transform: rotateY(180deg);
-    background: linear-gradient(to right, rgb(90, 91, 92), rgb(105, 105, 218));
-  }
-  .inner {
-    display: flex; // Убедимся, что внутренний контейнер также флекс-контейнер
-    flex-direction: column; // Располагаем элементы в колонну
-    align-items: center; // Центрируем элементы внутри
-    width: 100%; // Ширина на 100%
-    height: 200px;
-    text-align: center; // Центрируем текст
-    gap: 10px;
-    padding-top: 20px;
-  }
+.back {
+  transform: rotateY(180deg);
+  background: linear-gradient(to right, rgb(90, 91, 92), rgb(105, 105, 218));
+}
+.inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 200px;
+  text-align: center;
+  gap: 10px;
+  padding-top: 20px;
+}
 
-  .front .inner h2 {
-    color: grey;
-    font-family: $heading-font;
-    font-weight: 300;
-    font-size: 18px;
-  }
+.front .inner h2 {
+  color: grey;
+  font-family: $heading-font;
+  font-weight: 300;
+  font-size: 18px;
+}
 
-  .front .inner h2::after {
-    content: "";
-    width: 4rem;
-    height: 2px;
-    position: absolute;
-    background: #c6d4df;
-    display: block;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    bottom: -0.75rem;
-  }
+.front .inner h2::after {
+  content: "";
+  width: 4rem;
+  height: 2px;
+  position: absolute;
+  background: #c6d4df;
+  display: block;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  bottom: -0.75rem;
+}
 
-  .userPhoto {
-    width: 90%; /* Ширина 100% від контейнера */
-    height: 80%; /* Висота 100% від контейнера */
-    object-fit: cover; /* Зберігає пропорції і заповнює контейнер */
-    object-position: top; /* Вирівнює зображення по верхньому краю */
-    border-radius: 20px; /* Додає закруглені кути до зображення */
+.userPhoto {
+  width: 90%;
+  height: 80%;
+  object-fit: cover;
+  object-position: top;
+  border-radius: 20px;
 
-      // Style for tablet screens
+  // Style for tablet screens
   @media (max-width: 1024px) and (min-width: 768px) {
     width: 75%;
     height: 75%;
@@ -105,58 +105,58 @@
     width: 70%;
     height: 70%;
   }
+}
+
+.link {
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  display: inline-block;
+  transition: color 0.3s, transform 0.2s;
+
+  &:hover {
+    color: #d1c4ff;
+    transform: scale(1.1);
   }
 
-  .link {
-    text-decoration: none;
-    color: #ffffff; // Цвет текста ссылки
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 12px;
-    display: inline-block;
-    transition: color 0.3s, transform 0.2s;
-
-    &:hover {
-      color: #d1c4ff; // Цвет текста ссылки при наведении
-      transform: scale(1.1);
-    }
-
-      // Style for mobile screens
+  // Style for mobile screens
   @media (max-width: 768px) {
     font-size: 16px;
   }
+}
+
+.infoUser {
+  margin: 0;
+}
+
+.clickToFlip {
+  font-size: 16px;
+  margin-top: 10px;
+  font-weight: 300;
+  color: #c0c0c0;
+  transition: color 0.3s;
+
+  &:hover {
+    color: #ffffff;
   }
 
-  .infoUser {
-    margin: 0; // Убираем отступы для заголовка
-  }
-
-  .clickToFlip {
-    font-size: 16px; // Размер текста для "Click to flip back"
-    margin-top: 10px;
-    font-weight: 300;
-    color: #c0c0c0; // Цвет текста
-    transition: color 0.3s;
-
-    &:hover {
-      color: #ffffff; // Цвет текста при наведении
-    }
-
-      // Style for mobile screens
+  // Style for mobile screens
   @media (max-width: 768px) {
     font-size: 14px;
   }
-  }
+}
 
 .searchContainer {
   display: flex;
   justify-content: center;
   margin: 20px 0;
 
-    // Style for mobile screens
-    @media (max-width: 768px) {
-      margin: 15px 0;
-    }
+  // Style for mobile screens
+  @media (max-width: 768px) {
+    margin: 15px 0;
+  }
 }
 
 .searchInput {
@@ -179,59 +179,9 @@
     box-shadow: 0 2px 8px rgba(106, 90, 205, 0.3);
   }
 
-    // Style for mobile screens
-    @media (max-width: 768px) {
-      width: 80%;
-      font-size: 14px;
-    }
+  // Style for mobile screens
+  @media (max-width: 768px) {
+    width: 80%;
+    font-size: 14px;
+  }
 }
-
-// .userBox {
-//     display: flex;
-//     flex-wrap: wrap;
-//     gap: 30px;
-//     padding: 0 20px;
-//     justify-content: space-between; // Додає рівномірне розміщення карток
-
-//     .userCard {
-//       display: flex;
-//       flex-direction: column;
-//       gap: 20px;
-//       align-items: center;
-//       padding: 20px;
-//       border-radius: 10px;
-//       border: 1px solid blue;
-//       width: calc(25% - 30px); // 4 колонки на великих екранах
-//       min-width: 250px;
-//       box-sizing: border-box;
-
-//       // Висота для однакових карток
-//       min-height: 200px;
-//     }
-
-//     .userPhoto {
-//       width: 200px;
-//       height: auto;
-//     }
-//   }
-
-//   // Адаптивність для середніх екранів
-//   @media (max-width: 1200px) {
-//     .userCard {
-//       width: calc(33.33% - 30px); // 3 колонки на середніх екранах
-//     }
-//   }
-
-//   // Адаптивність для маленьких екранів
-//   @media (max-width: 768px) {
-//     .userCard {
-//       width: calc(50% - 30px); // 2 колонки на маленьких екранах
-//     }
-//   }
-
-//   // Для мобільних пристроїв
-//   @media (max-width: 480px) {
-//     .userCard {
-//       width: 100%; // 1 колонка на мобільних екранах
-//     }
-//   }

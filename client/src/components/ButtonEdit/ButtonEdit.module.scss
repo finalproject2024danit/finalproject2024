@@ -1,9 +1,11 @@
+@use "../../App.scss" as *;
+
 .button {
     padding: 12px 20px;
     margin: 15px 10px;
     border-radius: 8px;
-    background-color: #3b4e7e;
-    color: #ffffff;
+    background-color: $background-btn-third;
+    color: $primary;
     text-transform: uppercase;
     cursor: pointer;
     border: none;
@@ -11,7 +13,7 @@
   }
   
   .button:hover {
-    background-color: #4a90e2;
+    background-color: $background-btn-hover-third;
     transform: scale(1.05);
   }
   

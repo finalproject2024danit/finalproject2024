@@ -3,18 +3,13 @@
 .groupContainer {
   display: flex;
   flex-direction: column;
-  background: linear-gradient(
-    135deg,
-    rgba(0, 0, 0, 0.8), 
-    rgba(10, 10, 50, 0.7)
-  );
-  padding: 20px 30px;
+  // background: $background-body;
+  // padding: 20px 30px;
   width: 99%;
   box-sizing: border-box;
   border-radius: 15px;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-  position: relative;
-  z-index: 1;
+  // box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+  position: relative; 
 }
 
 .groupHeader {
@@ -22,7 +17,8 @@
   flex-wrap: nowrap;
   gap: 10px;
   overflow-x: auto;
-  width: 60vw;
+  width: 50vw;
+  height: 300px;
   margin-bottom: 50px;
   padding: 20px 10px;
   margin: 0 auto;
@@ -33,7 +29,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgba(0, 0, 50, 0.6);
+  justify-content: space-around;
+  background-color: $background-body;
   border-radius: 10px;
   padding: 20px;
   margin: 10px 0;
@@ -48,15 +45,15 @@
   box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
 }
 
-.groupLink h2 {
-  color: #fff;
-  font-size: 24px;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7), 0 0 20px rgba(255, 255, 255, 0.5);
+.groupLink h2 { 
+  font-size: $larger;
+  // text-shadow: 0 0 10px rgba(255, 255, 255, 0.7),
+    // 0 0 20px rgba(255, 255, 255, 0.5);
   margin-bottom: 15px;
 }
 
 .avatar {
-  width: 13vw;
+  width: 5vw;
   height: auto;
   object-fit: cover;
   border-radius: 50%;
@@ -66,7 +63,7 @@
 
 .groupDetails {
   width: 95%;
-  background-color: rgba(0, 0, 60, 0.8);
+  background-color: $background-body;
   padding: 30px;
   border-radius: 15px;
   margin-top: 30px;
@@ -75,16 +72,17 @@
 }
 
 .groupDetails h2 {
-  font-size: 30px;
-  font-weight: 500;
+  font-size: $extra-large;
+  font-weight: $font-weight-medium;
   margin: 30px;
-  color: yellow;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.7), 0 0 40px rgba(255, 255, 255, 0.5);  
+  // color: $sunglow-600;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.7),
+    0 0 40px rgba(255, 255, 255, 0.5);
 }
 
 .groupDetails p {
-  color: #ddd;
-  font-size: 18px;
+  color: $primary;
+  font-size: $medium;
   line-height: 1.6;
   margin-bottom: 30px;
 }
@@ -97,18 +95,19 @@
 
 .post {
   display: flex;
-  column-gap: 20px;
+  column-gap: 40px;
   flex-direction: column;
   padding: 20px;
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: $background-eleventh;
   border-radius: 8px;
   margin-bottom: 10px;
-  color: orange;
+  color: $fourth;
+  margin-bottom: 40px;
 }
 
 .post h3 {
-  color: #fff;
-  font-size: 24px;
+  color: $secondary;
+  font-size: $larger;
   margin-bottom: 10px;
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
 }
@@ -119,18 +118,23 @@
 }
 
 @keyframes starryBackground {
-  0% { background-position: 0 0; }
-  100% { background-position: 100% 100%; }
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
 }
 
 .groupContainer::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: url('https://cdn.pixabay.com/photo/2017/08/30/02/15/space-2695561_960_720.jpg') center center / cover no-repeat;
+  background: url("https://cdn.pixabay.com/photo/2017/08/30/02/15/space-2695561_960_720.jpg")
+    center center / cover no-repeat;
   opacity: 0.5;
   animation: starryBackground 10000s infinite linear;
   z-index: -1;
@@ -145,12 +149,13 @@
 .likes {
   display: flex;
   align-items: center;
-  gap: 5px;  
+  gap: 5px;
 }
 
-.likes, .comments {
-  font-size: 14px;
-  color: gray;
+.likes,
+.comments {
+  font-size: $smaller;
+  color: $secondary;
 }
 
 .commentForm {
@@ -165,108 +170,48 @@
   resize: none;
   height: 80px;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid $seventh;
   margin-bottom: 10px;
 }
 
 .commentForm button {
   padding: 10px;
-  background-color: #4CAF50;
-  color: white;
+  background-color: $background-btn-fifth;
+  color:$primary;
   border: none;
+  border-radius: 5px;
   cursor: pointer;
 }
 
 .commentForm button:hover {
-  background-color: #45a049;
+  background-color: $background-btn-hover-fifth;
+}
+.comment{
+  display: flex;
+  // background-color: yellow;
+  border: 2px solid $background-third;
+  border-radius: 10px;
+  margin-bottom: 10px;
+
+}
+.comment p{
+  // color: red;
 }
 
+.commentHeader {
+  display: flex;
+  align-items: center;
+}
 
-// @import "../../App.scss";
+.commentAvatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
 
-// .groupContainer {
-//   display: flex;
-//   flex-direction: column;  
-//   background: linear-gradient(
-//     90deg,
-//     rgba(62, 62, 65, 1) 0%,
-//     rgba(32, 32, 60, 1) 35%,
-//     rgba(0, 15, 18, 1) 100%
-//   );
-//   padding: 20px 30px;
-//   width: 99%;  
-//   box-sizing: border-box;
-// }
-
-// .groupHeader {
-//   display: flex;
-//   flex-wrap: nowrap; /* Вимкнути перенос елементів */
-//   gap: 10px;  
-//   // border-radius: 10px;
-//   overflow-x: auto; /* Додати горизонтальний скрол */ 
-//   width: 60vw; /* Змінено на 100% для адаптивності */
-//   margin-bottom: 50px;
-//   // border: 4px solid orange;
-//   padding: 20px 10px; /* Адаптуйте паддінги за потреби */
-//   // box-sizing: border-box; /* Включити паддінги в ширину */
-//   margin: 0 auto;
-// }
-
-// // .groupHeader::-webkit-scrollbar {
-// //   height: 8px !important;
-// // }
-
-// // .groupHeader::-webkit-scrollbar-track {
-// //   background: #2f2f2f !important;
-// // }
-
-// // .groupHeader::-webkit-scrollbar-thumb {
-// //   background-color: #555 !important;
-// //   border-radius: 10px !important;
-// //   border: 2px solid #2f2f2f !important;
-// // }
-
-// .groupRender {
-//   margin-top: 20px;
-//   text-align: center;
-//   // padding: 20px;  /* Додаємо відступ для groupRender */
-//   // padding-right: 20px;
-//   width: 100%;    /* Забезпечуємо, що контейнер займає всю ширину */
-// }
-
-// .groupLink h2 {
-//   font-size: 20px;
-//   font-weight: 600; 
-//   margin-bottom: 10px; 
-//   color: green;
-// }
-
-// .groupDetails h2 {
-//   font-size: 30px;
-//   font-weight: 500;
-//   margin: 30px;
-//   color: yellow;
-// }
-
-// .post {
-//   display: flex;
-//   column-gap: 20px; 
-//   flex-direction: column;
-//   padding: 20px;
-//   background-color: rgba(255, 255, 255, 0.1);  /* Додаємо фон для постів */
-//   border-radius: 8px;  /* Зробимо кут округленими */
-//   margin-bottom: 10px;  /* Відступ між постами */
-//   color: orange;
-// }
-
-// .post p {
-//   // width: 97%;
-//   word-wrap: break-word; /* Перенос слів */
-//   margin: 0;             /* Прибираємо відступи */
-// }
-
-// .avatar {
-//   width: 13vw; // Встановіть бажану ширину
-//   height: auto; // Встановіть бажану висоту
-//   object-fit: cover; // Щоб зображення не спотворювалося
-// }
+.commentAuthor {
+  font-size: 0.9rem;
+  color: #888;
+  font-weight: bold;
+}

@@ -47,12 +47,15 @@ const UserPage = () => {
             <div className={styles.userBox}>
                 <h1 className={styles.userBox_title}>{`${user.firstName} ${user.lastName}`}</h1>
                 <div className={styles.userContent}>
-                    <img
-                        className={styles.userPhoto}
-                        src={user.avatar || "default_avatar_url"}
-                        alt={`${user.firstName} ${user.lastName}`}
-                        title={`${user.firstName} ${user.lastName}`}
-                    />
+                    {/* Контейнер для изображения */}
+                    <div className={styles.userPhotoContainer}>
+                        <img
+                            src={user.avatar || "default_avatar_url"}
+                            alt={`${user.firstName} ${user.lastName}`}
+                            title={`${user.firstName} ${user.lastName}`}
+                        />
+                    </div>
+                    
                     <div className={styles.userDetails}>
                         <h3>General information:</h3>
                         <p>Date of birth: {formatDate(user.dateOfBirth)}</p>
@@ -60,7 +63,7 @@ const UserPage = () => {
                         <p>Phone: {formatPhones(user.phones)}</p>
                         <p>Gender: {user.gender}</p>
                         <p>Created Date: {formatDate(user.createdDate)}</p>
-
+    
                         <div className={styles.residencesList}>
                             <h3>Place of residence:</h3>
                             {user.residence ? (
@@ -73,7 +76,7 @@ const UserPage = () => {
                                 <p>Place of residence not found</p>
                             )}
                         </div>
-
+    
                         <div className={styles.hobbiesList}>
                             <h3>Hobbies:</h3>
                             {user.hobby ? (
@@ -91,6 +94,7 @@ const UserPage = () => {
             </div>
         </MainContent>
     );
+    
 };
 
 export default UserPage;

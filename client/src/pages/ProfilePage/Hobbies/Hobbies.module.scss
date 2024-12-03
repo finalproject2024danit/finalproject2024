@@ -1,4 +1,6 @@
-.container {
+@use "../../../App.scss" as *;
+
+.hobbiesBox {
   display: flex;
   flex-direction: column;
   padding: 30px;

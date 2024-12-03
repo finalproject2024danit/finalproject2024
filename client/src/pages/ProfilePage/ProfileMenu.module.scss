@@ -1,7 +1,10 @@
+@use "../../App.scss" as *;
+
 .navContainer {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
+  width: 100%;
+  margin: 30px;
 }
 
 .menu {

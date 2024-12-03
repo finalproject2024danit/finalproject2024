@@ -30,7 +30,7 @@ const ExitIcon = () => {
             <svg
                 className="exit-icon"
                 height="70px"
-                width="70px"
+                width="90px"
                 version="1.1"
                 id="Layer_1"
                 xmlns="http://www.w3.org/2000/svg"
@@ -39,8 +39,7 @@ const ExitIcon = () => {
                 onClick={handleExitClick}
             >
                 <path
-                    className="icon-path"
-                    // style={{ fill: "#9AD14B" }}
+                    className="icon-path"                    
                     d="M477.261,419.64H34.738c-14.258,0-25.816-11.558-25.816-25.816v-168.28
 	c0-14.258,11.558-25.816,25.816-25.816h442.523c14.258,0,25.816,11.558,25.816,25.816v168.28
 	C503.077,408.082,491.519,419.64,477.261,419.64z"
