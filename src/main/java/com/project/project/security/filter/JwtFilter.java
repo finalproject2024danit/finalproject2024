@@ -1,5 +1,6 @@
 package com.project.project.security.filter;
 
+import com.project.project.exceptions.AuthenticationException;
 import com.project.project.security.JwtAuthentication;
 import com.project.project.security.JwtUtils;
 import com.project.project.security.SysUser.service.AuthService;
@@ -10,6 +11,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -51,8 +53,12 @@ public class JwtFilter extends GenericFilterBean {
                     SecurityContextHolder.getContext().setAuthentication(jwtInfoToken);
                 }
             }
-        } catch (Exception e) {
+        } catch (AuthenticationException e) {
             log.error("Error processing JWT", e);
+            HttpServletResponse httpServletResponse = (HttpServletResponse) response;
+            httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            httpServletResponse.getWriter().write("Error processing JWT" + e);
+            return;
         }
         fc.doFilter(request, response);
     }

@@ -9,4 +9,30 @@ const axiosInstance = axios.create({
   }
 });
 
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem("authToken");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// // Обробка помилок у відповідях
+// axiosInstance.interceptors.response.use(
+//   (response) => response, // Якщо відповідь успішна
+//   (error) => {
+//     if (error.response && error.response.status === 401) {
+//       console.error("Unauthorized! Redirecting to login...");
+//       localStorage.removeItem("authToken"); // Очищення токена
+//       window.location.href = "/login"; // Перенаправлення на сторінку логіну
+//     }
+//     return Promise.reject(error);
+//   }
+// );
+
 export default axiosInstance;
