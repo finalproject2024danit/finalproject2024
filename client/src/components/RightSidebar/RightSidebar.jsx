@@ -7,7 +7,7 @@ import {
 } from "../../redux/slices/friendsSlice.js";
 import styles from "./RightSidebar.module.scss";
 import ButtonDeleteFriend from "../../components/ButtonDeleteFriend/index.jsx";
-import Modal from "../../components/Modal/Modal";
+import Modal from "../../components/Modal/ModalFriend/Modal.jsx";
 
 const RightSidebar = () => {
   const dispatch = useDispatch();
