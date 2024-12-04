@@ -1,6 +1,7 @@
 package com.project.project.security.jwt;
 
 import com.project.project.entities.user.User;
+import com.project.project.exceptions.AuthenticationException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -65,7 +66,7 @@ public class JwtProvider {
         return validateToken(refreshToken, jwtRefreshSecret);
     }
 
-    private boolean validateToken(@NonNull String token, @NonNull Key secret) {
+    private boolean validateToken(@NonNull String token, @NonNull Key secret) throws AuthenticationException {
         try {
             Jwts.parserBuilder()
                     .setSigningKey(secret)
@@ -74,16 +75,20 @@ public class JwtProvider {
             return true;
         } catch (ExpiredJwtException expEx) {
             log.error("Token expired", expEx);
+            throw new AuthenticationException("Token expired");
         } catch (UnsupportedJwtException unsEx) {
             log.error("Unsupported jwt", unsEx);
+            throw new AuthenticationException("Unsupported jwt");
         } catch (MalformedJwtException mjEx) {
             log.error("Malformed jwt", mjEx);
+            throw new AuthenticationException("Malformed jwt");
         } catch (SignatureException sEx) {
             log.error("Invalid signature", sEx);
+            throw new AuthenticationException("Invalid signature");
         } catch (Exception e) {
-            log.error("invalid token", e);
+            log.error("Invalid token", e);
+            throw new AuthenticationException("Invalid token");
         }
-        return false;
     }
 
     public Claims getAccessClaims(@NonNull String token) {

@@ -32,19 +32,17 @@ public class MySecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(requests ->
                         requests
-                                .requestMatchers("/**").permitAll()
-                                .requestMatchers("/").permitAll()
-                                .requestMatchers("http://localhost:3000/*").permitAll()
-                                .requestMatchers("http://localhost:3000/**").permitAll()
-//                                .requestMatchers("/login").permitAll()
+//                                .requestMatchers("/**").permitAll()
+//                                .requestMatchers("/").permitAll()
+                                .requestMatchers("/login").permitAll()
 //                                .requestMatchers("/:9000/login").permitAll()
 //                                .requestMatchers("http://134.209.246.21:9000/login").permitAll()
-//                                .requestMatchers("/css/**").permitAll()
-//                                .requestMatchers("/js/**").permitAll()
-//                                .requestMatchers("/images/**").permitAll()
-//                                .requestMatchers("/auth/**").permitAll()
-//                                .requestMatchers("/ws/**").authenticated()
-//                                .requestMatchers("/api/v1/**").authenticated()
+                                .requestMatchers("/css/**").permitAll()
+                                .requestMatchers("/js/**").permitAll()
+                                .requestMatchers("/images/**").permitAll()
+                                .requestMatchers("/auth/**").permitAll()
+                                .requestMatchers("/ws/**").authenticated()
+                                .requestMatchers("/api/v1/**").authenticated()
                 )
 
                 .addFilterAfter(jwtFilter, UsernamePasswordAuthenticationFilter.class)
@@ -55,7 +53,7 @@ public class MySecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:3001", "http://134.209.246.21"));
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
 

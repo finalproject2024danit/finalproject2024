@@ -28,7 +28,7 @@ public class ControllerAdvisor {
         return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(WorkplaceNameExistsException.class)
+    @ExceptionHandler({WorkplaceNameExistsException.class, AuthenticationException.class})
     public ResponseEntity<Object> handleOtherException(
             Exception ex) {
 
