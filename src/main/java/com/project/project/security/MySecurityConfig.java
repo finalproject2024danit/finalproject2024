@@ -37,6 +37,8 @@ public class MySecurityConfig {
                                 .requestMatchers("/login").permitAll()
                                 .requestMatchers("/:9000/login").permitAll()
                                 .requestMatchers("http://134.209.246.21:9000/login").permitAll()
+                                .requestMatchers("/:9000/assets/**").permitAll()
+                                .requestMatchers("/:9000/assets/*").permitAll()
                                 .requestMatchers("/css/**").permitAll()
                                 .requestMatchers("/js/**").permitAll()
                                 .requestMatchers("/images/**").permitAll()
@@ -52,7 +54,7 @@ public class MySecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:3000", "http://localhost:3001", "http://134.209.246.21", "http://134.209.246.21/9000", "http://134.209.246.21/9000/login"));
+        configuration.setAllowedOrigins(List.of("*"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
