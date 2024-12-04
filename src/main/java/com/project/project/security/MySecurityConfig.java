@@ -32,10 +32,11 @@ public class MySecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(requests ->
                         requests
-                                .requestMatchers("/**").permitAll()
+//                                .requestMatchers("/**").permitAll()
                                 .requestMatchers("/").permitAll()
                                 .requestMatchers("/login").permitAll()
                                 .requestMatchers("/:9000/login").permitAll()
+                                .requestMatchers("http://134.209.246.21:9000").permitAll()
                                 .requestMatchers("http://134.209.246.21:9000/login").permitAll()
                                 .requestMatchers("/:9000/assets/**").permitAll()
                                 .requestMatchers("/:9000/assets/*").permitAll()
