@@ -174,8 +174,9 @@
   margin-bottom: 10px;
 }
 
-.commentForm button {
+.groupBtn {
   padding: 10px;
+  font-size: $medium;
   background-color: $background-btn-fifth;
   color:$primary;
   border: none;
@@ -183,19 +184,26 @@
   cursor: pointer;
 }
 
-.commentForm button:hover {
+.groupBtn:hover {
   background-color: $background-btn-hover-fifth;
 }
-.comment{
+
+.commentsList {
   display: flex;
-  // background-color: yellow;
-  border: 2px solid $background-third;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 118vh;
+}
+
+.comment{
+  display: flex; 
+  flex-direction: column;
+  border: 0.5px solid $background-sixth;
   border-radius: 10px;
   margin-bottom: 10px;
-
-}
-.comment p{
-  // color: red;
+  padding: 10px;
+  width: 30vh;
+  font-size: $smaller;
 }
 
 .commentHeader {
@@ -207,11 +215,12 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  margin-right: 10px;
+  margin-right: 10px;  
 }
 
-.commentAuthor {
-  font-size: 0.9rem;
-  color: #888;
-  font-weight: bold;
+.commentAuthor{
+  font-size: $medium;
+  color: $background-btn-fifth;
+  font-weight: $font-weight-bold;
 }
+

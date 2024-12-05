@@ -1,4 +1,4 @@
-@use "../../App.scss" as *;
+@use "../../../App.scss" as *;
 
 .modalBackdrop {
   position: fixed;
@@ -27,19 +27,25 @@
 }
 
 .confirmButton {
-  background: $background-eighth;
+  background: $background-btn-fifth;
   color: $primary;
   border: none;
   padding: 10px 15px;
   cursor: pointer;
   border-radius: 5px;
 }
+.confirmButton:hover{
+  background: $background-btn-hover-fifth;
+}
 
 .cancelButton {
-  background: seventh;
-  color: $fifth;
+  background: $background-btn-first;
+  color: $primary;
   border: none;
   padding: 10px 15px;
   cursor: pointer;
   border-radius: 5px;
+}
+.cancelButton:hover{
+  background: $background-btn-hover-first;
 }

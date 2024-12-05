@@ -10,7 +10,7 @@ import {
   fetchFriends,
 } from "../../redux/slices/friendsSlice.js";
 import { useTranslation } from "react-i18next";
-import Modal from "../../components/Modal/Modal.jsx";
+import Modal from "../../components/Modal/ModalFriend/Modal.jsx";
 
 const defaultAvatar =
   "https://res.cloudinary.com/dsr6kwzrr/image/upload/v1729669892/photo_2024-10-23_10-30-18_nmluce.jpg";
@@ -25,7 +25,7 @@ const UsersPage = () => {
   const [flippedCards, setFlippedCards] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const usersPerPage = 10;
+  const usersPerPage = 12;
   const sortBy = "firstName";
   const sortDirection = "asc";
   const userFromId = useSelector((state) => state.user.id);
@@ -50,7 +50,7 @@ const UsersPage = () => {
         },
       });
 
-      const usersData = response.data || [];
+      const usersData = response.data || [];     
       if (usersData.length > 0) {
         setUsers((prevUsers) => [...prevUsers, ...usersData]);
       } else {
@@ -73,12 +73,15 @@ const UsersPage = () => {
 
   const handleScroll = () => {
     if (
+      !loading &&
+      hasMore &&
       window.innerHeight + document.documentElement.scrollTop >=
-      document.documentElement.offsetHeight - 100
+        document.documentElement.offsetHeight - 50
     ) {
       setCurrentPage((prevPage) => prevPage + 1);
     }
   };
+  
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);

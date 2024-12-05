@@ -18,11 +18,11 @@ const ExitIcon = () => {
             cursor: pointer;
           }
           .exit-icon .icon-path {
-            fill: #9ad14b; /* Початковий колір */
+            fill: #4caf50; /* Початковий колір */
             transition: fill 0.3s ease;
           }
           .exit-icon:hover .icon-path {
-            fill: #006400; /* Темно-зелений при наведенні */
+            fill: #386c3a; /* Темно-зелений при наведенні */
           }
         `}
             </style>

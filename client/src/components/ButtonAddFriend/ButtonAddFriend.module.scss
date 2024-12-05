@@ -1,7 +1,7 @@
 @use "../../App.scss" as *;
 
 .btn {
-  background-color: $background-btn-first;
+  background-color: $background-btn-fifth;
   color: $primary;
   border: none;
   padding: 12px 24px;
@@ -13,7 +13,7 @@
 }
 
 .btn:hover {
-  background-color: $background-btn-hover-first;
+  background-color: $background-btn-hover-fifth;
   box-shadow: 0 8px 16px rgba(106, 90, 205, 0.6);
   transform: scale(1.05);
 }
