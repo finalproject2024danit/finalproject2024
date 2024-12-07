@@ -4,16 +4,15 @@ import PropTypes from "prop-types";
 const Modal = ({ isOpen, onClose, onSubmit, newPost, setNewPost }) => {
   if (!isOpen) return null;
 
+  const handleClose = () => {
+    setNewPost({ content: "" }); 
+    onClose(); 
+  };
+
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
         <h2>Create New Post</h2>
-        <input
-          type="text"
-          placeholder="Enter title"
-          value={newPost.title}
-          onChange={(e) => setNewPost((prev) => ({ ...prev, title: e.target.value }))}
-        />
         <textarea
           placeholder="Enter content"
           value={newPost.content}
@@ -21,11 +20,19 @@ const Modal = ({ isOpen, onClose, onSubmit, newPost, setNewPost }) => {
         />
         <div className={styles.modalActions}>
           <button className={styles.createButton} onClick={onSubmit}>Create</button>
-          <button className={styles.cancelButton} onClick={onClose}>Cancel</button>
+          <button className={styles.cancelButton} onClick={handleClose}>Cancel</button>
         </div>
       </div>
     </div>
   );
+};
+
+Modal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  newPost: PropTypes.object.isRequired,
+  setNewPost: PropTypes.func.isRequired,
 };
 
 

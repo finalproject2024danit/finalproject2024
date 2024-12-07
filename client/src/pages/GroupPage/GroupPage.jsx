@@ -27,7 +27,7 @@ const GroupPage = () => {
   const hasMore = groups.length % perPage === 0 && groups.length < 100;
   const { id } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newPost, setNewPost] = useState({ title: "", content: "" });
+  const [newPost, setNewPost] = useState({ content: "" });
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
 
@@ -168,8 +168,8 @@ const GroupPage = () => {
   }
 
   const handleCreatePost = () => {
-    if (!newPost.title.trim() || !newPost.content.trim()) {
-      alert("Title and content are required.");
+    if (!newPost.content.trim()) {
+      alert("Content is required.");
       return;
     }
 
@@ -178,11 +178,16 @@ const GroupPage = () => {
       return;
     }
 
+    if (!userFromId || !userFromId.id) {
+      alert("User ID is not available. Please log in again.");
+      return;
+    }
+
     const newPostData = {
-      // id: Date.now(), // Генерація унікального ID
-      title: newPost.title,
+      id: Date.now(), // Генерація унікального ID
       content: newPost.content,
       groupId: selectedGroup.id,
+      userId: userFromId.id, // Додаємо userId
       createdDate: new Date().toISOString(),
     };
 
@@ -191,9 +196,37 @@ const GroupPage = () => {
       addPostToGroup({ groupId: selectedGroup.id, postData: newPostData })
     );
 
-    setNewPost({ title: "", content: "" });
+    setNewPost({ content: "" });
     handleCloseModal();
   };
+
+  const sortedPosts = selectedGroup?.posts
+    ? [...selectedGroup.posts].reverse()
+    : [];
+
+    if (loading && !groups.length) {
+      return (
+        <MainContent title="">
+          <p>Loading...</p>
+        </MainContent>
+      );
+    }
+  
+    if (error) {
+      return (
+        <MainContent title="">
+          <p>{error}</p>
+        </MainContent>
+      );
+    }
+  
+    if (!groups.length) {
+      return (
+        <MainContent title="">
+          <p>Groups not found.</p>
+        </MainContent>
+      );
+    }
 
   return (
     <MainContent title="">
@@ -226,8 +259,10 @@ const GroupPage = () => {
               New Post
             </button>
             <div className={styles.groupRender}>
-              {selectedGroup.posts && selectedGroup.posts.length > 0 ? (
-                selectedGroup.posts.map((post, index) => {
+              {/* {selectedGroup.posts && selectedGroup.posts.length > 0 ? (
+                selectedGroup.posts.map((post, index) => { */}
+                 {sortedPosts.length > 0 ? (
+                sortedPosts.map((post, index) => {
                   const postComments =
                     comments[selectedGroup.id]?.[post.id] || [];
                   const { liked = false, likes = 0 } =
@@ -235,7 +270,6 @@ const GroupPage = () => {
 
                   return (
                     <div key={index} className={styles.post}>
-                      <h3>{post.title}</h3>
                       <p>{post.content}</p>
                       <div className={styles.postFeedback}>
                         <div className={styles.likes}>
@@ -258,24 +292,22 @@ const GroupPage = () => {
                       >
                         <div className={styles.commentsList}>
                           {postComments.length > 0 ? (
-                            postComments.map((comment, idx) => (                              
-                                <div key={idx} className={styles.comment}>
-                                  <div className={styles.commentHeader}>
-                                    <img
-                                      src={
-                                        comment.userAvatar ||
-                                        "defaultAvatar.jpg"
-                                      }
-                                      alt={`${comment.userName} ${comment.userLastName}`}
-                                      className={styles.commentAvatar}
-                                    />
-                                    <span className={styles.commentAuthor}>                                      
-                                        {comment.userName}{" "}
-                                        {comment.userLastName}                                    
-                                    </span>
-                                  </div>
-                                  <p>{comment.content}</p>
-                                </div>                              
+                            postComments.map((comment, idx) => (
+                              <div key={idx} className={styles.comment}>
+                                <div className={styles.commentHeader}>
+                                  <img
+                                    src={
+                                      comment.userAvatar || "defaultAvatar.jpg"
+                                    }
+                                    alt={`${comment.userName} ${comment.userLastName}`}
+                                    className={styles.commentAvatar}
+                                  />
+                                  <span className={styles.commentAuthor}>
+                                    {comment.userName} {comment.userLastName}
+                                  </span>
+                                </div>
+                                <p>{comment.content}</p>
+                              </div>
                             ))
                           ) : (
                             <p>No comments yet.</p>
