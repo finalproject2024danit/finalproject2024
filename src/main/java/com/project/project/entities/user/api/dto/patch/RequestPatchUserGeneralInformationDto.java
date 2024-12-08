@@ -17,11 +17,11 @@ import static lombok.AccessLevel.PRIVATE;
 @Data
 public class RequestPatchUserGeneralInformationDto implements RequestPatchUserDto{
     @NotBlank(message = "First name must not be blank")
-    @Size(max = 100, message = "Email must not exceed 100 characters")
+    @Size(max = 100, message = "First name must not exceed 100 characters")
     String firstName;
 
     @NotBlank(message = "Last name must not be blank")
-    @Size(max = 100, message = "Email must not exceed 100 characters")
+    @Size(max = 100, message = "Last name must not exceed 100 characters")
     String lastName;
 
     @NotBlank(message = "Email must not be blank")
@@ -29,7 +29,7 @@ public class RequestPatchUserGeneralInformationDto implements RequestPatchUserDt
     @Size(max = 100, message = "Email must not exceed 100 characters")
     String email;
 
-    @NotNull(message = "Last name must not be blank")
+    @NotNull(message = "Gender must not be blank")
     Gender gender;
 
     @NotNull(message = "Date of birth must not be blank")
