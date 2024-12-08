@@ -18,6 +18,9 @@ import static lombok.AccessLevel.PRIVATE;
 @Data
 public class ResponseResidenceForUserDto {
     @JsonView(View.Admin.class)
+    Long id;
+
+    @JsonView(View.Admin.class)
     String planet;
 
     @JsonView(View.Admin.class)
