@@ -15,4 +15,5 @@ public interface WorkplaceService {
 
     Workplace updateWorkplace(long userId, long id, String name);
 
+    Workplace getWorkplaceByName(String name);
 }

@@ -1,7 +1,7 @@
 package com.project.project.entities.user.service;
 
 import com.project.project.entities.user.User;
-import com.project.project.entities.user.api.dto.RequestPatchUserDto;
+import com.project.project.entities.user.api.dto.patch.RequestPatchUserDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -26,4 +26,9 @@ public interface UserService {
 
     User getUserByEmail(String email);
 
+    User updateUserResidence(Long userId, Long residenceId);
+
+    User updateUserHobbies(Long userId, Long hobbiesId);
+
+    User updateUserWorkplace(Long userId, Long workplaceId);
 }

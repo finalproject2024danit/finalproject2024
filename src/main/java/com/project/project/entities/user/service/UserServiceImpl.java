@@ -1,9 +1,15 @@
 package com.project.project.entities.user.service;
 
+import com.project.project.entities.hobby.Hobby;
+import com.project.project.entities.hobby.service.HobbyServiceImpl;
+import com.project.project.entities.residence.Residence;
+import com.project.project.entities.residence.service.ResidenceServiceImpl;
 import com.project.project.entities.user.User;
-import com.project.project.entities.user.api.dto.RequestPatchUserDto;
+import com.project.project.entities.user.api.dto.patch.RequestPatchUserDto;
 import com.project.project.entities.user.db.UserRepository;
 import com.project.project.entities.user.status.UserStatus;
+import com.project.project.entities.workplace.Workplace;
+import com.project.project.entities.workplace.service.WorkplaceServiceImpl;
 import com.project.project.exceptions.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,6 +25,9 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final ResidenceServiceImpl residenceService;
+    private final HobbyServiceImpl hobbyService;
+    private final WorkplaceServiceImpl workplaceService;
 
     @Override
     public Page<User> findAllFiltered(Pageable pageable) {
@@ -40,7 +49,7 @@ public class UserServiceImpl implements UserService {
     public User patchUser(Long id, RequestPatchUserDto requestPatchUserDto) throws IllegalAccessException {
         User user = getUserById(id);
 
-        Field[] dtoFields = RequestPatchUserDto.class.getDeclaredFields();
+        Field[] dtoFields = requestPatchUserDto.getClass().getDeclaredFields();
         Field[] entityFields = User.class.getDeclaredFields();
 
         for (Field dtoField : dtoFields) {
@@ -88,5 +97,32 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByEmail(String email) throws UsernameNotFoundException {
         return userRepository.findByUserEmail(email).orElseThrow(() -> new UsernameNotFoundException(email));
+    }
+
+    @Override
+    public User updateUserResidence(Long userId, Long residenceId) {
+        User user = getUserById(userId);
+        Residence residence = residenceService.getResidenceById(residenceId);
+
+        user.setResidence(residence);
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User updateUserHobbies(Long userId, Long hobbiesId) {
+        User user = getUserById(userId);
+        Hobby hobby = hobbyService.getHobbyById(hobbiesId);
+
+        user.setHobby(hobby);
+        return userRepository.save(user);
+    }
+
+    @Override
+    public User updateUserWorkplace(Long userId, Long workplaceId) {
+        User user = getUserById(userId);
+        Workplace workplace = workplaceService.getWorkplaceById(workplaceId);
+
+        user.setWorkplace(workplace);
+        return userRepository.save(user);
     }
 }

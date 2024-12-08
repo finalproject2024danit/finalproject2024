@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ResidenceServiceImpl implements ResidenceService {
@@ -42,4 +44,27 @@ public class ResidenceServiceImpl implements ResidenceService {
     public Page<Residence> getAllResidences(Pageable pageable) {
         return residenceRepository.findAll(pageable);
     }
+
+    @Override
+    public Optional<Residence> getResidenceByPlanetCountryCity(String planet, String country, String city) {
+        return residenceRepository.findByPlanetAndCountryAndCity(planet, country, city);
+    }
+
+    @Override
+    public Residence createResidenceIfNew(String planet, String country, String city) {
+        Optional<Residence> existingResidence = getResidenceByPlanetCountryCity(planet, country, city);
+
+        if (existingResidence.isPresent()) {
+            return existingResidence.get();
+        }
+
+        Residence newResidence = new Residence();
+        newResidence.setPlanet(planet);
+        newResidence.setCountry(country);
+        newResidence.setCity(city);
+
+        return residenceRepository.save(newResidence);
+    }
+
+
 }
