@@ -4,13 +4,21 @@ import {
   fetchGroupById,
   fetchGroups,
   addPostToGroup,
+
+  editPost as editPostAction,
+  removePost
+
 } from "../../redux/slices/groupSlice.js";
 import styles from "./GroupPage.module.scss";
 import MainContent from "../../components/MainContent/MainContent";
 import { addComment, setComments } from "../../redux/slices/commentsSlice.js";
 import LikeIcon from "../../svg/Header/Like/index.jsx";
 import { useParams } from "react-router-dom";
-import Modal from "../../components/Modal/ModalGroup/Modal.jsx";
+
+import ModalPost from "../../components/Modal/ModalGroup/ModalPost.jsx";
+import Modal from "../../components/Modal/ModalFriend/Modal.jsx";
+import { format } from 'date-fns';
+
 
 const GroupPage = () => {
   const dispatch = useDispatch();
@@ -27,11 +35,14 @@ const GroupPage = () => {
   const hasMore = groups.length % perPage === 0 && groups.length < 100;
   const { id } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [newPost, setNewPost] = useState({ title: "", content: "" });
+
+  const [newPost, setNewPost] = useState({ content: "" });
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
+  const [editPost, setEditPost] = useState(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [postToDelete, setPostToDelete] = useState(null);
 
-  // const getRandomLikes = () => Math.floor(Math.random() * 1000) + 1;
 
   useEffect(() => {
     if (id) {
@@ -101,9 +112,11 @@ const GroupPage = () => {
       postId,
       groupId,
       userId: userFromId.id,
-      userName: userFromId.firstName, // Имя пользователя
-      userLastName: userFromId.lastName, // Фамилия пользователя
-      userAvatar: userFromId.avatar, // Аватар пользователя
+
+      userName: userFromId.firstName,
+      userLastName: userFromId.lastName,
+      userAvatar: userFromId.avatar,
+
       createdDate: new Date().toISOString(),
     };
 
@@ -146,7 +159,7 @@ const GroupPage = () => {
   if (loading && !groups.length) {
     return (
       <MainContent title="">
-        <p>Загрузка...</p>
+        <p>Loading...</p>
       </MainContent>
     );
   }
@@ -168,8 +181,10 @@ const GroupPage = () => {
   }
 
   const handleCreatePost = () => {
-    if (!newPost.title.trim() || !newPost.content.trim()) {
-      alert("Title and content are required.");
+
+    if (!newPost.content.trim()) {
+      alert("Content is required.");
+
       return;
     }
 
@@ -178,22 +193,81 @@ const GroupPage = () => {
       return;
     }
 
+    if (!userFromId || !userFromId.id) {
+      alert("User ID is not available. Please log in again.");
+      return;
+    }
+
     const newPostData = {
-      // id: Date.now(), // Генерація унікального ID
-      title: newPost.title,
+      id: Date.now(),
       content: newPost.content,
       groupId: selectedGroup.id,
+      userId: userFromId.id,
       createdDate: new Date().toISOString(),
     };
 
-    // Викликаємо Redux-дію для оновлення групи
+
     dispatch(
       addPostToGroup({ groupId: selectedGroup.id, postData: newPostData })
     );
 
-    setNewPost({ title: "", content: "" });
+
+    setNewPost({ content: "" });
     handleCloseModal();
   };
+
+  const sortedPosts = selectedGroup?.posts
+    ? [...selectedGroup.posts].reverse()
+    : [];
+
+  const handleEditPost = (post) => {
+    setEditPost(post);
+    setIsModalOpen(true);
+  };
+
+  const handleUpdatePost = () => {
+    if (!editPost || !editPost.id || !editPost.content.trim()) {
+      alert("Invalid post data. Please check the content and try again.");
+      console.error("Invalid post data:", editPost);
+      return;
+    }
+
+    dispatch(
+      editPostAction({
+        postId: editPost.id,
+        postData: { content: editPost.content },
+      })
+    )
+      .unwrap()
+      .then(() => {
+        setEditPost(null);
+        setIsModalOpen(false);
+      })
+      .catch((err) => {
+        console.error("Failed to update post:", err);
+      });
+  };
+
+  const handleOpenDeleteModal = (postId) => {
+    setPostToDelete(postId);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setPostToDelete(null);
+    setIsDeleteModalOpen(false);
+  };
+
+  const handleConfirmDeletePost = () => {
+    if (postToDelete) {
+      dispatch(removePost(postToDelete))
+        .unwrap()
+        .then(() => console.log("Post deleted:", postToDelete))
+        .catch((err) => console.error("Failed to delete post:", err));
+    }
+    handleCloseDeleteModal();
+  };
+
 
   return (
     <MainContent title="">
@@ -226,8 +300,8 @@ const GroupPage = () => {
               New Post
             </button>
             <div className={styles.groupRender}>
-              {selectedGroup.posts && selectedGroup.posts.length > 0 ? (
-                selectedGroup.posts.map((post, index) => {
+              {sortedPosts.length > 0 ? (
+                sortedPosts.map((post, index) => {
                   const postComments =
                     comments[selectedGroup.id]?.[post.id] || [];
                   const { liked = false, likes = 0 } =
@@ -235,8 +309,21 @@ const GroupPage = () => {
 
                   return (
                     <div key={index} className={styles.post}>
-                      <h3>{post.title}</h3>
                       <p>{post.content}</p>
+                      <div className={styles.postActions}>
+                        <button
+                          className={styles.editButton}
+                          onClick={() => handleEditPost(post)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className={styles.deleteButton}
+                          onClick={() => handleOpenDeleteModal(post.id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
                       <div className={styles.postFeedback}>
                         <div className={styles.likes}>
                           <LikeIcon
@@ -258,24 +345,27 @@ const GroupPage = () => {
                       >
                         <div className={styles.commentsList}>
                           {postComments.length > 0 ? (
-                            postComments.map((comment, idx) => (                              
-                                <div key={idx} className={styles.comment}>
-                                  <div className={styles.commentHeader}>
-                                    <img
-                                      src={
-                                        comment.userAvatar ||
-                                        "defaultAvatar.jpg"
-                                      }
-                                      alt={`${comment.userName} ${comment.userLastName}`}
-                                      className={styles.commentAvatar}
-                                    />
-                                    <span className={styles.commentAuthor}>                                      
-                                        {comment.userName}{" "}
-                                        {comment.userLastName}                                    
-                                    </span>
-                                  </div>
-                                  <p>{comment.content}</p>
-                                </div>                              
+
+                            postComments.map((comment, idx) => (
+                              <div key={idx} className={styles.comment}>
+                                <div className={styles.commentHeader}>
+                                  <img
+                                    src={
+                                      comment.userAvatar || "defaultAvatar.jpg"
+                                    }
+                                    alt={`${comment.userName} ${comment.userLastName}`}
+                                    className={styles.commentAvatar}
+                                  />
+                                  <span className={styles.commentAuthor}>
+                                    {comment.userName} {comment.userLastName}
+                                  </span>
+                                </div>
+                                <p>{comment.content}</p>
+                                <span className={styles.commentDate}>
+                                  {format(new Date(comment.createdDate), 'dd.MM.yyyy')}
+                                </span>
+                              </div>
+
                             ))
                           ) : (
                             <p>No comments yet.</p>
@@ -301,12 +391,20 @@ const GroupPage = () => {
           </div>
         )}
       </div>
-      <Modal
+
+      <ModalPost
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        onSubmit={handleCreatePost}
-        newPost={newPost}
-        setNewPost={setNewPost}
+        onSubmit={editPost ? handleUpdatePost : handleCreatePost}
+        newPost={editPost || newPost}
+        setNewPost={editPost ? setEditPost : setNewPost}
+      />
+      <Modal
+        isOpen={isDeleteModalOpen}
+        onClose={handleCloseDeleteModal}
+        onConfirm={handleConfirmDeletePost}
+        message="Are you sure you want to delete this post?"
+
       />
     </MainContent>
   );
