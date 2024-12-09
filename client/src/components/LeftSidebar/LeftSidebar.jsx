@@ -71,33 +71,6 @@ const LeftSidebar = () => {
           )}
         </Formik>
       </div>
-
-      {/* <div className={styles.gamesLink}>
-        <NavLink
-          className={({ isActive }) => (isActive ? styles.active : "")}
-          to="/solar"
-        >
-          {t("leftSidebar.solarSystem")}
-        </NavLink>
-        <NavLink
-          className={({ isActive }) => (isActive ? styles.active : "")}
-          to="/game1"
-        >
-          {t("leftSidebar.game1")}
-        </NavLink>
-        <NavLink
-          className={({ isActive }) => (isActive ? styles.active : "")}
-          to="/game2"
-        >
-          {t("leftSidebar.game2")}
-        </NavLink>
-        <NavLink
-          className={({ isActive }) => (isActive ? styles.active : "")}
-          to="/game3"
-        >
-          {t("leftSidebar.game3")}
-        </NavLink>
-      </div> */}
       <div className={styles.functionBlock}>
         <Exit />
       </div>

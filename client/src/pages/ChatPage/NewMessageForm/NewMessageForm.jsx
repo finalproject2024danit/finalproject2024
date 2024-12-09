@@ -1,143 +1,127 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import { useState, useEffect } from "react";
 import styles from "./NewMessageForm.module.scss";
-import PropTypes from "prop-types";
 
-const NewMessageForm = ({ onSendMessage, selectedUser, filteredMessages }) => {
-  const initialValues = {
-    message: "",
+const NewMessageForm = ({ userFrom, userTo, onSendMessage }) => {
+  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [loadingMessages, setLoadingMessages] = useState(false);
+
+  // Очистка ID пользователя от префикса (если нужно)
+  const getCleanUserId = (userId) => {
+    return String(userId).replace("user-", ""); // Преобразуем в строку и убираем 'user-' из ID
   };
 
-  const validationSchema = Yup.object({
-    message: Yup.string().required("Message is required"),
-  });
+  // Получение сообщений между двумя пользователями
+  useEffect(() => {
+    const fetchMessages = async () => {
+      try {
+        setLoadingMessages(true);
+        const cleanUserToId = getCleanUserId(userTo); // Очистить ID пользователя
+        const cleanUserFromId = getCleanUserId(userFrom); // Очистить ID текущего пользователя
 
-  const handleSubmit = (values, { resetForm }) => {
-    const newMessage = {
-      id: Date.now(),
-      user: selectedUser,
-      message: values.message,
-      date: "Just now",
-      status: "Online",
-      isUser: true, // Assuming the message is from the current user
-      userImage: selectedUser.image, // Assuming selectedUser has an image property
-      isOnline: selectedUser.isOnline,
+        console.log(`Fetching messages between ${cleanUserFromId} and ${cleanUserToId}`);
+        const response = await fetch(
+          `/api/v1/messages/between/${cleanUserFromId}/${cleanUserToId}`
+        );
+        console.log("Ответ от сервера на получение сообщений:", response.status, response.statusText);
+
+        const data = await response.json();
+        console.log("Полученные сообщения:", data); // Вывод загруженных сообщений
+        if (data && Array.isArray(data)) {
+          setMessages(data);
+        }
+      } catch (error) {
+        console.error("Ошибка при получении сообщений:", error);
+      } finally {
+        setLoadingMessages(false);
+      }
     };
 
-    onSendMessage(newMessage);
-    resetForm();
+    if (userFrom && userTo) {
+      fetchMessages();
+    }
+  }, [userFrom, userTo]);
+
+  // Отправка нового сообщения через HTTP POST
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Валидация перед отправкой
+    if (message.trim() === "") {
+      alert("Сообщение не может быть пустым.");
+      return;
+    }
+
+    const cleanUserToId = getCleanUserId(userTo); // Очистить ID собеседника
+    const cleanUserFromId = getCleanUserId(userFrom); // Очистить ID отправителя
+
+    const messageData = {
+      content: message,
+      userFrom: cleanUserFromId, // Чистый ID текущего пользователя
+      userTo: cleanUserToId, // Чистый ID собеседника
+    };
+
+    console.log("Отправляем сообщение:", messageData); // Лог отправляемых данных
+
+    try {
+      const response = await fetch("/api/v1/messages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(messageData),
+      });
+
+      console.log("Ответ от сервера на отправку сообщения:", response.status, response.statusText);
+
+      if (response.ok) {
+        const sentMessage = await response.json();
+        console.log("Сообщение отправлено:", sentMessage); // Лог успешного сообщения
+        setMessages((prevMessages) => [...prevMessages, sentMessage]); // Обновляем список сообщений
+        onSendMessage(sentMessage); // Вызываем родительскую функцию
+        setMessage(""); // Очистить поле ввода
+      } else {
+        const errorData = await response.json();
+        console.error("Ошибка при отправке сообщения:", errorData);
+        alert(`Ошибка при отправке сообщения: ${errorData.message || "Неизвестная ошибка"}`);
+      }
+    } catch (error) {
+      console.error("Ошибка при отправке сообщения:", error);
+    }
   };
 
   return (
-    // <Formik
-    //   initialValues={initialValues}
-    //   validationSchema={validationSchema}
-    //   onSubmit={handleSubmit}
-    // >
-    //   <Form className={styles.form}>
-    //     <div className={styles.formGroup}>
-    //       <Field
-    //         name="message"
-    //         as="textarea"
-    //         placeholder="Type your message..."
-    //       />
-    //       <ErrorMessage
-    //         name="message"
-    //         component="div"
-    //         className={styles.error}
-    //       />
-    //     </div>
-    //     <button type="submit" className={styles.submitBtn}>
-    //       &#8593;{/* Upward arrow */}
-    //     </button>
-    //   </Form>
-    // </Formik>
-
     <div>
-      <div className={styles.messagesChat}>
-        {filteredMessages.map((msg, index) => {
-          // Assign a unique id dynamically if it's missing
-          const messageWithId = msg.id
-            ? msg
-            : { ...msg, id: Date.now() + index }; // Create a new object if id is missing
+      <form className={styles.NewMessageForm} onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          placeholder="Напишите сообщение..."
+        />
+        <button type="submit" disabled={!message.trim()}>
+          Отправить
+        </button>
+      </form>
 
-          console.log("Message ID:", messageWithId.id); // Log the message ID
-          return (
-            <div
-              key={messageWithId.id}
-              className={`${styles.message} ${
-                messageWithId.isUser ? styles.textOnly : ""
-              }`}
-            >
-              {!messageWithId.isUser && (
-                <div
-                  className={styles.photo}
-                  style={{ backgroundImage: `url(${messageWithId.userImage})` }}
-                >
-                  {messageWithId.isOnline && (
-                    <div className={styles.online}></div>
-                  )}
-                </div>
-              )}
-              <p className={styles.text}>
-                {messageWithId.message || "No content available"}
-              </p>
-              {messageWithId.isUser && (
-                <p className={styles.responseTime}> {messageWithId.date}</p>
-              )}
+      <div>
+        <h3>Сообщения между {userFrom} и {userTo}</h3>
+        {loadingMessages ? (
+          <p>Загрузка сообщений...</p>
+        ) : messages.length > 0 ? (
+          messages.map((msg, index) => (
+            <div key={index}>
+              <p>{msg.content}</p>
+              <span>От: {msg.userFrom}</span>
+              <span>Кому: {msg.userTo}</span>
             </div>
-          );
-        })}
+          ))
+        ) : (
+          <p>Нет сообщений между этими пользователями.</p>
+        )}
       </div>
-
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        <Form className={styles.form}>
-          <div className={styles.formGroup}>
-            <Field
-              name="message"
-              as="textarea"
-              placeholder="Type your message..."
-            />
-            <ErrorMessage
-              name="message"
-              component="div"
-              className={styles.error}
-            />
-          </div>
-          <button type="submit" className={styles.submitBtn}>
-            &#8593;{/* Upward arrow */}
-          </button>
-        </Form>
-      </Formik>
     </div>
   );
 };
 
 export default NewMessageForm;
-
-NewMessageForm.propTypes = {
-  onSendMessage: PropTypes.func.isRequired,
-  selectedUser: PropTypes.shape({
-    name: PropTypes.string,
-    image: PropTypes.string,
-    isOnline: PropTypes.bool,
-  }).isRequired,
-  filteredMessages: PropTypes.arrayOf(
-    PropTypes.shape({
-      content: PropTypes.string, // Changed to optional
-
-      id: PropTypes.number,
-      user: PropTypes.object, // Adjust as per user object structure
-      message: PropTypes.string,
-      date: PropTypes.string,
-      status: PropTypes.string,
-      isUser: PropTypes.bool,
-      userImage: PropTypes.string,
-      isOnline: PropTypes.bool,
-    })
-  ).isRequired,
-};

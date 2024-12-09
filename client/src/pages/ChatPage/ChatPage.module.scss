@@ -1,325 +1,519 @@
 @use "../../App.scss" as *;
 
-#particles-js {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-}
-
-.container {
-  width: auto;
-  padding:0;
-  background-color:$nodle-black-700; 
-  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-  height: 700px;
-
-   /* === Tablet Styles === */
-   @media (max-width: 1024px) {
-    height: auto; 
-    padding: 10px; 
-  }
-
-  /* === iPhone Styles === */
-  @media (max-width: 767px) {
-    height: auto; 
-    padding: 10px; 
-    box-shadow: none; 
-    display: flex;
-    flex-direction: column;
-  }
-}
-
-/* === CONVERSATIONS === */
-
-.discussions {
-  width: 35%;
-  height: 700px;
-  border: 1px solid $border-color-blue;
-  border-radius: 10px;
-  box-shadow: 0 8px 10px rgba(0,0,0,0.20);
-  overflow: hidden;
-  background-color:$nodle-black-700;
-  display: inline-block;
-
-   /* === Tablet Styles === */
-   @media (max-width: 1024px) {
-    width: 100%; 
-    height: 500px; 
-    margin-bottom: 20px; 
-  }
-
-  /* === iPhone Styles === */
-  @media (max-width: 767px) {
-    width: 100%;
-    height: 300px; 
-    margin-bottom: 15px; 
-
-
-    .discussion {
-      width: 100%;
-    height: auto; 
-    margin-bottom: 0; 
-    display: flex;
-    flex-direction: row; 
-    overflow-x: auto;
-    }
-  }
-}
-
-.discussions .discussion {
-  width: 100%;
-  height: 90px;
-  background-color: $nodle-black-600;
-  border-bottom: solid 1px $nodle-black-500;
-  display:flex;
-  align-items: center;
-  cursor: pointer;
-
-  @media (max-width: 767px) {
-    height: 70px; // Keep height for discussion
-      flex-shrink: 0; // Prevent shrinking of discussion items
-  
-  
-    .discussions .discussion .photo {
-      margin-left: 5px; 
-      width: 40px; 
-      height: 40px; 
-    }
-  
-    .discussions .discussion .name,
-    .discussions .discussion .message {
-      display: none; // Hide name and message on mobile
-    }
-  } 
-}
-
-.discussions .search {
-  display:flex;
-  align-items: center;
-  justify-content: center;
-  color: #E0E0E0;
-}
-
-.discussions .search .searchbar {
-  height: 40px;
-  background-color: $nodle-black-500;
-  width: 70%;
-  padding: 0 20px;
-  border-radius: 50px;
-  border: 1px solid $nodle-black-600;
-  display:flex;
-  align-items: center;
-  cursor: pointer;
-
-  @media (max-width: 767px){
-    .search .searchbar {
-      width: 90%;
-    }
-  }
-}
-
-.discussions .search .searchbar input {
-  margin-left: 15px;
-  height:38px;
-  width:100%;
-  border:none;
-  color: $nodle-black-100;
-  background-color: transparent;
-  font-family: 'Montserrat', sans-serif;;
-}
-
-.discussions .search .searchbar *::-webkit-input-placeholder {
-    color:$nodle-black-200; 
-}
-.discussions .search .searchbar input *:-moz-placeholder {
-    color: $nodle-black-200; 
-}
-.discussions .search .searchbar input *::-moz-placeholder {
-    color:$nodle-black-200; 
-}
-.discussions .search .searchbar input *:-ms-input-placeholder {
-    color: $nodle-black-200; 
-}
-
-.discussions .message-active {
-  width: 98.5%;
-  height: 90px;
-  background-color: $nodle-black-600; 
-  border-bottom: solid 1px $nodle-black-500;
-}
-
-.discussions .discussion .photo {
-    margin-left:20px;
-    display: block;
-    width: 45px;
-    height: 45px;
-    background: #E6E7ED;
-    border-radius: 50%;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-
-.online {
-  position: relative;
-  top: 30px;
-  left: 35px;
-  width: 13px;
-  height: 13px;
-  background-color: #8BC34A;
-  border-radius: 13px;
-  border: 3px solid $nodle-black-800;
-}
-
-.discussions .discussion .name {
-  margin: 0 0 0 20px;
-  font-family:'Montserrat', sans-serif;
-  font-size: 11pt;
-  color:$nodle-black-100;
-}
-
-.discussions .discussion .message {
-  margin: 6px 0 0 20px;
-  font-family:'Montserrat', sans-serif;
-  font-size: 9pt;
-  color: $nodle-black-100;
-}
-
-.timer {
-  margin-left: 15%;
-  font-family:'Open Sans', sans-serif;
-  font-size: 11px;
-  padding: 3px 8px;
-  color: $nodle-black-100; 
-  background-color: $nodle-black-500;
-  border: 1px solid $nodle-black-700; 
-  border-radius: 15px;
-}
-
-.chat {
-  width: calc(65% - 85px);
-  height: 700px;
-  display: inline-block;
-  border-radius: 10px;
-  background-color: $nodle-black-700;
-  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.20);
-  position: relative; 
-
-  @media (max-width: 767px){
-    .chat {
-      width: 100%;
-      height: calc(100vh - 70px);
-      margin-top: 10px; 
-    }
-  }
-}
-
-.headerChat {
-  background-color: $nodle-black-700;
-  color: $nodle-black-100;
+.ChatBox{
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 20px;
-  height: 90px;
-  border-bottom: solid 1px $nodle-black-500;
-  box-shadow: 0 3px 2px rgba(0, 0, 0, 0.15);
-
-   /* === Tablet Styles === */
-   @media (max-width: 1024px) {
-    padding: 0 10px; 
-  }
-
-  /* === iPhone Styles === */
-  @media (max-width: 767px) {
-    padding: 0 10px; 
-    height: 70px;
-  }
 }
 
-.headerChat .icon {
-  font-size: 1.5rem;
-  cursor: pointer;
-  margin-left: 30px;
-  color:$nodle-black-100;
-  font-size: 14pt;
+.ChatSidebar{
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  height: 77vw;
+  gap: 20px;
 }
 
-.headerChat .name {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 14pt;
-  color: $nodle-black-100;
-  font-weight: 600;
-  margin: 0 0 0 20px;
-  text-transform: uppercase;
 
-   /* === Tablet Styles === */
-   @media (max-width: 1024px) {
-    font-size: 12pt; 
-  }
 
-  /* === iPhone Styles === */
-  @media (max-width: 767px) {
-    font-size: 10pt; 
-  }
-}
 
-.headerChat .right {
-  position: absolute;
-  right: 40px;
-}
-
-.messagesHistory {
-  padding: 20px;
-  overflow-y: auto;
-  height: auto; 
-  background-color: $nodle-black-700;
-  scrollbar-width: thin;
-  scrollbar-color: $nodle-black-500 $nodle-black-700;
-
-    /* === Tablet Styles === */
-    @media (max-width: 1024px) {
-      padding: 15px; 
-    }
+/* Общие стили для формы */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   
-    /* === iPhone Styles === */
-    @media (max-width: 767px) {
-      padding: 10px; 
+}
+
+/* Стили для контейнера поля Select */
+.select {
+  color: #000;
+  .react-select__control {
+    background-color: #adabab;
+    border: 1px solid #a3a1a1;
+    border-radius: 10px;
+    padding: 5px 10px;
+
+    &:hover {
+      border-color: #999;
     }
+  }
+
+  .react-select__value-container {
+    // padding: 5px;
+    font-size: 16px;
+  }
+
+  .react-select__input {
+    color: #333;
+  }
+
+  .react-select__menu {
+    background-color: #6d6b6b;
+    border: 1px solid #8f8d8d;
+    border-radius: 10px;
+    z-index: 10;
+
+    .react-select__option {
+      padding: 10px;
+      font-size: 14px;
+      color: #333;
+
+      &:hover {
+        background-color: #b3a9a9;
+      }
+    }
+
+    .react-select__option--is-focused {
+      background-color: #837474;
+    }
+
+    .react-select__option--is-selected {
+      background-color: #706a6a;
+      color: #000;
+    }
+  }
+
+  .react-select__indicator {
+    color: #999;
+
+    &:hover {
+      color: #666;
+    }
+  }
 }
 
-.messagesHistory::-webkit-scrollbar {
-  width: 6px;
-}
-
-.messagesHistory::-webkit-scrollbar-thumb {
-  background-color: $nodle-black-500;
-  border-radius: 3px;
-}
-
-
-.messageItem {
-  margin-bottom: 15px;
+.ChatUsersBox{
   padding: 10px;
-  background-color: $nodle-black-600;
-  border-radius: 10px;
-  color: $nodle-black-100;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 10pt;
-  display: flex;
-  align-items: center;
+  height: 100%;
+  border: 1px solid #5f5e5e;
+  gap: 10px;
+}
 
-  @media (max-width: 767px) {
-    font-size: 9pt; 
-    padding: 8px; 
+
+/* Стили для каждого пользователя */
+.ChatUser {
+  display: flex;
+  margin-bottom: 10px;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  // border: 1px solid #5f5e5e;
+  border-radius: 5px;
+  background-color:$secondary;
+  height: 100%;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  
+
+  &:hover {
+    background-color:$eleventh;
+    transform: scale(1.02);
+  }
+
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    object-fit: cover;
+  }
+
+  span {
+    font-size: 14px;
+    font-weight: 500;
+    color: $primary;
+    word-break: break-word; /* Чтобы длинные имена не ломали верстку */
   }
 }
 
-.messageItem p {
-  margin: 0;
-  display: inline;
+/* Стили для пустого списка */
+.ChatUsers:empty {
+  text-align: center;
+  color: #999;
+  font-size: 14px;
+  padding: 20px;
 }
+
+
+
+
+
+.ChatMessage{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 20px;
+}
+
+/* Стили для кнопки */
+// button {
+//   background-color: #007bff;
+//   color: #fff;
+//   font-size: 14px;
+//   font-weight: bold;
+//   padding: 8px 12px;
+//   border: none;
+//   border-radius: 5px;
+//   cursor: pointer;
+//   transition: background-color 0.3s ease;
+
+//   &:hover {
+//     background-color: #0056b3;
+//   }
+
+//   &:disabled {
+//     background-color: #ccc;
+//     cursor: not-allowed;
+//   }
+// }
+
+// /* Стили для ошибок */
+// .error-message {
+//   color: #ff0000;
+//   font-size: 12px;
+//   margin-top: -8px;
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// #particles-js {
+//   position: absolute;
+//   top: 0;
+//   left: 0;
+//   z-index: 1;
+//   width: 100%;
+//   height: 100%;
+// }
+
+// .container {
+//   width: auto;
+//   padding:0;
+//   background-color:$nodle-black-700; 
+//   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+//   height: 700px;
+
+//    /* === Tablet Styles === */
+//    @media (max-width: 1024px) {
+//     height: auto; 
+//     padding: 10px; 
+//   }
+
+//   /* === iPhone Styles === */
+//   @media (max-width: 767px) {
+//     height: auto; 
+//     padding: 10px; 
+//     box-shadow: none; 
+//     display: flex;
+//     flex-direction: column;
+//   }
+// }
+
+// /* === CONVERSATIONS === */
+
+// .discussions {
+//   width: 35%;
+//   height: 700px;
+//   border: 1px solid $border-color-blue;
+//   border-radius: 10px;
+//   box-shadow: 0 8px 10px rgba(0,0,0,0.20);
+//   overflow: hidden;
+//   background-color:$nodle-black-700;
+//   display: inline-block;
+
+//    /* === Tablet Styles === */
+//    @media (max-width: 1024px) {
+//     width: 100%; 
+//     height: 500px; 
+//     margin-bottom: 20px; 
+//   }
+
+//   /* === iPhone Styles === */
+//   @media (max-width: 767px) {
+//     width: 100%;
+//     height: 300px; 
+//     margin-bottom: 15px; 
+
+
+//     .discussion {
+//       width: 100%;
+//     height: auto; 
+//     margin-bottom: 0; 
+//     display: flex;
+//     flex-direction: row; 
+//     overflow-x: auto;
+//     }
+//   }
+// }
+
+// .discussions .discussion {
+//   width: 100%;
+//   height: 90px;
+//   background-color: $nodle-black-600;
+//   border-bottom: solid 1px $nodle-black-500;
+//   display:flex;
+//   align-items: center;
+//   cursor: pointer;
+
+//   @media (max-width: 767px) {
+//     height: 70px; // Keep height for discussion
+//       flex-shrink: 0; // Prevent shrinking of discussion items
+  
+  
+//     .discussions .discussion .photo {
+//       margin-left: 5px; 
+//       width: 40px; 
+//       height: 40px; 
+//     }
+  
+//     .discussions .discussion .name,
+//     .discussions .discussion .message {
+//       display: none; // Hide name and message on mobile
+//     }
+//   } 
+// }
+
+// .discussions .search {
+//   display:flex;
+//   align-items: center;
+//   justify-content: center;
+//   color: #E0E0E0;
+// }
+
+// .discussions .search .searchbar {
+//   height: 40px;
+//   background-color: $nodle-black-500;
+//   width: 70%;
+//   padding: 0 20px;
+//   border-radius: 50px;
+//   border: 1px solid $nodle-black-600;
+//   display:flex;
+//   align-items: center;
+//   cursor: pointer;
+
+//   @media (max-width: 767px){
+//     .search .searchbar {
+//       width: 90%;
+//     }
+//   }
+// }
+
+// .discussions .search .searchbar input {
+//   margin-left: 15px;
+//   height:38px;
+//   width:100%;
+//   border:none;
+//   color: $nodle-black-100;
+//   background-color: transparent;
+//   font-family: 'Montserrat', sans-serif;;
+// }
+
+// .discussions .search .searchbar *::-webkit-input-placeholder {
+//     color:$nodle-black-200; 
+// }
+// .discussions .search .searchbar input *:-moz-placeholder {
+//     color: $nodle-black-200; 
+// }
+// .discussions .search .searchbar input *::-moz-placeholder {
+//     color:$nodle-black-200; 
+// }
+// .discussions .search .searchbar input *:-ms-input-placeholder {
+//     color: $nodle-black-200; 
+// }
+
+// .discussions .message-active {
+//   width: 98.5%;
+//   height: 90px;
+//   background-color: $nodle-black-600; 
+//   border-bottom: solid 1px $nodle-black-500;
+// }
+
+// .discussions .discussion .photo {
+//     margin-left:20px;
+//     display: block;
+//     width: 45px;
+//     height: 45px;
+//     background: #E6E7ED;
+//     border-radius: 50%;
+//     background-position: center;
+//     background-size: cover;
+//     background-repeat: no-repeat;
+// }
+
+// .online {
+//   position: relative;
+//   top: 30px;
+//   left: 35px;
+//   width: 13px;
+//   height: 13px;
+//   background-color: #8BC34A;
+//   border-radius: 13px;
+//   border: 3px solid $nodle-black-800;
+// }
+
+// .discussions .discussion .name {
+//   margin: 0 0 0 20px;
+//   font-family:'Montserrat', sans-serif;
+//   font-size: 11pt;
+//   color:$nodle-black-100;
+// }
+
+// .discussions .discussion .message {
+//   margin: 6px 0 0 20px;
+//   font-family:'Montserrat', sans-serif;
+//   font-size: 9pt;
+//   color: $nodle-black-100;
+// }
+
+// .timer {
+//   margin-left: 15%;
+//   font-family:'Open Sans', sans-serif;
+//   font-size: 11px;
+//   padding: 3px 8px;
+//   color: $nodle-black-100; 
+//   background-color: $nodle-black-500;
+//   border: 1px solid $nodle-black-700; 
+//   border-radius: 15px;
+// }
+
+// .chat {
+//   width: calc(65% - 85px);
+//   height: 700px;
+//   display: inline-block;
+//   border-radius: 10px;
+//   background-color: $nodle-black-700;
+//   box-shadow: 0 8px 10px rgba(0, 0, 0, 0.20);
+//   position: relative; 
+
+//   @media (max-width: 767px){
+//     .chat {
+//       width: 100%;
+//       height: calc(100vh - 70px);
+//       margin-top: 10px; 
+//     }
+//   }
+// }
+
+// .headerChat {
+//   background-color: $nodle-black-700;
+//   color: $nodle-black-100;
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-between;
+//   padding: 0 20px;
+//   height: 90px;
+//   border-bottom: solid 1px $nodle-black-500;
+//   box-shadow: 0 3px 2px rgba(0, 0, 0, 0.15);
+
+//    /* === Tablet Styles === */
+//    @media (max-width: 1024px) {
+//     padding: 0 10px; 
+//   }
+
+//   /* === iPhone Styles === */
+//   @media (max-width: 767px) {
+//     padding: 0 10px; 
+//     height: 70px;
+//   }
+// }
+
+// .headerChat .icon {
+//   font-size: 1.5rem;
+//   cursor: pointer;
+//   margin-left: 30px;
+//   color:$nodle-black-100;
+//   font-size: 14pt;
+// }
+
+// .headerChat .name {
+//   font-family: 'Montserrat', sans-serif;
+//   font-size: 14pt;
+//   color: $nodle-black-100;
+//   font-weight: 600;
+//   margin: 0 0 0 20px;
+//   text-transform: uppercase;
+
+//    /* === Tablet Styles === */
+//    @media (max-width: 1024px) {
+//     font-size: 12pt; 
+//   }
+
+//   /* === iPhone Styles === */
+//   @media (max-width: 767px) {
+//     font-size: 10pt; 
+//   }
+// }
+
+// .headerChat .right {
+//   position: absolute;
+//   right: 40px;
+// }
+
+// .messagesHistory {
+//   padding: 20px;
+//   overflow-y: auto;
+//   height: auto; 
+//   background-color: $nodle-black-700;
+//   scrollbar-width: thin;
+//   scrollbar-color: $nodle-black-500 $nodle-black-700;
+
+//     /* === Tablet Styles === */
+//     @media (max-width: 1024px) {
+//       padding: 15px; 
+//     }
+  
+//     /* === iPhone Styles === */
+//     @media (max-width: 767px) {
+//       padding: 10px; 
+//     }
+// }
+
+// .messagesHistory::-webkit-scrollbar {
+//   width: 6px;
+// }
+
+// .messagesHistory::-webkit-scrollbar-thumb {
+//   background-color: $nodle-black-500;
+//   border-radius: 3px;
+// }
+
+
+// .messageItem {
+//   margin-bottom: 15px;
+//   padding: 10px;
+//   background-color: $nodle-black-600;
+//   border-radius: 10px;
+//   color: $nodle-black-100;
+//   font-family: 'Montserrat', sans-serif;
+//   font-size: 10pt;
+//   display: flex;
+//   align-items: center;
+
+//   @media (max-width: 767px) {
+//     font-size: 9pt; 
+//     padding: 8px; 
+//   }
+// }
+
+// .messageItem p {
+//   margin: 0;
+//   display: inline;
+// }
 
