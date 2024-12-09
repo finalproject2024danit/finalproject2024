@@ -1,0 +1,62 @@
+@use "../../../App.scss" as *;
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: $background-secondary;
+  padding: 20px;
+  border-radius: 8px;  
+  width: 40vh;  
+}
+
+.modalContent input {
+  width: 60%;
+  border-radius: 5px;
+  padding: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modalContent textarea {
+  width: 95%;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modalActions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.createButton,
+.cancelButton {
+  color: $primary;
+  padding: 10px 20px;
+  border-radius: 10px;
+}
+
+.createButton {
+  background-color: $background-btn-fifth;
+}
+.createButton:hover {
+  background-color: $background-btn-hover-fifth;
+}
+
+.cancelButton {
+  background: $background-btn-first;
+}
+.cancelButton:hover {
+  background: $background-btn-hover-first;
+}

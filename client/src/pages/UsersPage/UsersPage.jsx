@@ -25,7 +25,7 @@ const UsersPage = () => {
   const [flippedCards, setFlippedCards] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const usersPerPage = 12;
+  const usersPerPage = 9;
   const sortBy = "firstName";
   const sortDirection = "asc";
   const userFromId = useSelector((state) => state.user.id);
@@ -36,7 +36,7 @@ const UsersPage = () => {
   const { friends } = useSelector((state) => state.friends);
 
   const fetchUsers = useCallback(async () => {
-    if (!hasMore) return;
+    if (!hasMore || loading) return;
     setLoading(true);
     setError(null);
 
@@ -53,6 +53,9 @@ const UsersPage = () => {
       const usersData = response.data || [];     
       if (usersData.length > 0) {
         setUsers((prevUsers) => [...prevUsers, ...usersData]);
+        if (usersData.length < usersPerPage) {
+          setHasMore(false); 
+      }
       } else {
         setHasMore(false);
       }
@@ -72,12 +75,12 @@ const UsersPage = () => {
   }, [fetchUsers]);
 
   const handleScroll = () => {
-    if (
-      !loading &&
-      hasMore &&
-      window.innerHeight + document.documentElement.scrollTop >=
-        document.documentElement.offsetHeight - 50
-    ) {
+
+    const scrollPosition = window.innerHeight + document.documentElement.scrollTop; 
+    const threshold = document.documentElement.offsetHeight - 100; 
+  
+    if (!loading && hasMore && scrollPosition >= threshold) {
+
       setCurrentPage((prevPage) => prevPage + 1);
     }
   };

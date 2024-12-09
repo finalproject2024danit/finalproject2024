@@ -105,13 +105,6 @@
   margin-bottom: 40px;
 }
 
-.post h3 {
-  color: $secondary;
-  font-size: $larger;
-  margin-bottom: 10px;
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
-}
-
 .post p {
   word-wrap: break-word;
   margin: 0;
@@ -222,5 +215,24 @@
   font-size: $medium;
   color: $background-btn-fifth;
   font-weight: $font-weight-bold;
+
+}
+
+.editButton {
+  background-color: #4caf50;
+  color: white;
+  margin-right: 10px;
+}
+
+.deleteButton {
+  background-color: #f44336;
+  color: white;
+}
+
+.commentDate {
+  display: flex;
+  justify-content: flex-end;
+  font-size: $small;
+  color: $seventh;
 }
 
