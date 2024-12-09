@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import PropTypes from "prop-types"; // Import PropTypes
 import styles from "./NewMessageForm.module.scss";
 
 const NewMessageForm = ({ userFrom, userTo, onSendMessage }) => {
@@ -92,7 +93,7 @@ const NewMessageForm = ({ userFrom, userTo, onSendMessage }) => {
 
   return (
     <div>
-        <div>
+      <div>
         <h3>Сообщения между {userFrom} и {userTo}</h3>
         {loadingMessages ? (
           <p>Загрузка сообщений...</p>
@@ -119,10 +120,15 @@ const NewMessageForm = ({ userFrom, userTo, onSendMessage }) => {
           Отправить
         </button>
       </form>
-
-    
     </div>
   );
+};
+
+// PropTypes для компонента
+NewMessageForm.propTypes = {
+  userFrom: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired, // Идентификатор пользователя-отправителя
+  userTo: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired, // Идентификатор собеседника
+  onSendMessage: PropTypes.func.isRequired, // Функция, вызываемая при отправке сообщения
 };
 
 export default NewMessageForm;

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Formik } from "formik";
 import Select from "react-select";
+import PropTypes from "prop-types"; // Import PropTypes
 import styles from "./ChatPage.module.scss";
 import MainContent from "../../components/MainContent/MainContent";
 import { fetchSearchResults } from "../../redux/slices/searchSlice";
@@ -18,7 +19,7 @@ const ChatPage = () => {
 
   const [inputValue, setInputValue] = useState(""); // Для управления состоянием ввода
   const [chatUsers, setChatUsers] = useState([]); // Для хранения пользователей
-  const [userFrom, setUserFrom] = useState(1); // ID текущего пользователя, можно изменить по мере необходимости
+  const userFrom = 1; // ID текущего пользователя, можно изменить по мере необходимости
 
   // Загружаем список найденных пользователей из localStorage при монтировании компонента
   useEffect(() => {
@@ -167,8 +168,7 @@ const ChatPage = () => {
               )
               .map((message, index) => (
                 <div key={index} className={styles.Message}>
-                  <span>{message.userFrom === userFrom ? "You" : selectedUser?.name}</span>:{" "}
-                  {message.content}
+                  <span>{message.userFrom === userFrom ? "You" : selectedUser?.name}</span>: {message.content}
                 </div>
               ))}
           </div>
@@ -179,6 +179,31 @@ const ChatPage = () => {
       </div>
     </MainContent>
   );
+};
+
+ChatPage.propTypes = {
+  results: PropTypes.arrayOf(
+    PropTypes.shape({
+      value: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      avatar: PropTypes.string,
+      photoData: PropTypes.object,
+    })
+  ).isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  messages: PropTypes.arrayOf(
+    PropTypes.shape({
+      content: PropTypes.string.isRequired,
+      userFrom: PropTypes.number.isRequired,
+      userTo: PropTypes.number.isRequired,
+      messageTime: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+  selectedUser: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+    avatar: PropTypes.string,
+  }),
 };
 
 export default ChatPage;
