@@ -92,19 +92,7 @@ const NewMessageForm = ({ userFrom, userTo, onSendMessage }) => {
 
   return (
     <div>
-      <form className={styles.NewMessageForm} onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Напишите сообщение..."
-        />
-        <button type="submit" disabled={!message.trim()}>
-          Отправить
-        </button>
-      </form>
-
-      <div>
+        <div>
         <h3>Сообщения между {userFrom} и {userTo}</h3>
         {loadingMessages ? (
           <p>Загрузка сообщений...</p>
@@ -120,6 +108,19 @@ const NewMessageForm = ({ userFrom, userTo, onSendMessage }) => {
           <p>Нет сообщений между этими пользователями.</p>
         )}
       </div>
+      <form className={styles.NewMessageForm} onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          placeholder="Напишите сообщение..."
+        />
+        <button type="submit" disabled={!message.trim()}>
+          Отправить
+        </button>
+      </form>
+
+    
     </div>
   );
 };

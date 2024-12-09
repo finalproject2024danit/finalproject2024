@@ -141,7 +141,7 @@ const ChatPage = () => {
               {chatUsers.map((user) => (
                 <div
                   key={user.id}
-                  className={styles.ChatUser}
+                  className={`${styles.ChatUser} ${selectedUser?.id === user.id ? styles.selected : ""}`}
                   onClick={() => {
                     dispatch(selectUser(user));
                     console.log("Выбран пользователь из списка:");
@@ -182,4 +182,3 @@ const ChatPage = () => {
 };
 
 export default ChatPage;
-

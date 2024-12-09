@@ -2,14 +2,16 @@
 
 .ChatBox{
   display: flex;
+  border-radius: 10px;
 }
 
 .ChatSidebar{
   display: flex;
   flex-direction: column;
   width: 30%;
-  height: 77vw;
+  height: 80vh;
   gap: 20px;
+ 
 }
 
 
@@ -27,7 +29,7 @@ form {
 .select {
   color: #000;
   .react-select__control {
-    background-color: #adabab;
+    background-color: #e68e8e;
     border: 1px solid #a3a1a1;
     border-radius: 10px;
     padding: 5px 10px;
@@ -86,6 +88,7 @@ form {
   height: 100%;
   border: 1px solid #5f5e5e;
   gap: 10px;
+  border-radius: 10px;
 }
 
 
@@ -102,9 +105,14 @@ form {
   height: 100%;
   transition: background-color 0.2s ease, transform 0.2s ease;
   
+  
+  &.selected {
+      background-color:$background-btn-fifth; /* Выделение выбранного пользователя */
+      border: 2px solid $background-thirteenth; /* Например, синяя полоска слева */
+    }
 
   &:hover {
-    background-color:$eleventh;
+   
     transform: scale(1.02);
   }
 
