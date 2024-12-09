@@ -7,6 +7,7 @@ import {
   deletePost,
 } from "../../api/groups/requests.js";
 
+
 const initialState = {
   groups: [],
   selectedGroup: null,
@@ -49,7 +50,7 @@ export const editPost = createAsyncThunk(
 export const removePost = createAsyncThunk(
   "groups/removePost",
   async (postId) => {
-    const response = await deletePost(postId);
+    await deletePost(postId);
     return postId;
   }
 );
@@ -142,10 +143,27 @@ const groupSlice = createSlice({
             post.id === updatedPost.id ? updatedPost : post
           );
         }
+        try {
+          let storedGroups = JSON.parse(localStorage.getItem("groups")) || [];
+          const groupIndex = storedGroups.findIndex((g) => 
+            g.posts?.some((post) => post.id === updatedPost.id)
+          );
+      
+          if (groupIndex > -1) {
+            storedGroups[groupIndex].posts = storedGroups[groupIndex].posts.map((post) =>
+              post.id === updatedPost.id ? updatedPost : post
+            );
+          }
+      
+          localStorage.setItem("groups", JSON.stringify(storedGroups));
+        } catch (error) {
+          console.error("Failed to update localStorage:", error);
+        }
       })
       .addCase(editPost.rejected, (state, action) => {
         state.error = action.error.message;
       })
+      
       .addCase(removePost.fulfilled, (state, action) => {
         const postId = action.payload;
 

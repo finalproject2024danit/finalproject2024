@@ -227,3 +227,10 @@
   background-color: #f44336;
   color: white;
 }
+
+.commentDate {
+  display: flex;
+  justify-content: flex-end;
+  font-size: $small;
+  color: $seventh;
+}

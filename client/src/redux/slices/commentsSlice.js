@@ -1,28 +1,38 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  comments: {}, 
+  comments: {}, // Структура: { [groupId]: { [postId]: [comments] } }
 };
 
 const commentsSlice = createSlice({
   name: 'comments',
   initialState,
   reducers: {
+    // Встановлення коментарів для певного посту
     setComments: (state, action) => {
       const { groupId, postId, comments } = action.payload;
-      if (!state.comments[groupId]) {
-        state.comments[groupId] = {};
-      }
-      state.comments[groupId][postId] = comments;
+
+      // Створюємо структуру для groupId та postId, якщо вона ще не існує
+      state.comments[groupId] = {
+        ...state.comments[groupId],
+        [postId]: comments,
+      };
     },
+
+    // Додавання коментаря до посту
     addComment: (state, action) => {
       const { groupId, postId, comment } = action.payload;
-      if (!state.comments[groupId]) {
-        state.comments[groupId] = {};
+
+      if (!comment || typeof comment !== 'object') {
+        console.error('Invalid comment:', comment);
+        return; // Не додаємо, якщо коментар некоректний
       }
-      if (!state.comments[groupId][postId]) {
-        state.comments[groupId][postId] = [];
-      }
+
+      // Переконайтесь, що існують потрібні рівні структури
+      state.comments[groupId] = state.comments[groupId] || {};
+      state.comments[groupId][postId] = state.comments[groupId][postId] || [];
+
+      // Додаємо коментар до масиву
       state.comments[groupId][postId].push(comment);
     },
   },

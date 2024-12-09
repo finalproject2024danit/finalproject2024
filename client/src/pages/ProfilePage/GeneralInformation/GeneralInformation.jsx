@@ -78,7 +78,7 @@ const GeneralInformation = () => {
       email: user.email || "",
       gender: user.gender || "",
       phones: user.phones || "",
-      password: "",
+      // password: "",
       dateOfBirth: user.dateOfBirth ? unixToDate(user.dateOfBirth) : "",
     });
   }, [user]);
@@ -156,7 +156,7 @@ const GeneralInformation = () => {
               )}
             </div>
 
-            <div>
+            {/* <div>
               <label htmlFor="password" className={styles.label}>
                 Password
               </label>
@@ -173,7 +173,7 @@ const GeneralInformation = () => {
               {formik.touched.password && formik.errors.password && (
                 <div className={styles.error}>{formik.errors.password}</div>
               )}
-            </div>
+            </div> */}
 
             <div>
               <label htmlFor="gender" className={styles.label}>

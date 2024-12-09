@@ -38,7 +38,7 @@ export const getUserAllData = async (userId) => {
 
 export const updateUser = async (userId, userData) => {
     const response = await axiosInstance.patch(
-        `/users/patch/${userId}`,
+        `/users/patch/general_information/${userId}`,
         userData,
         {
             headers: {

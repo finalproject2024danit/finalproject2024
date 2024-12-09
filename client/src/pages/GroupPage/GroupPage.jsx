@@ -13,7 +13,8 @@ import { addComment, setComments } from "../../redux/slices/commentsSlice.js";
 import LikeIcon from "../../svg/Header/Like/index.jsx";
 import { useParams } from "react-router-dom";
 import ModalPost from "../../components/Modal/ModalGroup/ModalPost.jsx";
-import Modal from "../../components/Modal/ModalFriend/Modal.jsx"
+import Modal from "../../components/Modal/ModalFriend/Modal.jsx";
+import { format } from 'date-fns';
 
 const GroupPage = () => {
   const dispatch = useDispatch();
@@ -36,8 +37,6 @@ const GroupPage = () => {
   const [editPost, setEditPost] = useState(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [postToDelete, setPostToDelete] = useState(null);
-
-  // const getRandomLikes = () => Math.floor(Math.random() * 1000) + 1;
 
   useEffect(() => {
     if (id) {
@@ -107,9 +106,9 @@ const GroupPage = () => {
       postId,
       groupId,
       userId: userFromId.id,
-      userName: userFromId.firstName, // Имя пользователя
-      userLastName: userFromId.lastName, // Фамилия пользователя
-      userAvatar: userFromId.avatar, // Аватар пользователя
+      userName: userFromId.firstName,
+      userLastName: userFromId.lastName,
+      userAvatar: userFromId.avatar,
       createdDate: new Date().toISOString(),
     };
 
@@ -152,7 +151,7 @@ const GroupPage = () => {
   if (loading && !groups.length) {
     return (
       <MainContent title="">
-        <p>Загрузка...</p>
+        <p>Loading...</p>
       </MainContent>
     );
   }
@@ -190,14 +189,13 @@ const GroupPage = () => {
     }
 
     const newPostData = {
-      id: Date.now(), // Генерація унікального ID
+      id: Date.now(),
       content: newPost.content,
       groupId: selectedGroup.id,
-      userId: userFromId.id, // Додаємо userId
+      userId: userFromId.id,
       createdDate: new Date().toISOString(),
     };
 
-    // Викликаємо Redux-дію для оновлення групи
     dispatch(
       addPostToGroup({ groupId: selectedGroup.id, postData: newPostData })
     );
@@ -210,81 +208,53 @@ const GroupPage = () => {
     ? [...selectedGroup.posts].reverse()
     : [];
 
-    if (loading && !groups.length) {
-      return (
-        <MainContent title="">
-          <p>Loading...</p>
-        </MainContent>
-      );
-    }
-  
-    if (error) {
-      return (
-        <MainContent title="">
-          <p>{error}</p>
-        </MainContent>
-      );
-    }
-  
-    if (!groups.length) {
-      return (
-        <MainContent title="">
-          <p>Groups not found.</p>
-        </MainContent>
-      );
-    }
-    
-    const handleEditPost = (post) => {
-      setEditPost(post); // Встановлюємо пост для редагування
-      setIsModalOpen(true);
-    };
-    
-    const handleUpdatePost = () => {
-      if (!editPost || !editPost.id || !editPost.content.trim()) {
-        alert("Invalid post data. Please check the content and try again.");
-        console.error("Invalid post data:", editPost);
-        return;
-      }
-    
-      console.log("Updating post with data:", editPost);
-    
-      dispatch(
-        editPostAction({
-          postId: editPost.id,
-          postData: { content: editPost.content },
-        })
-      )
-        .unwrap()
-        .then(() => {
-          console.log("Post updated successfully");
-          setEditPost(null);
-          setIsModalOpen(false);
-        })
-        .catch((err) => {
-          console.error("Failed to update post:", err);
-        });
-    };
-    
+  const handleEditPost = (post) => {
+    setEditPost(post);
+    setIsModalOpen(true);
+  };
 
-    const handleOpenDeleteModal = (postId) => {
-      setPostToDelete(postId);
-      setIsDeleteModalOpen(true);
-    };
-  
-    const handleCloseDeleteModal = () => {
-      setPostToDelete(null);
-      setIsDeleteModalOpen(false);
-    };
-  
-    const handleConfirmDeletePost = () => {
-      if (postToDelete) {
-        dispatch(removePost(postToDelete))
-          .unwrap()
-          .then(() => console.log("Post deleted:", postToDelete))
-          .catch((err) => console.error("Failed to delete post:", err));
-      }
-      handleCloseDeleteModal();
-    };
+  const handleUpdatePost = () => {
+    if (!editPost || !editPost.id || !editPost.content.trim()) {
+      alert("Invalid post data. Please check the content and try again.");
+      console.error("Invalid post data:", editPost);
+      return;
+    }
+
+    dispatch(
+      editPostAction({
+        postId: editPost.id,
+        postData: { content: editPost.content },
+      })
+    )
+      .unwrap()
+      .then(() => {
+        setEditPost(null);
+        setIsModalOpen(false);
+      })
+      .catch((err) => {
+        console.error("Failed to update post:", err);
+      });
+  };
+
+  const handleOpenDeleteModal = (postId) => {
+    setPostToDelete(postId);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setPostToDelete(null);
+    setIsDeleteModalOpen(false);
+  };
+
+  const handleConfirmDeletePost = () => {
+    if (postToDelete) {
+      dispatch(removePost(postToDelete))
+        .unwrap()
+        .then(() => console.log("Post deleted:", postToDelete))
+        .catch((err) => console.error("Failed to delete post:", err));
+    }
+    handleCloseDeleteModal();
+  };
 
   return (
     <MainContent title="">
@@ -317,9 +287,7 @@ const GroupPage = () => {
               New Post
             </button>
             <div className={styles.groupRender}>
-              {/* {selectedGroup.posts && selectedGroup.posts.length > 0 ? (
-                selectedGroup.posts.map((post, index) => { */}
-                 {sortedPosts.length > 0 ? (
+              {sortedPosts.length > 0 ? (
                 sortedPosts.map((post, index) => {
                   const postComments =
                     comments[selectedGroup.id]?.[post.id] || [];
@@ -330,19 +298,19 @@ const GroupPage = () => {
                     <div key={index} className={styles.post}>
                       <p>{post.content}</p>
                       <div className={styles.postActions}>
-    <button
-      className={styles.editButton}
-      onClick={() => handleEditPost(post)}
-    >
-      Edit
-    </button>
-    <button
-      className={styles.deleteButton}
-      onClick={() => handleOpenDeleteModal(post.id)}
-    >
-      Delete
-    </button>
-  </div>
+                        <button
+                          className={styles.editButton}
+                          onClick={() => handleEditPost(post)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className={styles.deleteButton}
+                          onClick={() => handleOpenDeleteModal(post.id)}
+                        >
+                          Delete
+                        </button>
+                      </div>
                       <div className={styles.postFeedback}>
                         <div className={styles.likes}>
                           <LikeIcon
@@ -379,6 +347,9 @@ const GroupPage = () => {
                                   </span>
                                 </div>
                                 <p>{comment.content}</p>
+                                <span className={styles.commentDate}>
+                                  {format(new Date(comment.createdDate), 'dd.MM.yyyy')}
+                                </span>
                               </div>
                             ))
                           ) : (
@@ -406,18 +377,18 @@ const GroupPage = () => {
         )}
       </div>
       <ModalPost
-  isOpen={isModalOpen}
-  onClose={handleCloseModal}
-  onSubmit={editPost ? handleUpdatePost : handleCreatePost}
-  newPost={editPost || newPost}
-  setNewPost={editPost ? setEditPost : setNewPost}
-/>
-<Modal
-  isOpen={isDeleteModalOpen}
-  onClose={handleCloseDeleteModal}
-  onConfirm={handleConfirmDeletePost}
-  message="Are you sure you want to delete this post?"
-/>
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onSubmit={editPost ? handleUpdatePost : handleCreatePost}
+        newPost={editPost || newPost}
+        setNewPost={editPost ? setEditPost : setNewPost}
+      />
+      <Modal
+        isOpen={isDeleteModalOpen}
+        onClose={handleCloseDeleteModal}
+        onConfirm={handleConfirmDeletePost}
+        message="Are you sure you want to delete this post?"
+      />
     </MainContent>
   );
 };
