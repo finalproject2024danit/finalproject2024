@@ -4,17 +4,17 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 190px; /* Высота в свернутом состоянии */
+  height: 190px; 
   background-color: $background-secondary;
   border-radius: 10px;
-  overflow: hidden; /* Прячет содержимое, если блок свернут */
-  transition: height 1s ease; /* Анимация изменения высоты */
-padding-top: 10px;
-border: 3px solid $twelfth;
+  overflow: hidden; 
+  transition: height 1s ease; 
+  padding-top: 10px;
+  border: 3px solid $twelfth;
   &.expanded {
-    height: 52vh; /* Высота в развернутом состоянии */
-    overflow-y: scroll; /* Скролл включается только при развернутом блоке */
-    transition: height 1s ease; /* Плавное изменение высоты */
+    height: 52vh; 
+    overflow-y: scroll; 
+    transition: height 1s ease; 
   }
 
   &::-webkit-scrollbar {
@@ -35,10 +35,8 @@ border: 3px solid $twelfth;
   }
 }
 
-
 .friendItem {
   display: flex;
-
   align-items: center;
   justify-content: space-between;
   gap: 10px;
@@ -60,23 +58,23 @@ border: 3px solid $twelfth;
   flex-grow: 1;
 
   &:hover {
-    color: $sixth;
+    color: $background-btn-fifth;
     transform: scale(1.1);
     box-shadow: 0 0 15px rgba(83, 83, 83, 0.8), 0 0 25px rgba(52, 53, 53, 0.5);
   }
 }
-.toggleButton span{
+.toggleButton span {
   margin-right: 10px;
 }
-.toggleButton{
+.toggleButton {
   color: $primary;
   font-size: $medium;
-  padding:5px 10px;
+  padding: 5px 10px;
   border-radius: 10px;
-  background-color: #9ad14b;
+  background-color: $background-btn-fifth;
 }
-.toggleButton:hover{
-  background-color:#365806;
+.toggleButton:hover {
+  background-color: $background-btn-hover-fifth;
 }
 
 .friendName {

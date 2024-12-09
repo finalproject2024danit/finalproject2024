@@ -1,38 +1,45 @@
 import axios from 'axios';
 
-const axiosInstance = axios.create({
 
-  baseURL: 'http://134.209.246.21:9000/api/v1',
+// Створення axios інстансу
+const axiosInstance = axios.create({
+  baseURL: 'http://134.209.246.21:9000/api/v1',  // Основний URL для запитів
   // baseURL: 'http://localhost:9000/api/v1',
   headers: {
-    'Content-Type': 'application/json',
-  }
+    'Content-Type': 'application/json', // Стандартний тип контенту
+  },
 });
 
+// Інтерцептор для запитів
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("authToken");
+    // Отримуємо токен з localStorage
+    const token = localStorage.getItem('authToken');
     if (token) {
+      // Додаємо токен до заголовків запиту
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
   (error) => {
-    return Promise.reject(error);
+    return Promise.reject(error); // Якщо помилка в запиті, її потрібно обробити
   }
 );
 
-// // Обробка помилок у відповідях
-// axiosInstance.interceptors.response.use(
-//   (response) => response, // Якщо відповідь успішна
-//   (error) => {
-//     if (error.response && error.response.status === 401) {
-//       console.error("Unauthorized! Redirecting to login...");
-//       localStorage.removeItem("authToken"); // Очищення токена
-//       window.location.href = "/login"; // Перенаправлення на сторінку логіну
-//     }
-//     return Promise.reject(error);
-//   }
-// );
+// Функція для логіну та отримання токена
+export const loginByEmail = async (loginPayload) => {
+  try {
+    const response = await axios.post('http://134.209.246.21:9000/auth/login', loginPayload);
+    const { accessToken } = response.data; // Отримуємо токен з відповіді
+    localStorage.setItem('authToken', accessToken); // Зберігаємо токен в localStorage
+    return accessToken;
+  } catch (error) {
+    console.error('Login failed:', error);
+    throw new Error('Login failed');
+  }
+};
 
 export default axiosInstance;
+
+
+
