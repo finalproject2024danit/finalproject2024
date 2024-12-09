@@ -4,17 +4,21 @@ import {
   fetchGroupById,
   fetchGroups,
   addPostToGroup,
+
   editPost as editPostAction,
   removePost
+
 } from "../../redux/slices/groupSlice.js";
 import styles from "./GroupPage.module.scss";
 import MainContent from "../../components/MainContent/MainContent";
 import { addComment, setComments } from "../../redux/slices/commentsSlice.js";
 import LikeIcon from "../../svg/Header/Like/index.jsx";
 import { useParams } from "react-router-dom";
+
 import ModalPost from "../../components/Modal/ModalGroup/ModalPost.jsx";
 import Modal from "../../components/Modal/ModalFriend/Modal.jsx";
 import { format } from 'date-fns';
+
 
 const GroupPage = () => {
   const dispatch = useDispatch();
@@ -31,12 +35,14 @@ const GroupPage = () => {
   const hasMore = groups.length % perPage === 0 && groups.length < 100;
   const { id } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [newPost, setNewPost] = useState({ content: "" });
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
   const [editPost, setEditPost] = useState(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [postToDelete, setPostToDelete] = useState(null);
+
 
   useEffect(() => {
     if (id) {
@@ -106,9 +112,11 @@ const GroupPage = () => {
       postId,
       groupId,
       userId: userFromId.id,
+
       userName: userFromId.firstName,
       userLastName: userFromId.lastName,
       userAvatar: userFromId.avatar,
+
       createdDate: new Date().toISOString(),
     };
 
@@ -173,8 +181,10 @@ const GroupPage = () => {
   }
 
   const handleCreatePost = () => {
+
     if (!newPost.content.trim()) {
       alert("Content is required.");
+
       return;
     }
 
@@ -196,9 +206,11 @@ const GroupPage = () => {
       createdDate: new Date().toISOString(),
     };
 
+
     dispatch(
       addPostToGroup({ groupId: selectedGroup.id, postData: newPostData })
     );
+
 
     setNewPost({ content: "" });
     handleCloseModal();
@@ -255,6 +267,7 @@ const GroupPage = () => {
     }
     handleCloseDeleteModal();
   };
+
 
   return (
     <MainContent title="">
@@ -332,6 +345,7 @@ const GroupPage = () => {
                       >
                         <div className={styles.commentsList}>
                           {postComments.length > 0 ? (
+
                             postComments.map((comment, idx) => (
                               <div key={idx} className={styles.comment}>
                                 <div className={styles.commentHeader}>
@@ -351,6 +365,7 @@ const GroupPage = () => {
                                   {format(new Date(comment.createdDate), 'dd.MM.yyyy')}
                                 </span>
                               </div>
+
                             ))
                           ) : (
                             <p>No comments yet.</p>
@@ -376,6 +391,7 @@ const GroupPage = () => {
           </div>
         )}
       </div>
+
       <ModalPost
         isOpen={isModalOpen}
         onClose={handleCloseModal}
@@ -388,6 +404,7 @@ const GroupPage = () => {
         onClose={handleCloseDeleteModal}
         onConfirm={handleConfirmDeletePost}
         message="Are you sure you want to delete this post?"
+
       />
     </MainContent>
   );

@@ -50,7 +50,7 @@ export const editPost = createAsyncThunk(
 export const removePost = createAsyncThunk(
   "groups/removePost",
   async (postId) => {
-    await deletePost(postId);
+    await deletePost(postId); 
     return postId;
   }
 );
@@ -82,6 +82,7 @@ const groupSlice = createSlice({
       .addCase(addPostToGroup.fulfilled, (state, action) => {
         const { groupId, post } = action.payload;
 
+
         // Оновлюємо вибрану групу
         if (state.selectedGroup?.id === groupId) {
           state.selectedGroup.posts = [
@@ -90,11 +91,12 @@ const groupSlice = createSlice({
           ];
         }
 
-        // Оновлюємо групу в списку
+
         const group = state.groups.find((g) => g.id === groupId);
         if (group) {
           group.posts = [...(group.posts || []), post];
         }
+
 
         // Оновлення localStorage
         let storedGroups = [];
@@ -107,6 +109,7 @@ const groupSlice = createSlice({
         const groupIndex = storedGroups.findIndex((g) => g.id === groupId);
         if (groupIndex > -1) {
           storedGroups[groupIndex].posts = storedGroups[groupIndex].posts || [];
+
           storedGroups[groupIndex].posts.push(post);
         } else {
           storedGroups.push({
@@ -114,6 +117,7 @@ const groupSlice = createSlice({
             posts: [post],
           });
         }
+
 
         try {
           localStorage.setItem("groups", JSON.stringify(storedGroups));
@@ -135,6 +139,7 @@ const groupSlice = createSlice({
         }
 
         // Оновлення посту у списку груп
+
         const group = state.groups.find((g) =>
           g.posts?.some((post) => post.id === updatedPost.id)
         );
@@ -143,6 +148,7 @@ const groupSlice = createSlice({
             post.id === updatedPost.id ? updatedPost : post
           );
         }
+
         try {
           let storedGroups = JSON.parse(localStorage.getItem("groups")) || [];
           const groupIndex = storedGroups.findIndex((g) => 
@@ -181,6 +187,7 @@ const groupSlice = createSlice({
       })
       .addCase(removePost.rejected, (state, action) => {
         state.error = action.error.message;
+
       });
   },
 });
