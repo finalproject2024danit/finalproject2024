@@ -4,13 +4,16 @@ import {
   fetchGroupById,
   fetchGroups,
   addPostToGroup,
+  editPost as editPostAction,
+  removePost
 } from "../../redux/slices/groupSlice.js";
 import styles from "./GroupPage.module.scss";
 import MainContent from "../../components/MainContent/MainContent";
 import { addComment, setComments } from "../../redux/slices/commentsSlice.js";
 import LikeIcon from "../../svg/Header/Like/index.jsx";
 import { useParams } from "react-router-dom";
-import Modal from "../../components/Modal/ModalGroup/Modal.jsx";
+import ModalPost from "../../components/Modal/ModalGroup/ModalPost.jsx";
+import Modal from "../../components/Modal/ModalFriend/Modal.jsx"
 
 const GroupPage = () => {
   const dispatch = useDispatch();
@@ -30,6 +33,9 @@ const GroupPage = () => {
   const [newPost, setNewPost] = useState({ content: "" });
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
+  const [editPost, setEditPost] = useState(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [postToDelete, setPostToDelete] = useState(null);
 
   // const getRandomLikes = () => Math.floor(Math.random() * 1000) + 1;
 
@@ -227,6 +233,58 @@ const GroupPage = () => {
         </MainContent>
       );
     }
+    
+    const handleEditPost = (post) => {
+      setEditPost(post); // Встановлюємо пост для редагування
+      setIsModalOpen(true);
+    };
+    
+    const handleUpdatePost = () => {
+      if (!editPost || !editPost.id || !editPost.content.trim()) {
+        alert("Invalid post data. Please check the content and try again.");
+        console.error("Invalid post data:", editPost);
+        return;
+      }
+    
+      console.log("Updating post with data:", editPost);
+    
+      dispatch(
+        editPostAction({
+          postId: editPost.id,
+          postData: { content: editPost.content },
+        })
+      )
+        .unwrap()
+        .then(() => {
+          console.log("Post updated successfully");
+          setEditPost(null);
+          setIsModalOpen(false);
+        })
+        .catch((err) => {
+          console.error("Failed to update post:", err);
+        });
+    };
+    
+
+    const handleOpenDeleteModal = (postId) => {
+      setPostToDelete(postId);
+      setIsDeleteModalOpen(true);
+    };
+  
+    const handleCloseDeleteModal = () => {
+      setPostToDelete(null);
+      setIsDeleteModalOpen(false);
+    };
+  
+    const handleConfirmDeletePost = () => {
+      if (postToDelete) {
+        dispatch(removePost(postToDelete))
+          .unwrap()
+          .then(() => console.log("Post deleted:", postToDelete))
+          .catch((err) => console.error("Failed to delete post:", err));
+      }
+      handleCloseDeleteModal();
+    };
 
   return (
     <MainContent title="">
@@ -271,6 +329,20 @@ const GroupPage = () => {
                   return (
                     <div key={index} className={styles.post}>
                       <p>{post.content}</p>
+                      <div className={styles.postActions}>
+    <button
+      className={styles.editButton}
+      onClick={() => handleEditPost(post)}
+    >
+      Edit
+    </button>
+    <button
+      className={styles.deleteButton}
+      onClick={() => handleOpenDeleteModal(post.id)}
+    >
+      Delete
+    </button>
+  </div>
                       <div className={styles.postFeedback}>
                         <div className={styles.likes}>
                           <LikeIcon
@@ -333,13 +405,19 @@ const GroupPage = () => {
           </div>
         )}
       </div>
-      <Modal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        onSubmit={handleCreatePost}
-        newPost={newPost}
-        setNewPost={setNewPost}
-      />
+      <ModalPost
+  isOpen={isModalOpen}
+  onClose={handleCloseModal}
+  onSubmit={editPost ? handleUpdatePost : handleCreatePost}
+  newPost={editPost || newPost}
+  setNewPost={editPost ? setEditPost : setNewPost}
+/>
+<Modal
+  isOpen={isDeleteModalOpen}
+  onClose={handleCloseDeleteModal}
+  onConfirm={handleConfirmDeletePost}
+  message="Are you sure you want to delete this post?"
+/>
     </MainContent>
   );
 };
