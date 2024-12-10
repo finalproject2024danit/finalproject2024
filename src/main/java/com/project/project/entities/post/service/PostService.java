@@ -1,14 +1,14 @@
 package com.project.project.entities.post.service;
 
 import com.project.project.entities.post.Post;
-
-import java.util.Set;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 
 public interface PostService {
     Post getPostById(long id);
 
-    Set<Post> getPostsByUserId(long userId);
+    Page<Post> getPostsByUserId(long userId, Pageable pageable);
 
     Post createPost(Post post);
 

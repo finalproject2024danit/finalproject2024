@@ -22,6 +22,17 @@ public class CommentServiceImpl implements CommentService {
                 .orElseThrow(() -> new CommentNotFoundException(CommentStatus.COMMENT_NOT_FOUND.getMessage()));
     }
 
+    @Override
+    public Comment createComment(Comment comment) {
+        return commentRepository.save(comment);
+    }
+
+    @Override
+    public void deleteCommentById(long id) {
+        commentRepository.deleteById(id);
+    }
+
+
     public void likeComment(Long commentId, Long userId) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new CommentNotFoundException(CommentStatus.COMMENT_NOT_FOUND.getMessage()));

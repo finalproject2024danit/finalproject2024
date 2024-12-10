@@ -253,14 +253,27 @@ public class UserController {
 
     @GetMapping("/{userId}/friends")
     @JsonView(View.Admin.class)
-    public List<ResponseUserDto> getFriendsByUserId(@PathVariable Long userId) {
-        log.info("Trying to get all friends by user id: {}", userId);
+    public ResponseEntity<List<ResponseUserDto>> getFriendsByUserId(
+            @PathVariable Long userId,
+            @RequestParam(defaultValue = "0") int startPage,
+            @RequestParam(defaultValue = "10") int perPage,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDirection) {
 
-        List<User> friendsByUserId = userService.getFriendsByUserId(userId);
+        log.info("Trying to get friends for user ID: {} with pagination and sorting parameters", userId);
 
-        return friendsByUserId.stream()
+        Sort.Direction direction = Sort.Direction.fromString(sortDirection);
+        Pageable pageable = PageRequest.of(startPage, perPage, Sort.by(direction, sortBy));
+
+        List<ResponseUserDto> friends = userService.getFriendsByUserId(userId, pageable).stream()
                 .map(UserMapper.INSTANCE::userToUserDto)
                 .toList();
+
+        if (friends.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.ok(friends);
+        }
     }
 
 }

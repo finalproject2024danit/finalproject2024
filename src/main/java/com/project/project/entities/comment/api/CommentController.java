@@ -2,6 +2,10 @@ package com.project.project.entities.comment.api;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.project.project.entities.comment.Comment;
+import com.project.project.entities.comment.api.dto.CommentMapper;
+import com.project.project.entities.comment.api.dto.LikeCommentRequestDto;
+import com.project.project.entities.comment.api.dto.RequestCommentDto;
+import com.project.project.entities.comment.api.dto.ResponseCommentDto;
 import com.project.project.entities.comment.service.CommentServiceImpl;
 import com.project.project.entities.comment.status.CommentStatus;
 import com.project.project.entities.user.api.dto.View;
@@ -28,6 +32,30 @@ public class CommentController {
         ResponseCommentDto responseCommentDto = CommentMapper.INSTANCE.commentToResponseCommentDto(comment);
 
         return ResponseEntity.ok(responseCommentDto);
+    }
+
+    @PostMapping("/comment/create")
+    @JsonView(View.Admin.class)
+    public ResponseEntity<ResponseCommentDto> createComment(@RequestBody RequestCommentDto requestCommentDto) {
+        log.info("Trying to create comment");
+
+        Comment comment = CommentMapper.INSTANCE.requestCommentDtoToComment(requestCommentDto);
+
+        Comment savedComment = commentService.createComment(comment);
+
+        ResponseCommentDto responseCommentDto = CommentMapper.INSTANCE.commentToResponseCommentDto(savedComment);
+
+        return ResponseEntity.ok(responseCommentDto);
+    }
+
+    @GetMapping("/comment/delete/{id}")
+    @JsonView(View.Admin.class)
+    public ResponseEntity<String> deleteCommentById(@PathVariable long id) {
+        log.info("Trying to delete comment by id: {}", id);
+
+        commentService.deleteCommentById(id);
+
+        return ResponseEntity.ok("Comment was successfully deleted");
     }
 
     @PostMapping("/like")

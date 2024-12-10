@@ -22,7 +22,7 @@ public interface UserService {
 
     List<User> findAllById(Iterable<Long> userIds);
 
-    List<User> getFriendsByUserId(Long userId);
+    Page<User> getFriendsByUserId(Long userId, Pageable pageable);
 
     User getUserByEmail(String email);
 
