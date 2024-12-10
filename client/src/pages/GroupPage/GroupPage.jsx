@@ -6,8 +6,7 @@ import {
   addPostToGroup,
 
   editPost as editPostAction,
-  removePost
-
+  removePost,
 } from "../../redux/slices/groupSlice.js";
 import styles from "./GroupPage.module.scss";
 import MainContent from "../../components/MainContent/MainContent";
@@ -17,7 +16,7 @@ import { useParams } from "react-router-dom";
 
 import ModalPost from "../../components/Modal/ModalGroup/ModalPost.jsx";
 import Modal from "../../components/Modal/ModalFriend/Modal.jsx";
-import { format } from 'date-fns';
+import { format } from "date-fns";
 
 
 const GroupPage = () => {
@@ -42,6 +41,8 @@ const GroupPage = () => {
   const [editPost, setEditPost] = useState(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [postToDelete, setPostToDelete] = useState(null);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [expandedPosts, setExpandedPosts] = useState({});
 
 
   useEffect(() => {
@@ -268,6 +269,12 @@ const GroupPage = () => {
     handleCloseDeleteModal();
   };
 
+  const toggleExpand = (postId) => {
+    setExpandedPosts((prev) => ({
+      ...prev,
+      [postId]: !prev[postId],
+    }));
+  };
 
   return (
     <MainContent title="">
@@ -349,6 +356,7 @@ const GroupPage = () => {
                             postComments.map((comment, idx) => (
                               <div key={idx} className={styles.comment}>
                                 <div className={styles.commentHeader}>
+                                  <div className={styles.commentInfo}>
                                   <img
                                     src={
                                       comment.userAvatar || "defaultAvatar.jpg"
@@ -359,11 +367,15 @@ const GroupPage = () => {
                                   <span className={styles.commentAuthor}>
                                     {comment.userName} {comment.userLastName}
                                   </span>
+                                  </div>
+                                  <span className={styles.commentDate}>
+                                    {format(
+                                      new Date(comment.createdDate),
+                                      "dd.MM.yyyy"
+                                    )}
+                                  </span>
                                 </div>
                                 <p>{comment.content}</p>
-                                <span className={styles.commentDate}>
-                                  {format(new Date(comment.createdDate), 'dd.MM.yyyy')}
-                                </span>
                               </div>
 
                             ))
@@ -371,15 +383,29 @@ const GroupPage = () => {
                             <p>No comments yet.</p>
                           )}
                         </div>
-                        <textarea
-                          name={`comment-${post.id}`}
-                          onChange={(e) => handleCommentChange(post.id, e)}
-                          value={commentValues[post.id] || ""}
-                          placeholder="Write a comment..."
-                        />
-                        <button className={styles.groupBtn} type="submit">
-                          Send the comment
+                        <button
+                          className={styles.toggleButton}
+                          onClick={() => toggleExpand(post.id)}
+                          aria-label="Toggle Comments"
+                        >
+                          <span>Comments</span>
+                          {expandedPosts[post.id] ? "⬆" : "⬇"}
                         </button>
+
+                        {expandedPosts[post.id] && (
+                          <div className={styles.commentSection}>
+                            <textarea
+                              name={`comment-${post.id}`}
+                              onChange={(e) => handleCommentChange(post.id, e)}
+                              value={commentValues[post.id] || ""}
+                              placeholder="Write a comment..."
+                              className={styles.commentTextarea}
+                            />
+                            <button className={styles.groupBtn} type="submit">
+                              Send the comment
+                            </button>
+                          </div>
+                        )}
                       </form>
                     </div>
                   );

@@ -185,21 +185,27 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  width: 118vh;
+  gap: 5px;
+  width: 100%;
 }
 
 .comment{
   display: flex; 
   flex-direction: column;
-  border: 0.5px solid $background-sixth;
-  border-radius: 10px;
-  margin-bottom: 10px;
+  border: 0.5px solid $background-fourth;
+  border-radius: 10px; 
   padding: 10px;
   width: 30vh;
   font-size: $smaller;
 }
 
 .commentHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.commentInfo {
   display: flex;
   align-items: center;
 }
@@ -230,9 +236,22 @@
 }
 
 .commentDate {
-  display: flex;
-  justify-content: flex-end;
+  // display: flex;
+  // justify-content: flex-end;
   font-size: $small;
   color: $seventh;
 }
 
+.toggleButton span {
+  margin-right: 10px;
+}
+.toggleButton {
+  color: $primary;
+  font-size: $medium;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background-color: $background-btn-fifth;
+}
+.toggleButton:hover {
+  background-color: $background-btn-hover-fifth;
+}
