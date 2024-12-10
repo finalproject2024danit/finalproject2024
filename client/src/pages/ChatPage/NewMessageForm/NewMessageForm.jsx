@@ -107,17 +107,20 @@ import { useEffect, useState } from "react";
 import { Client } from "@stomp/stompjs";
 import PropTypes from "prop-types";
 import styles from "./NewMessageForm.module.scss";
+import {useSelector} from "react-redux";
 
 const NewMessageForm = ({ userFrom, userTo, onSendMessage }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [stompClient, setStompClient] = useState(null);
+  const token = useSelector((state) => state.user.authToken);
+
 
   useEffect(() => {
     const client = new Client({
       brokerURL: "ws://134.209.246.21:9000/ws/chat", // Адрес WebSocket
       connectHeaders: {
-        // Добавьте токен, если нужно
+        Authorization: `Bearer ${token}`,
       },
       debug: (str) => console.log(str),
       onConnect: () => {
