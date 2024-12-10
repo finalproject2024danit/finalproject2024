@@ -1,4 +1,4 @@
-package com.project.project.entities.comment.api;
+package com.project.project.entities.comment.api.dto;
 
 import com.project.project.entities.comment.Comment;
 import com.project.project.entities.like.Like;
@@ -14,6 +14,11 @@ import java.util.stream.Collectors;
 @Mapper()
 public interface CommentMapper {
     CommentMapper INSTANCE = Mappers.getMapper(CommentMapper.class);
+
+    @Mapping(source = "postId", target = "post.id") // Используем postId для связи с Post
+    @Mapping(source = "content", target = "content")
+    @Mapping(source = "userId", target = "userId")
+    Comment requestCommentDtoToComment(RequestCommentDto requestCommentDto);
 
     @Mapping(source = "id", target = "id")
     @Mapping(source = "post.id", target = "postId")

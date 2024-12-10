@@ -7,5 +7,9 @@ import org.springframework.stereotype.Repository;
 public interface CommentService {
     Comment getCommentById(long id);
 
+    Comment createComment(Comment comment);
+
+    void deleteCommentById(long id);
+
     void likeComment(Long commentId, Long userId);
 }

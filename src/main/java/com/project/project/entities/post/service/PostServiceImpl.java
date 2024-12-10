@@ -5,9 +5,9 @@ import com.project.project.entities.post.db.PostRepository;
 import com.project.project.entities.post.status.PostStatus;
 import com.project.project.exceptions.PostNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -22,8 +22,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Set<Post> getPostsByUserId(long userId) {
-        return postRepository.getPostsByUserId(userId);
+    public Page<Post> getPostsByUserId(long userId, Pageable pageable) {
+        return postRepository.getPostsByUserId(userId, pageable);
     }
 
     @Override
@@ -35,7 +35,7 @@ public class PostServiceImpl implements PostService {
     public Post patchPost(long id, String postContent) {
         Post post = getPostById(id);
         post.setContent(postContent);
-        return post;
+        return postRepository.save(post);
     }
 
     @Override
