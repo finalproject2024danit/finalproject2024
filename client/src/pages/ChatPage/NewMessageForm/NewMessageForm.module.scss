@@ -1,152 +1,225 @@
 @use "../../../App.scss" as *;
 
-.messagesChat {
-    padding: 25px 35px;
 
 
-  @media (max-width: 768px) { // Tablet styles
-    padding: 20px 25px;
+.NewMessageForm {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  background-color: #f1f1f1; /* Светлый серый фон */
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.NewMessageForm input {
+  width: 85%;
+  padding: 12px;
+  border: 1px solid #ccc; /* Светло-серая граница */
+  border-radius: 20px;
+  font-size: 14px;
+  background-color: #e9e9e9; /* Более темный серый фон */
+  outline: none;
+  transition: border-color 0.3s ease;
+
+  &:focus {
+    border-color: #8a8a8a; /* Более темный серый при фокусе */
   }
 
-  @media (max-width: 480px) { // iPhone styles
-    padding: 15px 20px;
+  &::placeholder {
+    color: #999; /* Светло-серый цвет плейсхолдера */
   }
-  }
-  
+}
 
-  .messagesChat .message {
-    display:flex;
-    align-items: center;
-    margin-bottom: 8px;
+.NewMessageForm button {
+  padding: 12px 18px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 20px;
+  background-color: #8a8a8a; /* Темно-серый цвет кнопки */
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 
-    &.textOnly { // Style for messages without photo
-      justify-content: flex-end;
-    }
-  
-  }
-  
-.messagesChat .message .photo {
-      display: block;
-      width: 45px;
-      height: 45px;
-      background: #E6E7ED;
-      border-radius: 50%;
-      background-position: center;
-      background-size: cover;
-      background-repeat: no-repeat;
-      position: relative;
-
-      .online {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        width: 10px;
-        height: 10px;
-        background-color: #4CAF50;
-        border-radius: 50%;
-        border: 2px solid #E6E7ED;
-      }
-
-  }
-  
-.messagesChat .text {
-    margin: 0 35px;
-    background-color: $nodle-black-600;
-    padding: 15px;
-    border-radius: 12px;
-    font-size: 10pt;
-    max-width: 60%;
-
-    @media (max-width: 768px) { // Tablet styles
-      padding: 12px;
-      font-size: 9pt;
-    }
-  
-    @media (max-width: 480px) { // iPhone styles
-      padding: 10px;
-      font-size: 8pt;
-      max-width: 75%; // Increase width for smaller screens
-    }
+  &:hover {
+    background-color: #7a7a7a; /* Темнее при наведении */
   }
 
-  .messagesChat .responseTime {
-    font-size: 0.8rem;
-    color: #aaa;
-    margin-left: 5px; // Space between message and time
+  &:disabled {
+    background-color: #d3d3d3; /* Более светлый серый для отключенной кнопки */
+    cursor: not-allowed;
   }
+}
 
-  .form {
-    display: flex;
-    flex-direction: column;
-    margin-top: 15px;
-    position: relative;
-  }
-  
-  .formGroup {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
-  }
-  
-  textarea {
-    width: 100%;
-    height: 60px; // Adjust height as needed
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    resize: none; // Prevent resizing
-    font-family: inherit; // Ensure consistent font
+.NewMessageForm button:focus {
+  outline: none;
+}
 
-    @media (max-width: 768px) { // Tablet styles
-      height: 50px;
-    }
-  
-    @media (max-width: 480px) { // iPhone styles
-      height: 40px;
-      font-size: 14px; // Adjust font size for smaller screens
-    }
-  }
-  
-  .error {
-    color: red; // Error message color
-    font-size: 0.875rem; // Smaller font for errors
-    margin-top: 5px; // Space above error message
-  }
-  
-  .submitBtn {
-    background-color: $nodle-black-600;
-    color: white; // Button text color
-    font-weight: 1000;
-    padding: 8px 15px; // Smaller padding for a smaller button
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    position: absolute; // Positioning the button in the right corner
-    bottom: 15px; // Space from the bottom
-    right: 15px; // Space from the right
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Add a shadow for distinction
-    width: 40px; // Fixed width for circular shape
-    height: 40px; // Fixed height for circular shape
-    display: flex; // Center icon vertically and horizontally
-    align-items: center;
-    justify-content: center;
-  
-    &:hover {
-      background-color: $nodle-black-400; // Darker shade on hover
-    }
 
-    @media (max-width: 768px) { // Tablet styles
-      padding: 7px 12px;
-      font-size: 14px; // Adjust font size for tablets
-      width: 35px;
-      height: 35px;
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+// .messagesChat {
+//     padding: 25px 35px;
+
+
+//   @media (max-width: 768px) { // Tablet styles
+//     padding: 20px 25px;
+//   }
+
+//   @media (max-width: 480px) { // iPhone styles
+//     padding: 15px 20px;
+//   }
+//   }
   
-    @media (max-width: 480px) { // iPhone styles
-      padding: 6px 10px;
-      font-size: 12px; // Adjust font size for iPhones
-      width: 30px;
-      height: 30px;
-    }
-  }
+
+//   .messagesChat .message {
+//     display:flex;
+//     align-items: center;
+//     margin-bottom: 8px;
+
+//     &.textOnly { // Style for messages without photo
+//       justify-content: flex-end;
+//     }
+  
+//   }
+  
+// .messagesChat .message .photo {
+//       display: block;
+//       width: 45px;
+//       height: 45px;
+//       background: #E6E7ED;
+//       border-radius: 50%;
+//       background-position: center;
+//       background-size: cover;
+//       background-repeat: no-repeat;
+//       position: relative;
+
+//       .online {
+//         position: absolute;
+//         bottom: 0;
+//         right: 0;
+//         width: 10px;
+//         height: 10px;
+//         background-color: #4CAF50;
+//         border-radius: 50%;
+//         border: 2px solid #E6E7ED;
+//       }
+
+//   }
+  
+// .messagesChat .text {
+//     margin: 0 35px;
+//     background-color: $nodle-black-600;
+//     padding: 15px;
+//     border-radius: 12px;
+//     font-size: 10pt;
+//     max-width: 60%;
+
+//     @media (max-width: 768px) { // Tablet styles
+//       padding: 12px;
+//       font-size: 9pt;
+//     }
+  
+//     @media (max-width: 480px) { // iPhone styles
+//       padding: 10px;
+//       font-size: 8pt;
+//       max-width: 75%; // Increase width for smaller screens
+//     }
+//   }
+
+//   .messagesChat .responseTime {
+//     font-size: 0.8rem;
+//     color: #aaa;
+//     margin-left: 5px; // Space between message and time
+//   }
+
+//   .form {
+//     display: flex;
+//     flex-direction: column;
+//     margin-top: 15px;
+//     position: relative;
+//   }
+  
+//   .formGroup {
+//     display: flex;
+//     flex-direction: column;
+//     margin-bottom: 10px;
+//   }
+  
+//   textarea {
+//     width: 100%;
+//     height: 60px; // Adjust height as needed
+//     padding: 10px;
+//     border: 1px solid #ccc;
+//     border-radius: 8px;
+//     resize: none; // Prevent resizing
+//     font-family: inherit; // Ensure consistent font
+
+//     @media (max-width: 768px) { // Tablet styles
+//       height: 50px;
+//     }
+  
+//     @media (max-width: 480px) { // iPhone styles
+//       height: 40px;
+//       font-size: 14px; // Adjust font size for smaller screens
+//     }
+//   }
+  
+//   .error {
+//     color: red; // Error message color
+//     font-size: 0.875rem; // Smaller font for errors
+//     margin-top: 5px; // Space above error message
+//   }
+  
+//   .submitBtn {
+//     background-color: $nodle-black-600;
+//     color: white; // Button text color
+//     font-weight: 1000;
+//     padding: 8px 15px; // Smaller padding for a smaller button
+//     border: none;
+//     border-radius: 50%;
+//     cursor: pointer;
+//     transition: background-color 0.3s;
+//     position: absolute; // Positioning the button in the right corner
+//     bottom: 15px; // Space from the bottom
+//     right: 15px; // Space from the right
+//     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Add a shadow for distinction
+//     width: 40px; // Fixed width for circular shape
+//     height: 40px; // Fixed height for circular shape
+//     display: flex; // Center icon vertically and horizontally
+//     align-items: center;
+//     justify-content: center;
+  
+//     &:hover {
+//       background-color: $nodle-black-400; // Darker shade on hover
+//     }
+
+//     @media (max-width: 768px) { // Tablet styles
+//       padding: 7px 12px;
+//       font-size: 14px; // Adjust font size for tablets
+//       width: 35px;
+//       height: 35px;
+//     }
+  
+//     @media (max-width: 480px) { // iPhone styles
+//       padding: 6px 10px;
+//       font-size: 12px; // Adjust font size for iPhones
+//       width: 30px;
+//       height: 30px;
+//     }
+//   }

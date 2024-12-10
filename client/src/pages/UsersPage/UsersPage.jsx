@@ -75,10 +75,12 @@ const UsersPage = () => {
   }, [fetchUsers]);
 
   const handleScroll = () => {
+
     const scrollPosition = window.innerHeight + document.documentElement.scrollTop; 
     const threshold = document.documentElement.offsetHeight - 100; 
   
     if (!loading && hasMore && scrollPosition >= threshold) {
+
       setCurrentPage((prevPage) => prevPage + 1);
     }
   };

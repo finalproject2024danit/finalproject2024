@@ -5,31 +5,28 @@ import {
     deleteConversation as removeConversation,
 } from '../../api/messages/conversations/request.js';
 
-// Initial conversation state
+// Начальное состояние для разговоров
 const initialState = {
     conversations: [],
     loading: false,
     error: null,
 };
 
-// Thunk to fetch all conversations
+// Thunk для получения всех разговоров
 export const fetchConversations = createAsyncThunk(
     'conversation/fetchConversations',
     async (_, thunkAPI) => {
-        // const { id: currentUserId } = thunkAPI.getState().auth.currentUser; <-- fails the slice
-        const { id: currentUserId } = { id: 1, firstName: "conversationSlice", lastName: "fetchConversations", };
+        const { id: currentUserId } = thunkAPI.getState().auth.currentUser;
         try {
-            // const response = await getAllConversations(currentUserId);
-            // return response.filter(conversation => conversation.userId === currentUserId); <-- we already queryed conversations by the user, no need to filter
             return await getAllConversations(currentUserId);
         } catch (error) {
-            console.error('Failed to fetch conversations:', error);
+            console.error('Ошибка при получении разговоров:', error);
             return thunkAPI.rejectWithValue(error.message);
         }
     }
 );
 
-// Thunk to create a new conversation
+// Thunk для создания нового разговора
 export const createConversation = createAsyncThunk(
     'conversation/createConversation',
     async (conversationDto, thunkAPI) => {
@@ -37,13 +34,13 @@ export const createConversation = createAsyncThunk(
             const response = await createNewConversation(conversationDto);
             return response;
         } catch (error) {
-            console.error('Failed to create conversation:', error);
+            console.error('Ошибка при создании разговора:', error);
             return thunkAPI.rejectWithValue(error.message);
         }
     }
 );
 
-// Thunk to delete a conversation
+// Thunk для удаления разговора
 export const deleteConversation = createAsyncThunk(
     'conversation/deleteConversation',
     async ({ userFromId, userToId }, thunkAPI) => {
@@ -51,7 +48,7 @@ export const deleteConversation = createAsyncThunk(
             await removeConversation(userFromId, userToId);
             return { userFromId, userToId };
         } catch (error) {
-            console.error('Failed to delete conversation:', error);
+            console.error('Ошибка при удалении разговора:', error);
             return thunkAPI.rejectWithValue(error.message);
         }
     }
@@ -61,11 +58,11 @@ const conversationSlice = createSlice({
     name: 'conversation',
     initialState,
     reducers: {
-        // Optional reducers for additional state updates
+        // Дополнительные редьюсеры (если нужно)
     },
     extraReducers: (builder) => {
         builder
-            // Handle fetchConversations actions
+            // Обработка действий для fetchConversations
             .addCase(fetchConversations.pending, (state) => {
                 state.loading = true;
             })
@@ -77,7 +74,7 @@ const conversationSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload || action.error.message;
             })
-            // Handle createConversation actions
+            // Обработка действий для createConversation
             .addCase(createConversation.pending, (state) => {
                 state.loading = true;
             })
@@ -89,7 +86,7 @@ const conversationSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload || action.error.message;
             })
-            // Handle deleteConversation actions
+            // Обработка действий для deleteConversation
             .addCase(deleteConversation.pending, (state) => {
                 state.loading = true;
             })

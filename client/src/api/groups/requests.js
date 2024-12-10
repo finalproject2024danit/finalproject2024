@@ -1,16 +1,21 @@
+
 import axiosInstance from "../axiosInstance.js";
+
 
 const safeRequest = async (request) => {
   try {
     const response = await request();
     return response.data;
   } catch (error) {
-    console.error("API Error:", error.message);
+
+    console.error('API Error:', error.message);
+
     throw error;
   }
 };
 
 // Групи
+
 export const getAllGroupsFiltered = async (
   startPage = 0,
   perPage = 0,
@@ -19,6 +24,7 @@ export const getAllGroupsFiltered = async (
 ) => {
   return await safeRequest(() =>
     axiosInstance.get("/groups/filter", {
+
       params: {
         startPage,
         perPage,
@@ -34,9 +40,11 @@ export const getGroupById = async (id) => {
 };
 
 export const createGroup = async (requestGroupDto) => {
+
   return await safeRequest(() =>
     axiosInstance.post("/groups", requestGroupDto)
   );
+
 };
 
 export const deleteGroup = async (id) => {
@@ -45,13 +53,17 @@ export const deleteGroup = async (id) => {
 
 export const addUserToGroup = async (userGroupDto) => {
   return await safeRequest(() =>
+
     axiosInstance.post("/groups/add-user", userGroupDto)
+
   );
 };
 
 export const removeUserFromGroup = async (userGroupDto) => {
   return await safeRequest(() =>
+
     axiosInstance.delete("/groups/remove-user", { data: userGroupDto })
+
   );
 };
 
@@ -66,12 +78,14 @@ export const searchGroupsByName = async (name) => {
 // Пости
 export const createPost = async (postData) => {
   try {
+
     console.log("Sending request with data:", postData);
     const response = await axiosInstance.post("/posts/create", postData);
     console.log("Post created successfully:",response.data); // Перевірте створений пост
     return response.data;
   } catch (error) {
     console.error("Error creating post:", error.response?.data || error.message);
+
     throw error;
   }
 };
