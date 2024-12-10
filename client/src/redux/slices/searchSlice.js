@@ -43,6 +43,7 @@ const searchSlice = createSlice({
           ...users.map((user) => ({
             value: `user-${user.id}`,
             label: `User: ${user.firstName} ${user.lastName}`,
+            avatar: user.avatar, // Обязательно добавляем аватар
           })),
           ...groups.map((group) => ({
             value: `group-${group.id}`,
