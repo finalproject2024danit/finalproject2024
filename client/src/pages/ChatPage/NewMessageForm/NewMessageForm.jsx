@@ -1,103 +1,186 @@
-import { useState, useEffect } from "react";
-import PropTypes from "prop-types"; // Import PropTypes
+
+// import { useState, useEffect } from "react";
+// import PropTypes from "prop-types"; // Import PropTypes
+// import styles from "./NewMessageForm.module.scss";
+
+// const NewMessageForm = ({ userFrom, userTo }) => {
+//   const [message, setMessage] = useState("");
+//   const [messages, setMessages] = useState([]);
+
+//   // Имитируем загрузку сообщений при монтировании компонента
+//   useEffect(() => {
+//     const localMessages = JSON.parse(localStorage.getItem("messages")) || [];
+//     setMessages(
+//       localMessages.filter(
+//         (msg) =>
+//           (msg.userFrom === userFrom && msg.userTo === userTo) ||
+//           (msg.userFrom === userTo && msg.userTo === userFrom)
+//       )
+//     );
+//   }, [userFrom, userTo]);
+
+//   // Функция для отправки сообщений (локальное сохранение)
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+
+//     if (message.trim() === "") {
+//       alert("Сообщение не может быть пустым.");
+//       return;
+//     }
+
+//     const newMessage = {
+//       content: message.trim(),
+//       userFrom,
+//       userTo,
+//       messageTime: new Date().toISOString(),
+//     };
+
+//     // Обновляем локальное хранилище
+//     const allMessages = JSON.parse(localStorage.getItem("messages")) || [];
+//     allMessages.push(newMessage);
+//     localStorage.setItem("messages", JSON.stringify(allMessages));
+
+//     // Обновляем локальный стейт
+//     setMessages((prev) => [...prev, newMessage]);
+//     setMessage(""); // Очищаем поле ввода
+//   };
+
+//   return (
+//     <div>
+//       <h3>Сообщения между {userFrom} и {userTo}</h3>
+//       <div className={styles.messageList}>
+//         {messages.length > 0 ? (
+//           messages.map((msg, index) => (
+//             <div key={index} className={styles.message}>
+//               <p>{msg.content}</p>
+//               <small>
+//                 От: {msg.userFrom} Кому: {msg.userTo}
+//               </small>
+//               <small>Время: {new Date(msg.messageTime).toLocaleString()}</small>
+//             </div>
+//           ))
+//         ) : (
+//           <p>Нет сообщений между этими пользователями.</p>
+//         )}
+//       </div>
+//       <form className={styles.NewMessageForm} onSubmit={handleSubmit}>
+//         <input
+//           type="text"
+//           value={message}
+//           onChange={(e) => setMessage(e.target.value)}
+//           placeholder="Напишите сообщение..."
+//         />
+//         <button type="submit" disabled={!message.trim()}>
+//           Отправить
+//         </button>
+//       </form>
+//     </div>
+//   );
+// };
+
+// // PropTypes для компонента
+// NewMessageForm.propTypes = {
+//   userFrom: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+//   userTo: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+// };
+
+// export default NewMessageForm;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import { useEffect, useState } from "react";
+import { Client } from "@stomp/stompjs";
+import PropTypes from "prop-types";
 import styles from "./NewMessageForm.module.scss";
 
 const NewMessageForm = ({ userFrom, userTo, onSendMessage }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
-  const [loadingMessages, setLoadingMessages] = useState(false);
+  const [stompClient, setStompClient] = useState(null);
 
-  // Очистка ID пользователя от префикса (если нужно)
-  const getCleanUserId = (userId) => {
-    return String(userId).replace("user-", ""); // Преобразуем в строку и убираем 'user-' из ID
-  };
-
-  // Получение сообщений между двумя пользователями
   useEffect(() => {
-    const fetchMessages = async () => {
-      try {
-        setLoadingMessages(true);
-        const cleanUserToId = getCleanUserId(userTo); // Очистить ID пользователя
-        const cleanUserFromId = getCleanUserId(userFrom); // Очистить ID текущего пользователя
+    const client = new Client({
+      brokerURL: "ws://134.209.246.21:9000/ws/chat", // Адрес WebSocket
+      connectHeaders: {
+        // Добавьте токен, если нужно
+      },
+      debug: (str) => console.log(str),
+      onConnect: () => {
+        console.log("Подключено к WebSocket");
 
-        console.log(`Fetching messages between ${cleanUserFromId} and ${cleanUserToId}`);
-        const response = await fetch(
-          `/api/v1/messages/between/${cleanUserFromId}/${cleanUserToId}`
-        );
-        console.log("Ответ от сервера на получение сообщений:", response.status, response.statusText);
+        client.subscribe("/topic/messages", (message) => {
+          const body = JSON.parse(message.body);
+          console.log("Получено сообщение:", body);
+          setMessages((prev) => [...prev, body]);
+        });
+      },
+      onStompError: (frame) => {
+        console.error("Ошибка STOMP:", frame.headers["message"]);
+      },
+    });
 
-        const data = await response.json();
-        console.log("Полученные сообщения:", data); // Вывод загруженных сообщений
-        if (data && Array.isArray(data)) {
-          setMessages(data);
-        }
-      } catch (error) {
-        console.error("Ошибка при получении сообщений:", error);
-      } finally {
-        setLoadingMessages(false);
-      }
+    client.activate();
+    setStompClient(client);
+
+    return () => {
+      client.deactivate();
     };
+  }, []);
 
-    if (userFrom && userTo) {
-      fetchMessages();
-    }
-  }, [userFrom, userTo]);
-
-  // Отправка нового сообщения через HTTP POST
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Валидация перед отправкой
-    if (message.trim() === "") {
+    if (!message.trim()) {
       alert("Сообщение не может быть пустым.");
       return;
     }
 
-    const cleanUserToId = getCleanUserId(userTo); // Очистить ID собеседника
-    const cleanUserFromId = getCleanUserId(userFrom); // Очистить ID отправителя
-
-    const messageData = {
+    const newMessage = {
+      userFrom,
+      userTo,
       content: message,
-      userFrom: cleanUserFromId, // Чистый ID текущего пользователя
-      userTo: cleanUserToId, // Чистый ID собеседника
     };
 
-    console.log("Отправляем сообщение:", messageData); // Лог отправляемых данных
-
-    try {
-      const response = await fetch("/api/v1/messages", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(messageData),
+    if (stompClient && stompClient.connected) {
+      stompClient.publish({
+        destination: "/app/chat",
+        body: JSON.stringify(newMessage),
       });
-
-      console.log("Ответ от сервера на отправку сообщения:", response.status, response.statusText);
-
-      if (response.ok) {
-        const sentMessage = await response.json();
-        console.log("Сообщение отправлено:", sentMessage); // Лог успешного сообщения
-        setMessages((prevMessages) => [...prevMessages, sentMessage]); // Обновляем список сообщений
-        onSendMessage(sentMessage); // Вызываем родительскую функцию
-        setMessage(""); // Очистить поле ввода
-      } else {
-        const errorData = await response.json();
-        console.error("Ошибка при отправке сообщения:", errorData);
-        alert(`Ошибка при отправке сообщения: ${errorData.message || "Неизвестная ошибка"}`);
-      }
-    } catch (error) {
-      console.error("Ошибка при отправке сообщения:", error);
+      console.log("Отправлено сообщение:", newMessage);
+    } else {
+      console.error("WebSocket не подключен");
     }
+
+    setMessage("");
   };
 
   return (
     <div>
       <div>
         <h3>Сообщения между {userFrom} и {userTo}</h3>
-        {loadingMessages ? (
-          <p>Загрузка сообщений...</p>
-        ) : messages.length > 0 ? (
+        {messages.length > 0 ? (
           messages.map((msg, index) => (
             <div key={index}>
               <p>{msg.content}</p>
@@ -124,11 +207,10 @@ const NewMessageForm = ({ userFrom, userTo, onSendMessage }) => {
   );
 };
 
-// PropTypes для компонента
 NewMessageForm.propTypes = {
-  userFrom: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired, // Идентификатор пользователя-отправителя
-  userTo: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired, // Идентификатор собеседника
-  onSendMessage: PropTypes.func.isRequired, // Функция, вызываемая при отправке сообщения
+  userFrom: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  userTo: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  onSendMessage: PropTypes.func.isRequired,
 };
 
 export default NewMessageForm;
