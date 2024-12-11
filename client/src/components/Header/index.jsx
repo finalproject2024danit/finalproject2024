@@ -5,6 +5,7 @@ import UsersIcon from "../../svg/Header/Users";
 import GroupIcon from "../../svg/Header/Group";
 import HomeIcon from "../../svg/Header/Home";
 import ChatIcon from "../../svg/Header/Chat";
+import FriendsIcon from "../../svg/Header/Friends";
 import styles from "./Header.module.scss";
 
 const Header = () => {
@@ -75,6 +76,19 @@ const Header = () => {
                   <li>
                     <NavLink
                       className={({ isActive }) =>
+                        `${isActive ? styles.active : ""} ${
+                          styles.hiddenOnLargeScreens
+                        }`
+                      }
+                      to="/chat"
+                    >
+                      <FriendsIcon />
+                    </NavLink>
+                  </li>
+
+                  <li>
+                    <NavLink
+                      className={({ isActive }) =>
                         isActive ? styles.active : ""
                       }
                       to="/"
@@ -120,11 +134,13 @@ const Header = () => {
                         className={styles.gameDropdown}
                       >
                         {/* <option value="">{t("header.selectGame")}</option> */}
-                        
+
                         <option value="/game1">{t("leftSidebar.game1")}</option>
                         <option value="/game2">{t("leftSidebar.game2")}</option>
                         <option value="/game3">{t("leftSidebar.game3")}</option>
-                        <option value="/solar">{t("leftSidebar.solarSystem")}</option>
+                        <option value="/solar">
+                          {t("leftSidebar.solarSystem")}
+                        </option>
                       </select>
                     </div>
                   </li>
