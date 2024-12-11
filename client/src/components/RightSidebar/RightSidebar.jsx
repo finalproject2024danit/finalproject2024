@@ -8,20 +8,33 @@ import {
 import styles from "./RightSidebar.module.scss";
 import ButtonDeleteFriend from "../../components/ButtonDeleteFriend/index.jsx";
 import Modal from "../../components/Modal/ModalFriend/Modal.jsx";
+import useMediaQuery from "../UseMediaQuery/UseMediaQuery.jsx";
 
-const RightSidebar = () => {
+const RightSidebar = ({ isInMainContent }) => {
   const dispatch = useDispatch();
   const userFromId = useSelector((state) => state.user.id);
-  const { friends, status, error, hasMore, currentPage } = useSelector((state) => state.friends);
+  const { friends, status, error, hasMore, currentPage } = useSelector(
+    (state) => state.friends
+  );
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedFriendId, setSelectedFriendId] = useState(null);
   const [isExpanded, setIsExpanded] = useState(false);
+  const isWideScreen = useMediaQuery("(min-width: 768px)");
+
+  console.log(
+    "isWideScreen:",
+    isWideScreen,
+    "isInMainContent:",
+    isInMainContent
+  );
 
   // Завантажуємо 3 друзів при першому рендері
   useEffect(() => {
     if (userFromId) {
-      dispatch(fetchFriendsWithPagination({ userId: userFromId, page: 1, perPage: 3 }));
+      dispatch(
+        fetchFriendsWithPagination({ userId: userFromId, page: 1, perPage: 3 })
+      );
     }
   }, [dispatch, userFromId]);
 
@@ -38,19 +51,33 @@ const RightSidebar = () => {
 
   const handleConfirmDelete = () => {
     if (selectedFriendId !== null) {
-      dispatch(deleteFriendThunk({ userFromId, userToId: selectedFriendId }))
-        .then(() => {
-          dispatch(fetchFriendsWithPagination({ userId: userFromId, page: currentPage, perPage: 3 }));
-        });
+      dispatch(
+        deleteFriendThunk({ userFromId, userToId: selectedFriendId })
+      ).then(() => {
+        dispatch(
+          fetchFriendsWithPagination({
+            userId: userFromId,
+            page: currentPage,
+            perPage: 3,
+          })
+        );
+      });
       handleCloseModal();
     }
   };
 
   // Функція для обробки скролу
   const handleScroll = (e) => {
-    const bottom = e.target.scrollHeight === e.target.scrollTop + e.target.clientHeight;
+    const bottom =
+      e.target.scrollHeight === e.target.scrollTop + e.target.clientHeight;
     if (bottom && hasMore && status !== "loading") {
-      dispatch(fetchFriendsWithPagination({ userId: userFromId, page: currentPage + 1, perPage: 3 }));
+      dispatch(
+        fetchFriendsWithPagination({
+          userId: userFromId,
+          page: currentPage + 1,
+          perPage: 3,
+        })
+      );
     }
   };
 
@@ -60,8 +87,13 @@ const RightSidebar = () => {
 
   return (
     <div
-      className={`${styles.rightMenu} ${isExpanded ? styles.expanded : ""}`}
+      className={`${styles.rightMenu} ${isExpanded ? styles.expanded : ""} ${
+        isInMainContent ? styles.showInMainContent : ""
+      }`}
       onScroll={handleScroll}
+      style={{
+        display: isWideScreen || isInMainContent ? "block" : "",
+      }}
     >
       <button
         className={styles.toggleButton}
@@ -77,7 +109,10 @@ const RightSidebar = () => {
       {status === "succeeded" && friends.length > 0 && (
         <ul>
           {friends.map((friend) => (
-            <li key={`${friend.id}-${friend.firstName}-${friend.lastName}-${friend.avatar}`} className={styles.friendItem}>
+            <li
+              key={`${friend.id}-${friend.firstName}-${friend.lastName}-${friend.avatar}`}
+              className={styles.friendItem}
+            >
               <NavLink to={`/user/${friend.id}`} className={styles.friendLink}>
                 <img
                   src={friend.avatar}
@@ -90,13 +125,18 @@ const RightSidebar = () => {
                   <p>{friend.lastName}</p>
                 </div>
               </NavLink>
-              <ButtonDeleteFriend onClick={() => handleOpenModal(friend.id)} className={styles.deleteButton} />
+              <ButtonDeleteFriend
+                onClick={() => handleOpenModal(friend.id)}
+                className={styles.deleteButton}
+              />
             </li>
           ))}
         </ul>
       )}
 
-      {status === "succeeded" && friends.length === 0 && <p>No friends found.</p>}
+      {status === "succeeded" && friends.length === 0 && (
+        <p>No friends found.</p>
+      )}
 
       <Modal
         isOpen={isModalOpen}
@@ -109,5 +149,3 @@ const RightSidebar = () => {
 };
 
 export default RightSidebar;
-
-

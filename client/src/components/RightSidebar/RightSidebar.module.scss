@@ -33,6 +33,20 @@
   &::-webkit-scrollbar-track {
     background: transparent;
   }
+
+  @media (max-width: 767px) {
+    display: none;
+    border: 1px solid red
+  }
+  &.showInMainContent {
+    display: flex !important;
+  }
+
+  @media (min-width: 768px) {
+    .showInMainContent {
+      display: none;
+    }
+  }
 }
 
 .friendItem {

@@ -8,6 +8,10 @@
   opacity: 0.9;
   border: 3px solid $twelfth;
 
+  @media (min-width: 360px) and (max-width: 767px) {
+    display: none;
+  }
+
   .functionBlock {
     display: flex;
     justify-content: space-around;

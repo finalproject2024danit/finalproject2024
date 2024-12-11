@@ -11,9 +11,23 @@ import styles from "./Header.module.scss";
 const Header = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate(); // Для перенаправления при выборе игры
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth); //для маленького екрану
 
   const [isChecked, setIsChecked] = useState(i18n.language === "ua");
   const [selectedGame, setSelectedGame] = useState(""); // Выбранная игра
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Clean up the event listener on unmount
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const isSmallScreen = windowWidth <= 768; // Adjust this value based on your breakpoint for small screens
 
   useEffect(() => {
     setIsChecked(i18n.language === "ua");
@@ -76,19 +90,6 @@ const Header = () => {
                   <li>
                     <NavLink
                       className={({ isActive }) =>
-                        `${isActive ? styles.active : ""} ${
-                          styles.hiddenOnLargeScreens
-                        }`
-                      }
-                      to="/chat"
-                    >
-                      <FriendsIcon />
-                    </NavLink>
-                  </li>
-
-                  <li>
-                    <NavLink
-                      className={({ isActive }) =>
                         isActive ? styles.active : ""
                       }
                       to="/"
@@ -124,6 +125,18 @@ const Header = () => {
                       to="/groups"
                     >
                       <GroupIcon />
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      className={({ isActive }) =>
+                        `${isActive ? styles.active : ""} ${
+                          styles.hiddenOnLargeScreens
+                        }`
+                      }
+                      to="/friends"
+                    >
+                      <FriendsIcon />
                     </NavLink>
                   </li>
                   <li>
