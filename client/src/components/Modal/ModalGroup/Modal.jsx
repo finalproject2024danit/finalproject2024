@@ -28,5 +28,15 @@ const Modal = ({ isOpen, onClose, onSubmit, newPost, setNewPost }) => {
   );
 };
 
+Modal.propTypes = {
+  isOpen: PropTypes.bool.isRequired, // Вказує, чи відкрита модалка
+  onClose: PropTypes.func.isRequired, // Функція закриття модалки
+  onSubmit: PropTypes.func.isRequired, // Функція для обробки сабміту
+  newPost: PropTypes.shape({
+    title: PropTypes.string.isRequired, // Назва поста
+    content: PropTypes.string.isRequired, // Контент поста
+  }).isRequired, // Об'єкт із даними нового поста
+  setNewPost: PropTypes.func.isRequired, // Функція для оновлення стану поста
+}
 
 export default Modal;

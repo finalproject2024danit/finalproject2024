@@ -17,6 +17,7 @@ export const updateResidenceData = createAsyncThunk(
   "residences/updateResidenceData",
   async ({ userId, updateData }) => {
     const response = await updateResidence(userId, updateData);
+    localStorage.setItem("residenceData", JSON.stringify(response));
     return { userId, residence: response };
   }
 );
@@ -56,8 +57,14 @@ const residencesSlice = createSlice({
         state.loading = true;
       })
       .addCase(updateResidenceData.fulfilled, (state, action) => {
-        state.loading = false;
+        // Оновлення даних у Redux
         state.byUserId[action.payload.userId] = action.payload.residence;
+
+        // Збереження в localStorage
+        localStorage.setItem(
+          "residenceData",
+          JSON.stringify(action.payload.residence)
+        );
       })
       .addCase(updateResidenceData.rejected, (state, action) => {
         state.loading = false;

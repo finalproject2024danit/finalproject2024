@@ -1,10 +1,22 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getHobbyById, updateHobby } from "../../api/hobbies/requests.js";
 
+// Функція для збереження хобі в localStorage
+const saveToLocalStorage = (userId, hobby) => {
+  localStorage.setItem(`hobbies-${userId}`, JSON.stringify(hobby));
+};
+
+// Функція для завантаження хобі з localStorage
+const loadFromLocalStorage = (userId) => {
+  const storedHobby = localStorage.getItem(`hobbies-${userId}`);
+  return storedHobby ? JSON.parse(storedHobby) : null;
+};
+
 export const fetchHobbiesByUserId = createAsyncThunk(
   "hobbies/fetchHobbiesByUserId",
   async (userId) => {
     const hobby = await getHobbyById(userId);
+    saveToLocalStorage(userId, hobby);  // Зберігаємо хобі в localStorage
     return { userId, hobby };
   }
 );
@@ -13,6 +25,7 @@ export const updateHobbies = createAsyncThunk(
   "hobbies/updateHobbies",
   async ({ userId, updatedHobby }) => {
     const response = await updateHobby(userId, updatedHobby);
+    saveToLocalStorage(userId, response);  // Зберігаємо оновлене хобі в localStorage
     return { userId, hobby: response };
   }
 );
@@ -48,5 +61,14 @@ const hobbiesSlice = createSlice({
     });
   },
 });
+
+export const loadHobbiesFromLocalStorage = (userId) => {
+  return (dispatch) => {
+    const hobby = loadFromLocalStorage(userId);
+    if (hobby) {
+      dispatch(fetchHobbiesByUserId.fulfilled({ userId, hobby }));
+    }
+  };
+};
 
 export default hobbiesSlice.reducer;

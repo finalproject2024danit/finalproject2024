@@ -108,7 +108,7 @@ import { Client } from "@stomp/stompjs";
 import PropTypes from "prop-types";
 import styles from "./NewMessageForm.module.scss";
 
-const NewMessageForm = ({ userFrom, userTo, onSendMessage }) => {
+const NewMessageForm = ({ userFrom, userTo }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [stompClient, setStompClient] = useState(null);
