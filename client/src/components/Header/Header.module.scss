@@ -3,25 +3,21 @@
 .headerBox {
   // margin: 0 auto;
   position: sticky;
-  width: 100%;
+  width: 99%;
   // border-radius: 50%;
   // overflow: hidden;
   // padding-right: 50px;
   top: 0; 
-  right: 0;
+  left: 5px;
   z-index: 100; 
   
  
 }
 .shinyCta{
   border-radius: 20px;
- width: 99%;
-
 }
+
 header {
-
-
-
   display: flex;
   // padding: 20px; 
   width: 100%;
@@ -132,6 +128,7 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-left: 10px;
     background-color: #282f44;
 
     

@@ -48,11 +48,27 @@ const RightSidebar = () => {
 
   // Функція для обробки скролу
   const handleScroll = (e) => {
-    const bottom = e.target.scrollHeight === e.target.scrollTop + e.target.clientHeight;
+    const bottom =
+      e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight - 1;
+
+    // Якщо є більше елементів і ми дійшли до кінця списку, завантажуємо нові елементи
     if (bottom && hasMore && status !== "loading") {
       dispatch(fetchFriendsWithPagination({ userId: userFromId, page: currentPage + 1, perPage: 3 }));
     }
+
+    // Якщо немає більше елементів (hasMore = false), зупиняємо скрол
+    if (!hasMore) {
+      console.log("No more friends to load.");
+    }
   };
+
+  // Використовуємо useEffect для обробки стану hasMore
+  useEffect(() => {
+    if (!hasMore) {
+      // Якщо немає більше елементів для завантаження, зупиняємо подальше завантаження
+      console.log("All friends have been loaded, no more pages.");
+    }
+  }, [hasMore]);
 
   const toggleExpand = () => {
     setIsExpanded((prev) => !prev);
@@ -76,23 +92,27 @@ const RightSidebar = () => {
       {status === "failed" && <p className={styles.error}>Error: {error}</p>}
       {status === "succeeded" && friends.length > 0 && (
         <ul>
-          {friends.map((friend) => (
-            <li key={`${friend.id}-${friend.firstName}-${friend.lastName}-${friend.avatar}`} className={styles.friendItem}>
-              <NavLink to={`/user/${friend.id}`} className={styles.friendLink}>
-                <img
-                  src={friend.avatar}
-                  alt={`${friend.firstName} ${friend.lastName}`}
-                  title={`${friend.firstName} ${friend.lastName}`}
-                  style={{ width: "70px", height: "70px", borderRadius: "50%" }}
-                />
-                <div className={styles.friendName}>
-                  <p>{friend.firstName}</p>
-                  <p>{friend.lastName}</p>
-                </div>
-              </NavLink>
-              <ButtonDeleteFriend onClick={() => handleOpenModal(friend.id)} className={styles.deleteButton} />
-            </li>
-          ))}
+          {friends.map((friend, index) => (
+  <li key={`${friend.id}-${index}`} className={styles.friendItem}>
+    <NavLink to={`/user/${friend.id}`} className={styles.friendLink}>
+      <img
+        src={friend.avatar}
+        alt={`${friend.firstName} ${friend.lastName}`}
+        title={`${friend.firstName} ${friend.lastName}`}
+        style={{ width: "70px", height: "70px", borderRadius: "50%" }}
+      />
+      <div className={styles.friendName}>
+        <p>{friend.firstName}</p>
+        <p>{friend.lastName}</p>
+      </div>
+    </NavLink>
+    <ButtonDeleteFriend
+      onClick={() => handleOpenModal(friend.id)}
+      className={styles.deleteButton}
+    />
+  </li>
+))}
+
         </ul>
       )}
 
@@ -109,5 +129,3 @@ const RightSidebar = () => {
 };
 
 export default RightSidebar;
-
-

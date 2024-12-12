@@ -4,17 +4,18 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 190px; 
+  max-height: 52vh;
   background-color: $background-secondary;
   border-radius: 10px;
-  overflow: hidden; 
+  overflow-y: auto; 
   transition: height 1s ease; 
   padding-top: 10px;
   border: 3px solid $twelfth;
   &.expanded {
-    height: 52vh; 
-    overflow-y: scroll; 
-    transition: height 1s ease; 
+    // height: 52vh; 
+    // overflow-y: scroll; 
+    // transition: height 1s ease; 
+    max-height: 52vh;
   }
 
   &::-webkit-scrollbar {

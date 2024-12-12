@@ -135,23 +135,24 @@ const friendsSlice = createSlice({
         state.status = "succeeded";
         const { friends, page } = action.payload;
       
-        // Якщо немає друзів на поточній сторінці, ставимо hasMore в false
-        if (friends.length === 0) {
-          state.hasMore = false;
+        if (friends.length === 0 || friends.length < 3) {
+          state.hasMore = false; // Якщо менше 3 друзів, зупиняємо пагінацію
         } else {
-          state.hasMore = true; // Якщо є друзі, продовжуємо пагінацію
+          state.hasMore = true;
         }
       
         if (page === 1) {
-          // Для першої сторінки очищуємо список друзів і додаємо нові
-          state.friends = friends;
+          state.friends = friends; // Якщо це перша сторінка, замінюємо список друзів
         } else {
-          // Для інших сторінок додаємо нових друзів до списку
-          state.friends = [...state.friends, ...friends];
+          const existingIds = state.friends.map(friend => friend.id);
+          const uniqueFriends = friends.filter(friend => !existingIds.includes(friend.id));
+      
+          state.friends = [...state.friends, ...uniqueFriends];
         }
       
         state.currentPage = page;
-      })
+      })      
+     
       .addCase(fetchFriendsWithPagination.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;

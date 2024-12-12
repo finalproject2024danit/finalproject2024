@@ -1,28 +1,31 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchGroupById, fetchGroups } from "../../redux/slices/groupSlice.js";
 import {
-  fetchGroupById,
-  fetchGroups,
-  addPostToGroup,
-
-  editPost as editPostAction,
-  removePost,
-} from "../../redux/slices/groupSlice.js";
+  createPost,
+  updatePost,
+  confirmDeletePost,
+  toggleLike,
+} from "../../utils/postUtils.js";
+import {
+  handleCommentChange,
+  handleSubmitComment,
+  handleDeleteComment,
+} from "../../utils/commentsUtils.js";
 import styles from "./GroupPage.module.scss";
 import MainContent from "../../components/MainContent/MainContent";
-import { addComment, setComments } from "../../redux/slices/commentsSlice.js";
+import { setComments } from "../../redux/slices/commentsSlice.js";
 import LikeIcon from "../../svg/Header/Like/index.jsx";
 import { useParams } from "react-router-dom";
-
+import ButtonDeleteFriend from "../../components/ButtonDeleteFriend/index.jsx";
 import ModalPost from "../../components/Modal/ModalGroup/ModalPost.jsx";
 import Modal from "../../components/Modal/ModalFriend/Modal.jsx";
 import { format } from "date-fns";
 
-
 const GroupPage = () => {
   const dispatch = useDispatch();
   const userFromId = useSelector((state) => state.user);
-  const { groups, loading, error, selectedGroup } = useSelector(
+  const { groups, loading, selectedGroup } = useSelector(
     (state) => state.group
   );
   const { comments = {} } = useSelector((state) => state.comments || {});
@@ -34,16 +37,34 @@ const GroupPage = () => {
   const hasMore = groups.length % perPage === 0 && groups.length < 100;
   const { id } = useParams();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const [newPost, setNewPost] = useState({ content: "" });
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
   const [editPost, setEditPost] = useState(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [postToDelete, setPostToDelete] = useState(null);
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [expandedPosts, setExpandedPosts] = useState({});
+  const [isDeleteCommentModalOpen, setIsDeleteCommentModalOpen] =
+    useState(false);
+  const [commentToDelete, setCommentToDelete] = useState(null);
+  // const [isExpanded, setIsExpanded] = useState(false);
+  const [expandedPosts, setExpandedPosts] = useState({});  
 
+  const handleCreatePost = () => {
+    createPost(dispatch, selectedGroup, userFromId, newPost, handleCloseModal);
+    setNewPost({ content: "" });
+  };
+
+  const handleUpdatePost = () => {
+    updatePost(dispatch, editPost, setEditPost, setIsModalOpen);
+  };
+
+  const handleConfirmDeletePost = () => {
+    confirmDeletePost(dispatch, postToDelete, handleCloseDeleteModal);
+  };
+
+  const handleLikeClick = (postId) => {
+    toggleLike(postId, setLikeStates);
+  };
 
   useEffect(() => {
     if (id) {
@@ -95,127 +116,7 @@ const GroupPage = () => {
 
   const handleGroupClick = (groupId) => {
     dispatch(fetchGroupById(groupId));
-  };
-
-  const handleCommentChange = (postId, event) => {
-    setCommentValues((prevValues) => ({
-      ...prevValues,
-      [postId]: event.target.value,
-    }));
-  };
-
-  const handleSubmitComment = (postId, groupId) => {
-    const commentContent = commentValues[postId]?.trim();
-    if (!commentContent) return;
-
-    const newComment = {
-      content: commentContent,
-      postId,
-      groupId,
-      userId: userFromId.id,
-
-      userName: userFromId.firstName,
-      userLastName: userFromId.lastName,
-      userAvatar: userFromId.avatar,
-
-      createdDate: new Date().toISOString(),
-    };
-
-    dispatch(
-      addComment({
-        groupId,
-        postId,
-        comment: newComment,
-      })
-    );
-
-    const updatedComments = JSON.parse(localStorage.getItem("comments")) || {};
-    if (!updatedComments[groupId]) updatedComments[groupId] = {};
-    if (!updatedComments[groupId][postId])
-      updatedComments[groupId][postId] = [];
-    updatedComments[groupId][postId].push(newComment);
-    localStorage.setItem("comments", JSON.stringify(updatedComments));
-
-    setCommentValues((prevValues) => ({
-      ...prevValues,
-      [postId]: "",
-    }));
-  };
-
-  const handleLikeClick = (postId) => {
-    setLikeStates((prevStates) => {
-      const isLiked = prevStates[postId]?.liked || false;
-      const likes = prevStates[postId]?.likes || 0;
-
-      return {
-        ...prevStates,
-        [postId]: {
-          liked: !isLiked,
-          likes: isLiked ? likes - 1 : likes + 1,
-        },
-      };
-    });
-  };
-
-  if (loading && !groups.length) {
-    return (
-      <MainContent title="">
-        <p>Loading...</p>
-      </MainContent>
-    );
-  }
-
-  if (error) {
-    return (
-      <MainContent title="">
-        <p>{error}</p>
-      </MainContent>
-    );
-  }
-
-  if (!groups.length) {
-    return (
-      <MainContent title="">
-        <p>Groups not found.</p>
-      </MainContent>
-    );
-  }
-
-  const handleCreatePost = () => {
-
-    if (!newPost.content.trim()) {
-      alert("Content is required.");
-
-      return;
-    }
-
-    if (!selectedGroup || !selectedGroup.id) {
-      alert("Selected group is not available. Please try again later.");
-      return;
-    }
-
-    if (!userFromId || !userFromId.id) {
-      alert("User ID is not available. Please log in again.");
-      return;
-    }
-
-    const newPostData = {
-      id: Date.now(),
-      content: newPost.content,
-      groupId: selectedGroup.id,
-      userId: userFromId.id,
-      createdDate: new Date().toISOString(),
-    };
-
-
-    dispatch(
-      addPostToGroup({ groupId: selectedGroup.id, postData: newPostData })
-    );
-
-
-    setNewPost({ content: "" });
-    handleCloseModal();
-  };
+  };  
 
   const sortedPosts = selectedGroup?.posts
     ? [...selectedGroup.posts].reverse()
@@ -224,29 +125,6 @@ const GroupPage = () => {
   const handleEditPost = (post) => {
     setEditPost(post);
     setIsModalOpen(true);
-  };
-
-  const handleUpdatePost = () => {
-    if (!editPost || !editPost.id || !editPost.content.trim()) {
-      alert("Invalid post data. Please check the content and try again.");
-      console.error("Invalid post data:", editPost);
-      return;
-    }
-
-    dispatch(
-      editPostAction({
-        postId: editPost.id,
-        postData: { content: editPost.content },
-      })
-    )
-      .unwrap()
-      .then(() => {
-        setEditPost(null);
-        setIsModalOpen(false);
-      })
-      .catch((err) => {
-        console.error("Failed to update post:", err);
-      });
   };
 
   const handleOpenDeleteModal = (postId) => {
@@ -259,16 +137,6 @@ const GroupPage = () => {
     setIsDeleteModalOpen(false);
   };
 
-  const handleConfirmDeletePost = () => {
-    if (postToDelete) {
-      dispatch(removePost(postToDelete))
-        .unwrap()
-        .then(() => console.log("Post deleted:", postToDelete))
-        .catch((err) => console.error("Failed to delete post:", err));
-    }
-    handleCloseDeleteModal();
-  };
-
   const toggleExpand = (postId) => {
     setExpandedPosts((prev) => ({
       ...prev,
@@ -276,6 +144,33 @@ const GroupPage = () => {
     }));
   };
 
+  // Відкриваємо модальне вікно при натисканні на кнопку видалення коментаря
+  const handleOpenDeleteCommentModal = (commentId, postId, groupId) => {
+    console.log("Comment ID:", commentId); // Логування commentId
+    console.log("Post ID:", postId); // Логування postId
+    console.log("Group ID:", groupId); // Логування groupId
+    setCommentToDelete({ commentId, postId, groupId }); // Зберігаємо інформацію про коментар
+    setIsDeleteCommentModalOpen(true); // Відкриваємо модальне вікно
+  };
+
+  // Закриваємо модальне вікно
+  const handleCloseDeleteCommentModal = () => {
+    setCommentToDelete(null); // Очищаємо інформацію про коментар
+    setIsDeleteCommentModalOpen(false); // Закриваємо модальне вікно
+  };
+
+  const handleDeleteCommentConfirm = () => {
+    handleDeleteComment(commentToDelete, dispatch, handleCloseDeleteCommentModal);
+  };
+  
+  const handleCommentChangeWrapper = (postId, event) => {
+    handleCommentChange(postId, event, setCommentValues);
+  };
+  
+  const handleSubmitCommentWrapper = (postId, groupId) => {
+    handleSubmitComment(postId, groupId, commentValues, userFromId, dispatch, setCommentValues);
+  };
+  
   return (
     <MainContent title="">
       <div className={styles.groupContainer}>
@@ -346,27 +241,27 @@ const GroupPage = () => {
                       <form
                         onSubmit={(event) => {
                           event.preventDefault();
-                          handleSubmitComment(post.id, selectedGroup.id);
+                          handleSubmitCommentWrapper(post.id, selectedGroup.id);
                         }}
                         className={styles.commentForm}
                       >
                         <div className={styles.commentsList}>
                           {postComments.length > 0 ? (
-
                             postComments.map((comment, idx) => (
                               <div key={idx} className={styles.comment}>
                                 <div className={styles.commentHeader}>
                                   <div className={styles.commentInfo}>
-                                  <img
-                                    src={
-                                      comment.userAvatar || "defaultAvatar.jpg"
-                                    }
-                                    alt={`${comment.userName} ${comment.userLastName}`}
-                                    className={styles.commentAvatar}
-                                  />
-                                  <span className={styles.commentAuthor}>
-                                    {comment.userName} {comment.userLastName}
-                                  </span>
+                                    <img
+                                      src={
+                                        comment.userAvatar ||
+                                        "defaultAvatar.jpg"
+                                      }
+                                      alt={`${comment.userName} ${comment.userLastName}`}
+                                      className={styles.commentAvatar}
+                                    />
+                                    <span className={styles.commentAuthor}>
+                                      {comment.userName} {comment.userLastName}
+                                    </span>
                                   </div>
                                   <span className={styles.commentDate}>
                                     {format(
@@ -374,10 +269,24 @@ const GroupPage = () => {
                                       "dd.MM.yyyy"
                                     )}
                                   </span>
+                                  <ButtonDeleteFriend
+                                    className={styles.deleteButton}
+                                    onClick={() => {
+                                      console.log("Selected Comment:", comment); // Логування об'єкта comment
+                                      console.log(
+                                        "Selected Comment ID:",
+                                        comment.id
+                                      ); // Логування ID
+                                      handleOpenDeleteCommentModal(
+                                        comment.id,
+                                        post.id,
+                                        selectedGroup.id
+                                      );
+                                    }}
+                                  />
                                 </div>
                                 <p>{comment.content}</p>
                               </div>
-
                             ))
                           ) : (
                             <p>No comments yet.</p>
@@ -396,7 +305,7 @@ const GroupPage = () => {
                           <div className={styles.commentSection}>
                             <textarea
                               name={`comment-${post.id}`}
-                              onChange={(e) => handleCommentChange(post.id, e)}
+                              onChange={(e) => handleCommentChangeWrapper(post.id, e)}
                               value={commentValues[post.id] || ""}
                               placeholder="Write a comment..."
                               className={styles.commentTextarea}
@@ -430,10 +339,18 @@ const GroupPage = () => {
         onClose={handleCloseDeleteModal}
         onConfirm={handleConfirmDeletePost}
         message="Are you sure you want to delete this post?"
-
+      />
+      <Modal
+        isOpen={isDeleteCommentModalOpen}
+        onClose={handleCloseDeleteCommentModal}
+        onConfirm={handleDeleteCommentConfirm}
+        message="Are you sure you want to delete this comment?" 
       />
     </MainContent>
   );
 };
 
 export default GroupPage;
+
+
+
