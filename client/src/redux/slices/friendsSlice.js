@@ -65,14 +65,14 @@ export const searchFriendsThunk = createAsyncThunk(
 
 export const fetchFriendsWithPagination = createAsyncThunk(
   "friends/fetchFriendsWithPagination",
-  async ({ userId, page, perPage = 3 }, { rejectWithValue }) => {
+  async ({ userId, startPage, perPage = 3 }, { rejectWithValue }) => {
     try {
-      console.log(`Fetching friends for userId: ${userId}, page: ${page}, perPage: ${perPage}`); // Логування параметрів запиту
+      console.log(`Fetching friends for userId: ${userId}, startPage: ${startPage}, perPage: ${perPage}`); // Логування параметрів запиту
       const response = await axiosInstance.get(`/users/${userId}/friends`, {
-        params: { page, perPage },
+        params: { startPage, perPage },
       });
       console.log("Friends data received:", response.data); // Логування отриманих даних
-      return { friends: response.data, page };
+      return { friends: response.data, startPage };
     } catch (error) {
       console.error("Error fetching friends:", error); // Логування помилок
       return rejectWithValue(error.response?.data || error.message);
@@ -133,32 +133,31 @@ const friendsSlice = createSlice({
       })
       .addCase(fetchFriendsWithPagination.fulfilled, (state, action) => {
         state.status = "succeeded";
-        const { friends, page } = action.payload;
-      
-        if (friends.length === 0 || friends.length < 3) {
-          state.hasMore = false; // Якщо менше 3 друзів, зупиняємо пагінацію
+        const { friends, startPage } = action.payload;
+    
+        // Якщо списку друзів немає або їх менше ніж потрібно (3), припиняємо пагінацію
+        state.hasMore = friends.length >= 3;
+    
+        // Якщо це перша сторінка, то замінюємо список друзів, інакше додаємо нових
+        if (startPage === 1) {
+            state.friends = friends;
         } else {
-          state.hasMore = true;
+            // Для фільтрації унікальних друзів краще використати Set для перевірки наявності id
+            const existingIds = new Set(state.friends.map(friend => friend.id));
+            const uniqueFriends = friends.filter(friend => !existingIds.has(friend.id));
+            
+            // Додаємо нові унікальні елементи
+            state.friends = [...state.friends, ...uniqueFriends];
         }
-      
-        if (page === 1) {
-          state.friends = friends; // Якщо це перша сторінка, замінюємо список друзів
-        } else {
-          const existingIds = state.friends.map(friend => friend.id);
-          const uniqueFriends = friends.filter(friend => !existingIds.includes(friend.id));
-      
-          state.friends = [...state.friends, ...uniqueFriends];
-        }
-      
-        state.currentPage = page;
-      })      
-     
+    
+        // Оновлюємо поточну сторінку
+        state.currentPage = startPage;
+    })
+    
       .addCase(fetchFriendsWithPagination.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.payload;
-      
-        // Якщо запит не вдався, не змінюємо hasMore, щоб пагінація не продовжувалася
-        state.hasMore = false;
+        state.error = action.payload?.toString() || "Unknown error";
+        // Не змінюємо hasMore при помилці, щоб дозволити подальші запити
       });
       
   },
