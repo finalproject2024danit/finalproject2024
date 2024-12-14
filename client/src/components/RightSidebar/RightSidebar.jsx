@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef} from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import {
@@ -8,18 +8,19 @@ import {
 import styles from "./RightSidebar.module.scss";
 import ButtonDeleteFriend from "../../components/ButtonDeleteFriend/index.jsx";
 import Modal from "../../components/Modal/ModalFriend/Modal.jsx";
+import useMediaQuery from "../UseMediaQuery/UseMediaQuery.jsx";
 
-const RightSidebar = () => {
+const RightSidebar = ({ isInMainContent }) => {
   const dispatch = useDispatch();
   const userFromId = useSelector((state) => state.user.id);
   const { friends, status, error, hasMore, currentPage } = useSelector(
     (state) => state.friends
   );
   const [isModalOpen, setModalOpen] = useState(false);
-  const [selectedFriendId, setSelectedFriendId] = useState(null); 
+  const [selectedFriendId, setSelectedFriendId] = useState(null);
   const scrollContainerRef = useRef(null);
 
-   useEffect(() => {
+  useEffect(() => {
     if (userFromId) {
       dispatch(
         fetchFriendsWithPagination({
@@ -61,30 +62,30 @@ const RightSidebar = () => {
   const handleScroll = (e) => {
     const bottom =
       e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight - 1;
-  
+
     if (bottom && hasMore && status !== "loading") {
-      const scrollTop = scrollContainerRef.current.scrollTop; 
+      const scrollTop = scrollContainerRef.current.scrollTop;
       dispatch(
         fetchFriendsWithPagination({
           userId: userFromId,
           startPage: currentPage + 1,
           perPage: 3,
         })
-      ).finally(() => {       
+      ).finally(() => {
         scrollContainerRef.current.scrollTop = scrollTop;
       });
     }
   };
 
   if (status === "loading") return null;
- 
+
   return (
     <div
       className={styles.rightMenu}
       onScroll={handleScroll}
       ref={scrollContainerRef}
     >
-       <h2 className={styles.friendsTitle}>Friends</h2>      
+      <h2 className={styles.friendsTitle}>Friends</h2>
 
       {status === "loading" && <p>Loading...</p>}
       {status === "failed" && <p className={styles.error}>Error: {error}</p>}
@@ -97,7 +98,7 @@ const RightSidebar = () => {
                   src={friend.avatar}
                   alt={`${friend.firstName} ${friend.lastName}`}
                   title={`${friend.firstName} ${friend.lastName}`}
-                  className={styles.friendAvatar} 
+                  className={styles.friendAvatar}
                 />
                 <div className={styles.friendName}>
                   <p>{friend.firstName}</p>
