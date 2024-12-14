@@ -11,6 +11,11 @@ import Modal from "../../components/Modal/ModalFriend/Modal.jsx";
 import useMediaQuery from "../UseMediaQuery/UseMediaQuery.jsx";
 
 const RightSidebar = ({ isInMainContent }) => {
+  //when render in main content on small screen
+  const sidebarClass = isInMainContent
+    ? styles.sidebarInMainContent
+    : styles.rightMenu;
+
   const dispatch = useDispatch();
   const userFromId = useSelector((state) => state.user.id);
   const { friends, status, error, hasMore, currentPage } = useSelector(
@@ -80,50 +85,55 @@ const RightSidebar = ({ isInMainContent }) => {
   if (status === "loading") return null;
 
   return (
-    <div
-      className={styles.rightMenu}
-      onScroll={handleScroll}
-      ref={scrollContainerRef}
-    >
-      <h2 className={styles.friendsTitle}>Friends</h2>
+    <div className={sidebarClass}>
+      <div
+        className={styles.rightMenu}
+        onScroll={handleScroll}
+        ref={scrollContainerRef}
+      >
+        <h2 className={styles.friendsTitle}>Friends</h2>
 
-      {status === "loading" && <p>Loading...</p>}
-      {status === "failed" && <p className={styles.error}>Error: {error}</p>}
-      {status === "succeeded" && friends.length > 0 && (
-        <ul>
-          {friends.map((friend) => (
-            <li key={friend.id} className={styles.friendItem}>
-              <NavLink to={`/user/${friend.id}`} className={styles.friendLink}>
-                <img
-                  src={friend.avatar}
-                  alt={`${friend.firstName} ${friend.lastName}`}
-                  title={`${friend.firstName} ${friend.lastName}`}
-                  className={styles.friendAvatar}
+        {status === "loading" && <p>Loading...</p>}
+        {status === "failed" && <p className={styles.error}>Error: {error}</p>}
+        {status === "succeeded" && friends.length > 0 && (
+          <ul>
+            {friends.map((friend) => (
+              <li key={friend.id} className={styles.friendItem}>
+                <NavLink
+                  to={`/user/${friend.id}`}
+                  className={styles.friendLink}
+                >
+                  <img
+                    src={friend.avatar}
+                    alt={`${friend.firstName} ${friend.lastName}`}
+                    title={`${friend.firstName} ${friend.lastName}`}
+                    className={styles.friendAvatar}
+                  />
+                  <div className={styles.friendName}>
+                    <p>{friend.firstName}</p>
+                    <p>{friend.lastName}</p>
+                  </div>
+                </NavLink>
+                <ButtonDeleteFriend
+                  onClick={() => handleOpenModal(friend.id)}
+                  className={styles.deleteButton}
                 />
-                <div className={styles.friendName}>
-                  <p>{friend.firstName}</p>
-                  <p>{friend.lastName}</p>
-                </div>
-              </NavLink>
-              <ButtonDeleteFriend
-                onClick={() => handleOpenModal(friend.id)}
-                className={styles.deleteButton}
-              />
-            </li>
-          ))}
-        </ul>
-      )}
+              </li>
+            ))}
+          </ul>
+        )}
 
-      {status === "succeeded" && friends.length === 0 && (
-        <p>No friends found.</p>
-      )}
+        {status === "succeeded" && friends.length === 0 && (
+          <p>No friends found.</p>
+        )}
 
-      <Modal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        onConfirm={handleConfirmDelete}
-        message="Are you sure you want to delete this friend?"
-      />
+        <Modal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          onConfirm={handleConfirmDelete}
+          message="Are you sure you want to delete this friend?"
+        />
+      </div>
     </div>
   );
 };

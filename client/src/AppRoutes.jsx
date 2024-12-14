@@ -19,6 +19,7 @@ import { useSelector } from "react-redux";
 import Layout from "./Layout.jsx";
 import { useEffect, useState } from "react";
 import NewsPage from "./pages/NewsPage/NewsPage.jsx";
+import MainContent from "./components/MainContent/MainContent.jsx";
 
 const AppRoutes = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -50,7 +51,15 @@ const AppRoutes = () => {
           <Route element={<Layout />}>
             <Route
               path="/friends"
-              element={isSmallScreen ? <RightSidebar /> : null}
+              element={
+                isSmallScreen ? (
+                  <MainContent title="Friends">
+                    <RightSidebar isInMainContent={true} />
+                  </MainContent>
+                ) : (
+                  <RightSidebar />
+                )
+              }
             />
             <Route path="/" element={<HomePage />} />
             <Route path="/users" element={<UsersPage />} />

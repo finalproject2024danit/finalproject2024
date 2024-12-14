@@ -1,5 +1,11 @@
 @use "../../App.scss" as *;
 
+.sidebarInMainContent {
+  /* Adjusted styles for when the sidebar is within MainContent */
+  margin: 0 auto;
+  padding: 10px;
+}
+
 .rightMenu {
   display: flex;
   flex-direction: column;

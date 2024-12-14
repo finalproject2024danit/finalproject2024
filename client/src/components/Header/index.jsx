@@ -27,7 +27,7 @@ const Header = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const isSmallScreen = windowWidth <= 768; // Adjust this value based on your breakpoint for small screens
+  // const isSmallScreen = windowWidth <= 768; // Adjust this value based on your breakpoint for small screens
 
   useEffect(() => {
     setIsChecked(i18n.language === "ua");
