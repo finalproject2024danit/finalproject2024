@@ -1,16 +1,11 @@
 import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
-import {
-  deleteFriendThunk,
-  fetchFriendsWithPagination,
-} from "../../redux/slices/friendsSlice.js";
+import { fetchFriendsWithPagination } from "../../redux/slices/friendsSlice.js";
 import styles from "./RightSidebar.module.scss";
-import ButtonDeleteFriend from "../../components/ButtonDeleteFriend/index.jsx";
-import Modal from "../../components/Modal/ModalFriend/Modal.jsx";
-import useMediaQuery from "../UseMediaQuery/UseMediaQuery.jsx";
+import Friends from "../Friends/Friends.jsx";
 
 const RightSidebar = ({ isInMainContent }) => {
+  console.log("isInMainContent:", isInMainContent);
   //when render in main content on small screen
   const sidebarClass = isInMainContent
     ? styles.sidebarInMainContent
@@ -18,12 +13,12 @@ const RightSidebar = ({ isInMainContent }) => {
 
   const dispatch = useDispatch();
   const userFromId = useSelector((state) => state.user.id);
-  const { friends, status, error, hasMore, currentPage } = useSelector(
-    (state) => state.friends
-  );
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [selectedFriendId, setSelectedFriendId] = useState(null);
-  const scrollContainerRef = useRef(null);
+  // const { friends, status, error, hasMore, currentPage } = useSelector(
+  //   (state) => state.friends
+  // );
+  // const [isModalOpen, setModalOpen] = useState(false);
+  // const [selectedFriendId, setSelectedFriendId] = useState(null);
+  // const scrollContainerRef = useRef(null);
 
   useEffect(() => {
     if (userFromId) {
@@ -37,105 +32,113 @@ const RightSidebar = ({ isInMainContent }) => {
     }
   }, [dispatch, userFromId]);
 
-  const handleOpenModal = (friendId) => {
-    setSelectedFriendId(friendId);
-    setModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setModalOpen(false);
-    setSelectedFriendId(null);
-  };
-
-  const handleConfirmDelete = () => {
-    if (selectedFriendId !== null) {
-      dispatch(
-        deleteFriendThunk({ userFromId, userToId: selectedFriendId })
-      ).then(() => {
-        dispatch(
-          fetchFriendsWithPagination({
-            userId: userFromId,
-            startPage: currentPage,
-            perPage: 3,
-          })
-        );
-      });
-      handleCloseModal();
-    }
-  };
-
-  const handleScroll = (e) => {
-    const bottom =
-      e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight - 1;
-
-    if (bottom && hasMore && status !== "loading") {
-      const scrollTop = scrollContainerRef.current.scrollTop;
-      dispatch(
-        fetchFriendsWithPagination({
-          userId: userFromId,
-          startPage: currentPage + 1,
-          perPage: 3,
-        })
-      ).finally(() => {
-        scrollContainerRef.current.scrollTop = scrollTop;
-      });
-    }
-  };
-
-  if (status === "loading") return null;
-
   return (
     <div className={sidebarClass}>
-      <div
-        className={styles.rightMenu}
-        onScroll={handleScroll}
-        ref={scrollContainerRef}
-      >
-        <h2 className={styles.friendsTitle}>Friends</h2>
-
-        {status === "loading" && <p>Loading...</p>}
-        {status === "failed" && <p className={styles.error}>Error: {error}</p>}
-        {status === "succeeded" && friends.length > 0 && (
-          <ul>
-            {friends.map((friend) => (
-              <li key={friend.id} className={styles.friendItem}>
-                <NavLink
-                  to={`/user/${friend.id}`}
-                  className={styles.friendLink}
-                >
-                  <img
-                    src={friend.avatar}
-                    alt={`${friend.firstName} ${friend.lastName}`}
-                    title={`${friend.firstName} ${friend.lastName}`}
-                    className={styles.friendAvatar}
-                  />
-                  <div className={styles.friendName}>
-                    <p>{friend.firstName}</p>
-                    <p>{friend.lastName}</p>
-                  </div>
-                </NavLink>
-                <ButtonDeleteFriend
-                  onClick={() => handleOpenModal(friend.id)}
-                  className={styles.deleteButton}
-                />
-              </li>
-            ))}
-          </ul>
-        )}
-
-        {status === "succeeded" && friends.length === 0 && (
-          <p>No friends found.</p>
-        )}
-
-        <Modal
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-          onConfirm={handleConfirmDelete}
-          message="Are you sure you want to delete this friend?"
-        />
-      </div>
+      <Friends isInMainContent={isInMainContent} />{" "}
+      {/* Pass isInMainContent to Friends */}
     </div>
   );
 };
 
 export default RightSidebar;
+
+// const handleOpenModal = (friendId) => {
+//   setSelectedFriendId(friendId);
+//   setModalOpen(true);
+// };
+
+// const handleCloseModal = () => {
+//   setModalOpen(false);
+//   setSelectedFriendId(null);
+// };
+
+// const handleConfirmDelete = () => {
+//   if (selectedFriendId !== null) {
+//     dispatch(
+//       deleteFriendThunk({ userFromId, userToId: selectedFriendId })
+//     ).then(() => {
+//       dispatch(
+//         fetchFriendsWithPagination({
+//           userId: userFromId,
+//           startPage: currentPage,
+//           perPage: 3,
+//         })
+//       );
+//     });
+//     handleCloseModal();
+//   }
+// };
+
+// const handleScroll = (e) => {
+//   const bottom =
+//     e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight - 1;
+
+//   if (bottom && hasMore && status !== "loading") {
+//     const scrollTop = scrollContainerRef.current.scrollTop;
+//     dispatch(
+//       fetchFriendsWithPagination({
+//         userId: userFromId,
+//         startPage: currentPage + 1,
+//         perPage: 3,
+//       })
+//     ).finally(() => {
+//       scrollContainerRef.current.scrollTop = scrollTop;
+//     });
+//   }
+// };
+
+// if (status === "loading") return null;
+
+// return (
+//   <div className={sidebarClass}>
+//     <div
+//       className={styles.rightMenu}
+//       onScroll={handleScroll}
+//       ref={scrollContainerRef}
+//     >
+//       <h2 className={styles.friendsTitle}>Friends</h2>
+
+//       {status === "loading" && <p>Loading...</p>}
+//       {status === "failed" && <p className={styles.error}>Error: {error}</p>}
+//       {status === "succeeded" && friends.length > 0 && (
+//         <ul>
+//           {friends.map((friend) => (
+//             <li key={friend.id} className={styles.friendItem}>
+//               <NavLink
+//                 to={`/user/${friend.id}`}
+//                 className={styles.friendLink}
+//               >
+//                 <img
+//                   src={friend.avatar}
+//                   alt={`${friend.firstName} ${friend.lastName}`}
+//                   title={`${friend.firstName} ${friend.lastName}`}
+//                   className={styles.friendAvatar}
+//                 />
+//                 <div className={styles.friendName}>
+//                   <p>{friend.firstName}</p>
+//                   <p>{friend.lastName}</p>
+//                 </div>
+//               </NavLink>
+//               <ButtonDeleteFriend
+//                 onClick={() => handleOpenModal(friend.id)}
+//                 className={styles.deleteButton}
+//               />
+//             </li>
+//           ))}
+//         </ul>
+//       )}
+
+//       {status === "succeeded" && friends.length === 0 && (
+//         <p>No friends found.</p>
+//       )}
+
+//       <Modal
+//         isOpen={isModalOpen}
+//         onClose={handleCloseModal}
+//         onConfirm={handleConfirmDelete}
+//         message="Are you sure you want to delete this friend?"
+//       />
+//     </div>
+//   </div>
+// );
+// };

@@ -1,0 +1,84 @@
+@use "../../App.scss" as *;
+
+.friendsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  background-color: $background-secondary;
+  border-radius: 10px;
+  max-height: 50vh;
+  overflow-y: auto;
+}
+
+.friendsTitle {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  padding: 5px 0;
+  margin-top: 0;
+  font-size: 1.5rem;
+  width: 100%;
+  background-color: $background-secondary;
+  text-align: center;
+}
+
+.friendItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px;
+  width: 100%;
+}
+
+.friendLink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 11vh;
+  gap: 10px;
+  text-decoration: none;
+  color: $secondary;
+  border: solid 1px $secondary;
+  border-radius: 20px;
+  padding: 5px;
+  flex-grow: 1;
+
+  &:hover {
+    color: $background-btn-fifth;
+    transform: scale(1.1);
+    box-shadow: 0 0 15px rgba(83, 83, 83, 0.8), 0 0 25px rgba(52, 53, 53, 0.5);
+  }
+}
+
+.friendAvatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+}
+
+.friendName,
+.lastName p {
+  font-size: $large;
+}
+
+.deleteButton {
+  margin-left: auto;
+}
+
+.toggleButton {
+  color: $primary;
+  font-size: $medium;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background-color: $background-btn-fifth;
+
+  &:hover {
+    background-color: $background-btn-hover-fifth;
+  }
+
+  span {
+    margin-right: 10px;
+  }
+}

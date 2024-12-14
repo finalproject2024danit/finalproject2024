@@ -20,6 +20,7 @@ import Layout from "./Layout.jsx";
 import { useEffect, useState } from "react";
 import NewsPage from "./pages/NewsPage/NewsPage.jsx";
 import MainContent from "./components/MainContent/MainContent.jsx";
+import Friends from "./components/Friends/Friends.jsx";
 
 const AppRoutes = () => {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -53,11 +54,15 @@ const AppRoutes = () => {
               path="/friends"
               element={
                 isSmallScreen ? (
-                  <MainContent title="Friends">
-                    <RightSidebar isInMainContent={true} />
+                  <MainContent>
+                    <Friends isInMainContent={true} />
                   </MainContent>
                 ) : (
-                  <RightSidebar />
+                  <div style={{ display: "flex" }}>
+                    <MainContent />
+                    <RightSidebar />
+                    {/* This renders normally on larger screens */}
+                  </div>
                 )
               }
             />
