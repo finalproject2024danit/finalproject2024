@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import {
@@ -8,37 +8,29 @@ import {
 import styles from "./RightSidebar.module.scss";
 import ButtonDeleteFriend from "../../components/ButtonDeleteFriend/index.jsx";
 import Modal from "../../components/Modal/ModalFriend/Modal.jsx";
-import useMediaQuery from "../UseMediaQuery/UseMediaQuery.jsx";
 
-const RightSidebar = ({ isInMainContent }) => {
+const RightSidebar = () => {
   const dispatch = useDispatch();
   const userFromId = useSelector((state) => state.user.id);
   const { friends, status, error, hasMore, currentPage } = useSelector(
     (state) => state.friends
   );
-
   const [isModalOpen, setModalOpen] = useState(false);
-  const [selectedFriendId, setSelectedFriendId] = useState(null);
-  const [isExpanded, setIsExpanded] = useState(false);
-  const isWideScreen = useMediaQuery("(min-width: 768px)");
+  const [selectedFriendId, setSelectedFriendId] = useState(null); 
+  const scrollContainerRef = useRef(null);
 
-  console.log(
-    "isWideScreen:",
-    isWideScreen,
-    "isInMainContent:",
-    isInMainContent
-  );
-
-  // Завантажуємо 3 друзів при першому рендері
-  useEffect(() => {
+   useEffect(() => {
     if (userFromId) {
       dispatch(
-        fetchFriendsWithPagination({ userId: userFromId, page: 1, perPage: 3 })
+        fetchFriendsWithPagination({
+          userId: userFromId,
+          startPage: 1,
+          perPage: 3,
+        })
       );
     }
   }, [dispatch, userFromId]);
 
-  // Обробка відкриття модалки
   const handleOpenModal = (friendId) => {
     setSelectedFriendId(friendId);
     setModalOpen(true);
@@ -57,7 +49,7 @@ const RightSidebar = ({ isInMainContent }) => {
         dispatch(
           fetchFriendsWithPagination({
             userId: userFromId,
-            page: currentPage,
+            startPage: currentPage,
             perPage: 3,
           })
         );
@@ -66,59 +58,46 @@ const RightSidebar = ({ isInMainContent }) => {
     }
   };
 
-  // Функція для обробки скролу
   const handleScroll = (e) => {
     const bottom =
-      e.target.scrollHeight === e.target.scrollTop + e.target.clientHeight;
+      e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight - 1;
+  
     if (bottom && hasMore && status !== "loading") {
+      const scrollTop = scrollContainerRef.current.scrollTop; 
       dispatch(
         fetchFriendsWithPagination({
           userId: userFromId,
-          page: currentPage + 1,
+          startPage: currentPage + 1,
           perPage: 3,
         })
-      );
+      ).finally(() => {       
+        scrollContainerRef.current.scrollTop = scrollTop;
+      });
     }
   };
 
-  const toggleExpand = () => {
-    setIsExpanded((prev) => !prev);
-  };
-
+  if (status === "loading") return null;
+ 
   return (
     <div
-      className={`${styles.rightMenu} ${isExpanded ? styles.expanded : ""} ${
-        isInMainContent ? styles.showInMainContent : ""
-      }`}
+      className={styles.rightMenu}
       onScroll={handleScroll}
-      style={{
-        display: isWideScreen || isInMainContent ? "block" : "",
-      }}
+      ref={scrollContainerRef}
     >
-      <button
-        className={styles.toggleButton}
-        onClick={toggleExpand}
-        aria-label="Toggle Sidebar"
-      >
-        <span>Friends</span>
-        {isExpanded ? "⬆" : "⬇"}
-      </button>
+       <h2 className={styles.friendsTitle}>Friends</h2>      
 
       {status === "loading" && <p>Loading...</p>}
       {status === "failed" && <p className={styles.error}>Error: {error}</p>}
       {status === "succeeded" && friends.length > 0 && (
         <ul>
           {friends.map((friend) => (
-            <li
-              key={`${friend.id}-${friend.firstName}-${friend.lastName}-${friend.avatar}`}
-              className={styles.friendItem}
-            >
+            <li key={friend.id} className={styles.friendItem}>
               <NavLink to={`/user/${friend.id}`} className={styles.friendLink}>
                 <img
                   src={friend.avatar}
                   alt={`${friend.firstName} ${friend.lastName}`}
                   title={`${friend.firstName} ${friend.lastName}`}
-                  style={{ width: "70px", height: "70px", borderRadius: "50%" }}
+                  className={styles.friendAvatar} 
                 />
                 <div className={styles.friendName}>
                   <p>{friend.firstName}</p>

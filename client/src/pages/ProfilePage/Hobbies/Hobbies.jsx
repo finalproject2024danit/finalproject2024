@@ -1,4 +1,5 @@
 import { useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -9,12 +10,23 @@ import styles from "./Hobbies.module.scss";
 import {
   fetchHobbiesByUserId,
   updateHobbies,
+  loadHobbiesFromLocalStorage 
 } from "../../../redux/slices/hobbiesSlice.js";
 
 const Hobbies = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   const [isEditing, setIsEditing] = useState(false);
+  const hobbies = useSelector((state) => state.hobbies[user.id]);
+  useEffect(() => {
+    // Спочатку перевіряємо localStorage на наявність хобі
+    if (!hobbies) {
+      dispatch(loadHobbiesFromLocalStorage(user.id)); // Завантажити хобі з localStorage
+    }
+    if (!hobbies) {
+      dispatch(fetchHobbiesByUserId(user.id)); // Якщо не знайдено в localStorage, завантажити з сервера
+    }
+  }, [dispatch, user.id, hobbies]);
 
   const validationSchema = Yup.object({
     language: Yup.string().max(100, "Max 100 characters"),

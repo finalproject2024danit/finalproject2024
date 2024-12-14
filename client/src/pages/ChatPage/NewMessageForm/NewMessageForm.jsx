@@ -109,7 +109,7 @@ import PropTypes from "prop-types";
 import styles from "./NewMessageForm.module.scss";
 import {useSelector} from "react-redux";
 
-const NewMessageForm = ({ userFrom, userTo, onSendMessage }) => {
+const NewMessageForm = ({ userFrom, userTo }) => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [stompClient, setStompClient] = useState(null);
