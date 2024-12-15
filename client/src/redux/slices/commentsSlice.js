@@ -10,7 +10,7 @@ export const fetchComments = createAsyncThunk(
   'comments/fetchComments',
   async ({ groupId, postId }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.get(`/api/v1/comment/${postId}`);
+      const response = await axiosInstance.get(`/comments/comment/${postId}`);
       return { groupId, postId, comments: response.data };
     } catch (error) {
       console.error('Error fetching comments:', error);
@@ -23,7 +23,7 @@ export const createComment = createAsyncThunk(
   'comments/createComment',
   async ({ groupId, postId, userId, content }, { rejectWithValue, dispatch }) => {
     try {
-      const response = await axiosInstance.post('/api/v1/comment/create', {
+      const response = await axiosInstance.post('/comments/comment/create', {
         postId,
         userId,
         content,
@@ -50,7 +50,7 @@ export const removeComment = createAsyncThunk(
   'comments/removeComment',
   async ({ groupId, postId, commentId }, { rejectWithValue, dispatch }) => {
     try {
-      await axiosInstance.get(`/api/v1/comment/delete/${commentId}`);
+      await axiosInstance.get(`/comments/comment/delete/${commentId}`);
 
       // Видаляємо коментар з Redux
       dispatch(deleteComment({ groupId, postId, commentId }));

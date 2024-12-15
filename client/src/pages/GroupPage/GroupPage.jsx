@@ -7,8 +7,8 @@ import {
   confirmDeletePost,
   toggleLike,
 } from "../../utils/postUtils.js";
-import {
-  handleCommentChange,
+import {  
+  handleFetchComments,
   handleSubmitComment,
   handleDeleteComment,
 } from "../../utils/commentsUtils.js";
@@ -48,6 +48,7 @@ const GroupPage = () => {
   const [commentToDelete, setCommentToDelete] = useState(null);
   // const [isExpanded, setIsExpanded] = useState(false);
   const [expandedPosts, setExpandedPosts] = useState({});  
+  
 
   const handleCreatePost = () => {
     createPost(dispatch, selectedGroup, userFromId, newPost, handleCloseModal);
@@ -170,6 +171,23 @@ const GroupPage = () => {
   const handleSubmitCommentWrapper = (postId, groupId) => {
     handleSubmitComment(postId, groupId, commentValues, userFromId, dispatch, setCommentValues);
   };
+
+  const handleCommentChange = (postId, event) => {
+    const { value } = event.target;
+    setCommentValues((prevValues) => ({
+      ...prevValues,
+      [postId]: value,
+    }));
+  };
+
+  useEffect(() => {
+    if (selectedGroup) {
+      selectedGroup.posts.forEach(post => {
+        handleFetchComments(selectedGroup.id, post.id, dispatch);
+      });
+    }
+  }, [selectedGroup, dispatch]);
+
   
   return (
     <MainContent title="">
@@ -351,6 +369,7 @@ const GroupPage = () => {
 };
 
 export default GroupPage;
+
 
 
 
