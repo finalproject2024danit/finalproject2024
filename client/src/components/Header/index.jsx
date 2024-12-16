@@ -176,29 +176,29 @@ const Header = () => {
                       </select>
                     </div>
                   </li>
-                  <li>
-                    <Formik initialValues={{ search: "" }} onSubmit={() => {}}>
-                      {({ setFieldValue }) => (
-                        <Form className={styles.menuForm}>
-                          <Select
-                            options={results}
-                            placeholder={t("leftSidebar.globalSearch")}
-                            className={styles.select}
-                            isLoading={isLoading}
-                            onInputChange={(inputValue) => {
-                              handleSearch(inputValue);
-                              setFieldValue("search", inputValue);
-                            }}
-                            onChange={handleSelectChange}
-                            isSearchable
-                            getOptionLabel={(e) => e.label}
-                          />
-                        </Form>
-                      )}
-                    </Formik>
-                  </li>
                 </ul>
               </nav>
+              <div>
+                <Formik initialValues={{ search: "" }} onSubmit={() => {}}>
+                  {({ setFieldValue }) => (
+                    <Form className={styles.menuForm}>
+                      <Select
+                        options={results}
+                        placeholder={t("leftSidebar.globalSearch")}
+                        className={styles.select}
+                        isLoading={isLoading}
+                        onInputChange={(inputValue) => {
+                          handleSearch(inputValue);
+                          setFieldValue("search", inputValue);
+                        }}
+                        onChange={handleSelectChange}
+                        isSearchable
+                        getOptionLabel={(e) => e.label}
+                      />
+                    </Form>
+                  )}
+                </Formik>
+              </div>
             </div>
           </div>
         </div>
