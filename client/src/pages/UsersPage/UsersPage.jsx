@@ -77,10 +77,9 @@ const UsersPage = () => {
   const handleScroll = () => {
 
     const scrollPosition = window.innerHeight + document.documentElement.scrollTop; 
-    const threshold = document.documentElement.offsetHeight - 100; 
+    const threshold = document.documentElement.scrollHeight - window.innerHeight - 100; 
   
     if (!loading && hasMore && scrollPosition >= threshold) {
-
       setCurrentPage((prevPage) => prevPage + 1);
     }
   };
