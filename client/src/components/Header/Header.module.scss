@@ -29,10 +29,14 @@ header {
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: $huge;
+    font-size: $large;
     font-weight: $font-weight-bold;
     cursor: pointer;
     animation: gradientMove 3s infinite;
+
+    @media (min-width: 768px) {
+      font-size: $huge;
+    }
   }
 
   @keyframes gradientMove {
@@ -144,29 +148,51 @@ header {
 
   .headerTop {
     display: flex;
-    justify-content:center;
+    justify-content:column;
     align-items: center;
-    gap: 30px;
+    gap: 10px;
     padding: 10px;
     box-sizing: border-box;
-    // border-bottom: 1px solid $fifth;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 30px;
+    }
   }
 
   .imgLogo {
-    width: 150px;
-    height: 100px;
+    width: 100px;
+    height: 80px;
     border-radius: 50%;
     cursor: pointer;
+    margin-left: 30px;
+
+    @media (min-width: 768px) {
+      width: 150px;
+      height: 100px;
+    }
   }
 
   .headerBottom {
-    padding: 20px;
+    padding: 10px;
     box-sizing: border-box;
+
+    @media (min-width: 768px) {
+      padding: 20px;
+    }
+
   }
 
   .headerNav {
     display: flex;
-    justify-content: space-evenly;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+
+    @media (min-width: 768px) {
+      justify-content: space-evenly;
+    }
   }
 }
 
@@ -175,6 +201,10 @@ header {
   margin: 0 auto;
   position: relative;
   opacity: 0.8;
+
+  @media (max-width: 767px) {
+    display: none;
+  }
   
 }
 
@@ -217,23 +247,56 @@ header {
   color: #363636; /* Цвет текста */
 }
 
+.searchContainer {
+  position: relative; /* Required for absolute positioning of the child */
+  display: flex;
 
-// .gamesSelect {
-//   margin: 0 auto;
-// }
 
-// .gameDropdown {
-//   padding: 8px;
-//   border-radius: 5px;
-//   // border: 1px solid #ccc;
-//   background-color: #35353511;
-//   color: #f1eeee;
-//   cursor: pointer;
-// }
+  @media (max-width: 767px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
 
-// .gameDropdown:focus {
-//   // border-color: #111316;
-//   outline: none;
-// }
+.menuForm {
+  width: 100%;
+  margin: 10px 0;
+  padding: 5px;
+  box-sizing: border-box;
+  position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 50;
+    background-color: $background-primary;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+
+    @media (min-width: 768px) {
+      display: none; // Hide on larger screens
+    }
+ 
+
+  @media (max-width: 767px)  {
+    display: block;
+  }
+
+  .select {
+    width: 100%;
+
+    @media (max-width: 767px) {
+      font-size: $small;
+    }
+  }
+}
+
+.menuForm input {
+  width: 95%;
+  padding: 20px 5px;
+  cursor: pointer;
+}
+
+
+
 
 
