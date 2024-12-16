@@ -7,6 +7,8 @@ import com.project.project.entities.like.Like;
 import com.project.project.entities.like.db.LikeRepository;
 import com.project.project.exceptions.CommentNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -47,5 +49,10 @@ public class CommentServiceImpl implements CommentService {
             newLike.setUserId(userId);
             likeRepository.save(newLike);
         }
+    }
+
+    @Override
+    public Page<Comment> getCommentsByPostId(long postId, Pageable pageable) {
+        return commentRepository.findByPostId(postId, pageable);
     }
 }
