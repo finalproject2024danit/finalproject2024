@@ -29,10 +29,14 @@ header {
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: $huge;
+    font-size: $large;
     font-weight: $font-weight-bold;
     cursor: pointer;
     animation: gradientMove 3s infinite;
+
+    @media (min-width: 768px) {
+      font-size: $huge;
+    }
   }
 
   @keyframes gradientMove {
@@ -144,29 +148,51 @@ header {
 
   .headerTop {
     display: flex;
-    justify-content:center;
+    justify-content:column;
     align-items: center;
-    gap: 30px;
+    gap: 10px;
     padding: 10px;
     box-sizing: border-box;
-    // border-bottom: 1px solid $fifth;
+
+    @media (min-width: 768px) {
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 30px;
+    }
   }
 
   .imgLogo {
-    width: 150px;
-    height: 100px;
+    width: 100px;
+    height: 80px;
     border-radius: 50%;
     cursor: pointer;
+    margin-left: 30px;
+
+    @media (min-width: 768px) {
+      width: 150px;
+      height: 100px;
+    }
   }
 
   .headerBottom {
-    padding: 20px;
+    padding: 10px;
     box-sizing: border-box;
+
+    @media (min-width: 768px) {
+      padding: 20px;
+    }
+
   }
 
   .headerNav {
     display: flex;
-    justify-content: space-evenly;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+
+    @media (min-width: 768px) {
+      justify-content: space-evenly;
+    }
   }
 }
 
