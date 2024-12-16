@@ -247,30 +247,44 @@ header {
   color: #363636; /* Цвет текста */
 }
 
+.searchContainer {
+  position: relative; /* Required for absolute positioning of the child */
+  display: flex;
+
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
 .menuForm {
   width: 100%;
   margin: 10px 0;
   padding: 5px;
-  box-sizing: border-box; 
-  display: none;
-
-  @media (max-width: 768px)  {
-    // position: absolute;
-    display: flex;
-    flex-direction: column;
+  box-sizing: border-box;
+  position: absolute;
     top: 100%;
     left: 0;
     z-index: 50;
+    background-color: $background-primary;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
     padding: 10px;
     border-radius: 5px;
+
+    @media (min-width: 768px) {
+      display: none; // Hide on larger screens
+    }
+ 
+
+  @media (max-width: 767px)  {
+    display: block;
   }
 
   .select {
     width: 100%;
-    font-size: $small;
 
-    @media (max-width: 768px) {
+    @media (max-width: 767px) {
       font-size: $small;
     }
   }

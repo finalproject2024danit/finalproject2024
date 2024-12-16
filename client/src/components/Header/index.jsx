@@ -21,6 +21,7 @@ const Header = () => {
 
   const [isChecked, setIsChecked] = useState(i18n.language === "ua");
   const [selectedGame, setSelectedGame] = useState(""); // Выбранная игра
+  const [menuVisible, setMenuVisible] = useState(false); // New state for dropdown
 
   useEffect(() => {
     setIsChecked(i18n.language === "ua");
@@ -178,13 +179,13 @@ const Header = () => {
                   </li>
                 </ul>
               </nav>
-              <div>
+              <div className={styles.searchContainer}>
                 <Formik initialValues={{ search: "" }} onSubmit={() => {}}>
                   {({ setFieldValue }) => (
                     <Form className={styles.menuForm}>
                       <Select
                         options={results}
-                        placeholder={t("leftSidebar.globalSearch")}
+                        placeholder={t("Search")}
                         className={styles.select}
                         isLoading={isLoading}
                         onInputChange={(inputValue) => {
