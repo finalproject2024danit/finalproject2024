@@ -201,6 +201,10 @@ header {
   margin: 0 auto;
   position: relative;
   opacity: 0.8;
+
+  @media (max-width: 767px) {
+    display: none;
+  }
   
 }
 

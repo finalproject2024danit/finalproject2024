@@ -6,7 +6,11 @@ import {
   updatePost,
   deletePost,
 } from "../../api/groups/requests.js";
-
+import {
+  getGroupsFromLocalStorage,
+  saveGroupsToLocalStorage,
+  updatePostsInLocalStorage,
+} from "../../utils/localStorageUtils.js";
 
 const initialState = {
   groups: [],
@@ -18,16 +22,14 @@ const initialState = {
 export const fetchGroups = createAsyncThunk(
   "groups/fetchGroups",
   async ({ startPage = 0, perPage = 5 }) => {
-    const data = await getAllGroupsFiltered(startPage, perPage);
-    return data;
+    return await getAllGroupsFiltered(startPage, perPage);
   }
 );
 
 export const fetchGroupById = createAsyncThunk(
   "groups/fetchGroupById",
   async (id) => {
-    const group = await getGroupById(id);
-    return group;
+    return await getGroupById(id);
   }
 );
 
@@ -42,15 +44,14 @@ export const addPostToGroup = createAsyncThunk(
 export const editPost = createAsyncThunk(
   "groups/editPost",
   async ({ postId, postData }) => {
-    const updatedPost = await updatePost(postId, postData);
-    return updatedPost;
+    return await updatePost(postId, postData);
   }
 );
 
 export const removePost = createAsyncThunk(
   "groups/removePost",
   async (postId) => {
-    await deletePost(postId); 
+    await deletePost(postId);
     return postId;
   }
 );
@@ -82,63 +83,32 @@ const groupSlice = createSlice({
       .addCase(addPostToGroup.fulfilled, (state, action) => {
         const { groupId, post } = action.payload;
 
-
-        // Оновлюємо вибрану групу
         if (state.selectedGroup?.id === groupId) {
-          state.selectedGroup.posts = [
-            ...(state.selectedGroup.posts || []),
-            post,
-          ];
+          state.selectedGroup.posts = [...(state.selectedGroup.posts || []), post];
         }
-
 
         const group = state.groups.find((g) => g.id === groupId);
         if (group) {
           group.posts = [...(group.posts || []), post];
         }
 
-
-        // Оновлення localStorage
-        let storedGroups = [];
-        try {
-          storedGroups = JSON.parse(localStorage.getItem("groups")) || [];
-        } catch (error) {
-          console.error("Error parsing groups from localStorage:", error);
-        }
-
+        const storedGroups = getGroupsFromLocalStorage();
         const groupIndex = storedGroups.findIndex((g) => g.id === groupId);
         if (groupIndex > -1) {
-          storedGroups[groupIndex].posts = storedGroups[groupIndex].posts || [];
-
-          storedGroups[groupIndex].posts.push(post);
+          storedGroups[groupIndex].posts = [...(storedGroups[groupIndex].posts || []), post];
         } else {
-          storedGroups.push({
-            id: groupId,
-            posts: [post],
-          });
+          storedGroups.push({ id: groupId, posts: [post] });
         }
-
-
-        try {
-          localStorage.setItem("groups", JSON.stringify(storedGroups));
-        } catch (error) {
-          console.error("Failed to update localStorage:", error);
-        }
-      })
-      .addCase(addPostToGroup.rejected, (state, action) => {
-        state.error = action.error.message;
+        saveGroupsToLocalStorage(storedGroups);
       })
       .addCase(editPost.fulfilled, (state, action) => {
         const updatedPost = action.payload;
 
-        // Оновлення посту у вибраній групі
         if (state.selectedGroup) {
           state.selectedGroup.posts = state.selectedGroup.posts.map((post) =>
             post.id === updatedPost.id ? updatedPost : post
           );
         }
-
-        // Оновлення посту у списку груп
 
         const group = state.groups.find((g) =>
           g.posts?.some((post) => post.id === updatedPost.id)
@@ -149,45 +119,25 @@ const groupSlice = createSlice({
           );
         }
 
-        try {
-          let storedGroups = JSON.parse(localStorage.getItem("groups")) || [];
-          const groupIndex = storedGroups.findIndex((g) => 
-            g.posts?.some((post) => post.id === updatedPost.id)
-          );
-      
-          if (groupIndex > -1) {
-            storedGroups[groupIndex].posts = storedGroups[groupIndex].posts.map((post) =>
-              post.id === updatedPost.id ? updatedPost : post
-            );
-          }
-      
-          localStorage.setItem("groups", JSON.stringify(storedGroups));
-        } catch (error) {
-          console.error("Failed to update localStorage:", error);
-        }
+        updatePostsInLocalStorage(updatedPost.id, updatedPost);
       })
-      .addCase(editPost.rejected, (state, action) => {
-        state.error = action.error.message;
-      })
-      
       .addCase(removePost.fulfilled, (state, action) => {
         const postId = action.payload;
 
-        // Видалення посту з вибраної групи
         if (state.selectedGroup) {
           state.selectedGroup.posts = state.selectedGroup.posts?.filter(
             (post) => post.id !== postId
           );
         }
 
-        // Видалення посту зі списку груп
         state.groups.forEach((group) => {
           group.posts = group.posts?.filter((post) => post.id !== postId);
         });
+
+        updatePostsInLocalStorage(postId);
       })
       .addCase(removePost.rejected, (state, action) => {
         state.error = action.error.message;
-
       });
   },
 });
