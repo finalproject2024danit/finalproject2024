@@ -247,23 +247,23 @@ header {
   color: #363636; /* Цвет текста */
 }
 
+.menuForm {
+  padding: 20px 10px;
+  width: 80%;
+  margin-left: 10px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
 
-// .gamesSelect {
-//   margin: 0 auto;
-// }
+.menuForm input {
+  width: 95%;
+  padding: 20px 5px;
+  cursor: pointer;
+}
 
-// .gameDropdown {
-//   padding: 8px;
-//   border-radius: 5px;
-//   // border: 1px solid #ccc;
-//   background-color: #35353511;
-//   color: #f1eeee;
-//   cursor: pointer;
-// }
 
-// .gameDropdown:focus {
-//   // border-color: #111316;
-//   outline: none;
-// }
+
 
 
