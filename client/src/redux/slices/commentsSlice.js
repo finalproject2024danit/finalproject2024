@@ -10,7 +10,8 @@ export const fetchComments = createAsyncThunk(
   'comments/fetchComments',
   async ({ groupId, postId }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.get(`/comments/comment/${postId}`);
+      const response = await axiosInstance.get(`/comments/comment/${groupId}`);
+      console.log("наш:", response);
       return { groupId, postId, comments: response.data };
     } catch (error) {
       console.error('Error fetching comments:', error);
@@ -23,7 +24,7 @@ export const createComment = createAsyncThunk(
   'comments/createComment',
   async ({ groupId, postId, userId, content }, { rejectWithValue, dispatch }) => {
     try {
-      const response = await axiosInstance.post('/comments/comment/create', {
+      const response = await axiosInstance.post(`/comments/comment/create`, {
         postId,
         userId,
         content,

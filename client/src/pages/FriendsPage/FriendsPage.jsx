@@ -5,11 +5,11 @@ import {
   deleteFriendThunk,
   fetchFriendsWithPagination,
 } from "../../redux/slices/friendsSlice.js";
-import styles from "./RightSidebar.module.scss";
-// import ButtonDeleteFriend from "../../components/ButtonDeleteFriend/index.jsx";
+import styles from "./FriendsPage.module.scss";
+import ButtonDeleteFriend from "../../components/ButtonDeleteFriend/index.jsx";
 import Modal from "../../components/Modal/ModalFriend/Modal.jsx";
 
-const RightSidebar = () => {
+const FriendsPage = () => {
   const dispatch = useDispatch();
   const userFromId = useSelector((state) => state.user.id);
   const { friends, status, error, hasMore, currentPage } = useSelector(
@@ -31,10 +31,10 @@ const RightSidebar = () => {
     }
   }, [dispatch, userFromId]);
 
-  // const handleOpenModal = (friendId) => {
-  //   setSelectedFriendId(friendId);
-  //   setModalOpen(true);
-  // };
+  const handleOpenModal = (friendId) => {
+    setSelectedFriendId(friendId);
+    setModalOpen(true);
+  };
 
   const handleCloseModal = () => {
     setModalOpen(false);
@@ -104,10 +104,10 @@ const RightSidebar = () => {
                   <p>{friend.lastName}</p>
                 </div>
               </NavLink>
-              {/* <ButtonDeleteFriend
+              <ButtonDeleteFriend
                 onClick={() => handleOpenModal(friend.id)}
                 className={styles.deleteButton}
-              /> */}
+              />
             </li>
           ))}
         </ul>
@@ -127,4 +127,4 @@ const RightSidebar = () => {
   );
 };
 
-export default RightSidebar;
+export default FriendsPage;
