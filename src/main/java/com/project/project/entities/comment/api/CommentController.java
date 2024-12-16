@@ -12,8 +12,14 @@ import com.project.project.entities.user.api.dto.View;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Log4j2
 @RestController
@@ -64,5 +70,23 @@ public class CommentController {
 
         commentService.likeComment(likeCommentRequestDto.getCommentId(), likeCommentRequestDto.getUserId());
         return ResponseEntity.ok(CommentStatus.LIKED_SUCCESSFULLY.getMessage());
+    }
+
+    @GetMapping("/comment/post/{postId}")
+    public ResponseEntity<List<ResponseCommentDto>> getCommentsByPostId(
+            @PathVariable long postId, @RequestParam(defaultValue = "0") int startPage,
+            @RequestParam(defaultValue = "10") int perPage,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDirection) {
+        log.info("Trying to get comments with pagination and sorting parameters by post id: {}", postId);
+
+        Sort.Direction direction = Sort.Direction.fromString(sortDirection);
+        Pageable pageable = PageRequest.of(startPage, perPage, Sort.by(direction, sortBy));
+
+        Page<Comment> commentsByPostId = commentService.getCommentsByPostId(postId, pageable);
+
+        List<ResponseCommentDto> responseCommentsDto = commentsByPostId.stream().map(CommentMapper.INSTANCE::commentToResponseCommentDto).toList();
+
+        return ResponseEntity.ok(responseCommentsDto);
     }
 }
