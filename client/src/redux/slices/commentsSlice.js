@@ -10,27 +10,15 @@ export const fetchComments = createAsyncThunk(
   'comments/fetchComments',
   async ({ groupId, postId }, { rejectWithValue }) => {
     try {
-      // Отримуємо дані групи по її ID
-      const response = await axiosInstance.get(`/groups/${groupId}`);
-      const groupData = response.data;      
-
-      // Знаходимо пост з потрібним postId
-      const post = groupData.posts.find(post => post.id === postId);
-      console.log( "пост з потрібним postId:", post);
-
-      if (!post) {
-        throw new Error(`Post with ID ${postId} not found in group ${groupId}`);
-      }
-
-      // Повертаємо коментарі з поста
-      return { groupId, postId, comments: post.comments };
+      const response = await axiosInstance.get(`/comments/comment/${groupId}`);
+      console.log("наш:", response);
+      return { groupId, postId, comments: response.data };
     } catch (error) {
       console.error('Error fetching comments:', error);
       return rejectWithValue(error.response?.data || 'Unknown error');
     }
   }
 );
-
 
 export const createComment = createAsyncThunk(
   'comments/createComment',

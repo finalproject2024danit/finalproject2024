@@ -5,6 +5,9 @@ import UsersIcon from "../../svg/Header/Users";
 import GroupIcon from "../../svg/Header/Group";
 import HomeIcon from "../../svg/Header/Home";
 import ChatIcon from "../../svg/Header/Chat";
+import FriendsIcon from "../../svg/Header/Friends";
+import PenIcon from "../../svg/Header/Pen";
+
 import styles from "./Header.module.scss";
 
 const Header = () => {
@@ -110,6 +113,26 @@ const Header = () => {
                       to="/groups"
                     >
                       <GroupIcon />
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      className={({ isActive }) =>
+                        isActive ? styles.active : ""
+                      }
+                      to="/friends"
+                    >
+                      <FriendsIcon />
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      className={({ isActive }) =>
+                        isActive ? styles.active : ""
+                      }
+                      to="/profile/general_information"
+                    >
+                      <PenIcon />
                     </NavLink>
                   </li>
                   <li>
