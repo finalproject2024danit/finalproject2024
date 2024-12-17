@@ -2,7 +2,7 @@
 
 .ChatBox{
   display: flex;
-  border-radius: 10px;
+  border-radius: $border-radius-medium-big;
 }
 
 .ChatSidebar{
@@ -31,33 +31,33 @@ form {
   .react-select__control {
     background-color: #e68e8e;
     border: 1px solid #a3a1a1;
-    border-radius: 10px;
-    padding: 5px 10px;
+    border-radius: $border-radius-medium-big;
+    padding: $padding-small $padding-medium;
 
     &:hover {
-      border-color: #999;
+      border-color: $secondary;
     }
   }
 
   .react-select__value-container {
     // padding: 5px;
-    font-size: 16px;
+    font-size: $normal;
   }
 
   .react-select__input {
-    color: #333;
+    color: $ninth;
   }
 
   .react-select__menu {
     background-color: #6d6b6b;
     border: 1px solid #8f8d8d;
-    border-radius: 10px;
+    border-radius: $border-radius-medium-big;
     z-index: 10;
 
     .react-select__option {
-      padding: 10px;
-      font-size: 14px;
-      color: #333;
+      padding: $padding-medium;
+      font-size: $smaller;
+      color: $ninth;
 
       &:hover {
         background-color: #b3a9a9;
@@ -70,12 +70,12 @@ form {
 
     .react-select__option--is-selected {
       background-color: #706a6a;
-      color: #000;
+      color: $fifth;
     }
   }
 
   .react-select__indicator {
-    color: #999;
+    color: $secondary;
 
     &:hover {
       color: #666;
@@ -84,11 +84,11 @@ form {
 }
 
 .ChatUsersBox{
-  padding: 10px;
+  padding: $padding-medium;
   height: 100%;
   border: 1px solid #5f5e5e;
   gap: 10px;
-  border-radius: 10px;
+  border-radius: $border-radius-medium-big;
   overflow-y: auto;
 }
 
@@ -96,12 +96,12 @@ form {
 /* Стили для каждого пользователя */
 .ChatUser {
   display: flex;
-  margin-bottom: 10px;
+  margin-bottom: $margin-medium;
   align-items: center;
   gap: 10px;
   padding: 8px;
   // border: 1px solid #5f5e5e;
-  border-radius: 5px;
+  border-radius: $border-radius-small;
   background-color:$secondary;
   height: 100%;
   transition: background-color 0.2s ease, transform 0.2s ease;
@@ -126,8 +126,8 @@ form {
   }
 
   span {
-    font-size: 14px;
-    font-weight: 500;
+    font-size: $smaller;
+    font-weight: $font-weight-medium;
     color: $primary;
     word-break: break-word; /* Чтобы длинные имена не ломали верстку */
   }
@@ -136,9 +136,9 @@ form {
 /* Стили для пустого списка */
 .ChatUsers:empty {
   text-align: center;
-  color: #999;
-  font-size: 14px;
-  padding: 20px;
+  color: $secondary;
+  font-size: $smaller;
+  padding: $padding-large;
 }
 
 .ChatMessage{
@@ -147,6 +147,6 @@ form {
   justify-content: flex-end;
   gap: 10px;
   width: 100%;
-  padding: 10px 20px;
+  padding: $padding-medium $padding-large;
 }
 
