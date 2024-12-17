@@ -9,6 +9,8 @@ import com.project.project.entities.post.status.PostStatus;
 import com.project.project.exceptions.LikeNotFoundException;
 import com.project.project.exceptions.PostNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -39,5 +41,10 @@ public class LikeServiceImpl implements LikeService {
             like.setUserId(userId);
             return likeRepository.save(like);
         }
+    }
+
+    @Override
+    public Page<Like> getLikesByPostId(long postId, Pageable pageable) {
+        return likeRepository.findByPostId(postId, pageable);
     }
 }

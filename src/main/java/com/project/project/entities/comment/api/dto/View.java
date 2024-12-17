@@ -1,4 +1,4 @@
-package com.project.project.entities.comment.api;
+package com.project.project.entities.comment.api.dto;
 
 public interface View {
 

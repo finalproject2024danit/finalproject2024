@@ -90,8 +90,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getFriendsByUserId(Long userId) {
-        return userRepository.findFriendsByUserId(userId);
+    public Page<User> getFriendsByUserId(Long userId, Pageable pageable) {
+        return userRepository.findFriendsByUserId(userId, pageable);
     }
 
     @Override

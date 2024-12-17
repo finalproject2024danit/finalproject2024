@@ -1,4 +1,4 @@
-package com.project.project.entities.comment.api;
+package com.project.project.entities.comment.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.project.project.dto.AbstractDto;

@@ -7,13 +7,15 @@ import com.project.project.entities.post.api.dto.RequestPostDto;
 import com.project.project.entities.post.api.dto.ResponsePostDto;
 import com.project.project.entities.post.api.dto.View;
 import com.project.project.entities.post.service.PostServiceImpl;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Log4j2
 @RestController
@@ -34,18 +36,27 @@ public class PostController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<Set<ResponsePostDto>> getPostsByUserId(@PathVariable long userId) {
-        log.info("Trying to get post by user id: {}", userId);
-        Set<Post> posts = postService.getPostsByUserId(userId);
+    public ResponseEntity<Page<ResponsePostDto>> getPostsByUserId(
+            @PathVariable long userId,
+            @RequestParam(defaultValue = "0") int startPage,
+            @RequestParam(defaultValue = "10") int perPage,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDirection) {
 
-        Set<ResponsePostDto> listResponsePostDto = posts.stream()
-                .map(PostMapper.INSTANCE::postToPostDto).collect(Collectors.toSet());
+        log.info("Trying to get posts by user ID: {}, with pagination parameters", userId);
 
-        return ResponseEntity.ok(listResponsePostDto);
+        Sort.Direction direction = Sort.Direction.fromString(sortDirection);
+        Pageable pageable = PageRequest.of(startPage, perPage, Sort.by(direction, sortBy));
+
+        Page<Post> posts = postService.getPostsByUserId(userId, pageable);
+
+        Page<ResponsePostDto> responsePostsDto = posts.map(PostMapper.INSTANCE::postToPostDto);
+
+        return ResponseEntity.ok(responsePostsDto);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<ResponsePostDto> createPost(@RequestBody RequestPostDto requestPostDto) {
+    public ResponseEntity<ResponsePostDto> createPost(@Valid @RequestBody RequestPostDto requestPostDto) {
         log.info("Trying to create post");
         Post post = PostMapper.INSTANCE.requestPostDtoToPost(requestPostDto);
 
@@ -57,7 +68,7 @@ public class PostController {
     }
 
     @PatchMapping("/post/{id}")
-    public ResponseEntity<ResponsePostDto> updatePostContent(@PathVariable long id, @RequestBody RequestPostDto requestPostDto) {
+    public ResponseEntity<ResponsePostDto> updatePostContent(@PathVariable long id, @Valid @RequestBody RequestPostDto requestPostDto) {
         log.info("Trying to patch post id: {}", id);
 
         Post post = postService.patchPost(id, requestPostDto.getContent());
