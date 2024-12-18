@@ -1,8 +1,11 @@
 package com.project.project.entities.group.service;
 
 import com.project.project.entities.group.Group;
+import com.project.project.entities.group.api.dto.ResponseGroupFullInfoDto;
 import com.project.project.entities.group.db.GroupRepository;
 import com.project.project.entities.group.status.GroupStatus;
+import com.project.project.entities.post.api.dto.PostMapper;
+import com.project.project.entities.post.api.dto.ResponsePostWithLikeCommentsSumDto;
 import com.project.project.entities.user.User;
 import com.project.project.entities.user.db.UserRepository;
 import com.project.project.entities.user.status.UserStatus;
@@ -14,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -21,6 +25,7 @@ public class GroupServiceImpl implements GroupService {
 
     private final GroupRepository groupRepository;
     private final UserRepository userRepository;
+    private final PostMapper postMapper;
 
     @Override
     public Page<Group> findAllFiltered(Pageable pageable) {
@@ -31,6 +36,26 @@ public class GroupServiceImpl implements GroupService {
     public Group getGroupById(Long groupId) {
         return groupRepository.findById(groupId)
                 .orElseThrow(() -> new GroupNotFoundException(GroupStatus.GROUP_NOT_FOUND.getMessage()));
+    }
+
+    @Override
+    public ResponseGroupFullInfoDto getGroupFullInfo(Long groupId) {
+        Group group = getGroupById(groupId);
+
+        List<ResponsePostWithLikeCommentsSumDto> postsDto = group.getPosts().stream()
+                .map(postMapper::postToPostWithLikesCommentsSumDto)
+                .collect(Collectors.toList());
+
+
+        return new ResponseGroupFullInfoDto(
+                group.getId(),
+                group.getName(),
+                group.getIsOpen(),
+                group.getPhoto(),
+                postsDto,
+                group.getCreatedDate(),
+                group.getLastModifiedDate()
+        );
     }
 
     @Override

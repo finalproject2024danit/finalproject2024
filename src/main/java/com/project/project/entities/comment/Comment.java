@@ -3,7 +3,7 @@ package com.project.project.entities.comment;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.project.project.AbstractEntity;
 import com.project.project.entities.like.Like;
-import com.project.project.entities.post.Post; // Import Post entity
+import com.project.project.entities.post.Post;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

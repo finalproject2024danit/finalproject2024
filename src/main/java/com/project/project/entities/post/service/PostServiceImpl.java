@@ -1,6 +1,7 @@
 package com.project.project.entities.post.service;
 
 import com.project.project.entities.post.Post;
+import com.project.project.entities.post.api.dto.ResponsePostWithLikeCommentsSumDto;
 import com.project.project.entities.post.db.PostRepository;
 import com.project.project.entities.post.status.PostStatus;
 import com.project.project.exceptions.PostNotFoundException;
@@ -19,6 +20,25 @@ public class PostServiceImpl implements PostService {
     public Post getPostById(long id) {
         return postRepository.findById(id)
                 .orElseThrow(() -> new PostNotFoundException(PostStatus.POST_NOT_FOUND.getMessage()));
+    }
+
+    @Override
+    public ResponsePostWithLikeCommentsSumDto getPostByIdWithTotalLikesComments(long id) {
+        Post post = getPostById(id);
+
+        int totalLikes = post.getLikes().size();
+        int totalComments = post.getComments().size();
+
+        return new ResponsePostWithLikeCommentsSumDto(
+                post.getId(),
+                post.getUserId(),
+                post.getContent(),
+                post.getGroup().getId(),
+                totalLikes,
+                totalComments,
+                post.getCreatedDate(),
+                post.getLastModifiedDate()
+        );
     }
 
     @Override
