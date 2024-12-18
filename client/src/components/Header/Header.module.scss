@@ -21,23 +21,20 @@ header {
   display: flex;
   // padding: 20px; 
   width: 100%;
-  
-
-  h1 {
+ 
+  h1 {    
     background: $linear-gradient-header;
     background-size: 300%;
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: $large;
+    font-size: $huge;
     font-weight: $font-weight-bold;
     cursor: pointer;
-    animation: gradientMove 3s infinite;
-
-    @media (min-width: 768px) {
-      font-size: $huge;
-    }
+    animation: gradientMove 3s infinite;    
   }
+
+  
 
   @keyframes gradientMove {
     0% {
@@ -148,17 +145,17 @@ header {
 
   .headerTop {
     display: flex;
-    justify-content:column;
+    justify-content: center;
     align-items: center;
     gap: 10px;
     padding: 10px;
     box-sizing: border-box;
 
-    @media (min-width: 768px) {
-      flex-direction: row;
-      justify-content: space-between;
-      gap: 30px;
-    }
+    // @media (min-width: 768px) {
+    //   flex-direction: row;
+    //   justify-content: space-between;
+    //   gap: 30px;
+    // }
   }
 
   .imgLogo {
@@ -166,7 +163,7 @@ header {
     height: 80px;
     border-radius: 50%;
     cursor: pointer;
-    margin-left: 30px;
+    margin-left: 10px;
 
     @media (min-width: 768px) {
       width: 150px;

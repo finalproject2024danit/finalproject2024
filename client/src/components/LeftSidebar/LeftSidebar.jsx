@@ -50,7 +50,7 @@ const LeftSidebar = () => {
         </div>
       </NavLink>
 
-      <div>
+      <div className={styles.formBlock}>
         <Formik initialValues={{ search: "" }} onSubmit={() => {}}>
           {({ setFieldValue }) => (
             <Form className={styles.menuForm}>

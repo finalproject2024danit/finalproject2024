@@ -1,18 +1,29 @@
-import { fetchComments, addComment, deleteComment } from "../redux/slices/commentsSlice";
-import axiosInstance from '../api/axiosInstance';
+import {
+  fetchComments,
+  fetchNewComment,
+  removeCommentThunk,
+} from "../redux/slices/commentsSlice"; // Правильний імпорт
+import axiosInstance from "../api/axiosInstance";
 
 // Отримання коментарів для поста
-export const handleFetchComments = async (groupId, postId, dispatch) => {
-  try {
-    await dispatch(fetchComments({ groupId, postId }));  // Викликаємо action для отримання коментарів
-    console.log(`Comments fetched for post ${postId} in group ${groupId}`);
-  } catch (error) {
-    console.error('Error fetching comments:', error.message);
-  }
-};
+// export const handleFetchComments = async (groupId, postId, dispatch) => {
+//   try {
+//     await dispatch(fetchComments({ postId }));  // Викликаємо action для отримання коментарів
+//     console.log(`Comments fetched for post ${postId} in group ${groupId}`);
+//   } catch (error) {
+//     console.error('Error fetching comments:', error.message);
+//   }
+// };
 
 // Створення коментарів для поста
-export const handleSubmitComment = async (postId, groupId, commentValues, userFromId, dispatch, setCommentValues) => {
+export const handleSubmitComment = async (
+  postId,
+  groupId,
+  commentValues,
+  userFromId,
+  dispatch,
+  setCommentValues
+) => {
   const commentText = commentValues[postId];
   if (!commentText) return;
 
@@ -22,40 +33,30 @@ export const handleSubmitComment = async (postId, groupId, commentValues, userFr
     content: commentText,
   };
 
-  try {
-    const response = await axiosInstance.post('/comments/comment/create', newComment);
-    console.log('Comment created:', response.data);
-
-    dispatch(addComment({
-      groupId,
-      postId,
-      comment: response.data,
-    }));
-
-    const updatedComments = JSON.parse(localStorage.getItem("comments")) || {};
-    updatedComments[groupId] = updatedComments[groupId] || {};
-    updatedComments[groupId][postId] = updatedComments[groupId][postId] || [];
-    updatedComments[groupId][postId].push(response.data);
-    localStorage.setItem("comments", JSON.stringify(updatedComments));
-
-    setCommentValues((prevValues) => ({ ...prevValues, [postId]: "" }));
-  } catch (error) {
-    console.error('Error creating comment:', error.response?.data || error.message);
-  }
+  // Викликаємо thunk action для створення коментаря
+  await dispatch(
+    fetchNewComment({ postId, userId: userFromId.id, content: commentText })
+  );
 };
 
-
-export const handleDeleteComment = async (commentToDelete, dispatch, handleCloseDeleteCommentModal) => {
+// Видалення коментаря
+export const handleDeleteComment = async (
+  commentToDelete,
+  dispatch,
+  handleCloseDeleteCommentModal
+) => {
   if (!commentToDelete) return;
 
   const { commentId, postId, groupId } = commentToDelete;
 
   try {
-    // Используем метод GET с правильным URL
-    const response = await axiosInstance.get(`/comments/comment/delete/${commentId}`);
+    // Використовуємо метод DELETE, якщо сервер підтримує
+    const response = await axiosInstance.delete(
+      `/comments/comment/delete/${commentId}`
+    );
     console.log(response.data.message);
 
-    dispatch(deleteComment({ commentId, postId, groupId }));
+    dispatch(removeCommentThunk({ postId, commentId }));
 
     const storedComments = JSON.parse(localStorage.getItem("comments")) || {};
     if (storedComments[groupId] && storedComments[groupId][postId]) {
@@ -67,9 +68,9 @@ export const handleDeleteComment = async (commentToDelete, dispatch, handleClose
 
     handleCloseDeleteCommentModal();
   } catch (error) {
-    console.error("Failed to delete comment:", error.response?.data || error.message);
+    console.error(
+      "Failed to delete comment:",
+      error.response?.data || error.message
+    );
   }
 };
-
-
-

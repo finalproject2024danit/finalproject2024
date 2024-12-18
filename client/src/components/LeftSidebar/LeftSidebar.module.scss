@@ -3,6 +3,8 @@
 .leftMenu {
   display: flex;
   flex-direction: column;  
+  align-items: center;
+  gap: 10px;
   background-color:$background-secondary;
   border-radius: 10px;  
   opacity: 0.9;
@@ -22,17 +24,24 @@
   }
 
   .iconWrapper img {
-    width: 100px;
-    height: 100px;
+    width: 7vw;
+    height: 7vw;
     border-radius: 50%;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
   }
+
+  .formBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .menuForm {
-    padding: 20px 10px;
+    // padding: 10px 0;
     width: 80%;
-    margin-left: 10px;
+    // margin-left: 10px;
     border-radius: 10px;
     display: flex;
     flex-direction: column;

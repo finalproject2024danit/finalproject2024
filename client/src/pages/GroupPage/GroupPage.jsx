@@ -8,13 +8,13 @@ import {
   toggleLike,
 } from "../../utils/postUtils.js";
 import {  
-  handleFetchComments,
+  // handleFetchComments,
   handleSubmitComment,
   handleDeleteComment,
 } from "../../utils/commentsUtils.js";
 import styles from "./GroupPage.module.scss";
 import MainContent from "../../components/MainContent/MainContent";
-import { setComments } from "../../redux/slices/commentsSlice.js";
+import { setComments, fetchComments, fetchNewComment } from "../../redux/slices/commentsSlice.js";
 import LikeIcon from "../../svg/Header/Like/index.jsx";
 import { useParams } from "react-router-dom";
 import ButtonDeleteFriend from "../../components/ButtonDeleteFriend/index.jsx";
@@ -22,13 +22,15 @@ import ModalPost from "../../components/Modal/ModalGroup/ModalPost.jsx";
 import Modal from "../../components/Modal/ModalFriend/Modal.jsx";
 import { format } from "date-fns";
 
+
 const GroupPage = () => {
   const dispatch = useDispatch();
   const userFromId = useSelector((state) => state.user);
   const { groups, loading, selectedGroup } = useSelector(
     (state) => state.group
   );
-  const { comments = {} } = useSelector((state) => state.comments || {});
+  const comments = useSelector((state) => state.comments.comments);
+  // const { comments = {} } = useSelector((state) => state.comments || {});
   const observer = useRef();
   const [page, setPage] = useState(0);
   const [commentValues, setCommentValues] = useState({});
@@ -123,10 +125,10 @@ const GroupPage = () => {
     ? [...selectedGroup.posts].reverse()
     : [];
 
-  const handleEditPost = (post) => {
-    setEditPost(post);
-    setIsModalOpen(true);
-  };
+  // const handleEditPost = (post) => {
+  //   setEditPost(post);
+  //   setIsModalOpen(true);
+  // };
 
   const handleOpenDeleteModal = (postId) => {
     setPostToDelete(postId);
@@ -138,12 +140,20 @@ const GroupPage = () => {
     setIsDeleteModalOpen(false);
   };
 
-  const toggleExpand = (postId) => {
+  const toggleExpand = (postId) => { 
+    console.log("Fetching comments for post:", postId);
+    dispatch(fetchComments({postId}))     
+    // console.log("Fetching comments for post ID:", postId, "Current state:", comments);
     setExpandedPosts((prev) => ({
       ...prev,
       [postId]: !prev[postId],
     }));
+    // console.log("Expanded posts state:", expandedPosts);
   };
+  // useEffect(() => {
+  //   console.log("Updated comments state after fetch:", comments);
+  // }, [comments]);
+  
 
   // Відкриваємо модальне вікно при натисканні на кнопку видалення коментаря
   const handleOpenDeleteCommentModal = (commentId, postId, groupId) => {
@@ -168,9 +178,12 @@ const GroupPage = () => {
     handleCommentChange(postId, event, setCommentValues);
   };
   
-  const handleSubmitCommentWrapper = (postId, groupId) => {
-    handleSubmitComment(postId, groupId, commentValues, userFromId, dispatch, setCommentValues);
+  const fetchNewCommentWrapper = (postId, content, userId) => {    
+    if (!content) return; // Перевірка, щоб уникнути порожніх коментарів
+    dispatch(fetchNewComment({ postId, userId, content }));    
+    setCommentValues((prev) => ({ ...prev, [postId]: "" })); // Очищаємо поле коментаря
   };
+  
 
   const handleCommentChange = (postId, event) => {
     const { value } = event.target;
@@ -183,7 +196,7 @@ const GroupPage = () => {
   useEffect(() => {
     if (selectedGroup) {
       selectedGroup.posts.forEach(post => {
-        handleFetchComments(selectedGroup.id, post.id, dispatch);
+        fetchComments(selectedGroup.id, post.id, dispatch);
       });
     }
   }, [selectedGroup, dispatch]);
@@ -221,22 +234,22 @@ const GroupPage = () => {
             </button>
             <div className={styles.groupRender}>
               {sortedPosts.length > 0 ? (
-                sortedPosts.map((post, index) => {
+                sortedPosts.map(post => {
                   const postComments =
-                    comments[selectedGroup.id]?.[post.id] || [];
+                    comments[post.id] || [];
                   const { liked = false, likes = 0 } =
                     likeStates[post.id] || {};
 
                   return (
-                    <div key={index} className={styles.post}>
+                    <div key={post.id} className={styles.post}>
                       <p>{post.content}</p>
                       <div className={styles.postActions}>
-                        <button
+                        {/* <button
                           className={styles.editButton}
                           onClick={() => handleEditPost(post)}
                         >
                           Edit
-                        </button>
+                        </button> */}
                         <button
                           className={styles.deleteButton}
                           onClick={() => handleOpenDeleteModal(post.id)}
@@ -259,14 +272,14 @@ const GroupPage = () => {
                       <form
                         onSubmit={(event) => {
                           event.preventDefault();
-                          handleSubmitCommentWrapper(post.id, selectedGroup.id);
+                          fetchNewCommentWrapper(post.id, commentValues[post.id], userFromId.id); // Передаємо тільки необхідні дані
                         }}
                         className={styles.commentForm}
                       >
                         <div className={styles.commentsList}>
                           {postComments.length > 0 ? (
-                            postComments.map((comment, idx) => (
-                              <div key={idx} className={styles.comment}>
+                            postComments.map((comment) => (
+                              <div key={comment.id} className={styles.comment}>
                                 <div className={styles.commentHeader}>
                                   <div className={styles.commentInfo}>
                                     <img
@@ -278,7 +291,8 @@ const GroupPage = () => {
                                       className={styles.commentAvatar}
                                     />
                                     <span className={styles.commentAuthor}>
-                                      {comment.userName} {comment.userLastName}
+                                      {/* {comment.userName} {comment.userLastName} */}
+                                      User {comment.userId}
                                     </span>
                                   </div>
                                   <span className={styles.commentDate}>
@@ -290,12 +304,7 @@ const GroupPage = () => {
                                   <ButtonDeleteFriend
                                     className={styles.deleteButton}
                                     onClick={() => {
-                                      console.log("Selected Comment:", comment); // Логування об'єкта comment
-                                      console.log(
-                                        "Selected Comment ID:",
-                                        comment.id
-                                      ); // Логування ID
-                                      handleOpenDeleteCommentModal(
+                                        handleOpenDeleteCommentModal(
                                         comment.id,
                                         post.id,
                                         selectedGroup.id
@@ -314,6 +323,7 @@ const GroupPage = () => {
                           className={styles.toggleButton}
                           onClick={() => toggleExpand(post.id)}
                           aria-label="Toggle Comments"
+                          type="button"
                         >
                           <span>Comments</span>
                           {expandedPosts[post.id] ? "⬆" : "⬇"}

@@ -1,136 +1,124 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axiosInstance from "../../api/axiosInstance.js";
-
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import {
+  fetchCommentsByPostId,
+  createComment,
+  removeComment,
+} from "../../api/comments/requests";
 
 const initialState = {
-  comments: {}, // Структура: { [groupId]: { [postId]: [comments] } }
+  comments: [], // Структура: { [postId]: [comments] }
+  loading: false,
+  error: null,
 };
 
+// Отримання коментарів для поста
 export const fetchComments = createAsyncThunk(
-  'comments/fetchComments',
-  async ({ groupId, postId }, { rejectWithValue }) => {
+  "comments/fetchByPostId",
+  async ({ postId, ...params }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.get(`/comments/comment/${groupId}`);
-      console.log("наш:", response);
-      return { groupId, postId, comments: response.data };
+      // Вызываем существующую функцию API с передачей postId и остальных параметров
+      return await fetchCommentsByPostId({ postId, ...params });
     } catch (error) {
-      console.error('Error fetching comments:', error);
-      return rejectWithValue(error.response?.data || 'Unknown error');
+      console.error("Error fetching comments:", error);
+      return rejectWithValue(
+        error.response?.data || "Failed to fetch comments"
+      );
     }
   }
 );
 
-export const createComment = createAsyncThunk(
-  'comments/createComment',
-  async ({ groupId, postId, userId, content }, { rejectWithValue, dispatch }) => {
+// Створення нового коментаря
+export const fetchNewComment = createAsyncThunk(
+  "comment/createComment",
+  async ({ postId, userId, content }, { rejectWithValue }) => {
     try {
-      const response = await axiosInstance.post(`/comments/comment/create`, {
-        postId,
-        userId,
-        content,
-      });
-      const comment = response.data;
-
-      // Додаємо коментар у Redux
-      dispatch(addComment({ groupId, postId, comment }));
-
-      // Оновлюємо коментарі в localStorage
-      const storedComments = JSON.parse(localStorage.getItem(`comments_${groupId}_${postId}`)) || [];
-      storedComments.push(comment);
-      localStorage.setItem(`comments_${groupId}_${postId}`, JSON.stringify(storedComments));
-
-      return comment;
+      return await createComment({ postId, userId, content });
     } catch (error) {
-      console.error('Error creating comment:', error);
-      return rejectWithValue(error.response?.data || 'Unknown error');
+      return rejectWithValue(error.message);
     }
   }
 );
 
-export const removeComment = createAsyncThunk(
-  'comments/removeComment',
-  async ({ groupId, postId, commentId }, { rejectWithValue, dispatch }) => {
+// Видалення коментаря
+export const removeCommentThunk = createAsyncThunk(
+  "comments/removeComment",
+  async ({ postId, commentId }, { rejectWithValue }) => {
     try {
-      await axiosInstance.get(`/comments/comment/delete/${commentId}`);
-
-      // Видаляємо коментар з Redux
-      dispatch(deleteComment({ groupId, postId, commentId }));
-
-      // Оновлюємо localStorage
-      const storedComments = JSON.parse(localStorage.getItem(`comments_${groupId}_${postId}`)) || [];
-      const updatedComments = storedComments.filter(comment => comment.id !== commentId);
-      localStorage.setItem(`comments_${groupId}_${postId}`, JSON.stringify(updatedComments));
-
-      return commentId;
+      await removeComment({ commentId });
+      return { postId, commentId };
     } catch (error) {
-      console.error('Error deleting comment:', error);
-      return rejectWithValue(error.response?.data || 'Unknown error');
+      console.error("Error deleting comment:", error);
+      return rejectWithValue(error.response?.data || "Unknown error");
     }
   }
 );
 
 const commentsSlice = createSlice({
-  name: 'comments',
+  name: "comments",
   initialState,
   reducers: {
     setComments: (state, action) => {
-      const { groupId, postId, comments } = action.payload;
-      state.comments[groupId] = {
-        ...state.comments[groupId],
-        [postId]: comments,
-      };
-
-      localStorage.setItem(`comments_${groupId}_${postId}`, JSON.stringify(comments));
-    },
-    addComment: (state, action) => {
-      const { groupId, postId, comment } = action.payload;
-
-      if (!comment || typeof comment !== 'object') {
-        console.error('Invalid comment:', comment);
-        return;
-      }
-
-      state.comments[groupId] = state.comments[groupId] || {};
-      state.comments[groupId][postId] = state.comments[groupId][postId] || [];
-
-      state.comments[groupId][postId].push(comment);
-
-      localStorage.setItem(
-        `comments_${groupId}_${postId}`,
-        JSON.stringify(state.comments[groupId][postId])
-      );
-    },
-    deleteComment: (state, action) => {
-      const { groupId, postId, commentId } = action.payload;
-
-      const commentsForPost = state.comments[groupId]?.[postId];
-      if (!commentsForPost) {
-        console.error(`No comments found for groupId: ${groupId}, postId: ${postId}`);
-        return;
-      }
-
-      state.comments[groupId][postId] = commentsForPost.filter(comment => comment.id !== commentId);
-
-      localStorage.setItem(
-        `comments_${groupId}_${postId}`,
-        JSON.stringify(state.comments[groupId][postId])
-      );
+      const { postId, comments } = action.payload;
+      state.comments[postId] = comments;
+      localStorage.setItem(`comments_${postId}`, JSON.stringify(comments));
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchComments.fulfilled, (state, action) => {
-        const { groupId, postId, comments } = action.payload;
-        state.comments[groupId] = {
-          ...state.comments[groupId],
-          [postId]: comments,
-        };
+      // Отримання коментарів
+      .addCase(fetchComments.pending, (state) => {
+        state.loading = true;
       })
-      .addCase(fetchComments.rejected, (state, action) => {
-        console.error('Failed to fetch comments:', action.payload);
+      .addCase(fetchComments.fulfilled, (state, action) => {
+        const { postId } = action.meta.arg;
+        state.comments[postId] = action.payload;
+        state.loading = false;
+      })
+      .addCase(fetchComments.rejected, (state) => {
+        state.loading = false;
+      })
+
+      // Створення коментаря
+      // Створення коментаря
+    .addCase(fetchNewComment.pending, (state) => {
+      state.loading = true;
+    })
+    .addCase(fetchNewComment.fulfilled, (state, action) => {
+      const { postId } = action.meta.arg;
+      const newComment = action.payload;
+
+      state.comments[postId] = state.comments[postId] || [];
+      state.comments[postId].push(newComment);
+
+      localStorage.setItem(
+        `comments_${postId}`,
+        JSON.stringify(state.comments[postId])
+      );
+
+      state.loading = false;
+    })
+    .addCase(fetchNewComment.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    })
+      // .addCase(fetchNewComment.fulfilled, (state, action) => {
+      //   const { postId, comment } = action.payload;
+      //   state.comments[postId] = state.comments[postId] || [];
+      //   state.comments[postId].push(comment);
+      //   localStorage.setItem(`comments_${postId}`, JSON.stringify(state.comments[postId]));
+      // })
+
+      // Видалення коментаря
+      .addCase(removeCommentThunk.fulfilled, (state, action) => {
+        const { postId, commentId } = action.payload;
+        state.comments[postId] =
+          state.comments[postId]?.filter(
+            (comment) => comment.id !== commentId
+          ) || [];
+        // localStorage.setItem(`comments_${postId}`, JSON.stringify(state.comments[postId]));
       });
   },
 });
 
-export const { setComments, addComment, deleteComment } = commentsSlice.actions;
+export const { setComments } = commentsSlice.actions;
 export default commentsSlice.reducer;

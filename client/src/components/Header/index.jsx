@@ -84,17 +84,7 @@ const Header = () => {
                   connect!&quot;
                 </h1>
               </NavLink>
-              <div className={styles.radioBtn}>
-                <input
-                  type="checkbox"
-                  checked={isChecked}
-                  onChange={handleLanguageChange}
-                  id="languageToggle"
-                />
-                <label htmlFor="languageToggle">
-                  {isChecked ? "UA" : "EN"}
-                </label>
-              </div>
+              
             </div>
             <div className={styles.headerBottom}>
               <nav>
@@ -177,6 +167,19 @@ const Header = () => {
                       </select>
                     </div>
                   </li>
+                  <li>
+                  <div className={styles.radioBtn}>
+                <input
+                  type="checkbox"
+                  checked={isChecked}
+                  onChange={handleLanguageChange}
+                  id="languageToggle"
+                />
+                <label htmlFor="languageToggle">
+                  {isChecked ? "UA" : "EN"}
+                </label>
+              </div>
+              </li>
                 </ul>
               </nav>
               <div className={styles.searchContainer}>
