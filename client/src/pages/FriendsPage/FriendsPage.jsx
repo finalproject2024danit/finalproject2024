@@ -20,8 +20,7 @@ const FriendsPage = () => {
   const [flippedCards, setFlippedCards] = useState({});
   const { t } = useTranslation();
   const [isModalOpen, setModalOpen] = useState(false);
-  const [modalMessage, setModalMessage] = useState("");
-  const [onConfirmAction, setOnConfirmAction] = useState(() => () => {});
+  const [selectedFriendId, setSelectedFriendId] = useState(null);
   const userFromId = useSelector((state) => state.user.id);
   const { friends, status, error, currentPage, hasMore } = useSelector(
     (state) => state.friends
@@ -138,7 +137,7 @@ const FriendsPage = () => {
   // };
 
   return (
-    <MainContent title="Friends">
+    <MainContent title="">
       <div className={styles.searchContainer}>
         <input
           type="text"
@@ -178,7 +177,6 @@ const FriendsPage = () => {
                 </NavLink>
                 <ButtonDeleteFriend
                   onClick={() => handleOpenModal(friend.id)}
-                  className={styles.deleteButton}
                 />
                 <h2 className={styles.clickToFlip}>{t("users.clickToFlip")}</h2>
               </div>
