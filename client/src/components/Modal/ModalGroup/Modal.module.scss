@@ -17,15 +17,15 @@
   flex-direction: column;
   gap: 10px;
   background: $background-secondary;
-  padding: 20px;
-  border-radius: 8px;  
+  padding: $padding-large;
+  border-radius: $border-radius-medium;  
   width: 40vh;  
 }
 
 .modalContent input {
   width: 60%;
-  border-radius: 5px;
-  padding: 5px;
+  border-radius: $border-radius-small;
+  padding: $padding-small;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -37,14 +37,14 @@
 .modalActions {
   display: flex;
   justify-content: space-between;
-  margin-top: 10px;
+  margin-top: $margin-medium;
 }
 
 .createButton,
 .cancelButton {
   color: $primary;
-  padding: 10px 20px;
-  border-radius: 10px;
+  padding: $padding-medium $padding-large;
+  border-radius: $border-radius-medium-big;
 }
 
 .createButton {

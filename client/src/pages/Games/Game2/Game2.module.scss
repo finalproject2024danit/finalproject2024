@@ -1,3 +1,5 @@
+@use "../../../App.scss" as *;
+
 .game2 {
     text-align: center;
     // background-color: #282c34;
@@ -24,22 +26,22 @@
   }
 
   .boxGame2 h2{
-    margin-bottom: 20px;     
+    margin-bottom: $margin-large;     
   }
   
   .restart {
   background-color: green;
-  border-radius: 5px;
+  border-radius: $border-radius-small;
   border: none;
   color: #fff;
   cursor: pointer;
-  font-size: 20px;
-  font-weight: 500;
+  font-size: $large;
+  font-weight: $font-weight-medium;
   outline: none;
-  padding: 20px 25px;
+  padding: $padding-large 25px;
   text-transform: capitalize;
   align-items: center;
-  margin-top: 30px;
+  margin-top: $margin-largexl;
 
   &:hover {
     background-color: darkgreen; /* Колір фону при наведенні */

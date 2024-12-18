@@ -64,14 +64,14 @@
   height: 200px;
   text-align: center;
   gap: 10px;
-  padding-top: 20px;
+  padding-top: $padding-large;
 }
 
 .front .inner h2 {
-  color: grey;
+  color: $secondary;
   font-family: $heading-font;
-  font-weight: 300;
-  font-size: 18px;
+  font-weight: $font-weight-light;
+  font-size: $medium;
 }
 
 .front .inner h2::after {
@@ -109,8 +109,8 @@
 
 .link {
   text-decoration: none;
-  color: #ffffff;
-  font-size: 18px;
+  color: $primary;
+  font-size: $medium;
   font-weight: bold;
   margin-bottom: 12px;
   display: inline-block;
@@ -123,7 +123,7 @@
 
   // Style for mobile screens
   @media (max-width: 768px) {
-    font-size: 16px;
+    font-size: $normal;
   }
 }
 
@@ -132,19 +132,19 @@
 }
 
 .clickToFlip {
-  font-size: 16px;
-  margin-top: 10px;
-  font-weight: 300;
+  font-size: $normal;
+  margin-top: $margin-medium;
+  font-weight: $font-weight-light;
   color: #c0c0c0;
   transition: color 0.3s;
 
   &:hover {
-    color: #ffffff;
+    color: $primary;
   }
 
   // Style for mobile screens
   @media (max-width: 768px) {
-    font-size: 14px;
+    font-size: $smaller;
   }
 }
 
@@ -161,17 +161,17 @@
 
 .searchInput {
   width: 50%;
-  padding: 10px;
+  padding: $padding-medium;
   border-radius: 25px;
   border: 1px solid #cababa;
   background-color: #363a3d;
   outline: none;
-  font-size: 16px;
+  font-size: $normal;
   transition: all 0.3s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
   &::placeholder {
-    color: gray;
+    color: $secondary;
   }
 
   &:focus {
@@ -182,6 +182,6 @@
   // Style for mobile screens
   @media (max-width: 768px) {
     width: 80%;
-    font-size: 14px;
+    font-size: $smaller;
   }
 }
