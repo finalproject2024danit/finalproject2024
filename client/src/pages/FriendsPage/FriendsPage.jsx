@@ -9,6 +9,7 @@ import {
   fetchFriendsWithPagination,
   deleteFriendThunk,
 } from "../../redux/slices/friendsSlice.js";
+import { useTranslation } from "react-i18next";
 
 const defaultAvatar =
   "https://res.cloudinary.com/dsr6kwzrr/image/upload/v1729669892/photo_2024-10-23_10-30-18_nmluce.jpg";
@@ -17,8 +18,8 @@ const FriendsPage = () => {
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState("");
   const [flippedCards, setFlippedCards] = useState({});
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { t } = useTranslation();
+  const [isModalOpen, setModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [onConfirmAction, setOnConfirmAction] = useState(() => () => {});
   const userFromId = useSelector((state) => state.user.id);
@@ -68,7 +69,7 @@ const FriendsPage = () => {
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll]);
+  }, []);
 
   const filteredFriends = friends.filter((friend) =>
     `${friend.firstName} ${friend.lastName}`
@@ -76,25 +77,65 @@ const FriendsPage = () => {
       .includes(searchTerm.toLowerCase())
   );
 
-  const handleDeleteFriend = (friendId) => {
-    setModalMessage("Are you sure you want to delete this friend?");
-    setOnConfirmAction(() => () => {
-      dispatch(deleteFriendThunk({ userFromId, userToId: friendId }))
-        .then(() => {
-          dispatch(
-            fetchFriendsWithPagination({
-              userId: userFromId,
-              startPage: 1,
-              perPage: friendsPerPage,
-            })
-          );
-        })
-        .finally(() => {
-          setIsModalOpen(false);
-        });
-    });
-    setIsModalOpen(true);
+  const handleCardClick = (id) => {
+    setFlippedCards((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
+    setTimeout(() => {
+      setFlippedCards((prev) => ({
+        ...prev,
+        [id]: false,
+      }));
+    }, 5000);
   };
+
+  const handleOpenModal = (friendId) => {
+    setSelectedFriendId(friendId);
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+    setSelectedFriendId(null);
+  };
+
+  const handleConfirmDelete = () => {
+    if (selectedFriendId !== null) {
+      dispatch(
+        deleteFriendThunk({ userFromId, userToId: selectedFriendId })
+      ).then(() => {
+        dispatch(
+          fetchFriendsWithPagination({
+            userId: userFromId,
+            startPage: currentPage,
+            perPage: 3,
+          })
+        );
+      });
+      handleCloseModal();
+    }
+  };
+
+  // const handleDeleteFriend = (friendId) => {
+  //   setModalMessage("Are you sure you want to delete this friend?");
+  //   setOnConfirmAction(() => () => {
+  //     dispatch(deleteFriendThunk({ userFromId, userToId: friendId }))
+  //       .then(() => {
+  //         dispatch(
+  //           fetchFriendsWithPagination({
+  //             userId: userFromId,
+  //             startPage: 1,
+  //             perPage: friendsPerPage,
+  //           })
+  //         );
+  //       })
+  //       .finally(() => {
+  //         setIsModalOpen(false);
+  //       });
+  //   });
+  //   setIsModalOpen(true);
+  // };
 
   return (
     <MainContent title="Friends">
@@ -118,32 +159,37 @@ const FriendsPage = () => {
             onClick={() => handleCardClick(friend.id)}
           >
             <div className={styles.front}>
-              {/* <div key={friend.id} className={styles.friendCard}> */}
-              <NavLink to={`/user/${friend.id}`} className={styles.link}>
-                <div className={styles.inner}>
-                  <img
-                    className={styles.friendPhoto}
-                    src={friend.avatar || defaultAvatar}
-                    alt={`${friend.firstName} ${friend.lastName}`}
-                    onError={(e) => (e.target.src = defaultAvatar)}
-                  />
-                  <h2>
-                    {friend.firstName} {friend.lastName}
-                  </h2>
-                </div>
-              </NavLink>
+              <div className={styles.inner}>
+                <img
+                  className={styles.friendPhoto}
+                  src={friend.avatar || defaultAvatar}
+                  alt={`${friend.firstName} ${friend.lastName}`}
+                  onError={(e) => (e.target.src = defaultAvatar)}
+                />
+                <h2>
+                  {friend.firstName} {friend.lastName}
+                </h2>
+              </div>
             </div>
-            <ButtonDeleteFriend
-              onClick={() => handleDeleteFriend(friend.id)}
-              className={styles.deleteButton}
-            />
+            <div className={styles.back}>
+              <div className={styles.inner}>
+                <NavLink to={`/user/${friend.id}`} className={styles.link}>
+                  <h3 className={styles.infoFriend}>{t("users.infoUser")}</h3>
+                </NavLink>
+                <ButtonDeleteFriend
+                  onClick={() => handleOpenModal(friend.id)}
+                  className={styles.deleteButton}
+                />
+                <h2 className={styles.clickToFlip}>{t("users.clickToFlip")}</h2>
+              </div>
+            </div>
           </div>
         ))}
         <Modal
           isOpen={isModalOpen}
-          message={modalMessage}
-          onConfirm={onConfirmAction}
-          onClose={() => setIsModalOpen(false)}
+          message="Are you sure you want to delete this friend?"
+          onConfirm={handleConfirmDelete}
+          onClose={() => handleCloseModal}
         />
         {loading && <p>Loading...</p>}
         {error && <p>{error}</p>}
