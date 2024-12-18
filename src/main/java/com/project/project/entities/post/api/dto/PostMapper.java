@@ -5,7 +5,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper()
+@Mapper(componentModel = "spring")
 public interface PostMapper {
     PostMapper INSTANCE = Mappers.getMapper(PostMapper.class);
 
@@ -22,5 +22,15 @@ public interface PostMapper {
     @Mapping(source = "createdDate", target = "createdDate")
     @Mapping(source = "lastModifiedDate", target = "lastModifiedDate")
     ResponsePostDto postToPostDto(Post post);
+
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "userId", target = "userId")
+    @Mapping(source = "content", target = "content")
+    @Mapping(source = "group.id", target = "groupId")
+    @Mapping(target = "totalLikes", expression = "java(post.getLikes().size())")
+    @Mapping(target = "totalComments", expression = "java(post.getComments().size())")
+    @Mapping(source = "createdDate", target = "createdDate")
+    @Mapping(source = "lastModifiedDate", target = "lastModifiedDate")
+    ResponsePostWithLikeCommentsSumDto postToPostWithLikesCommentsSumDto(Post post);
 
 }

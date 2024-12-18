@@ -22,13 +22,13 @@ import java.util.Set;
 import static jakarta.persistence.TemporalType.TIMESTAMP;
 import static lombok.AccessLevel.PRIVATE;
 
-@EqualsAndHashCode(callSuper = true)
 @Data
 @Entity
 @Table(name = "posts")
 @FieldDefaults(level = PRIVATE)
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true, exclude = {"comments", "likes"})
 public class Post extends AbstractEntity {
 
     @Column(name = "user_id", nullable = false)
@@ -38,10 +38,11 @@ public class Post extends AbstractEntity {
     String content;
 
     @JsonManagedReference
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     Set<Comment> comments = new HashSet<>();
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     Set<Like> likes = new HashSet<>();
 
     @JsonIgnore

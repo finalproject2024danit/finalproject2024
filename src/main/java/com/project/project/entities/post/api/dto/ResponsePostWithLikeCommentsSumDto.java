@@ -1,8 +1,7 @@
-package com.project.project.entities.group.api.dto;
+package com.project.project.entities.post.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.project.project.dto.AbstractDto;
-import com.project.project.entities.post.api.dto.ResponsePostWithLikeCommentsSumDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -10,7 +9,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import static lombok.AccessLevel.PRIVATE;
 
@@ -20,25 +18,28 @@ import static lombok.AccessLevel.PRIVATE;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ResponseGroupFullInfoDto extends AbstractDto {
+public class ResponsePostWithLikeCommentsSumDto extends AbstractDto {
     @JsonView(View.Admin.class)
     Long id;
 
     @JsonView(View.Admin.class)
-    String name;
+    Long userId;
 
     @JsonView(View.Admin.class)
-    Boolean isOpen;
+    String content;
 
     @JsonView(View.Admin.class)
-    String photo;
+    Long groupId;
 
     @JsonView(View.Admin.class)
-    List<ResponsePostWithLikeCommentsSumDto> posts;
+    int totalLikes;
 
     @JsonView(View.Admin.class)
-    private LocalDateTime createdDate;
+    int totalComments;
 
     @JsonView(View.Admin.class)
-    private LocalDateTime lastModifiedDate;
+    LocalDateTime createdDate;
+
+    @JsonView(View.Admin.class)
+    LocalDateTime lastModifiedDate;
 }
