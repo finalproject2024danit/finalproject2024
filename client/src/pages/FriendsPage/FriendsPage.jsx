@@ -16,6 +16,8 @@ const defaultAvatar =
 const FriendsPage = () => {
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState("");
+  const [flippedCards, setFlippedCards] = useState({});
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [onConfirmAction, setOnConfirmAction] = useState(() => () => {});
@@ -106,22 +108,31 @@ const FriendsPage = () => {
         />
       </div>
 
-      <div className={styles.userBox}>
+      <div className={styles.friendBox}>
         {filteredFriends.map((friend) => (
-          <div key={friend.id} className={styles.userCard}>
-            <NavLink to={`/user/${friend.id}`} className={styles.link}>
-              <div className={styles.inner}>
-                <img
-                  className={styles.userPhoto}
-                  src={friend.avatar || defaultAvatar}
-                  alt={`${friend.firstName} ${friend.lastName}`}
-                  onError={(e) => (e.target.src = defaultAvatar)}
-                />
-                <h2>
-                  {friend.firstName} {friend.lastName}
-                </h2>
-              </div>
-            </NavLink>
+          <div
+            key={friend.id}
+            className={`${styles.friendCard} ${
+              flippedCards[friend.id] ? styles.flipped : ""
+            }`}
+            onClick={() => handleCardClick(friend.id)}
+          >
+            <div className={styles.front}>
+              {/* <div key={friend.id} className={styles.friendCard}> */}
+              <NavLink to={`/user/${friend.id}`} className={styles.link}>
+                <div className={styles.inner}>
+                  <img
+                    className={styles.friendPhoto}
+                    src={friend.avatar || defaultAvatar}
+                    alt={`${friend.firstName} ${friend.lastName}`}
+                    onError={(e) => (e.target.src = defaultAvatar)}
+                  />
+                  <h2>
+                    {friend.firstName} {friend.lastName}
+                  </h2>
+                </div>
+              </NavLink>
+            </div>
             <ButtonDeleteFriend
               onClick={() => handleDeleteFriend(friend.id)}
               className={styles.deleteButton}
