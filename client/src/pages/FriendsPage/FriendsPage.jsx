@@ -187,7 +187,7 @@ const FriendsPage = () => {
           isOpen={isModalOpen}
           message="Are you sure you want to delete this friend?"
           onConfirm={handleConfirmDelete}
-          onClose={() => handleCloseModal}
+          onClose={handleCloseModal}
         />
         {loading && <p>Loading...</p>}
         {error && <p>{error}</p>}
