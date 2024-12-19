@@ -1,19 +1,21 @@
+@use "../../App.scss" as *;
+
 .dropdownMenu {
   position: absolute;
   background-color: white;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   border-radius: 3%;
-  padding: 10px;
+  padding: $padding-medium;
   width: 400px;
   height: 170px;
-  margin-top: 10px;
+  margin-top: $margin-medium;
   left: 71%;  
   display: flex;
   flex-direction: column;
 }
 
 .dropdownItem {
-  padding: 10px;
+  padding: $padding-medium;
   width: 350px;
   cursor: pointer;
   transition: background-color 0.2s ease;
@@ -25,7 +27,7 @@
   }
 
   .icon {
-    margin-right: 10px; 
+    margin-right: $margin-medium; 
   }
 }
 

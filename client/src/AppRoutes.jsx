@@ -3,6 +3,7 @@ import HomePage from "./pages/HomePage/HomePage.jsx";
 import LoginPage from "./pages/LoginPage/LoginPage.jsx";
 import GroupPage from "./pages/GroupPage/GroupPage.jsx";
 import ChatPage from "./pages/ChatPage/ChatPage.jsx";
+import FriendsPage from "./pages/FriendsPage/FriendsPage.jsx";
 import UsersPage from "./pages/UsersPage/UsersPage.jsx";
 import UserPage from "./pages/UserPage/UserPage.jsx";
 import GeneralInformation from "./pages/ProfilePage/GeneralInformation/GeneralInformation.jsx";
@@ -59,6 +60,7 @@ const AppRoutes = () => {
                         <Route path="/groups" element={<GroupPage/>}/>
                         <Route path="/group/:id" element={<GroupPage/>}/>
                         <Route path="/chat" element={<ChatPage/>}/>
+                        <Route path="/friends" element={<FriendsPage/>}/>
                         <Route path="/user/:id" element={<UserPage/>}/>
                         <Route path="/game1" element={<Game1/>}/>
                         <Route path="/game2" element={<Game2/>}/>

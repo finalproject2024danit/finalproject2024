@@ -1,18 +1,27 @@
 import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { Form, Formik } from "formik";
+import Select from "react-select";
+import { useDispatch, useSelector } from "react-redux";
 import UsersIcon from "../../svg/Header/Users";
 import GroupIcon from "../../svg/Header/Group";
 import HomeIcon from "../../svg/Header/Home";
 import ChatIcon from "../../svg/Header/Chat";
+import FriendsIcon from "../../svg/Header/Friends";
+import PenIcon from "../../svg/Header/Pen";
 import styles from "./Header.module.scss";
+import { fetchSearchResults } from "../../redux/slices/searchSlice";
 
 const Header = () => {
+  const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
   const navigate = useNavigate(); // Для перенаправления при выборе игры
+  const { results, isLoading } = useSelector((state) => state.globalsearch);
 
   const [isChecked, setIsChecked] = useState(i18n.language === "ua");
   const [selectedGame, setSelectedGame] = useState(""); // Выбранная игра
+  const [menuVisible, setMenuVisible] = useState(false); // New state for dropdown
 
   useEffect(() => {
     setIsChecked(i18n.language === "ua");
@@ -28,6 +37,24 @@ const Header = () => {
     setSelectedGame(game);
     if (game) {
       navigate(game); // Переход на страницу игры
+    }
+  };
+
+  const handleSearch = async (inputValue) => {
+    if (!inputValue) return;
+    dispatch(fetchSearchResults(inputValue));
+  };
+
+  const handleSelectChange = (selectedOption) => {
+    if (selectedOption) {
+      const [type, id] = selectedOption.value.split("-");
+
+      const route = type === "user" ? `/user/${id}` : `/group/${id}`;
+
+      if (type === "group") {
+        navigate(`/group/${id}`);
+      }
+      navigate(route);
     }
   };
 
@@ -113,6 +140,26 @@ const Header = () => {
                     </NavLink>
                   </li>
                   <li>
+                    <NavLink
+                      className={({ isActive }) =>
+                        isActive ? styles.active : ""
+                      }
+                      to="/friends"
+                    >
+                      <FriendsIcon />
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink
+                      className={({ isActive }) =>
+                        isActive ? styles.active : ""
+                      }
+                      to="/profile/general_information"
+                    >
+                      <PenIcon />
+                    </NavLink>
+                  </li>
+                  <li>
                     <div className={styles.gamesSelect}>
                       <select
                           value={selectedGame}
@@ -123,12 +170,35 @@ const Header = () => {
                         <option value="/game1">{t("leftSidebar.game1")}</option>
                         <option value="/game2">{t("leftSidebar.game2")}</option>
                         <option value="/game3">{t("leftSidebar.game3")}</option>
-                        <option value="/solar">{t("leftSidebar.solarSystem")}</option>
+                        <option value="/solar">
+                          {t("leftSidebar.solarSystem")}
+                        </option>
                       </select>
                     </div>
                   </li>
                 </ul>
               </nav>
+              <div className={styles.searchContainer}>
+                <Formik initialValues={{ search: "" }} onSubmit={() => {}}>
+                  {({ setFieldValue }) => (
+                    <Form className={styles.menuForm}>
+                      <Select
+                        options={results}
+                        placeholder={t("Search")}
+                        className={styles.select}
+                        isLoading={isLoading}
+                        onInputChange={(inputValue) => {
+                          handleSearch(inputValue);
+                          setFieldValue("search", inputValue);
+                        }}
+                        onChange={handleSelectChange}
+                        isSearchable
+                        getOptionLabel={(e) => e.label}
+                      />
+                    </Form>
+                  )}
+                </Formik>
+              </div>
             </div>
           </div>
         </div>

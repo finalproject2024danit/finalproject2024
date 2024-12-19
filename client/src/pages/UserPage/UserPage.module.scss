@@ -32,7 +32,7 @@
   justify-content: space-around;
   width: 100%;
   height: 73vh;
-  padding: 20px;
+  padding: $padding-large;
   background: rgba(0, 0, 0, 0.2);
   border-radius: 15px;
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
@@ -48,7 +48,7 @@
   width: 350px;
   height:500px;
   overflow: hidden; /* Скрывает лишние части изображения */
-  border-radius: 10px;
+  border-radius: $border-radius-medium-big;
   border: 3px solid #8e9aaf;
   box-shadow: 0 0 10px rgba(138, 174, 255, 0.6);
   transition: transform 0.9s ease-in-out;

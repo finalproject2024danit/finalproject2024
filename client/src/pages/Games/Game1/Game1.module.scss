@@ -1,9 +1,11 @@
+@use "../../../App.scss" as *;
+
 .gameOver {
   color: red;
   margin: 0 auto;
-  padding: 20px;
+  padding: $padding-large;
   font-size: 50px;
-  font-weight: 900;
+  font-weight: $font-weight-black;
 }
 
 .boxArrow{
@@ -14,6 +16,6 @@
   // gap: 20px;
   color:orange; 
   // margin-top: 20px;
-  font-size: 30px; 
+  font-size: $extra-large; 
 }
 
