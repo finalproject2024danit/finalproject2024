@@ -14,13 +14,25 @@ import Game1 from "./pages/Games/Game1/Game1.jsx";
 import Game2 from "./pages/Games/Game2/Game2.jsx";
 import Game3 from "./pages/Games/Game3/Game3.jsx";
 import SolarSystem from "./pages/SolarSystemPage/SolarSystem.jsx";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import Layout from "./Layout.jsx";
 import {useEffect} from "react";
 import NewsPage from "./pages/NewsPage/NewsPage.jsx";
+import {fetchNewToken} from "./redux/slices/userSlice.js";
 
 const AppRoutes = () => {
+    const dispatch = useDispatch();
     const token = useSelector((state) => state.user.token);
+    const currentTimestamp = Date.now();
+    const tokenExpirationDate = localStorage.getItem("authTokenExpirationDate");
+    const refreshToken = localStorage.getItem("refreshToken");
+    const refreshTokenExpirationDate = localStorage.getItem("refreshTokenExpirationDate");
+
+    if (currentTimestamp >= tokenExpirationDate) {
+        dispatch(fetchNewToken(refreshToken));
+    }
+
+    const isRefreshTokenExpired = !refreshToken || currentTimestamp >= refreshTokenExpirationDate;
 
     useEffect(() => {
         console.log("Token updated:", token);
@@ -30,7 +42,7 @@ const AppRoutes = () => {
         <Routes>
             <Route path="/login" element={<LoginPage/>}/>
 
-            {!token ? (
+            {isRefreshTokenExpired ? (
                 <Route path="*" element={<Navigate to="/login" replace/>}/>
             ) : (
                 <>
