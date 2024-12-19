@@ -59,24 +59,25 @@ const RightSidebar = () => {
   };
 
   const handleScroll = (e) => {
-    const bottom =
+    const isBottomReached =
       e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight - 1;
   
-    if (bottom && hasMore && status !== "loading") {
-      const scrollTop = scrollContainerRef.current.scrollTop; 
+    if (isBottomReached && hasMore && status !== "loading") {
+      const scrollTop = scrollContainerRef.current.scrollTop;
+  
       dispatch(
         fetchFriendsWithPagination({
           userId: userFromId,
           startPage: currentPage + 1,
           perPage: 3,
         })
-      ).finally(() => {       
+      ).finally(() => {
         scrollContainerRef.current.scrollTop = scrollTop;
       });
     }
   };
 
-  if (status === "loading") return null;
+  {status === "failed" && <p className={styles.error}>Error: {error}</p>}
  
   return (
     <div

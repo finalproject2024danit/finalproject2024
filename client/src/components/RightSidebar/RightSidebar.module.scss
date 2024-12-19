@@ -4,7 +4,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-height: 52vh;
+  height: 52vh;
   background-color: $background-secondary;
   border-radius: $border-radius-medium-big;
   overflow-y: auto; 
@@ -45,14 +45,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 11vh;
+  width: 8vw;
+  height: 150px;
   gap: 10px;
   text-decoration: none;
   color: $secondary;
   border: solid 1px $secondary;
   border-radius: 20px;
   padding: $padding-small;
-  flex-grow: 1;
+  // flex-grow: 1;
 
   &:hover {
     color: $background-btn-fifth;
@@ -89,8 +90,8 @@
 }
 
 .friendAvatar {
-  width: 70px;
-  height: 70px;
+  width: 5vw;
+  height: 5vw;
   border-radius: 50%;
 }
 

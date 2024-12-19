@@ -21,7 +21,7 @@ const Header = () => {
 
   const [isChecked, setIsChecked] = useState(i18n.language === "ua");
   const [selectedGame, setSelectedGame] = useState(""); // Выбранная игра
-  const [menuVisible, setMenuVisible] = useState(false); // New state for dropdown
+  // const [menuVisible, setMenuVisible] = useState(false); // New state for dropdown
 
   useEffect(() => {
     setIsChecked(i18n.language === "ua");
@@ -84,17 +84,7 @@ const Header = () => {
                   connect!&quot;
                 </h1>
               </NavLink>
-              <div className={styles.radioBtn}>
-                <input
-                  type="checkbox"
-                  checked={isChecked}
-                  onChange={handleLanguageChange}
-                  id="languageToggle"
-                />
-                <label htmlFor="languageToggle">
-                  {isChecked ? "UA" : "EN"}
-                </label>
-              </div>
+              
             </div>
             <div className={styles.headerBottom}>
               <nav>
@@ -176,6 +166,19 @@ const Header = () => {
                       </select>
                     </div>
                   </li>
+                  <li>
+                  <div className={styles.radioBtn}>
+                <input
+                  type="checkbox"
+                  checked={isChecked}
+                  onChange={handleLanguageChange}
+                  id="languageToggle"
+                />
+                <label htmlFor="languageToggle">
+                  {isChecked ? "UA" : "EN"}
+                </label>
+              </div>
+              </li>
                 </ul>
               </nav>
               <div className={styles.searchContainer}>

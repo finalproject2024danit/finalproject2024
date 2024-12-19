@@ -25,7 +25,6 @@ export const addFriendThunk = createAsyncThunk(
       const response = await addFriend(userFromId, userToId);
       return response.data;
     } catch (error) {
-      console.error("Failed to add friend:", error);
       return rejectWithValue(error.response?.data || error.message);
     }
   }
@@ -35,17 +34,12 @@ export const deleteFriendThunk = createAsyncThunk(
   "friends/deleteFriend",
   async ({ userFromId, userToId }, { rejectWithValue }) => {
     try {
-      console.log("Attempting to delete friend:", { userFromId, userToId });
-
       const response = await axios.delete("/api/v1/friends/delete", {
         data: { userFromId, userToId },
       });
-
-      console.log("Friend deleted successfully:", response.data);
-      return { userToId };  // Повертаємо лише ID видаленого друга
+      return { userToId };
     } catch (error) {
-      console.error("Failed to delete friend:", error);
-      return rejectWithValue(error.message);
+      return rejectWithValue(error.response?.data || error.message);
     }
   }
 );
@@ -57,7 +51,6 @@ export const searchFriendsThunk = createAsyncThunk(
       const response = await searchFriendsByFullName(currentUserId, fullName);
       return response.data;
     } catch (error) {
-      console.error("Failed to search friends:", error);
       return rejectWithValue(error.response?.data || error.message);
     }
   }
@@ -67,18 +60,27 @@ export const fetchFriendsWithPagination = createAsyncThunk(
   "friends/fetchFriendsWithPagination",
   async ({ userId, startPage, perPage = 3 }, { rejectWithValue }) => {
     try {
-      console.log(`Fetching friends for userId: ${userId}, startPage: ${startPage}, perPage: ${perPage}`); // Логування параметрів запиту
       const response = await axiosInstance.get(`/users/${userId}/friends`, {
         params: { startPage, perPage },
       });
-      console.log("Friends data received:", response.data); // Логування отриманих даних
-      return { friends: response.data, startPage };
+
+      const friends = response.data;
+
+      // Якщо це остання сторінка
+      const hasMore = friends.length > 0;
+
+      return { friends, startPage, hasMore };
     } catch (error) {
-      console.error("Error fetching friends:", error); // Логування помилок
+      // Якщо сервер повернув 404, припиняємо пагінацію
+      if (error.response?.status === 404) {
+        return { friends: [], startPage, hasMore: false };
+      }
       return rejectWithValue(error.response?.data || error.message);
     }
   }
 );
+
+
 
 const initialState = {
   friends: [],
@@ -96,7 +98,6 @@ const friendsSlice = createSlice({
     builder
       .addCase(fetchFriends.pending, (state) => {
         state.status = "loading";
-        state.error = null;
       })
       .addCase(fetchFriends.fulfilled, (state, action) => {
         state.status = "succeeded";
@@ -104,7 +105,7 @@ const friendsSlice = createSlice({
       })
       .addCase(fetchFriends.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message;
+        state.error = action.payload || "Failed to fetch friends";
       })
       .addCase(addFriendThunk.fulfilled, (state, action) => {
         state.friends.push(action.payload);
@@ -113,7 +114,6 @@ const friendsSlice = createSlice({
         state.error = action.payload;
       })
       .addCase(deleteFriendThunk.fulfilled, (state, action) => {
-        // Видаляємо друга за ID
         state.friends = state.friends.filter(
           (friend) => friend.id !== action.payload.userToId
         );
@@ -129,37 +129,22 @@ const friendsSlice = createSlice({
       })
       .addCase(fetchFriendsWithPagination.pending, (state) => {
         state.status = "loading";
-        state.error = null;
       })
       .addCase(fetchFriendsWithPagination.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        const { friends, startPage } = action.payload;
-    
-        // Якщо списку друзів немає або їх менше ніж потрібно (3), припиняємо пагінацію
-        state.hasMore = friends.length >= 3;
-    
-        // Якщо це перша сторінка, то замінюємо список друзів, інакше додаємо нових
-        if (startPage === 1) {
-            state.friends = friends;
+        if (action.payload.startPage === 1) {
+          state.friends = action.payload.friends;
         } else {
-            // Для фільтрації унікальних друзів краще використати Set для перевірки наявності id
-            const existingIds = new Set(state.friends.map(friend => friend.id));
-            const uniqueFriends = friends.filter(friend => !existingIds.has(friend.id));
-            
-            // Додаємо нові унікальні елементи
-            state.friends = [...state.friends, ...uniqueFriends];
+          state.friends = [...state.friends, ...action.payload.friends];
         }
-    
-        // Оновлюємо поточну сторінку
-        state.currentPage = startPage;
-    })
-    
+        state.currentPage = action.payload.startPage;
+        state.hasMore = action.payload.hasMore;
+        state.status = "succeeded";
+      })
       .addCase(fetchFriendsWithPagination.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.payload?.toString() || "Unknown error";
-        // Не змінюємо hasMore при помилці, щоб дозволити подальші запити
+        state.error = action.payload || "Something went wrong";
+        state.hasMore = false; // Зупиняємо пагінацію у випадку помилки
       });
-      
   },
 });
 

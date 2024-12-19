@@ -1,14 +1,11 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import styles from "./UsersPage.module.scss";
 import MainContent from "../../components/MainContent/MainContent";
 import axiosInstance from "../../api/axiosInstance.js";
 import ButtonAddFriend from "../../components/ButtonAddFriend/index.jsx";
-import {
-  addFriendThunk,
-  fetchFriends,
-} from "../../redux/slices/friendsSlice.js";
+import { addFriendThunk, fetchFriends } from "../../redux/slices/friendsSlice.js";
 import { useTranslation } from "react-i18next";
 import Modal from "../../components/Modal/ModalFriend/Modal.jsx";
 
@@ -34,6 +31,7 @@ const UsersPage = () => {
   const [onConfirmAction, setOnConfirmAction] = useState(() => () => {});
   const [selectedUserId, setSelectedUserId] = useState(null);
   const { friends } = useSelector((state) => state.friends);
+  const loaderRef = useRef(null);
 
   const fetchUsers = useCallback(async () => {
     if (!hasMore || loading) return;
@@ -50,12 +48,12 @@ const UsersPage = () => {
         },
       });
 
-      const usersData = response.data || [];     
+      const usersData = response.data || [];
       if (usersData.length > 0) {
         setUsers((prevUsers) => [...prevUsers, ...usersData]);
         if (usersData.length < usersPerPage) {
-          setHasMore(false); 
-      }
+          setHasMore(false);
+        }
       } else {
         setHasMore(false);
       }
@@ -74,21 +72,26 @@ const UsersPage = () => {
     fetchUsers();
   }, [fetchUsers]);
 
-  const handleScroll = () => {
-
-    const scrollPosition = window.innerHeight + document.documentElement.scrollTop; 
-    const threshold = document.documentElement.scrollHeight - window.innerHeight - 100; 
-  
-    if (!loading && hasMore && scrollPosition >= threshold) {
-      setCurrentPage((prevPage) => prevPage + 1);
-    }
-  };
-  
-
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore && !loading) {
+          setCurrentPage((prevPage) => prevPage + 1);
+        }
+      },
+      { threshold: 1.0 }
+    );
+
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current);
+    }
+
+    return () => {
+      if (loaderRef.current) {
+        observer.unobserve(loaderRef.current);
+      }
+    };
+  }, [hasMore, loading]);
 
   const filteredUsers = users.filter((user) =>
     `${user.firstName} ${user.lastName}`
@@ -176,15 +179,17 @@ const UsersPage = () => {
             </div>
           </div>
         ))}
-        <Modal
-          isOpen={isModalOpen}
-          message={modalMessage}
-          onConfirm={onConfirmAction}
-          onClose={() => setIsModalOpen(false)}
-        />
         {loading && <p>{t("users.loading")}</p>}
         {error && <p>{error}</p>}
+        <div ref={loaderRef} className={styles.loader}></div>
       </div>
+
+      <Modal
+        isOpen={isModalOpen}
+        message={modalMessage}
+        onConfirm={onConfirmAction}
+        onClose={() => setIsModalOpen(false)}
+      />
     </MainContent>
   );
 };

@@ -84,7 +84,10 @@ const groupSlice = createSlice({
         const { groupId, post } = action.payload;
 
         if (state.selectedGroup?.id === groupId) {
-          state.selectedGroup.posts = [...(state.selectedGroup.posts || []), post];
+          state.selectedGroup.posts = [
+            ...(state.selectedGroup.posts || []),
+            post,
+          ];
         }
 
         const group = state.groups.find((g) => g.id === groupId);
@@ -95,7 +98,10 @@ const groupSlice = createSlice({
         const storedGroups = getGroupsFromLocalStorage();
         const groupIndex = storedGroups.findIndex((g) => g.id === groupId);
         if (groupIndex > -1) {
-          storedGroups[groupIndex].posts = [...(storedGroups[groupIndex].posts || []), post];
+          storedGroups[groupIndex].posts = [
+            ...(storedGroups[groupIndex].posts || []),
+            post,
+          ];
         } else {
           storedGroups.push({ id: groupId, posts: [post] });
         }
