@@ -258,36 +258,60 @@ header {
 }
 
 .menuForm {
-  width: 100%;
-  margin: $margin-medium 0;
-  padding:  $padding-small;
-  box-sizing: border-box;
-  position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 50;
-    background-color: $background-primary;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    padding: $padding-medium;
-    border-radius: $border-radius-small;
+  padding: $padding-large $padding-medium;
+  width: 80%;
+  margin-left: $margin-medium;
+  border-radius: $border-radius-medium-big;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 
-    @media (min-width: 768px) {
-      display: none; // Hide on larger screens
-    }
- 
-
-  @media (max-width: 767px)  {
-    display: block;
-  }
-
-  .select {
-    width: 100%;
-
-    @media (max-width: 767px) {
-      font-size: $small;
-    }
+  @media (min-width: 768px) {
+    display: none;
   }
 }
+
+.menuForm input {
+  width: 95%;
+  padding: $padding-large $padding-small;
+}
+
+a {
+  cursor: pointer;
+} 
+
+
+// .menuForm {
+//   width: 100%;
+//   margin: $margin-medium 0;
+//   padding:  $padding-small;
+//   box-sizing: border-box;
+//   position: absolute;
+//     top: 100%;
+//     left: 0;
+//     z-index: 50;
+//     background-color: $background-primary;
+//     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+//     padding: $padding-medium;
+//     border-radius: $border-radius-small;
+
+//     @media (min-width: 768px) {
+//       display: none; // Hide on larger screens
+//     }
+ 
+
+//   @media (max-width: 767px)  {
+//     display: block;
+//   }
+
+//   .select {
+//     width: 100%;
+
+//     @media (max-width: 767px) {
+//       font-size: $small;
+//     }
+//   }
+// }
 
 .menuForm input {
   width: 95%;
