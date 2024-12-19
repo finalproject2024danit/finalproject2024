@@ -152,12 +152,11 @@ const Header = () => {
                   <li>
                     <div className={styles.gamesSelect}>
                       <select
-                        value={selectedGame}
-                        onChange={handleGameChange}
-                        className={styles.gameDropdown}
+                          value={selectedGame}
+                          onChange={handleGameChange}
+                          className={styles.gameDropdown}
                       >
-                        {/* <option value="">{t("header.selectGame")}</option> */}
-
+                        <option value="">{t("leftSidebar.games")}</option>
                         <option value="/game1">{t("leftSidebar.game1")}</option>
                         <option value="/game2">{t("leftSidebar.game2")}</option>
                         <option value="/game3">{t("leftSidebar.game3")}</option>

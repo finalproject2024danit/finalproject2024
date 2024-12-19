@@ -14,7 +14,7 @@
  
 }
 .shinyCta{
-  border-radius: 20px;
+  border-radius: $border-radius-large;
 }
 
 header {
@@ -69,7 +69,7 @@ header {
 
     &:before {
       content: 'EN';
-      color: gray;
+      color: $secondary;
       position: absolute;
       left: 10px;
       z-index: 0;
@@ -129,8 +129,8 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-left: 10px;
-    background-color: #282f44;
+    padding-left: $padding-medium;
+    background-color: $background-secondary;
 
     
   }
@@ -139,7 +139,7 @@ header {
     display: flex;
     flex-direction: column;
     width: 100%;
-    background-color: #282f44;
+    background-color: $background-secondary;
 
   }
 
@@ -147,8 +147,8 @@ header {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
-    padding: 10px;
+    gap: $padding-medium;
+    padding: $padding-medium;
     box-sizing: border-box;
 
     // @media (min-width: 768px) {
@@ -172,11 +172,11 @@ header {
   }
 
   .headerBottom {
-    padding: 10px;
+    padding: $padding-medium;
     box-sizing: border-box;
 
     @media (min-width: 768px) {
-      padding: 20px;
+      padding: $padding-large;
     }
 
   }
@@ -210,8 +210,8 @@ header {
   padding: 8px 12px;
   border-radius: 20px;
   border: 1px solid #131212;
-  background-color: #1a1a1a; /* Тёмный фон */
-  color: #807979; /* Белый текст */
+  background-color: $background-primary;
+  color: $secondary; /* Белый текст */
   appearance: none; /* Убирает стрелку браузера */
   cursor: pointer;
   transition: background-color 0.5s ease, border-color 0.5s ease;
@@ -219,29 +219,29 @@ header {
 }
 
 .gameDropdown:hover {
-  background-color: #333; /* Изменение фона при наведении */
-  border-color: #0a0a0a; /* Цвет рамки при наведении */
+  background-color: $background-sixth;
+    border-color: $background-fourth; /* Цвет рамки при наведении */
 }
 
 .gameDropdown:focus {
   outline: none;
-  background-color: #444; /* Более яркий фон при фокусе */
-  border-color: #171718; /* Активный цвет рамки */
+  background-color: $background-secondary;
+    border-color: $background-fifth; /* Активный цвет рамки */
 }
 
 /* Стили для опций */
 .gameDropdown option {
   padding: 8px 12px; /* Паддинги внутри опций */
-  background-color: #1a1a1a; /* Фон опции */
-  color: #615f5f; /* Цвет текста */
+  background-color: $background-primary;
+    color: $secondary; /* Цвет текста */
   border-radius: 20px; /* Убираем закругления */
   cursor: pointer;
 }
 
 .gameDropdown option:hover,
 .gameDropdown option:focus {
-  background-color: #444; /* Фон при наведении */
-  color: #363636; /* Цвет текста */
+  background-color: $background-secondary;
+      color: $primary;; /* Цвет текста */
 }
 
 .searchContainer {
@@ -256,40 +256,64 @@ header {
 }
 
 .menuForm {
-  width: 100%;
-  margin: 10px 0;
-  padding: 5px;
-  box-sizing: border-box;
-  position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 50;
-    background-color: $background-primary;
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    border-radius: 5px;
+  padding: $padding-large $padding-medium;
+  width: 80%;
+  margin-left: $margin-medium;
+  border-radius: $border-radius-medium-big;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
 
-    @media (min-width: 768px) {
-      display: none; // Hide on larger screens
-    }
- 
-
-  @media (max-width: 767px)  {
-    display: block;
-  }
-
-  .select {
-    width: 100%;
-
-    @media (max-width: 767px) {
-      font-size: $small;
-    }
+  @media (min-width: 768px) {
+    display: none;
   }
 }
 
 .menuForm input {
   width: 95%;
-  padding: 20px 5px;
+  padding: $padding-large $padding-small;
+}
+
+a {
+  cursor: pointer;
+} 
+
+
+// .menuForm {
+//   width: 100%;
+//   margin: $margin-medium 0;
+//   padding:  $padding-small;
+//   box-sizing: border-box;
+//   position: absolute;
+//     top: 100%;
+//     left: 0;
+//     z-index: 50;
+//     background-color: $background-primary;
+//     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+//     padding: $padding-medium;
+//     border-radius: $border-radius-small;
+
+//     @media (min-width: 768px) {
+//       display: none; // Hide on larger screens
+//     }
+ 
+
+//   @media (max-width: 767px)  {
+//     display: block;
+//   }
+
+//   .select {
+//     width: 100%;
+
+//     @media (max-width: 767px) {
+//       font-size: $small;
+//     }
+//   }
+// }
+
+.menuForm input {
+  width: 95%;
+  padding: $padding-large $padding-small;
   cursor: pointer;
 }
 

@@ -45,11 +45,9 @@ public class GroupController {
     public ResponseEntity<ResponseGroupFullInfoDto> getGroupById(@PathVariable("id") Long groupId) {
         log.info("Trying to get group by id");
 
-        Group group = groupService.getGroupById(groupId);
+        ResponseGroupFullInfoDto groupFullInfo = groupService.getGroupFullInfo(groupId);
 
-        ResponseGroupFullInfoDto responseGroupFullInfoDto = GroupMapper.INSTANCE.groupToResponseGroupFullInfoDTO(group);
-
-        return ResponseEntity.ok(responseGroupFullInfoDto);
+        return ResponseEntity.ok(groupFullInfo);
     }
 
     @PostMapping

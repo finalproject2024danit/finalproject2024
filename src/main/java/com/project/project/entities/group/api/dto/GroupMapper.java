@@ -1,11 +1,12 @@
 package com.project.project.entities.group.api.dto;
 
 import com.project.project.entities.group.Group;
+import com.project.project.entities.post.api.dto.PostMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
-@Mapper()
+@Mapper(uses = {PostMapper.class})
 public interface GroupMapper {
     GroupMapper INSTANCE = Mappers.getMapper(GroupMapper.class);
 
