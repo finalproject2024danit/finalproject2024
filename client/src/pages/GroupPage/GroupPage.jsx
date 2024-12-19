@@ -9,12 +9,12 @@ import {
 } from "../../utils/postUtils.js";
 import {  
   // handleFetchComments,
-  handleSubmitComment,
-  handleDeleteComment,
+  // handleSubmitComment,
+  // handleDeleteComment,
 } from "../../utils/commentsUtils.js";
 import styles from "./GroupPage.module.scss";
 import MainContent from "../../components/MainContent/MainContent";
-import { setComments, fetchComments, fetchNewComment } from "../../redux/slices/commentsSlice.js";
+import { setComments, fetchComments, fetchNewComment, removeComment } from "../../redux/slices/commentsSlice.js";
 import LikeIcon from "../../svg/Header/Like/index.jsx";
 import { useParams } from "react-router-dom";
 import ButtonDeleteFriend from "../../components/ButtonDeleteFriend/index.jsx";
@@ -49,8 +49,8 @@ const GroupPage = () => {
     useState(false);
   const [commentToDelete, setCommentToDelete] = useState(null);
   // const [isExpanded, setIsExpanded] = useState(false);
-  const [expandedPosts, setExpandedPosts] = useState({});  
-  
+  const [expandedPosts, setExpandedPosts] = useState({}); 
+const [groupToDelete, setGroupToDelete] = useState(null);
 
   const handleCreatePost = () => {
     createPost(dispatch, selectedGroup, userFromId, newPost, handleCloseModal);
@@ -157,11 +157,10 @@ const GroupPage = () => {
 
   // Відкриваємо модальне вікно при натисканні на кнопку видалення коментаря
   const handleOpenDeleteCommentModal = (commentId, postId, groupId) => {
-    console.log("Comment ID:", commentId); // Логування commentId
-    console.log("Post ID:", postId); // Логування postId
-    console.log("Group ID:", groupId); // Логування groupId
-    setCommentToDelete({ commentId, postId, groupId }); // Зберігаємо інформацію про коментар
-    setIsDeleteCommentModalOpen(true); // Відкриваємо модальне вікно
+    setCommentToDelete(commentId);
+    setPostToDelete(postId);
+    setGroupToDelete(groupId);
+    setIsDeleteCommentModalOpen(true);
   };
 
   // Закриваємо модальне вікно
@@ -170,9 +169,34 @@ const GroupPage = () => {
     setIsDeleteCommentModalOpen(false); // Закриваємо модальне вікно
   };
 
-  const handleDeleteCommentConfirm = () => {
-    handleDeleteComment(commentToDelete, dispatch, handleCloseDeleteCommentModal);
+  const handleRemoveComment = () => {
+    if (!commentToDelete) {
+      console.error("Comment ID is missing");
+      return;
+    }
+    console.log("Deleting comment for postId:", postToDelete, "commentId:", commentToDelete);
+    dispatch(removeComment({ postId: postToDelete, commentId: commentToDelete }));
+    handleCloseDeleteCommentModal(); // Закрити модальне вікно після видалення
   };
+
+
+  // const handleRemoveComment = () => {
+  //   if (commentToDelete) {
+  //     dispatch(removeComment(commentToDelete.commentId))
+  //       .then((response) => {
+  //         console.log('Comment deleted:', response);
+  //         handleCloseDeleteCommentModal();
+  //         dispatch(fetchComments({ postId: commentToDelete.postId }));
+  //       })
+  //       .catch((error) => console.error('Error deleting comment:', error));
+  //   }
+  // };
+
+  // const handleRemoveComment = () => {
+  //   dispatch(removeComment(commentToDelete.commentId)).then(() => {
+  //     handleCloseDeleteCommentModal();
+  //   });
+  // };
   
   const handleCommentChangeWrapper = (postId, event) => {
     handleCommentChange(postId, event, setCommentValues);
@@ -371,7 +395,7 @@ const GroupPage = () => {
       <Modal
         isOpen={isDeleteCommentModalOpen}
         onClose={handleCloseDeleteCommentModal}
-        onConfirm={handleDeleteCommentConfirm}
+        onConfirm={handleRemoveComment}
         message="Are you sure you want to delete this comment?" 
       />
     </MainContent>

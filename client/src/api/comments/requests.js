@@ -20,18 +20,15 @@ export const fetchCommentsByPostId = async ({ postId, startPage = 0, perPage = 1
 };
 
 
-/// Створення нового коментаря
 export const createComment = async ({ postId, userId, content }) => {
   try {
-    console.log("Creating comment:", { postId, userId, content });
-    // Відправка запиту на сервер
+    console.log("Creating comment:", { postId, userId, content });   
     const response = await axiosInstance.post(`/comments/comment/create`, {
       postId,
       userId,
       content,
     });
-    const comment = response.data;
-    // Повертаємо створений коментар
+    const comment = response.data;    
     return comment;
   } catch (error) {
     console.error('Error creating comment:', error);
@@ -40,24 +37,35 @@ export const createComment = async ({ postId, userId, content }) => {
 };
 
 // Видалення коментаря за ID
-export const removeComment = createAsyncThunk(
-  'comments/removeComment',
-  async ({ postId, commentId }, { rejectWithValue, dispatch }) => {
-    try {
-      const response = await axiosInstance.post(`/comments/comment/delete/${commentId}`);
 
-      // Видаляємо коментар з Redux
-      dispatch(deleteComment({ postId, commentId }));
-
-      // Оновлюємо localStorage
-      const storedComments = JSON.parse(localStorage.getItem(`comments_${postId}`)) || [];
-      const updatedComments = storedComments.filter(comment => comment.id !== commentId);
-      localStorage.setItem(`comments_${postId}`, JSON.stringify(updatedComments));
-
-      return response.data.message; // Повертаємо повідомлення про успішне видалення
-    } catch (error) {
-      console.error('Error deleting comment:', error);
-      return rejectWithValue(error.response?.data || 'Unknown error');
-    }
+export const deleteComment = async ({ commentId }) => {
+  console.log("Attempting to delete comment with ID:", commentId);
+  if (!commentId) {
+    throw new Error("Missing commentId for delete request");
   }
-);
+  try {
+    const response = await axiosInstance.get(`/comments/comment/delete/${commentId}`);
+    return response.data; // Сервер повертає { "message": "Comment was successfully deleted" }
+  } catch (error) {
+    console.error("Error deleting comment:", error);
+    throw error.response?.data || new Error("Failed to delete comment");
+  }
+};
+
+
+// export const removeComment = async ({ postId, commentId }) => {
+//   try {
+//     const response = await axiosInstance.get(`/comments/comment/delete/${commentId}`);
+
+//     // Оновлюємо localStorage
+//     const storedComments = JSON.parse(localStorage.getItem(`comments_${postId}`)) || [];
+//     const updatedComments = storedComments.filter((comment) => comment.id !== commentId);
+//     localStorage.setItem(`comments_${postId}`, JSON.stringify(updatedComments));
+
+//     console.log('Comment deleted successfully:', response.data.message);
+//     return response.data.message; // Повертаємо повідомлення про успішне видалення
+//   } catch (error) {
+//     console.error('Error deleting comment:', error);
+//     throw error.response?.data || new Error('Unknown error');
+//   }
+// };
