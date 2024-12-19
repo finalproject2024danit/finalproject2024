@@ -170,7 +170,7 @@ const [groupToDelete, setGroupToDelete] = useState(null);
   };
 
   const handleRemoveComment = () => {
-    if (!commentToDelete) {
+    if (!commentToDelete || !groupToDelete) {
       console.error("Comment ID is missing");
       return;
     }
@@ -179,24 +179,6 @@ const [groupToDelete, setGroupToDelete] = useState(null);
     handleCloseDeleteCommentModal(); // Закрити модальне вікно після видалення
   };
 
-
-  // const handleRemoveComment = () => {
-  //   if (commentToDelete) {
-  //     dispatch(removeComment(commentToDelete.commentId))
-  //       .then((response) => {
-  //         console.log('Comment deleted:', response);
-  //         handleCloseDeleteCommentModal();
-  //         dispatch(fetchComments({ postId: commentToDelete.postId }));
-  //       })
-  //       .catch((error) => console.error('Error deleting comment:', error));
-  //   }
-  // };
-
-  // const handleRemoveComment = () => {
-  //   dispatch(removeComment(commentToDelete.commentId)).then(() => {
-  //     handleCloseDeleteCommentModal();
-  //   });
-  // };
   
   const handleCommentChangeWrapper = (postId, event) => {
     handleCommentChange(postId, event, setCommentValues);

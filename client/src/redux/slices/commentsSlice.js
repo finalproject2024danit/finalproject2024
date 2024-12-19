@@ -6,7 +6,7 @@ import {
 } from "../../api/comments/requests";
 
 const initialState = {
-  comments: [], 
+  comments: {}, 
   loading: false,
   error: null,
 };

@@ -21,7 +21,7 @@ const Header = () => {
 
   const [isChecked, setIsChecked] = useState(i18n.language === "ua");
   const [selectedGame, setSelectedGame] = useState(""); // Выбранная игра
-  const [menuVisible, setMenuVisible] = useState(false); // New state for dropdown
+  // const [menuVisible, setMenuVisible] = useState(false); // New state for dropdown
 
   useEffect(() => {
     setIsChecked(i18n.language === "ua");

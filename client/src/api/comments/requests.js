@@ -1,5 +1,4 @@
 import axiosInstance from '../axiosInstance.js'
-import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchCommentsByPostId = async ({ postId, startPage = 0, perPage = 10, sortBy = "id", sortDirection = "asc" }) => {
   try {
@@ -53,19 +52,5 @@ export const deleteComment = async ({ commentId }) => {
 };
 
 
-// export const removeComment = async ({ postId, commentId }) => {
-//   try {
-//     const response = await axiosInstance.get(`/comments/comment/delete/${commentId}`);
 
-//     // Оновлюємо localStorage
-//     const storedComments = JSON.parse(localStorage.getItem(`comments_${postId}`)) || [];
-//     const updatedComments = storedComments.filter((comment) => comment.id !== commentId);
-//     localStorage.setItem(`comments_${postId}`, JSON.stringify(updatedComments));
 
-//     console.log('Comment deleted successfully:', response.data.message);
-//     return response.data.message; // Повертаємо повідомлення про успішне видалення
-//   } catch (error) {
-//     console.error('Error deleting comment:', error);
-//     throw error.response?.data || new Error('Unknown error');
-//   }
-// };
