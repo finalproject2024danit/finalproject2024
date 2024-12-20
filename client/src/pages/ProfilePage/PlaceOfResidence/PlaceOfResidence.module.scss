@@ -8,6 +8,7 @@
   color: $primary;
   border-radius: 15px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  margin-top: 10px;
 }
 
 .content {
@@ -16,6 +17,7 @@
   border-radius: $border-radius-medium-big;
   padding: $padding-large;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  width: 97%;
 }
 
 .currentResidence {  
@@ -95,8 +97,11 @@
 @media (max-width: 1024px) {
   .residenceBox {
     padding: $padding-large; 
-  }
 
+  }
+.content {
+  width: 95%;
+}
   .title {
     font-size: 1.6rem; 
   }
@@ -112,9 +117,13 @@
 
 @media (max-width: 767px) {
   .residenceBox {
-    padding: 15px; 
+    padding: 15px;
+    width: 90vw; 
   }
+  .content {
 
+    width: 90%;
+  }
   .title {
     font-size: 1.4rem; 
   }

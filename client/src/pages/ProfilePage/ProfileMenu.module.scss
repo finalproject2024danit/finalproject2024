@@ -3,7 +3,7 @@
 .navContainer {
   display: flex;
   justify-content: center;
-  width: 100%;
+  width: 95%;
   margin: $margin-largexl;
 
   // @media (max-width: 768px) {
@@ -19,6 +19,7 @@
   list-style: none;
   padding: 0;
   margin: 0;
+  width: 90%;
 }
 
 .navButton {

@@ -6,6 +6,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: 30px;
 
  
   @media (max-width: 767px) {
@@ -27,7 +28,7 @@
 }
 
 .news-detail__image {
-  max-width: 400px;
+  max-width: 500px;
   width: 100%;
   height: auto;
   border-radius: 10px;
