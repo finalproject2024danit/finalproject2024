@@ -10,7 +10,7 @@
   top: 0; 
   left: 5px;
   z-index: 100; 
-  
+ 
  
 }
 .shinyCta{
@@ -131,7 +131,10 @@ header {
     align-items: center;
     padding-left: $padding-medium;
     background-color: $background-secondary;
-
+    @media (max-width: 768px) {
+      display: flex;
+      flex-direction: column;
+    }
     
   }
 

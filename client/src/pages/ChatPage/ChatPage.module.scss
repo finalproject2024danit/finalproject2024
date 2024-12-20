@@ -3,6 +3,11 @@
 .ChatBox{
   display: flex;
   border-radius: $border-radius-medium-big;
+// width: 90vw;
+  @media (max-width: 768px) {
+    height:  70vh;
+   
+  }
 }
 
 .ChatSidebar{
@@ -11,6 +16,10 @@
   width: 30%;
   height: 80vh;
   gap: 20px;
+  @media (max-width: 768px) {
+    height:  70vh;
+   
+  }
  
 }
 
@@ -22,6 +31,7 @@ form {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  width: 97%;
   
 }
 
