@@ -6,6 +6,17 @@
   gap: 50px 20px;
   padding: 0 20px;
   justify-content: space-between;
+
+  // @media (max-width: 768px) {
+  //   width: 85vh;
+  //   height: 180px;
+  // }
+
+  @media (max-width: 767px) {
+    flex-direction: column; /* Stack items vertically */
+    align-items: center;    /* Center items horizontally */
+    gap: 20px;              /* Adjust the gap between cards */
+  }
 }
 
 .friendCard {
@@ -21,9 +32,15 @@
     width: 45%;
   }
 
+  // @media (max-width: 768px) {
+  //   width: 100%;
+  //   height: 180px;
+  // }
+
   @media (max-width: 768px) {
-    width: 100%;
-    height: 180px;
+    width: 100%; /* Reduce the width to fit nicely on small screens */
+    max-width: 400px; /* Set a maximum width for better scaling */
+    height: 200px; /* Adjust the height dynamically */
   }
 
   &.flipped {
@@ -174,7 +191,7 @@
   }
 
   @media (max-width: 768px) {
-    width: 80%;
+    width: 50%;
     font-size: $smaller;
   }
 }
