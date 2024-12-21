@@ -101,3 +101,22 @@ export const deletePost = async (postId) => {
     axiosInstance.delete(`/posts/delete/${postId}`)
   );
 };
+
+// Пости з пагінацією
+export const getAllPostsFiltered = async (
+  startPage = 0,
+  perPage = 0,
+  sortBy = "id",
+  sortDirection = "asc"
+) => {
+  return await safeRequest(() =>
+    axiosInstance.get("/posts/filter", {
+      params: {
+        startPage,
+        perPage,
+        sortBy,
+        sortDirection,
+      },
+    })
+  );
+};
