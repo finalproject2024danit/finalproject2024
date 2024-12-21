@@ -279,6 +279,76 @@ a {
   cursor: pointer;
 } 
 
+.select {
+  width: 100%;
+  max-width: 300px; // Limit max width for better alignment
+  padding: $padding-small; // Add padding for better spacing
+  border-radius: $border-radius-medium; // Rounded corners
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Subtle shadow for depth
+  background-color: $nodle-black-0; // Background color
+  border: 1px solid $glass-stroke; // Border color for the input
+
+  // Focus styling for better accessibility
+  &:focus {
+    border-color: $glass-modal; // Focus border color
+    box-shadow: 0 0 0 2px rgba($glass-modal, 0.2); // Focus box shadow
+  }
+
+  .react-select__control {
+    padding: 0;
+    border: none; // Remove default border
+    border-radius: $border-radius-medium; // Match the container's border radius
+
+    &--is-focused {
+      border-color: $glass-modal; // Focused state styling
+      box-shadow: 0 0 0 2px rgba($glass-modal, 0.2); // Focus shadow effect
+    }
+  }
+
+  .react-select__indicator {
+    color: $glass-modal; // Color for dropdown indicator (arrow)
+    transition: transform 0.2s ease; // Smooth transition for indicator rotation
+
+    .react-select__dropdown-indicator {
+      transform: rotate(0deg); // Normal arrow rotation
+    }
+  }
+
+  .react-select__menu {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Menu shadow for depth
+    border-radius: $border-radius-medium; // Rounded corners for the menu
+  }
+
+  .react-select__option {
+    padding: $padding-small;
+    cursor: pointer; // Pointer on hover
+    transition: $nodle-black-0 0.2s ease;
+
+    &:hover {
+      background-color: $nodle-black-200; // Hover effect
+      color: $nodle-black-500; // White text on hover
+    }
+
+    &--is-selected {
+      background-color: $nodle-black-300; // Highlight selected option
+      color: $nodle-black-500; // White text on selected
+    }
+  }
+
+  .react-select__input {
+    padding: $padding-small;
+    font-size: 1rem; // Input text size
+    color: $nodle-black-500; // Text color
+  }
+
+  // Responsiveness for small screens
+  @media (max-width: 767px) {
+    width: 100%;
+    max-width: none; // Allow the select to take up the full width
+  }
+}
+
+
 
 // .menuForm {
 //   width: 100%;

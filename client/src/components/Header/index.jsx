@@ -21,7 +21,17 @@ const Header = () => {
 
   const [isChecked, setIsChecked] = useState(i18n.language === "ua");
   const [selectedGame, setSelectedGame] = useState(""); // Выбранная игра
-  // const [menuVisible, setMenuVisible] = useState(false); // New state for dropdown
+  const [menuPlacement, setMenuPlacement] = useState("bottom");
+
+  useEffect(() => {
+    const handleResize = () => {
+      setMenuPlacement(window.innerWidth <= 767 ? "top" : "bottom");
+    };
+
+    handleResize(); // Set the initial placement
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   useEffect(() => {
     setIsChecked(i18n.language === "ua");
@@ -84,7 +94,6 @@ const Header = () => {
                   connect!&quot;
                 </h1>
               </NavLink>
-              
             </div>
             <div className={styles.headerBottom}>
               <nav>
@@ -152,9 +161,9 @@ const Header = () => {
                   <li>
                     <div className={styles.gamesSelect}>
                       <select
-                          value={selectedGame}
-                          onChange={handleGameChange}
-                          className={styles.gameDropdown}
+                        value={selectedGame}
+                        onChange={handleGameChange}
+                        className={styles.gameDropdown}
                       >
                         <option value="">{t("leftSidebar.games")}</option>
                         <option value="/game1">{t("leftSidebar.game1")}</option>
@@ -167,18 +176,18 @@ const Header = () => {
                     </div>
                   </li>
                   <li>
-                  <div className={styles.radioBtn}>
-                <input
-                  type="checkbox"
-                  checked={isChecked}
-                  onChange={handleLanguageChange}
-                  id="languageToggle"
-                />
-                <label htmlFor="languageToggle">
-                  {isChecked ? "UA" : "EN"}
-                </label>
-              </div>
-              </li>
+                    <div className={styles.radioBtn}>
+                      <input
+                        type="checkbox"
+                        checked={isChecked}
+                        onChange={handleLanguageChange}
+                        id="languageToggle"
+                      />
+                      <label htmlFor="languageToggle">
+                        {isChecked ? "UA" : "EN"}
+                      </label>
+                    </div>
+                  </li>
                 </ul>
               </nav>
               <div className={styles.searchContainer}>
@@ -197,6 +206,7 @@ const Header = () => {
                         onChange={handleSelectChange}
                         isSearchable
                         getOptionLabel={(e) => e.label}
+                        menuPlacement={menuPlacement} // This ensures the dropdown opens upwards
                       />
                     </Form>
                   )}
