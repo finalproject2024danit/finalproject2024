@@ -15,6 +15,7 @@ import {
 import styles from "./GroupPage.module.scss";
 import MainContent from "../../components/MainContent/MainContent";
 import { setComments, fetchComments, fetchNewComment, removeComment } from "../../redux/slices/commentsSlice.js";
+import { addLike } from "../../redux/slices/likeSlice.js";
 import LikeIcon from "../../svg/Header/Like/index.jsx";
 import { useParams } from "react-router-dom";
 import ButtonDeleteFriend from "../../components/ButtonDeleteFriend/index.jsx";
@@ -68,6 +69,25 @@ const [groupToDelete, setGroupToDelete] = useState(null);
   const handleLikeClick = (postId) => {
     toggleLike(postId, setLikeStates);
   };
+
+  // const handleLikeClick = (postId) => {
+  //   const isLiked = likeStates[postId]?.liked || false; // Перевіряємо, чи вже лайкнуто
+  //   const currentLikes = likeStates[postId]?.likes || 0;
+  
+  //   const updatedState = {
+  //     liked: !isLiked, // Змінюємо стан лайка
+  //     likes: isLiked ? currentLikes - 1 : currentLikes + 1, // Збільшуємо або зменшуємо кількість лайків
+  //   };
+  
+  //   setLikeStates((prev) => ({
+  //     ...prev,
+  //     [postId]: updatedState,
+  //   }));
+  
+  //   // Диспетчер виклику для додавання/видалення лайка в Redux
+  //   dispatch(addLike({ postId, liked: !isLiked, userId }));
+  // };
+
 
   useEffect(() => {
     if (id) {
