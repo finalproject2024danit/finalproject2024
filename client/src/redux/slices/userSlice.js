@@ -95,8 +95,7 @@ export const fetchRegister = createAsyncThunk(
     async (registerPayload, {rejectWithValue}) => {
         try {
             const response = await registerByEmail(registerPayload);
-            localStorage.setItem("authToken", response.accessToken);
-            localStorage.setItem("refreshToken", response.refreshToken);
+            handleTokenResponse(response);
             return response;
         } catch (error) {
             return rejectWithValue(error.response?.data?.message || error.message);

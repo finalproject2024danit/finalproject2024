@@ -54,7 +54,7 @@ public class CommentController {
         return ResponseEntity.ok(responseCommentDto);
     }
 
-    @GetMapping("/comment/delete/{id}")
+    @DeleteMapping("/comment/delete/{id}")
     @JsonView(View.Admin.class)
     public ResponseEntity<String> deleteCommentById(@PathVariable long id) {
         log.info("Trying to delete comment by id: {}", id);
