@@ -10,8 +10,6 @@
   top: 0; 
   left: 5px;
   z-index: 100; 
- 
- 
 }
 .shinyCta{
   border-radius: $border-radius-large;
@@ -280,6 +278,81 @@ header {
 a {
   cursor: pointer;
 } 
+
+.select {
+  width: 100%;
+  max-width: 300px; // Limit max width for better alignment
+  padding: $padding-small; // Add padding for better spacing
+  border-radius: $border-radius-medium; // Rounded corners
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Subtle shadow for depth
+  background-color: $nodle-black-0; // Background color
+  border: 1px solid $glass-stroke; // Border color for the input
+
+  // Focus styling for better accessibility
+  &:focus {
+    border-color: $stem-green-500; // Focus border color
+    box-shadow: 0 0 0 2px rgba($stem-green-500, 0.3); // Focus box shadow
+  }
+
+  .react-select__control {
+    padding: 0;
+    border: none; // Remove default border
+    border-radius: $border-radius-medium; // Match the container's border radius
+    background-color: $nodle-black-0; // Match input background
+
+    &--is-focused {
+      border-color: $stem-green-500; // Focused state styling
+      box-shadow: 0 0 0 2px rgba($stem-green-500, 0.3); // Focus shadow effect
+    }
+  }
+
+  .react-select__indicator {
+    color: $stem-green-500; // Color for dropdown indicator (arrow)
+    transition: transform 0.2s ease; // Smooth transition for indicator rotation
+    
+    &:hover {
+      color: $stem-green-600; // Slightly lighter on hover
+    }
+    .react-select__dropdown-indicator {
+      transform: rotate(0deg); // Normal arrow rotation
+    }
+  }
+
+  .react-select__menu {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); // Menu shadow for depth
+    border-radius: $border-radius-medium; // Rounded corners for the menu
+    background-color: $nodle-black-100; // Dropdown background
+  }
+
+  .react-select__option {
+    padding: $padding-small;
+    cursor: pointer; // Pointer on hover
+    transition: background-color 0.2s ease, color 0.2s ease; // Smooth transitions
+
+    &:hover {
+      background-color: $nodle-black-300; // Hover effect
+      color: $nodle-black-0; // White text on hover
+    }
+
+    &--is-selected {
+      background-color: $stem-green-500; // Highlight selected option
+      color: $nodle-black-0; // White text on selected
+    }
+  }
+
+  .react-select__input {
+    padding: $padding-small;
+    font-size: 1rem; // Input text size
+    color: $nodle-black-500; // Text color
+  }
+
+  // Responsiveness for small screens
+  @media (max-width: 767px) {
+    width: 100%;
+    max-width: none; // Allow the select to take up the full width
+  }
+}
+
 
 
 // .menuForm {

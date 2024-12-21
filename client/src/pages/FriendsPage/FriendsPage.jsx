@@ -6,9 +6,9 @@ import MainContent from "../../components/MainContent/MainContent.jsx";
 import ButtonDeleteFriend from "../../components/ButtonDeleteFriend/index.jsx";
 import Modal from "../../components/Modal/ModalFriend/Modal.jsx";
 import {
-  fetchFriendsWithPagination,
-  deleteFriendThunk,
-} from "../../redux/slices/friendsSlice.js";
+  fetchFriendsPageWithPagination,
+  deleteFriendPageThunk,
+} from "../../redux/slices/friendsPageSlice.js";
 import { useTranslation } from "react-i18next";
 
 const defaultAvatar =
@@ -29,12 +29,12 @@ const FriendsPage = () => {
 
   const friendsPerPage = 10;
 
-  const fetchFriends = useCallback(() => {
+  const fetchFriendsPage = useCallback(() => {
     if (!hasMore || loading) return;
     setLoading(true);
 
     dispatch(
-      fetchFriendsWithPagination({
+      fetchFriendsPageWithPagination({
         userId: userFromId,
         startPage: currentPage,
         perPage: friendsPerPage,
@@ -45,8 +45,8 @@ const FriendsPage = () => {
   }, [dispatch, userFromId, currentPage, hasMore, loading]);
 
   useEffect(() => {
-    fetchFriends();
-  }, [fetchFriends]);
+    fetchFriendsPage();
+  }, [fetchFriendsPage]);
 
   const handleScroll = () => {
     const scrollPosition =
@@ -56,7 +56,7 @@ const FriendsPage = () => {
 
     if (!loading && hasMore && scrollPosition >= threshold) {
       dispatch(
-        fetchFriendsWithPagination({
+        fetchFriendsPageWithPagination({
           userId: userFromId,
           startPage: currentPage + 1,
           perPage: friendsPerPage,
@@ -102,10 +102,10 @@ const FriendsPage = () => {
   const handleConfirmDelete = () => {
     if (selectedFriendId !== null) {
       dispatch(
-        deleteFriendThunk({ userFromId, userToId: selectedFriendId })
+        deleteFriendPageThunk({ userFromId, userToId: selectedFriendId })
       ).then(() => {
         dispatch(
-          fetchFriendsWithPagination({
+          fetchFriendsPageWithPagination({
             userId: userFromId,
             startPage: currentPage,
             perPage: 3,
