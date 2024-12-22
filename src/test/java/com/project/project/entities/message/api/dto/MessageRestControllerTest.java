@@ -1,4 +1,4 @@
-package com.project.project.entities.message.api;
+package com.project.project.entities.message.api.dto;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.project.project.entities.message.Message;
