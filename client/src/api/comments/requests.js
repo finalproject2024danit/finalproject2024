@@ -43,7 +43,7 @@ export const deleteComment = async ({ commentId }) => {
     throw new Error("Missing commentId for delete request");
   }
   try {
-    const response = await axiosInstance.get(`/comments/comment/delete/${commentId}`);
+    const response = await axiosInstance.delete(`/comments/comment/delete/${commentId}`);
     return response.data; // Сервер повертає { "message": "Comment was successfully deleted" }
   } catch (error) {
     console.error("Error deleting comment:", error);
