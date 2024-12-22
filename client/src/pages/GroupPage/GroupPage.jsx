@@ -15,7 +15,6 @@ import {
   fetchNewComment,
   removeComment,
 } from "../../redux/slices/commentsSlice.js";
-import { addLike } from "../../redux/slices/likeSlice.js";
 import LikeIcon from "../../svg/Header/Like/index.jsx";
 import { useParams } from "react-router-dom";
 import ButtonDeleteFriend from "../../components/ButtonDeleteFriend/index.jsx";

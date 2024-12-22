@@ -108,7 +108,7 @@ const FriendsPage = () => {
           fetchFriendsPageWithPagination({
             userId: userFromId,
             startPage: currentPage,
-            perPage: 3,
+            perPage: 10,
           })
         );
       });

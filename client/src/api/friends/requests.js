@@ -5,18 +5,12 @@ export const addFriend = async (userFromId, userToId) => {
         params: {userFromId, userToId}
     })
 }
-
-// export const deleteFriend = async (friendId) => {
-//     return await axiosInstance.delete(`friends/delete/${friendId}`)
-// }
-
 export const deleteFriend = async (userFromId, userToId) => {
     return await axiosInstance.delete(`friends/delete`, {
         userId1: userFromId,
         userId2: userToId
     });
 };
-
 
 export const searchFriendsByFullName = async (currentUserId, fullName) => {
     return await axiosInstance.get(`friends/search`, {
