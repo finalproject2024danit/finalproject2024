@@ -1,28 +1,27 @@
 @use "../../App.scss" as *;
 
 .headerBox {
-  // margin: 0 auto;
   position: sticky;
   width: 99%;
-  // border-radius: 50%;
-  // overflow: hidden;
-  // padding-right: 50px;
   top: 0; 
   left: 0;
   z-index: 100; 
-  display: flex;
-  @media (max-width: 768px) {
 
-    position:static;
-  }
+
+
+  // display: flex;
+  // @media (max-width: 768px) {
+  //   position:static;
+  // }
 }
 
 
 
 
 .headerNav {
+  display: flex;
   // display: none;
-  flex-direction: column;
+  // flex-direction: column;
   gap: 15px;
 
   // &.open {
