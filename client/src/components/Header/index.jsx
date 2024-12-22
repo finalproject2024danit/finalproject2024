@@ -25,7 +25,7 @@ const Header = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      setMenuPlacement(window.innerWidth <= 767 ? "top" : "bottom");
+      setMenuPlacement(window.innerWidth <= 768 ? "top" : "bottom");
     };
 
     handleResize(); // Set the initial placement
@@ -68,6 +68,33 @@ const Header = () => {
     }
   };
 
+
+  const customStyles = {
+    control: (base) => ({
+      ...base,
+      backgroundColor: "#fff", // Белый фон для поля ввода
+      color: "#000", // Черный текст
+      borderColor: "#ccc", // Светло-серая рамка
+      boxShadow: "none",
+    }),
+    menu: (base) => ({
+      ...base,
+      backgroundColor: "#fff", // Белый фон для выпадающего списка
+      zIndex: 100,
+    }),
+    option: (base, state) => ({
+      ...base,
+      backgroundColor: state.isFocused ? "#e6f7ff" : "#fff", // Синий фон при наведении
+      color: "#000", // Черный текст
+      cursor: "pointer",
+    }),
+    menuPlacement: "top", // Это заставит меню подниматься вверх
+  };
+  
+
+
+
+
   return (
     <div className={styles.headerBox}>
       <header className={styles.shinyCta}>
@@ -90,8 +117,8 @@ const Header = () => {
                 to="/"
               >
                 <h1>
-                  Galactic Connections &quot;Reach for the stars and
-                  connect!&quot;
+                  Galactic Connections <span className={styles.headerSlogan}>&quot;Reach for the stars and
+                  connect!&quot;</span>
                 </h1>
               </NavLink>
             </div>
@@ -197,7 +224,8 @@ const Header = () => {
                       <Select
                         options={results}
                         placeholder={t("Search")}
-                        className={styles.select}
+                        className={styles.selectForm}
+                        styles={customStyles} // Передаем стили в Select
                         isLoading={isLoading}
                         onInputChange={(inputValue) => {
                           handleSearch(inputValue);

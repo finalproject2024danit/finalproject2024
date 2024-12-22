@@ -110,7 +110,7 @@ const ChatPage = () => {
   const userOptions = results.filter((result) => result.value.startsWith("user-"));
 
   return (
-    <MainContent title="Chat">
+    <MainContent title="">
       <div className={styles.ChatBox}>
         <div className={styles.ChatSidebar}>
           <div className={styles.ChatSearch}>

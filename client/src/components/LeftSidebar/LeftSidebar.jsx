@@ -39,6 +39,29 @@ const LeftSidebar = () => {
         }
     };
 
+
+    const customsStyles = {
+      control: (base) => ({
+        ...base,
+        // width:"80%",
+        backgroundColor: "#fff", // Белый фон для поля ввода
+        color: "#000", // Черный текст
+        borderColor: "#ccc", // Светло-серая рамка
+        boxShadow: "none",
+      }),
+      menu: (base) => ({
+        ...base,
+        backgroundColor: "#fff", // Белый фон для выпадающего списка
+        zIndex: 100,
+      }),
+      option: (base, state) => ({
+        ...base,
+        backgroundColor: state.isFocused ? "#e6f7ff" : "#fff", // Синий фон при наведении
+        color: "#000", // Черный текст
+        cursor: "pointer",
+      }),
+    };
+
     return (
         // <aside className={`${styles.leftMenu} ${styles.shinyCta}`}>
         <aside className={`${styles.leftMenu} `}>
@@ -59,6 +82,7 @@ const LeftSidebar = () => {
                 options={results}
                 placeholder={t("leftSidebar.globalSearch")}
                 className={styles.select}
+                styles={customsStyles} // Передаем стили в Select
                 isLoading={isLoading}
                 onInputChange={(inputValue) => {
                   handleSearch(inputValue);

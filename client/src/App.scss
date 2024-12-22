@@ -185,24 +185,43 @@ $large-screen-breakpoint: 1440px;
 .inner{
   display: flex;
   flex-direction: column;
-  // align-items: flex-end;
-  // position: relative;
-  width: 100vw;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  @media   (max-width: 768px) {
+
+  
+}
+
 }
 .innerBox {
   display: flex;
   justify-content: flex-end;
-  
+
   // flex-direction: column;
-  // position: relative;
+  position: relative;
   // gap: 10px;
   width: 100%;
   height: 85vh;
   padding: 10px;
-  @media   (max-width: 768px) {
-   justify-content: flex-start;
-    width: 85vh;
-   
+
+  // @media (min-width: 769px) and (max-width: 1030px) {
+  //   display: flex;
+  //   position: relative;
+  //   flex-direction: column;
+  //   align-items:flex-end;
+  //   justify-content: flex-start;
+  // }
+
+
+    @media   (max-width: 768px) {
+      box-sizing: border-box;
+      padding-top: 10px;
+     width: 99.9vw;
+     display: flex;
+     flex-direction: column;
+     justify-content: flex-start;
+    
   }
 }
 
@@ -218,10 +237,10 @@ $large-screen-breakpoint: 1440px;
   // position: relative;  
   z-index: 100;
   padding-right: 20px;
-  @media (min-width: 768px) and (max-width: 1023px) {
+  @media (min-width: 769px) and (max-width: 1030px) {
     top: 183px;
   }
-  @media   (max-width: 767px) {
+  @media   (max-width: 768px) {
     display: none;
     width: 0;
     height: 0;
@@ -230,14 +249,22 @@ $large-screen-breakpoint: 1440px;
 }
 
 .mainContainer {
-  // padding-top: 10px;
   display: flex;
-  gap: 10px;  
-  width: 88%;
+  justify-content: center;
+  width: 89%;
   border-radius: 20px;
-  // margin-top: 180px;
-  // opacity: 0.9;
+
+  @media (max-width: 1440px) { // Добавлена единица измерения
+    width: 88%;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+  }
 }
+
 
 .menuSocial {
  
@@ -285,34 +312,34 @@ body {
 
 // АДАПТИВНИЙ ДИЗАЙН
 /////////////////////////////////////////////////////////////////////////////////////////
-// Мобільні телефони (480px–767px)
-@media (min-width: 481px) and (max-width: 767px) {
-  // .container {
-  //   padding: 15px;
-  //   font-size: 16px;
-  // }
-}
+// // Мобільні телефони (480px–767px)
+// @media (min-width: 481px) and (max-width: 767px) {
+//   // .container {
+//   //   padding: 15px;
+//   //   font-size: 16px;
+//   // }
+// }
 
-// Планшети (768px–1023px)
-@media (min-width: 768px) and (max-width: 1023px) {
-  // .container {
-  //   padding: 20px;
-  //   font-size: 18px;
-  // }
-}
+// // Планшети (768px–1023px)
+// @media (min-width: 768px) and (max-width: 1023px) {
+//   // .container {
+//   //   padding: 20px;
+//   //   font-size: 18px;
+//   // }
+// }
 
-// Ноутбуки та маленькі екрани (1024px–1399px)
-@media (min-width: 1024px) and (max-width: 1399px) {
-  // .container {
-  //   padding: 25px;
-  //   font-size: 20px;
-  // }
-}
+// // Ноутбуки та маленькі екрани (1024px–1399px)
+// @media (min-width: 1024px) and (max-width: 1399px) {
+//   // .container {
+//   //   padding: 25px;
+//   //   font-size: 20px;
+//   // }
+// }
 
-// Великі екрани (1400px+)
-@media (min-width: 1400px) {
-  // .container {
-  //   padding: 30px;
-  //   font-size: 22px;
-  // }
-}
+// // Великі екрани (1400px+)
+// @media (min-width: 1400px) {
+//   // .container {
+//   //   padding: 30px;
+//   //   font-size: 22px;
+//   // }
+// }

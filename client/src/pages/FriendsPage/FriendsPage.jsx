@@ -138,59 +138,63 @@ const FriendsPage = () => {
 
   return (
     <MainContent title="">
-      <div className={styles.searchContainer}>
-        <input
-          type="text"
-          placeholder="Search friends"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className={styles.searchInput}
-        />
-      </div>
+      <div className={styles.friendsBox}>
+        <div className={styles.searchContainer}>
+          <input
+            type="text"
+            placeholder="Search friends"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className={styles.searchInput}
+          />
+        </div>
 
-      <div className={styles.friendBox}>
-        {filteredFriends.map((friend) => (
-          <div
-            key={friend.id}
-            className={`${styles.friendCard} ${
-              flippedCards[friend.id] ? styles.flipped : ""
-            }`}
-            onClick={() => handleCardClick(friend.id)}
-          >
-            <div className={styles.front}>
-              <div className={styles.inner}>
-                <img
-                  className={styles.friendPhoto}
-                  src={friend.avatar || defaultAvatar}
-                  alt={`${friend.firstName} ${friend.lastName}`}
-                  onError={(e) => (e.target.src = defaultAvatar)}
-                />
-                <h2>
-                  {friend.firstName} {friend.lastName}
-                </h2>
+        <div className={styles.friendBox}>
+          {filteredFriends.map((friend) => (
+            <div
+              key={friend.id}
+              className={`${styles.friendCard} ${
+                flippedCards[friend.id] ? styles.flipped : ""
+              }`}
+              onClick={() => handleCardClick(friend.id)}
+            >
+              <div className={styles.front}>
+                <div className={styles.inner}>
+                  <img
+                    className={styles.friendPhoto}
+                    src={friend.avatar || defaultAvatar}
+                    alt={`${friend.firstName} ${friend.lastName}`}
+                    onError={(e) => (e.target.src = defaultAvatar)}
+                  />
+                  <h2>
+                    {friend.firstName} {friend.lastName}
+                  </h2>
+                </div>
+              </div>
+              <div className={styles.back}>
+                <div className={styles.inner}>
+                  <NavLink to={`/user/${friend.id}`} className={styles.link}>
+                    <h3 className={styles.infoFriend}>{t("users.infoUser")}</h3>
+                  </NavLink>
+                  <ButtonDeleteFriend
+                    onClick={() => handleOpenModal(friend.id)}
+                  />
+                  <h2 className={styles.clickToFlip}>
+                    {t("users.clickToFlip")}
+                  </h2>
+                </div>
               </div>
             </div>
-            <div className={styles.back}>
-              <div className={styles.inner}>
-                <NavLink to={`/user/${friend.id}`} className={styles.link}>
-                  <h3 className={styles.infoFriend}>{t("users.infoUser")}</h3>
-                </NavLink>
-                <ButtonDeleteFriend
-                  onClick={() => handleOpenModal(friend.id)}
-                />
-                <h2 className={styles.clickToFlip}>{t("users.clickToFlip")}</h2>
-              </div>
-            </div>
-          </div>
-        ))}
-        <Modal
-          isOpen={isModalOpen}
-          message="Are you sure you want to delete this friend?"
-          onConfirm={handleConfirmDelete}
-          onClose={handleCloseModal}
-        />
-        {loading && <p>Loading...</p>}
-        {error && <p>{error}</p>}
+          ))}
+          <Modal
+            isOpen={isModalOpen}
+            message="Are you sure you want to delete this friend?"
+            onConfirm={handleConfirmDelete}
+            onClose={handleCloseModal}
+          />
+          {loading && <p>Loading...</p>}
+          {error && <p>{error}</p>}
+        </div>
       </div>
     </MainContent>
   );
