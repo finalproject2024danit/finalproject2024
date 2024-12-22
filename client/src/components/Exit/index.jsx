@@ -9,6 +9,7 @@ const ExitIcon = () => {
     const handleExitClick = () => {
         dispatch(clearUserData());
         navigate("/login");
+        window.location.reload();
     };
     return (
         <>
@@ -92,4 +93,3 @@ const ExitIcon = () => {
 };
 
 export default ExitIcon;
-  

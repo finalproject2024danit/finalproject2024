@@ -22,7 +22,7 @@ const UsersPage = () => {
   const [flippedCards, setFlippedCards] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const usersPerPage = 10;
+  const usersPerPage = 17;
   const sortBy = "firstName";
   const sortDirection = "asc";
   const userFromId = useSelector((state) => state.user.id);

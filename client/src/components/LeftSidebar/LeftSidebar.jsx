@@ -4,7 +4,8 @@ import {Form, Formik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import {useTranslation} from "react-i18next";
 import styles from "./LeftSidebar.module.scss";
-import Exit from "../Exit";
+import ExitIcon from "../Exit";
+
 import {fetchSearchResults} from "../../redux/slices/searchSlice";
 
 const defaultAvatarProfile =
@@ -72,7 +73,7 @@ const LeftSidebar = () => {
         </Formik>
       </div>
       <div className={styles.functionBlock}>
-        <Exit />
+        <ExitIcon />
       </div>
     </aside>
   );
