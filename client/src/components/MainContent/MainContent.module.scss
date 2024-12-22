@@ -2,6 +2,9 @@
 
 .mainBox {
   // margin-top: 180px;
+  display: flex;
+  // align-items: center;
+  justify-content: center;
   border-radius: $border-radius-medium-big;
   width: 99%;
   height: 100%;
@@ -9,7 +12,12 @@
   overflow-y: auto;
   overflow-x: hidden;
   background-color: $background-secondary;
+  padding: 10px;
+  @media   (max-width: 768px) {
+// padding: 10px;
+display: flex;
   
+}
 }
 
 .mainBox::-webkit-scrollbar {
