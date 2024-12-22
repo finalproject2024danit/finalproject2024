@@ -1,5 +1,12 @@
 @use "../../App.scss" as *;
 
+
+.friendsBox{
+display: flex;
+flex-direction: column;
+
+
+}
 .friendBox {
   display: flex;
   flex-wrap: wrap;
@@ -12,7 +19,7 @@
   //   height: 180px;
   // }
 
-  @media (max-width: 767px) {
+  @media (max-width: 768px) {
     flex-direction: column; /* Stack items vertically */
     align-items: center;    /* Center items horizontally */
     gap: 20px;              /* Adjust the gap between cards */

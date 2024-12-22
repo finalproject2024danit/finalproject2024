@@ -131,6 +131,7 @@ const UsersPage = () => {
 
   return (
     <MainContent title="">
+      <div className={styles.usersContainer}>
       <div className={styles.searchContainer}>
         <input
           type="text"
@@ -190,6 +191,7 @@ const UsersPage = () => {
         onConfirm={onConfirmAction}
         onClose={() => setIsModalOpen(false)}
       />
+      </div>
     </MainContent>
   );
 };

@@ -16,6 +16,7 @@ const NewsPage = () => {
 
     return (
         <MainContent title="">
+            <div className={styles.NewsBox}>
             <div className={styles["news-page"]}>
                 {loading ? (
                     <p>Loading...</p>
@@ -42,6 +43,7 @@ const NewsPage = () => {
                 ) : (
                     <p>Not found.</p>
                 )}
+            </div>
             </div>
         </MainContent>
     );

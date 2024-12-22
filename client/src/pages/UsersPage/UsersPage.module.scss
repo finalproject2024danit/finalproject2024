@@ -1,5 +1,11 @@
 @use "../../App.scss" as *;
 
+
+.usersContainer{
+  display: flex;
+  flex-direction: column;
+
+}
 .userBox {
   display: flex;
   flex-wrap: wrap;
