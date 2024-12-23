@@ -267,11 +267,17 @@
   justify-content: end;
 }
 
-.deleteButton {
+.deleteBtnPost {
   background-color: $background-btn-secondary;
   color: $primary;
   padding: 5px 10px;
   border-radius: 10px;
+}
+
+.deleteBtnComment {
+  background-color: $background-btn-secondary;
+  color: $primary;  
+  border-radius: 50px;
 }
 
 .commentDate {
