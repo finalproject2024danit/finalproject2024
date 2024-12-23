@@ -17,7 +17,6 @@ import {
 } from "../../redux/slices/commentsSlice.js";
 import LikeIcon from "../../svg/Header/Like/index.jsx";
 import { useParams } from "react-router-dom";
-import ButtonDeleteFriend from "../../components/ButtonDeleteFriend/index.jsx";
 import ModalPost from "../../components/Modal/ModalGroup/ModalPost.jsx";
 import Modal from "../../components/Modal/ModalFriend/Modal.jsx";
 import { format } from "date-fns";
@@ -241,7 +240,7 @@ const GroupPage = () => {
                       <p>{post.content}</p>
                       <div className={styles.postActions}>
                         <button
-                          className={styles.deleteButton}
+                          className={styles.deleteBtnPost}
                           onClick={() => handleOpenDeleteModal(post.id)}
                         >
                           Delete post
@@ -290,8 +289,9 @@ const GroupPage = () => {
                                         "dd.MM.yyyy"
                                       )}
                                     </span>
-                                    <ButtonDeleteFriend
-                                      className={styles.deleteButton}
+                                    <button
+                                      type="button"
+                                      className={styles.deleteBtnComment}
                                       onClick={() => {
                                         handleOpenDeleteCommentModal(
                                           comment.id,
@@ -299,7 +299,9 @@ const GroupPage = () => {
                                           selectedGroup.id
                                         );
                                       }}
-                                    />
+                                    >
+                                      x
+                                    </button>                                   
                                   </div>
                                   <p>{comment.content}</p>
                                 </div>
