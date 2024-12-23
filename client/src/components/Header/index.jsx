@@ -16,11 +16,11 @@ import { fetchSearchResults } from "../../redux/slices/searchSlice";
 const Header = () => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
-  const navigate = useNavigate(); // Для перенаправления при выборе игры
+  const navigate = useNavigate();
   const { results, isLoading } = useSelector((state) => state.globalsearch);
 
   const [isChecked, setIsChecked] = useState(i18n.language === "ua");
-  const [selectedGame, setSelectedGame] = useState(""); // Выбранная игра
+  const [selectedGame, setSelectedGame] = useState("");
   const [menuPlacement, setMenuPlacement] = useState("bottom");
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const Header = () => {
       setMenuPlacement(window.innerWidth <= 768 ? "top" : "bottom");
     };
 
-    handleResize(); // Set the initial placement
+    handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -46,7 +46,7 @@ const Header = () => {
     const game = event.target.value;
     setSelectedGame(game);
     if (game) {
-      navigate(game); // Переход на страницу игры
+      navigate(game);
     }
   };
 
@@ -68,32 +68,27 @@ const Header = () => {
     }
   };
 
-
   const customStyles = {
     control: (base) => ({
       ...base,
-      backgroundColor: "#fff", // Белый фон для поля ввода
-      color: "#000", // Черный текст
-      borderColor: "#ccc", // Светло-серая рамка
+      backgroundColor: "#fff",
+      color: "#000",
+      borderColor: "#ccc",
       boxShadow: "none",
     }),
     menu: (base) => ({
       ...base,
-      backgroundColor: "#fff", // Белый фон для выпадающего списка
+      backgroundColor: "#fff",
       zIndex: 100,
     }),
     option: (base, state) => ({
       ...base,
-      backgroundColor: state.isFocused ? "#e6f7ff" : "#fff", // Синий фон при наведении
-      color: "#000", // Черный текст
+      backgroundColor: state.isFocused ? "#e6f7ff" : "#fff",
+      color: "#000",
       cursor: "pointer",
     }),
-    menuPlacement: "top", // Это заставит меню подниматься вверх
+    menuPlacement: "top",
   };
-  
-
-
-
 
   return (
     <div className={styles.headerBox}>
@@ -117,8 +112,10 @@ const Header = () => {
                 to="/"
               >
                 <h1>
-                  Galactic Connections <span className={styles.headerSlogan}>&quot;Reach for the stars and
-                  connect!&quot;</span>
+                  Galactic Connections{" "}
+                  <span className={styles.headerSlogan}>
+                    &quot;Reach for the stars and connect!&quot;
+                  </span>
                 </h1>
               </NavLink>
             </div>
@@ -225,7 +222,7 @@ const Header = () => {
                         options={results}
                         placeholder={t("Search")}
                         className={styles.selectForm}
-                        styles={customStyles} // Передаем стили в Select
+                        styles={customStyles}
                         isLoading={isLoading}
                         onInputChange={(inputValue) => {
                           handleSearch(inputValue);
@@ -234,7 +231,7 @@ const Header = () => {
                         onChange={handleSelectChange}
                         isSearchable
                         getOptionLabel={(e) => e.label}
-                        menuPlacement={menuPlacement} // This ensures the dropdown opens upwards
+                        menuPlacement={menuPlacement}
                       />
                     </Form>
                   )}

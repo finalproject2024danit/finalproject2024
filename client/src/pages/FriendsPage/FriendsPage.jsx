@@ -22,7 +22,7 @@ const FriendsPage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedFriendId, setSelectedFriendId] = useState(null);
   const userFromId = useSelector((state) => state.user.id);
-  const { friends, status, error, currentPage, hasMore } = useSelector(
+  const { friends, error, currentPage, hasMore } = useSelector(
     (state) => state.friends
   );
   const [loading, setLoading] = useState(false);
@@ -115,26 +115,6 @@ const FriendsPage = () => {
       handleCloseModal();
     }
   };
-
-  // const handleDeleteFriend = (friendId) => {
-  //   setModalMessage("Are you sure you want to delete this friend?");
-  //   setOnConfirmAction(() => () => {
-  //     dispatch(deleteFriendThunk({ userFromId, userToId: friendId }))
-  //       .then(() => {
-  //         dispatch(
-  //           fetchFriendsWithPagination({
-  //             userId: userFromId,
-  //             startPage: 1,
-  //             perPage: friendsPerPage,
-  //           })
-  //         );
-  //       })
-  //       .finally(() => {
-  //         setIsModalOpen(false);
-  //       });
-  //   });
-  //   setIsModalOpen(true);
-  // };
 
   return (
     <MainContent title="">

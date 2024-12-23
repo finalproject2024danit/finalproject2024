@@ -1,11 +1,8 @@
 @use "../../App.scss" as *;
 
-
-
-.NewsBox{
-width: 80vw;
-display: flex;
-
+.NewsBox {
+  width: 80vw;
+  display: flex;
 }
 
 .news-page {
@@ -15,7 +12,6 @@ display: flex;
   justify-content: center;
   align-items: center;
 
- 
   @media (max-width: 767px) {
     padding: $padding-small;
     width: 95vw;
@@ -50,7 +46,6 @@ display: flex;
 
 .news-detail__content {
   display: flex;
-  // flex-direction: column;
   gap: 20px;
   width: 100%;
 

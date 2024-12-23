@@ -34,9 +34,10 @@ export const deleteFriendPageThunk = createAsyncThunk(
   "friends/deleteFriend",
   async ({ userFromId, userToId }, { rejectWithValue }) => {
     try {
-      const response = await axios.delete("/api/v1/friends/delete", {
+      const response = await axios.delete("/api/v1/friends/delete", {        
         data: { userFromId, userToId },
       });
+      console.log(response);
       return { userToId };
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
@@ -63,15 +64,11 @@ export const fetchFriendsPageWithPagination = createAsyncThunk(
       const response = await axiosInstance.get(`/users/${userId}/friends`, {
         params: { startPage, perPage },
       });
-
       const friends = response.data;
-
-      // Якщо це остання сторінка
       const hasMore = friends.length > 0;
 
       return { friends, startPage, hasMore };
     } catch (error) {
-      // Якщо сервер повернув 404, припиняємо пагінацію
       if (error.response?.status === 404) {
         return { friends: [], startPage, hasMore: false };
       }
@@ -79,8 +76,6 @@ export const fetchFriendsPageWithPagination = createAsyncThunk(
     }
   }
 );
-
-
 
 const initialState = {
   friends: [],
@@ -143,7 +138,7 @@ const friendsPageSlice = createSlice({
       .addCase(fetchFriendsPageWithPagination.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload || "Something went wrong";
-        state.hasMore = false; // Зупиняємо пагінацію у випадку помилки
+        state.hasMore = false;
       });
   },
 });

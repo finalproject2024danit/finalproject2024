@@ -7,10 +7,10 @@
   height: 52vh;
   background-color: $background-secondary;
   border-radius: $border-radius-medium-big;
-  overflow-y: auto; 
-  transition: height 1s ease;   
+  overflow-y: auto;
+  transition: height 1s ease;
   border: 3px solid $twelfth;
-  &.expanded {    
+  &.expanded {
     max-height: 52vh;
   }
 
@@ -53,7 +53,6 @@
   border: solid 1px $secondary;
   border-radius: 20px;
   padding: $padding-small;
-  // flex-grow: 1;
 
   &:hover {
     color: $background-btn-fifth;
@@ -96,14 +95,10 @@
 }
 
 .friendsTitle {
-  // position: sticky;
-  // top: 0; 
-  // z-index: 10; 
   padding: $padding-small 0;
   margin-top: 0;
-  font-size: 1.5rem; 
+  font-size: 1.5rem;
   width: 100%;
   background-color: $background-secondary;
   text-align: center;
 }
-

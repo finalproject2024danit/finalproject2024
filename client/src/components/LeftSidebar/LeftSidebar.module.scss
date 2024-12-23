@@ -2,20 +2,20 @@
 
 .leftMenu {
   display: flex;
-  flex-direction: column;  
+  flex-direction: column;
   align-items: center;
   gap: 10px;
-  background-color:$background-secondary;
-  border-radius: $border-radius-medium-big;  
+  background-color: $background-secondary;
+  border-radius: $border-radius-medium-big;
   opacity: 0.9;
   border: 3px solid $twelfth;
 
   .functionBlock {
     display: flex;
     justify-content: space-around;
-    align-items: center;    
+    align-items: center;
     cursor: pointer;
-  } 
+  }
 
   .iconWrapper {
     display: flex;
@@ -55,9 +55,8 @@
 
   a {
     cursor: pointer;
-  } 
+  }
 }
-
 
 @keyframes glow {
   0% {

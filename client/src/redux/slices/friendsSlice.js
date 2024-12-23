@@ -37,6 +37,7 @@ export const deleteFriendThunk = createAsyncThunk(
       const response = await axios.delete("/api/v1/friends/delete", {
         data: { userFromId, userToId },
       });
+      console.log(response);
       return { userToId };
     } catch (error) {
       return rejectWithValue(error.response?.data || error.message);
@@ -58,7 +59,7 @@ export const searchFriendsThunk = createAsyncThunk(
 
 export const fetchFriendsWithPagination = createAsyncThunk(
   "friends/fetchFriendsWithPagination",
-  async ({ userId, startPage, perPage = 5 }, { rejectWithValue }) => {
+  async ({ userId, startPage, perPage = 10 }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get(`/users/${userId}/friends`, {
         params: { startPage, perPage },

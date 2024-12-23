@@ -11,37 +11,32 @@
   flex-wrap: wrap;
   gap: 50px 20px;
   padding: 0 20px;
-  justify-content: space-between;
-  // height: 40vh;
+  justify-content: space-between; 
   width: 82vw;
   
 
   @media (max-width: 767px) {
     justify-content: center;
     width: 90vw;
-  }
-  
+  }  
 }
 
 .userCard {
   position: relative;
-  flex-basis: calc((100% - 60px) / 4); // 4 карточки в ряду на больших экранах
+  flex-basis: calc((100% - 60px) / 4); 
   max-width: calc((100% - 60px) / 4); 
   height: 200px;
   transform-style: preserve-3d;
   transition: transform 0.6s;
   cursor: pointer;
 
-  @media (max-width: 1024px) and (min-width: 768px) {
-    // width: 45%;
-    flex-basis: calc((100% - 60px) / 3); // 4 карточки в ряду на больших экранах
+  @media (max-width: 1024px) and (min-width: 768px) {  
+    flex-basis: calc((100% - 60px) / 3); 
     max-width: calc((100% - 60px) / 3); 
   }
-
-
-  // Styles for mobile screens
+  
   @media (max-width: 767px) {
-    flex-basis: calc((100% - 20px) / 1); // 4 карточки в ряду на больших экранах
+    flex-basis: calc((100% - 20px) / 1); 
   max-width: calc((100% - 20px) / 1); 
   height: 300px;
   }
@@ -112,14 +107,12 @@
   object-position: top;
   border-radius: 20px;
 
-  // Style for tablet screens
-  @media (max-width: 1024px) and (min-width: 768px) {
+   @media (max-width: 1024px) and (min-width: 768px) {
     width: 75%;
     height: 75%;
   }
 
-  // Style for mobile screens
-  @media (max-width: 768px) {
+    @media (max-width: 768px) {
     width: 90%;
     height: 80%;
   }
@@ -139,8 +132,7 @@
     transform: scale(1.1);
   }
 
-  // Style for mobile screens
-  @media (max-width: 768px) {
+   @media (max-width: 768px) {
     font-size: $normal;
   }
 }
@@ -160,7 +152,6 @@
     color: $primary;
   }
 
-  // Style for mobile screens
   @media (max-width: 768px) {
     font-size: $smaller;
   }
@@ -171,7 +162,6 @@
   justify-content: center;
   margin: 20px 0;
 
-  // Style for mobile screens
   @media (max-width: 768px) {
     margin: 15px 0;
   }
@@ -197,8 +187,7 @@
     box-shadow: 0 2px 8px rgba(106, 90, 205, 0.3);
   }
 
-  // Style for mobile screens
-  @media (max-width: 768px) {
+   @media (max-width: 768px) {
     width: 50%;
     font-size: $smaller;
   }

@@ -1,45 +1,39 @@
-import axios from 'axios';
+import axios from "axios";
 
-
-// Створення axios інстансу
 const axiosInstance = axios.create({
-  baseURL: 'http://134.209.246.21:9000/api/v1',  // Основний URL для запитів
+  baseURL: "http://134.209.246.21:9000/api/v1",
   // baseURL: 'http://localhost:9000/api/v1',
   headers: {
-    'Content-Type': 'application/json', // Стандартний тип контенту
+    "Content-Type": "application/json",
   },
 });
 
-// Інтерцептор для запитів
 axiosInstance.interceptors.request.use(
   (config) => {
-    // Отримуємо токен з localStorage
-    const token = localStorage.getItem('authToken');
+    const token = localStorage.getItem("authToken");
     if (token) {
-      // Додаємо токен до заголовків запиту
       config.headers.Authorization = `Bearer ${token}`;
     }
     return config;
   },
   (error) => {
-    return Promise.reject(error); // Якщо помилка в запиті, її потрібно обробити
+    return Promise.reject(error);   
   }
 );
 
-// Функція для логіну та отримання токена
 export const loginByEmail = async (loginPayload) => {
   try {
-    const response = await axios.post('http://134.209.246.21:9000/auth/login', loginPayload);
-    const { accessToken } = response.data; // Отримуємо токен з відповіді
-    localStorage.setItem('authToken', accessToken); // Зберігаємо токен в localStorage
+    const response = await axios.post(
+      "http://134.209.246.21:9000/auth/login",
+      loginPayload
+    );
+    const { accessToken } = response.data;
+    localStorage.setItem("authToken", accessToken);
     return accessToken;
   } catch (error) {
-    console.error('Login failed:', error);
-    throw new Error('Login failed');
+    console.error("Login failed:", error);
+    throw new Error("Login failed");
   }
 };
 
 export default axiosInstance;
-
-
-

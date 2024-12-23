@@ -19,12 +19,12 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
-.currentResidence {  
-    background: rgba(20, 30, 48, 0.8);
-    border-radius: $border-radius-large;
-    padding: $padding-large;
-    margin-bottom: $margin-large;
-    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+.currentResidence {
+  background: rgba(20, 30, 48, 0.8);
+  border-radius: $border-radius-large;
+  padding: $padding-large;
+  margin-bottom: $margin-large;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
 }
 
 .title {
@@ -92,48 +92,47 @@
   background-color: #f0f0f0;
 }
 
-/* Media Queries for Responsive Design */
 @media (max-width: 1024px) {
   .residenceBox {
-    padding: $padding-large; 
+    padding: $padding-large;
   }
 
   .title {
-    font-size: 1.6rem; 
+    font-size: 1.6rem;
   }
 
   .button {
-    padding: 10px 15px; 
+    padding: 10px 15px;
   }
 
   .input {
-    padding: 8px; 
+    padding: 8px;
   }
 }
 
 @media (max-width: 767px) {
   .residenceBox {
-    padding: 15px; 
+    padding: 15px;
   }
 
   .title {
-    font-size: 1.4rem; 
+    font-size: 1.4rem;
   }
 
   .form {
-    gap: 0.5rem; 
+    gap: 0.5rem;
   }
 
   .input {
-    padding: 6px; 
+    padding: 6px;
   }
 
   .button {
-    width: 100%; 
-    padding: $padding-medium; 
+    width: 100%;
+    padding: $padding-medium;
   }
 
   .suggestions {
-    width: 100%; 
+    width: 100%;
   }
 }

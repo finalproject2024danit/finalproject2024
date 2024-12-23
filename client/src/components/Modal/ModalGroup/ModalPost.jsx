@@ -4,17 +4,17 @@ import PropTypes from "prop-types";
 const ModalPost = ({ isOpen, onClose, onSubmit, newPost, setNewPost }) => {
   if (!isOpen) return null;
 
-  const isEditing = !!newPost.id; // Перевірка, чи є пост для редагування
+  const isEditing = !!newPost.id;
 
   const handleClose = () => {
-    setNewPost({ content: "" }); // Скидання полів вводу
-    onClose(); 
+    setNewPost({ content: "" });
+    onClose();
   };
 
   return (
     <div className={styles.modalOverlay}>
       <div className={styles.modalContent}>
-        <h2>{isEditing ? "Edit Post" : "Create New Post"}</h2> {/* Змінюємо заголовок */}
+        <h2>{isEditing ? "Edit Post" : "Create New Post"}</h2>
         <textarea
           placeholder="Enter content"
           value={newPost.content}
@@ -23,11 +23,8 @@ const ModalPost = ({ isOpen, onClose, onSubmit, newPost, setNewPost }) => {
           }
         />
         <div className={styles.modalActions}>
-          <button
-            className={styles.createButton}
-            onClick={onSubmit}
-          >
-            {isEditing ? "Save Changes" : "Create"} {/* Змінюємо текст кнопки */}
+          <button className={styles.createButton} onClick={onSubmit}>
+            {isEditing ? "Save Changes" : "Create"}
           </button>
           <button className={styles.cancelButton} onClick={handleClose}>
             Cancel

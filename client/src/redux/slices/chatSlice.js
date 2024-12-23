@@ -1,7 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
-// Initial chat state
 const initialState = {
   messages: [],
   talks: [],
@@ -11,10 +10,12 @@ const initialState = {
 };
 
 export const fetchMessages = createAsyncThunk(
-  'chat/fetchMessages',
+  "chat/fetchMessages",
   async ({ userFrom, userTo }, thunkAPI) => {
     try {
-      const response = await axios.get(`/api/v1/messages/between/${userFrom}/${userTo}`);
+      const response = await axios.get(
+        `/api/v1/messages/between/${userFrom}/${userTo}`
+      );
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -23,11 +24,10 @@ export const fetchMessages = createAsyncThunk(
 );
 
 const chatSlice = createSlice({
-  name: 'chat',
+  name: "chat",
   initialState,
   reducers: {
     receivedMessage: (state, action) => {
-      // Add new message to state
       state.messages.push(action.payload);
     },
     selectUser: (state, action) => {

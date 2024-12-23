@@ -7,12 +7,15 @@ import * as Yup from "yup";
 import { useFormik } from "formik";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateResidenceData, fetchResidenceById } from "../../../redux/slices/residencesSlice.js";
+import {
+  updateResidenceData,
+  fetchResidenceById,
+} from "../../../redux/slices/residencesSlice.js";
 
 const PlaceOfResidence = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const residences = useSelector((state) => state.residences.byUserId); // отримання стану
+  const residences = useSelector((state) => state.residences.byUserId);
   const [suggestions, setSuggestions] = useState({
     planet: [],
     country: [],
@@ -20,8 +23,7 @@ const PlaceOfResidence = () => {
   });
   const [loading, setLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
-  
-  
+
   const fetchSuggestions = async (field) => {
     setLoading(true);
     try {
@@ -50,7 +52,6 @@ const PlaceOfResidence = () => {
     city: Yup.string().required("Required"),
     planet: Yup.string().required("Required"),
   });
-  
 
   useEffect(() => {
     if (!residences[user.id]) {

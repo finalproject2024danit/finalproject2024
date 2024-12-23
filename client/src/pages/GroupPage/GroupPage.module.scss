@@ -2,53 +2,49 @@
 
 .groupContainer {
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   width: 99%;
   box-sizing: border-box;
-  border-radius: 15px;  
-  position: relative; 
-
+  border-radius: 15px;
+  position: relative;
 }
 
 .groupHeader {
   display: flex;
-  flex-wrap: nowrap; 
+  flex-wrap: nowrap;
   gap: 10px;
-  overflow-x: auto; 
-  width: 50vw; 
-  height: 35vh; 
+  overflow-x: auto;
+  width: 50vw;
+  height: 35vh;
   margin-bottom: 50px;
   padding: 20px 10px;
   margin: 0 auto;
 
-  
   scrollbar-width: thin;
-  scrollbar-color: $eleventh transparent; 
+  scrollbar-color: $eleventh transparent;
 
   &::-webkit-scrollbar {
     height: 8px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: $eleventh; 
+    background-color: $eleventh;
     border-radius: 10px;
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background-color: $secondary; 
+    background-color: $secondary;
   }
 
   &::-webkit-scrollbar-track {
-    background: transparent; 
+    background: transparent;
   }
 
   @media (max-width: 767px) {
-    width: 50vh; 
+    width: 50vh;
     height: 25vh;
-   
   }
 }
-
 
 .groupLink {
   width: 80%;
@@ -71,8 +67,8 @@
   box-shadow: 0 0 25px rgba(255, 255, 255, 0.5);
 }
 
-.groupLink h2 { 
-  font-size: $larger;  
+.groupLink h2 {
+  font-size: $larger;
   margin-bottom: 15px;
 }
 
@@ -97,18 +93,18 @@
   text-align: center;
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 
-  @media   (max-width: 768px) {
-    width: 92%;     
-   }
-  @media   (max-width: 425px) {
-    width: 85%;     
-   }
+  @media (max-width: 768px) {
+    width: 92%;
+  }
+  @media (max-width: 425px) {
+    width: 85%;
+  }
 }
 
 .groupDetails h2 {
   font-size: $extra-large;
   font-weight: $font-weight-medium;
-  margin: 30px; 
+  margin: 30px;
   text-shadow: 0 0 20px rgba(255, 255, 255, 0.7),
     0 0 40px rgba(255, 255, 255, 0.5);
 }
@@ -124,9 +120,9 @@
   margin-top: 20px;
   text-align: center;
   width: 100%;
-  @media   (max-width: 767px) {
-    width: 85vw;     
-   }
+  @media (max-width: 767px) {
+    width: 85vw;
+  }
 }
 
 .post {
@@ -139,9 +135,9 @@
   margin-bottom: 10px;
   color: $fourth;
   margin-bottom: 40px;
-  @media   (max-width: 425px) {
-    width: 80%;     
-   }
+  @media (max-width: 425px) {
+    width: 80%;
+  }
 }
 
 .post p {
@@ -210,7 +206,7 @@
   padding: 10px;
   font-size: $medium;
   background-color: $background-btn-fifth;
-  color:$primary;
+  color: $primary;
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -228,18 +224,18 @@
   width: 100%;
 }
 
-.comment{
-  display: flex; 
+.comment {
+  display: flex;
   flex-direction: column;
   border: 0.5px solid $background-fourth;
-  border-radius: 10px; 
+  border-radius: 10px;
   padding: 10px;
   width: 30vh;
   font-size: $smaller;
 
-  @media   (max-width: 767px) {
-    width: 20vh;     
-   }
+  @media (max-width: 767px) {
+    width: 20vh;
+  }
 }
 
 .commentHeader {
@@ -257,25 +253,18 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  margin-right: 10px;  
+  margin-right: 10px;
 }
 
-.commentAuthor{
+.commentAuthor {
   font-size: $medium;
   color: $background-btn-fifth;
   font-weight: $font-weight-bold;
-
 }
-
-// .editButton {
-//   background-color: #4caf50;
-//   color: white;
-//   margin-right: 10px;
-// }
 
 .postActions {
   display: flex;
-justify-content: end;
+  justify-content: end;
 }
 
 .deleteButton {

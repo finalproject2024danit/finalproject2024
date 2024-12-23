@@ -5,7 +5,7 @@ import {
   createPost,
   updatePost,
   deletePost,
-  getAllPostsFiltered
+  getAllPostsFiltered,
 } from "../../api/groups/requests.js";
 import {
   getGroupsFromLocalStorage,
@@ -94,7 +94,7 @@ const groupSlice = createSlice({
       })
       .addCase(fetchPosts.fulfilled, (state, action) => {
         const { posts, currentPage, totalPages } = action.payload;
-        state.posts = [...state.posts, ...posts]; // Додаємо нові пости
+        state.posts = [...state.posts, ...posts];
         state.postsPagination.currentPage = currentPage;
         state.postsPagination.totalPages = totalPages;
         state.loading = false;

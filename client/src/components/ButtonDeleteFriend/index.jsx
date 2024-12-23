@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 const ButtonDeleteFriend = ({ userId, onClick, children }) => {
   return (
     <button className={styles.btn} onClick={() => onClick(userId)}>
-      х{children}
+      Delete Friend{children}
     </button>
   );
 };

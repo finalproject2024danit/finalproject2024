@@ -121,7 +121,6 @@
   z-index: 200;
 }
 
-
 .wrapper {
   position: relative;
   max-width: 470px;
@@ -150,7 +149,7 @@
   transition: all 0.6s ease;
   color: $primary;
   border: 7px solid $eighth;
-  width: 400px; 
+  width: 400px;
 }
 .wrapper.active .form.login {
   bottom: -16%;
@@ -158,18 +157,18 @@
   border-radius: 26%;
   box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.1);
   @media (max-width: 768px) {
-    width: 50vw;          
+    width: 50vw;
   }
 }
 .form header {
   font-size: $extra-large;
   text-align: center;
-  color:$primary;
+  color: $primary;
   font-weight: $font-weight-semi-bold;
   cursor: pointer;
 }
 .form.login header {
-  color:$primary;
+  color: $primary;
   opacity: 0.6;
 }
 .wrapper.active .form.login header {
@@ -223,11 +222,10 @@ form .checkbox {
 }
 form .checkbox label {
   cursor: pointer;
-  color:$primary;
+  color: $primary;
 }
 form a {
   color: $tenth;
-  ;
   text-decoration: none;
 }
 form a:hover {
