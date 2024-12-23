@@ -5,6 +5,7 @@
   width: 100vh;
   text-align: center;
   color: $primary;
+  width: 80vw;
 
   h2 {
     color: #00bfff;
@@ -36,6 +37,12 @@
       max-height: 500px;
       object-fit: cover;
       border-radius: $border-radius-medium-big;
+      @media (max-width: 768px) {
+        width: 450px;
+    
+        max-height: 350px;
+    
+      }
     }
   }
 

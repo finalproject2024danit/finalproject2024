@@ -2,7 +2,7 @@
 
 .generalBox {
 margin: 10px 0;
-  // width: 80vw;
+  width: 80vw;
   display: flex; 
   flex-direction: column;
   padding: $padding-largexl;
@@ -10,6 +10,11 @@ margin: 10px 0;
   color: #ffffff;
   border-radius: 15px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  @media (max-width: 1024px) {
+ 
+    
+    
+   }
 }
 
 .sidebar {
