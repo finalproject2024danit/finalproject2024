@@ -5,7 +5,10 @@ import styles from "./UsersPage.module.scss";
 import MainContent from "../../components/MainContent/MainContent";
 import axiosInstance from "../../api/axiosInstance.js";
 import ButtonAddFriend from "../../components/ButtonAddFriend/index.jsx";
-import { addFriendThunk, fetchFriends } from "../../redux/slices/friendsSlice.js";
+import {
+  addFriendThunk,
+  fetchFriends,
+} from "../../redux/slices/friendsSlice.js";
 import { useTranslation } from "react-i18next";
 import Modal from "../../components/Modal/ModalFriend/Modal.jsx";
 
@@ -132,65 +135,67 @@ const UsersPage = () => {
   return (
     <MainContent title="">
       <div className={styles.usersContainer}>
-      <div className={styles.searchContainer}>
-        <input
-          type="text"
-          placeholder={t("users.searchPlaceholder")}
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className={styles.searchInput}
+        <div className={styles.searchContainer}>
+          <input
+            type="text"
+            placeholder={t("users.searchPlaceholder")}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className={styles.searchInput}
+          />
+        </div>
+
+        <div className={styles.userBox}>
+          {filteredUsers.map((user) => (
+            <div
+              key={user.id}
+              className={`${styles.userCard} ${
+                flippedCards[user.id] ? styles.flipped : ""
+              }`}
+              onClick={() => handleCardClick(user.id)}
+            >
+              <div className={styles.front}>
+                <div className={styles.inner}>
+                  <img
+                    className={styles.userPhoto}
+                    src={user.avatar || defaultAvatar}
+                    alt={`${user.firstName} ${user.lastName}`}
+                    onError={(e) => (e.target.src = defaultAvatar)}
+                  />
+                  <h2>
+                    {user.firstName} {user.lastName}
+                  </h2>
+                </div>
+              </div>
+              <div className={styles.back}>
+                <div className={styles.inner}>
+                  <NavLink to={`/user/${user.id}`} className={styles.link}>
+                    <h3 className={styles.infoUser}>{t("users.infoUser")}</h3>
+                  </NavLink>
+                  <ButtonAddFriend
+                    userId={user.id}
+                    onClick={handleAddFriend}
+                    isFriend={friends.some((friend) => friend.id === user.id)}
+                    disabled={selectedUserId === null}
+                  />
+                  <h2 className={styles.clickToFlip}>
+                    {t("users.clickToFlip")}
+                  </h2>
+                </div>
+              </div>
+            </div>
+          ))}
+          {loading && <p>{t("users.loading")}</p>}
+          {error && <p>{error}</p>}
+          <div ref={loaderRef} className={styles.loader}></div>
+        </div>
+
+        <Modal
+          isOpen={isModalOpen}
+          message={modalMessage}
+          onConfirm={onConfirmAction}
+          onClose={() => setIsModalOpen(false)}
         />
-      </div>
-
-      <div className={styles.userBox}>
-        {filteredUsers.map((user) => (
-          <div
-            key={user.id}
-            className={`${styles.userCard} ${
-              flippedCards[user.id] ? styles.flipped : ""
-            }`}
-            onClick={() => handleCardClick(user.id)}
-          >
-            <div className={styles.front}>
-              <div className={styles.inner}>
-                <img
-                  className={styles.userPhoto}
-                  src={user.avatar || defaultAvatar}
-                  alt={`${user.firstName} ${user.lastName}`}
-                  onError={(e) => (e.target.src = defaultAvatar)}
-                />
-                <h2>
-                  {user.firstName} {user.lastName}
-                </h2>
-              </div>
-            </div>
-            <div className={styles.back}>
-              <div className={styles.inner}>
-                <NavLink to={`/user/${user.id}`} className={styles.link}>
-                  <h3 className={styles.infoUser}>{t("users.infoUser")}</h3>
-                </NavLink>
-                <ButtonAddFriend
-                  userId={user.id}
-                  onClick={handleAddFriend}
-                  isFriend={friends.some((friend) => friend.id === user.id)}
-                  disabled={selectedUserId === null}
-                />
-                <h2 className={styles.clickToFlip}>{t("users.clickToFlip")}</h2>
-              </div>
-            </div>
-          </div>
-        ))}
-        {loading && <p>{t("users.loading")}</p>}
-        {error && <p>{error}</p>}
-        <div ref={loaderRef} className={styles.loader}></div>
-      </div>
-
-      <Modal
-        isOpen={isModalOpen}
-        message={modalMessage}
-        onConfirm={onConfirmAction}
-        onClose={() => setIsModalOpen(false)}
-      />
       </div>
     </MainContent>
   );

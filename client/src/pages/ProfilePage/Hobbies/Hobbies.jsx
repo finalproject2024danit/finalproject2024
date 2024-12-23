@@ -10,7 +10,7 @@ import styles from "./Hobbies.module.scss";
 import {
   fetchHobbiesByUserId,
   updateHobbies,
-  loadHobbiesFromLocalStorage 
+  loadHobbiesFromLocalStorage,
 } from "../../../redux/slices/hobbiesSlice.js";
 
 const Hobbies = () => {
@@ -19,12 +19,11 @@ const Hobbies = () => {
   const [isEditing, setIsEditing] = useState(false);
   const hobbies = useSelector((state) => state.hobbies[user.id]);
   useEffect(() => {
-    // Спочатку перевіряємо localStorage на наявність хобі
     if (!hobbies) {
-      dispatch(loadHobbiesFromLocalStorage(user.id)); // Завантажити хобі з localStorage
+      dispatch(loadHobbiesFromLocalStorage(user.id));
     }
     if (!hobbies) {
-      dispatch(fetchHobbiesByUserId(user.id)); // Якщо не знайдено в localStorage, завантажити з сервера
+      dispatch(fetchHobbiesByUserId(user.id));
     }
   }, [dispatch, user.id, hobbies]);
 

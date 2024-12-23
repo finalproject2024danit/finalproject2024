@@ -1,20 +1,15 @@
 @use "../../../App.scss" as *;
 
 .generalBox {
-margin: 10px 0;
+  margin: 10px 0;
   width: 80vw;
-  display: flex; 
+  display: flex;
   flex-direction: column;
   padding: $padding-largexl;
   background: linear-gradient(to bottom, #141e30, #243b55);
   color: #ffffff;
   border-radius: 15px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  @media (max-width: 1024px) {
- 
-    
-    
-   }
 }
 
 .sidebar {
@@ -39,13 +34,11 @@ margin: 10px 0;
   object-fit: cover;
   margin-bottom: $margin-medium;
   border: 3px solid #394a6d;
-
 }
 
 .avatarInput {
   display: none;
 }
-
 
 .avatarSection:hover .avatarInput {
   display: inline;
@@ -66,12 +59,10 @@ margin: 10px 0;
 }
 
 .content {
-display: flex;
-@media (max-width: 1024px) {
- flex-direction: column;
- 
- 
-}
+  display: flex;
+  @media (max-width: 1024px) {
+    flex-direction: column;
+  }
 }
 
 .form {
@@ -128,7 +119,6 @@ display: flex;
   color: #4a90e2;
 }
 
-/* Медиазапросы для планшетов */
 @media (max-width: 1024px) {
   .generalBox {
     flex-direction: column;
@@ -175,7 +165,6 @@ display: flex;
   }
 }
 
-/* Медиазапросы для мобильных устройств */
 @media (max-width: 767px) {
   .generalBox {
     padding: 15px;

@@ -14,6 +14,9 @@ import { Gender } from "../../../utils/gender.js";
 import { unixToDate } from "../../../utils/unixToDate.js";
 import { dateToUnix } from "../../../utils/dateToUnix.js";
 
+const defaultAvatarProfile =
+  "https://res.cloudinary.com/dsr6kwzrr/image/upload/v1729669892/photo_2024-10-23_10-30-18_nmluce.jpg";
+
 const GeneralInformation = () => {
   const [isEditing, setIsEditing] = useState(false);
   const dispatch = useDispatch();
@@ -88,7 +91,7 @@ const GeneralInformation = () => {
           <div className={styles.sidebar}>
             <div className={styles.avatarSection}>
               <img
-                src={user.avatar || "default-avatar.png"}
+                src={user.avatar || defaultAvatarProfile}
                 alt="User Avatar"
                 className={styles.avatar}
               />

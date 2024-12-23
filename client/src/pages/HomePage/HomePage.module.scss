@@ -4,11 +4,11 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;  
-  @media   (max-width: 767px) {
-    width: 93vw;      
-   }
-  
+  gap: 20px;
+  @media (max-width: 767px) {
+    width: 93vw;
+  }
+
   .newsCard {
     width: 97%;
     display: flex;
@@ -34,10 +34,10 @@
     max-height: 35vh;
     height: auto;
     border-radius: 15px;
-    @media   (max-width: 767px) {
+    @media (max-width: 767px) {
       max-width: 20vw;
-      max-height: 25vh;      
-     }
+      max-height: 25vh;
+    }
   }
 
   .newsContent {
@@ -48,19 +48,19 @@
   }
 
   .newsContent h2 {
-    font-size: $huge;  
-    @media   (max-width: 767px) {
-      font-size: $larger;      
-      }  
+    font-size: $huge;
+    @media (max-width: 767px) {
+      font-size: $larger;
+    }
   }
 
   .newsContent p {
     font-size: $large;
     line-height: 1.5;
     color: $seventh;
-    @media   (max-width: 767px) {
-      font-size: $normal;      
-      } 
+    @media (max-width: 767px) {
+      font-size: $normal;
+    }
   }
 
   .date {

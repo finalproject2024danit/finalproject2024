@@ -57,10 +57,8 @@ const residencesSlice = createSlice({
         state.loading = true;
       })
       .addCase(updateResidenceData.fulfilled, (state, action) => {
-        // Оновлення даних у Redux
         state.byUserId[action.payload.userId] = action.payload.residence;
 
-        // Збереження в localStorage
         localStorage.setItem(
           "residenceData",
           JSON.stringify(action.payload.residence)

@@ -1,6 +1,5 @@
 import { addPostToGroup, editPost as editPostAction, removePost } from "../redux/slices/groupSlice.js";
 
-// Створення нового поста
 export const createPost = (dispatch, selectedGroup, userFromId, newPost, handleCloseModal) => {
   if (!newPost.content.trim()) {
     alert("Content is required.");
@@ -29,7 +28,6 @@ export const createPost = (dispatch, selectedGroup, userFromId, newPost, handleC
   handleCloseModal();
 };
 
-// Редагування поста
 export const updatePost = (dispatch, editPost, setEditPost, setIsModalOpen) => {
   if (!editPost || !editPost.id || !editPost.content.trim()) {
     alert("Invalid post data. Please check the content and try again.");
@@ -53,7 +51,6 @@ export const updatePost = (dispatch, editPost, setEditPost, setIsModalOpen) => {
     });
 };
 
-// Видалення поста
 export const confirmDeletePost = (dispatch, postToDelete, handleCloseDeleteModal) => {
   if (postToDelete) {
     dispatch(removePost(postToDelete))
@@ -64,7 +61,6 @@ export const confirmDeletePost = (dispatch, postToDelete, handleCloseDeleteModal
   handleCloseDeleteModal();
 };
 
-// Лайк поста
 export const toggleLike = (postId, setLikeStates) => {
   setLikeStates((prevStates) => {
     const isLiked = prevStates[postId]?.liked || false;

@@ -131,7 +131,7 @@ $background-button: linear-gradient(
   145deg,
   rgba(225, 215, 237, 0.16) 0%,
   rgba(235, 204, 217, 0.16) 100%
-); // тут не понятно но это стиль для сайдбара слева что бы знать на какой ты странице находишся, так же для отображения твоего аватара слева снизу //
+); 
 $glass-stroke: rgba(255, 255, 255, 0.08);
 $glass-modal: rgba(26, 29, 33, 0.96);
 
@@ -222,9 +222,8 @@ $large-screen-breakpoint: 1440px;
   width: 11%;
   gap: 10px;
   position: fixed;
-  top: 123px;
-  left: 0;
-  // position: relative;  
+  top: 137px;
+  left: 0;  
   z-index: 100;
   padding-right: 20px;
   @media (min-width: 769px) and (max-width: 1030px) {
@@ -244,7 +243,7 @@ $large-screen-breakpoint: 1440px;
   width: 89%;
   border-radius: 20px;
 
-  @media (max-width: 1440px) { // Добавлена единица измерения
+  @media (max-width: 1440px) { 
     width: 88%;
   }
 
@@ -271,15 +270,11 @@ body {
   box-sizing: border-box;
   overflow-x: hidden;
   color: $primary;
-  // background-color: $nodle-black-700;
-  background-color: $background-body;
-  // background-image: url("https://res.cloudinary.com/dsr6kwzrr/image/upload/v1732992422/4k-Space-Wallpaper-scaled_rjuqft.jpg");
-  // background-repeat: no-repeat;
-  // background-size: cover;
+  background-color: $background-body; 
   &.expanded {
-    height: 100vh; /* Высота в развернутом состоянии */
-    overflow-y: scroll; /* Скролл включается только при развернутом блоке */
-    transition: height 1s ease; /* Плавное изменение высоты */
+    height: 100vh; 
+    overflow-y: scroll; 
+    transition: height 1s ease; 
   }
 
   &::-webkit-scrollbar {
@@ -300,36 +295,3 @@ body {
   }
 }
 
-// АДАПТИВНИЙ ДИЗАЙН
-/////////////////////////////////////////////////////////////////////////////////////////
-// // Мобільні телефони (480px–767px)
-// @media (min-width: 481px) and (max-width: 767px) {
-//   // .container {
-//   //   padding: 15px;
-//   //   font-size: 16px;
-//   // }
-// }
-
-// // Планшети (768px–1023px)
-// @media (min-width: 768px) and (max-width: 1023px) {
-//   // .container {
-//   //   padding: 20px;
-//   //   font-size: 18px;
-//   // }
-// }
-
-// // Ноутбуки та маленькі екрани (1024px–1399px)
-// @media (min-width: 1024px) and (max-width: 1399px) {
-//   // .container {
-//   //   padding: 25px;
-//   //   font-size: 20px;
-//   // }
-// }
-
-// // Великі екрани (1400px+)
-// @media (min-width: 1400px) {
-//   // .container {
-//   //   padding: 30px;
-//   //   font-size: 22px;
-//   // }
-// }
