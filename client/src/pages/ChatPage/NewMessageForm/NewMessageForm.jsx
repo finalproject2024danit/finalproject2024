@@ -1,4 +1,120 @@
 
+
+
+
+import { useEffect, useState } from "react";
+import { Client } from "@stomp/stompjs";
+import PropTypes from "prop-types";
+import styles from "./NewMessageForm.module.scss";
+import {useSelector} from "react-redux";
+
+const NewMessageForm = ({ userFrom, userTo }) => {
+  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
+  const [stompClient, setStompClient] = useState(null);
+  const token = useSelector((state) => state.user.authToken);
+
+
+  useEffect(() => {
+    const client = new Client({
+      brokerURL: "ws://134.209.246.21:9000/ws/chat", 
+      connectHeaders: {
+        Authorization: `Bearer ${token}`,
+      },
+      debug: (str) => console.log(str),
+      onConnect: () => {
+        console.log("Подключено к WebSocket");
+
+        client.subscribe("/topic/messages", (message) => {
+          const body = JSON.parse(message.body);
+          console.log("Получено сообщение:", body);
+          setMessages((prev) => [...prev, body]);
+        });
+      },
+      onStompError: (frame) => {
+        console.error("Ошибка STOMP:", frame.headers["message"]);
+      },
+    });
+
+    client.activate();
+    setStompClient(client);
+
+    return () => {
+      client.deactivate();
+    };
+  }, []);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!message.trim()) {
+      alert("Повідомлення не може бути порожнім.");
+      return;
+    }
+
+    const newMessage = {
+      userFrom,
+      userTo,
+      content: message,
+    };
+
+    if (stompClient && stompClient.connected) {
+      stompClient.publish({
+        destination: "/app/chat",
+        body: JSON.stringify(newMessage),
+      });
+      console.log("Надіслано повідомлення:", newMessage);
+    } else {
+      console.error("WebSocket не подключен");
+    }
+
+    setMessage("");
+  };
+
+  return (
+    <div>
+      <div>
+        <h3>Confidence between {userFrom} и {userTo}</h3>
+        {messages.length > 0 ? (
+          messages.map((msg, index) => (
+            <div key={index}>
+              <p>{msg.content}</p>
+              <span>From: {msg.userFrom}</span>
+              <span>To whom: {msg.userTo}</span>
+            </div>
+          ))
+        ) : (
+          <p>There are no messages between these users.</p>
+        )}
+      </div>
+      <form className={styles.NewMessageForm} onSubmit={handleSubmit}>
+        <input
+          type="text"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          placeholder="Write a message..."
+        />
+        <button type="submit" disabled={!message.trim()}>
+        Send
+        </button>
+      </form>
+    </div>
+  );
+};
+
+NewMessageForm.propTypes = {
+  userFrom: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  userTo: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  onSendMessage: PropTypes.func.isRequired,
+};
+
+export default NewMessageForm;
+
+
+
+
+
+
 // import { useState, useEffect } from "react";
 // import PropTypes from "prop-types"; // Import PropTypes
 // import styles from "./NewMessageForm.module.scss";
@@ -87,126 +203,3 @@
 // export default NewMessageForm;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import { useEffect, useState } from "react";
-import { Client } from "@stomp/stompjs";
-import PropTypes from "prop-types";
-import styles from "./NewMessageForm.module.scss";
-import {useSelector} from "react-redux";
-
-const NewMessageForm = ({ userFrom, userTo }) => {
-  const [message, setMessage] = useState("");
-  const [messages, setMessages] = useState([]);
-  const [stompClient, setStompClient] = useState(null);
-  const token = useSelector((state) => state.user.authToken);
-
-
-  useEffect(() => {
-    const client = new Client({
-      brokerURL: "ws://134.209.246.21:9000/ws/chat", // Адрес WebSocket
-      connectHeaders: {
-        Authorization: `Bearer ${token}`,
-      },
-      debug: (str) => console.log(str),
-      onConnect: () => {
-        console.log("Подключено к WebSocket");
-
-        client.subscribe("/topic/messages", (message) => {
-          const body = JSON.parse(message.body);
-          console.log("Получено сообщение:", body);
-          setMessages((prev) => [...prev, body]);
-        });
-      },
-      onStompError: (frame) => {
-        console.error("Ошибка STOMP:", frame.headers["message"]);
-      },
-    });
-
-    client.activate();
-    setStompClient(client);
-
-    return () => {
-      client.deactivate();
-    };
-  }, []);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (!message.trim()) {
-      alert("Сообщение не может быть пустым.");
-      return;
-    }
-
-    const newMessage = {
-      userFrom,
-      userTo,
-      content: message,
-    };
-
-    if (stompClient && stompClient.connected) {
-      stompClient.publish({
-        destination: "/app/chat",
-        body: JSON.stringify(newMessage),
-      });
-      console.log("Отправлено сообщение:", newMessage);
-    } else {
-      console.error("WebSocket не подключен");
-    }
-
-    setMessage("");
-  };
-
-  return (
-    <div>
-      <div>
-        <h3>Сообщения между {userFrom} и {userTo}</h3>
-        {messages.length > 0 ? (
-          messages.map((msg, index) => (
-            <div key={index}>
-              <p>{msg.content}</p>
-              <span>От: {msg.userFrom}</span>
-              <span>Кому: {msg.userTo}</span>
-            </div>
-          ))
-        ) : (
-          <p>Нет сообщений между этими пользователями.</p>
-        )}
-      </div>
-      <form className={styles.NewMessageForm} onSubmit={handleSubmit}>
-        <input
-          type="text"
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          placeholder="Напишите сообщение..."
-        />
-        <button type="submit" disabled={!message.trim()}>
-          Отправить
-        </button>
-      </form>
-    </div>
-  );
-};
-
-NewMessageForm.propTypes = {
-  userFrom: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  userTo: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  onSendMessage: PropTypes.func.isRequired,
-};
-
-export default NewMessageForm;

@@ -58,7 +58,7 @@ export const searchFriendsThunk = createAsyncThunk(
 
 export const fetchFriendsWithPagination = createAsyncThunk(
   "friends/fetchFriendsWithPagination",
-  async ({ userId, startPage, perPage = 3 }, { rejectWithValue }) => {
+  async ({ userId, startPage, perPage = 5 }, { rejectWithValue }) => {
     try {
       const response = await axiosInstance.get(`/users/${userId}/friends`, {
         params: { startPage, perPage },

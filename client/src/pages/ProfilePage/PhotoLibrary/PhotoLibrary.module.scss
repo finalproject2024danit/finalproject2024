@@ -43,6 +43,12 @@
         max-height: 350px;
     
       }
+      @media (max-width: 425px) {
+        width: 250px;
+    
+        max-height: 200px;
+    
+      }
     }
   }
 
