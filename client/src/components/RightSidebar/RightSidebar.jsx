@@ -25,7 +25,7 @@ const RightSidebar = () => {
         fetchFriendsWithPagination({
           userId: userFromId,
           startPage: 1,
-          perPage: 3,
+          perPage: 5,
         })
       );
     }
