@@ -219,7 +219,7 @@ const LoginPage = () => {
                     <Field
                         type="password"
                         name="confirmPassword"
-                        placeholder="Confirm Password"
+                        placeholder={t("login.confirmPassword")}
                     />
                     <ErrorMessage
                         name="confirmPassword"
