@@ -8,6 +8,7 @@
   height: 100%;
   pointer-events: none;
 }
+
 .circles li {
   position: absolute;
   display: block;
@@ -18,12 +19,14 @@
   animation: animate 25s linear infinite;
   bottom: -150px;
 }
+
 .circles li:nth-child(1) {
   left: 25%;
   width: 40px;
   height: 40px;
   animation-delay: 0s;
 }
+
 .circles li:nth-child(2) {
   left: 10%;
   width: 20px;
@@ -31,12 +34,14 @@
   animation-delay: 2s;
   animation-duration: 12s;
 }
+
 .circles li:nth-child(3) {
   left: 70%;
   width: 20px;
   height: 20px;
   animation-delay: 4s;
 }
+
 .circles li:nth-child(4) {
   left: 40%;
   width: 35px;
@@ -44,24 +49,28 @@
   animation-delay: 0s;
   animation-duration: 18s;
 }
+
 .circles li:nth-child(5) {
   left: 65%;
   width: 20px;
   height: 20px;
   animation-delay: 0s;
 }
+
 .circles li:nth-child(6) {
   left: 75%;
   width: 30px;
   height: 30px;
   animation-delay: 3s;
 }
+
 .circles li:nth-child(7) {
   left: 35%;
   width: 35px;
   height: 35px;
   animation-delay: 7s;
 }
+
 .circles li:nth-child(8) {
   left: 50%;
   width: 25px;
@@ -69,6 +78,7 @@
   animation-delay: 15s;
   animation-duration: 45s;
 }
+
 .circles li:nth-child(9) {
   left: 20%;
   width: 15px;
@@ -76,6 +86,7 @@
   animation-delay: 2s;
   animation-duration: 35s;
 }
+
 .circles li:nth-child(10) {
   left: 85%;
   width: 35px;
@@ -132,6 +143,7 @@
   overflow: hidden;
   backdrop-filter: saturate(180%) blur(8px);
 }
+
 .form.login {
   display: flex;
   flex-direction: column;
@@ -141,7 +153,6 @@
   left: 50%;
   bottom: -88%;
   transform: translateX(-50%);
-  width: calc(25% + 425px);
   padding: 0 140px;
   border-radius: 50%;
   height: 100%;
@@ -151,6 +162,7 @@
   border: 7px solid $eighth;
   width: 400px;
 }
+
 .wrapper.active .form.login {
   bottom: -16%;
 
@@ -160,6 +172,7 @@
     width: 50vw;
   }
 }
+
 .form header {
   font-size: $extra-large;
   text-align: center;
@@ -167,22 +180,27 @@
   font-weight: $font-weight-semi-bold;
   cursor: pointer;
 }
+
 .form.login header {
   color: $primary;
   opacity: 0.6;
 }
+
 .wrapper.active .form.login header {
   opacity: 1;
 }
+
 .wrapper.active .signup header {
   opacity: 0.6;
 }
+
 .wrapper form {
   display: flex;
   flex-direction: column;
   gap: 20px;
   margin-top: 40px;
 }
+
 form input {
   height: 47px;
   outline: none;
@@ -194,50 +212,59 @@ form input {
   border-radius: $border-radius-medium;
   background: $primary;
   box-shadow: -10px -10px 14px rgba(255, 255, 255, 0.3),
-    10px 10px 15px rgba(70, 70, 70, 0.15),
-    inset -10px -10px 15px rgba(255, 255, 255, 0.3),
-    inset 10px 10px 15px rgba(70, 70, 70, 0.15);
+  10px 10px 15px rgba(70, 70, 70, 0.15),
+  inset -10px -10px 15px rgba(255, 255, 255, 0.3),
+  inset 10px 10px 15px rgba(70, 70, 70, 0.15);
   border: 1px solid #05b5b4de;
 }
+
 .form.login input {
   border: 1px solid $ninth;
   box-shadow: -10px -10px 14px rgb(27 22 86 / 30%),
-    10px 10px 15px rgb(61 88 151 / 15%),
-    inset -10px -10px 15px rgb(108 136 233 / 30%),
-    inset 10px 10px 15px rgb(21 48 106 / 15%);
+  10px 10px 15px rgb(61 88 151 / 15%),
+  inset -10px -10px 15px rgb(108 136 233 / 30%),
+  inset 10px 10px 15px rgb(21 48 106 / 15%);
 }
+
 .form.login input:focus {
   box-shadow: 0 1px 0 #ddd;
 }
+
 form .checkbox {
   display: flex;
   align-items: center;
   gap: 10px;
 }
+
 .checkbox input[type="checkbox"] {
   height: 16px;
   width: 16px;
   accent-color: $primary;
   cursor: pointer;
 }
+
 form .checkbox label {
   cursor: pointer;
   color: $primary;
 }
+
 form a {
   color: $tenth;
   text-decoration: none;
 }
+
 form a:hover {
   text-decoration: underline;
 }
+
 form input[type="submit"] {
   margin-top: 15px;
-  padding: none;
+  padding: 0;
   font-size: $medium;
   font-weight: $font-weight-medium;
   cursor: pointer;
 }
+
 .form.login input[type="submit"] {
   background: $background-btn-sixth;
   color: $primary;
@@ -253,4 +280,61 @@ form input[type="submit"] {
   font-size: $medium;
   font-weight: $font-weight-semi-bold;
   cursor: pointer;
+}
+
+.languageToggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 25px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 25px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 21px;
+  width: 21px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2196f3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(25px);
+}
+
+.languageLabel {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333;
 }

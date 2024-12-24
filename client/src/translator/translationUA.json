@@ -17,5 +17,14 @@
     "login": "Вхід",
     "solarSystem": "Сонячна система",
     "globalSearch": "Глобальний пошук"
+  },
+  "login": {
+    "title": "Login",
+    "firstName": "First Name",
+    "lastName": "Last name",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "signUp": "Signup"
   }
 }
