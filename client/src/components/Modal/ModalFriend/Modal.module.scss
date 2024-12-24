@@ -15,8 +15,8 @@
 
 .modalContent {
   background: $background-sixth;
-  padding: 20px;
-  border-radius: 8px;
+  padding: $padding-large;
+  border-radius: $border-radius-medium;
   text-align: center;
 }
 
@@ -30,9 +30,9 @@
   background: $background-btn-fifth;
   color: $primary;
   border: none;
-  padding: 10px 15px;
+  padding: $padding-medium 15px;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: $border-radius-small;
 }
 .confirmButton:hover{
   background: $background-btn-hover-fifth;
@@ -42,9 +42,9 @@
   background: $background-btn-first;
   color: $primary;
   border: none;
-  padding: 10px 15px;
+  padding: $padding-medium 15px;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: $border-radius-small;
 }
 .cancelButton:hover{
   background: $background-btn-hover-first;

@@ -5,6 +5,7 @@ import {
   createPost,
   updatePost,
   deletePost,
+  getAllPostsFiltered,
 } from "../../api/groups/requests.js";
 import {
   getGroupsFromLocalStorage,
@@ -30,6 +31,13 @@ export const fetchGroupById = createAsyncThunk(
   "groups/fetchGroupById",
   async (id) => {
     return await getGroupById(id);
+  }
+);
+
+export const fetchPosts = createAsyncThunk(
+  "groups/fetchPosts",
+  async ({ startPage = 0, perPage = 5 }) => {
+    return await getAllPostsFiltered(startPage, perPage);
   }
 );
 
@@ -80,11 +88,29 @@ const groupSlice = createSlice({
       .addCase(fetchGroupById.rejected, (state, action) => {
         state.error = action.error.message;
       })
+      .addCase(fetchPosts.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchPosts.fulfilled, (state, action) => {
+        const { posts, currentPage, totalPages } = action.payload;
+        state.posts = [...state.posts, ...posts];
+        state.postsPagination.currentPage = currentPage;
+        state.postsPagination.totalPages = totalPages;
+        state.loading = false;
+      })
+      .addCase(fetchPosts.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
       .addCase(addPostToGroup.fulfilled, (state, action) => {
         const { groupId, post } = action.payload;
 
         if (state.selectedGroup?.id === groupId) {
-          state.selectedGroup.posts = [...(state.selectedGroup.posts || []), post];
+          state.selectedGroup.posts = [
+            ...(state.selectedGroup.posts || []),
+            post,
+          ];
         }
 
         const group = state.groups.find((g) => g.id === groupId);
@@ -95,7 +121,10 @@ const groupSlice = createSlice({
         const storedGroups = getGroupsFromLocalStorage();
         const groupIndex = storedGroups.findIndex((g) => g.id === groupId);
         if (groupIndex > -1) {
-          storedGroups[groupIndex].posts = [...(storedGroups[groupIndex].posts || []), post];
+          storedGroups[groupIndex].posts = [
+            ...(storedGroups[groupIndex].posts || []),
+            post,
+          ];
         } else {
           storedGroups.push({ id: groupId, posts: [post] });
         }

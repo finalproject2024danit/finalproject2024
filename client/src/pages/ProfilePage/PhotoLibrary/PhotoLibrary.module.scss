@@ -4,7 +4,8 @@
   margin: 0 auto;
   width: 100vh;
   text-align: center;
-  color: white;
+  color: $primary;
+  width: 80vw;
 
   h2 {
     color: #00bfff;
@@ -35,7 +36,17 @@
       height: auto;
       max-height: 500px;
       object-fit: cover;
-      border-radius: 10px;
+      border-radius: $border-radius-medium-big;
+      @media (max-width: 768px) {
+        width: 450px;
+
+        max-height: 350px;
+      }
+      @media (max-width: 425px) {
+        width: 250px;
+
+        max-height: 200px;
+      }
     }
   }
 
@@ -45,10 +56,10 @@
     top: 50%;
     transform: translateY(-50%);
     background-color: rgba(0, 0, 0, 0.5);
-    color: white;
+    color: $primary;
     border: none;
     font-size: 2rem;
-    padding: 10px;
+    padding: $padding-medium;
     cursor: pointer;
     border-radius: 50%;
     z-index: 10;
@@ -65,12 +76,12 @@
   .sliderNav {
     display: flex;
     justify-content: center;
-    margin-top: 10px;
+    margin-top: $margin-medium;
 
     .dot {
       width: 10px;
       height: 10px;
-      margin: 5px;
+      margin: $margin-small;
       background-color: #ddd;
       border-radius: 50%;
       display: inline-block;

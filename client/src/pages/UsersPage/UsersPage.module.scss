@@ -1,31 +1,44 @@
 @use "../../App.scss" as *;
 
+
+.usersContainer{
+  display: flex;
+  flex-direction: column;
+
+}
 .userBox {
   display: flex;
   flex-wrap: wrap;
   gap: 50px 20px;
   padding: 0 20px;
-  justify-content: space-between;
-  // height: 40vh;
+  justify-content: space-between; 
+  width: 82vw;
+  
+
+  @media (max-width: 767px) {
+    justify-content: center;
+    width: 90vw;
+  }  
 }
 
 .userCard {
   position: relative;
-  min-width: 295px;
-  width: 20%;
+  flex-basis: calc((100% - 60px) / 4); 
+  max-width: calc((100% - 60px) / 4); 
   height: 200px;
   transform-style: preserve-3d;
   transition: transform 0.6s;
   cursor: pointer;
 
-  @media (max-width: 1024px) and (min-width: 768px) {
-    width: 45%;
+  @media (max-width: 1024px) and (min-width: 768px) {  
+    flex-basis: calc((100% - 60px) / 3); 
+    max-width: calc((100% - 60px) / 3); 
   }
-
-  // Styles for mobile screens
-  @media (max-width: 768px) {
-    width: 100%;
-    height: 180px;
+  
+  @media (max-width: 767px) {
+    flex-basis: calc((100% - 20px) / 1); 
+  max-width: calc((100% - 20px) / 1); 
+  height: 300px;
   }
 
   &.flipped {
@@ -64,14 +77,14 @@
   height: 200px;
   text-align: center;
   gap: 10px;
-  padding-top: 20px;
+  padding-top: $padding-large;
 }
 
 .front .inner h2 {
-  color: grey;
+  color: $secondary;
   font-family: $heading-font;
-  font-weight: 300;
-  font-size: 18px;
+  font-weight: $font-weight-light;
+  font-size: $medium;
 }
 
 .front .inner h2::after {
@@ -94,23 +107,21 @@
   object-position: top;
   border-radius: 20px;
 
-  // Style for tablet screens
-  @media (max-width: 1024px) and (min-width: 768px) {
+   @media (max-width: 1024px) and (min-width: 768px) {
     width: 75%;
     height: 75%;
   }
 
-  // Style for mobile screens
-  @media (max-width: 768px) {
-    width: 70%;
-    height: 70%;
+    @media (max-width: 768px) {
+    width: 90%;
+    height: 80%;
   }
 }
 
 .link {
   text-decoration: none;
-  color: #ffffff;
-  font-size: 18px;
+  color: $primary;
+  font-size: $medium;
   font-weight: bold;
   margin-bottom: 12px;
   display: inline-block;
@@ -121,9 +132,8 @@
     transform: scale(1.1);
   }
 
-  // Style for mobile screens
-  @media (max-width: 768px) {
-    font-size: 16px;
+   @media (max-width: 768px) {
+    font-size: $normal;
   }
 }
 
@@ -132,19 +142,18 @@
 }
 
 .clickToFlip {
-  font-size: 16px;
-  margin-top: 10px;
-  font-weight: 300;
+  font-size: $normal;
+  margin-top: $margin-medium;
+  font-weight: $font-weight-light;
   color: #c0c0c0;
   transition: color 0.3s;
 
   &:hover {
-    color: #ffffff;
+    color: $primary;
   }
 
-  // Style for mobile screens
   @media (max-width: 768px) {
-    font-size: 14px;
+    font-size: $smaller;
   }
 }
 
@@ -153,7 +162,6 @@
   justify-content: center;
   margin: 20px 0;
 
-  // Style for mobile screens
   @media (max-width: 768px) {
     margin: 15px 0;
   }
@@ -161,17 +169,17 @@
 
 .searchInput {
   width: 50%;
-  padding: 10px;
+  padding: $padding-medium;
   border-radius: 25px;
   border: 1px solid #cababa;
   background-color: #363a3d;
   outline: none;
-  font-size: 16px;
+  font-size: $normal;
   transition: all 0.3s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
   &::placeholder {
-    color: gray;
+    color: $secondary;
   }
 
   &:focus {
@@ -179,9 +187,8 @@
     box-shadow: 0 2px 8px rgba(106, 90, 205, 0.3);
   }
 
-  // Style for mobile screens
-  @media (max-width: 768px) {
-    width: 80%;
-    font-size: 14px;
+   @media (max-width: 768px) {
+    width: 50%;
+    font-size: $smaller;
   }
 }

@@ -1,31 +1,28 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { likePost } from '../../api/likes/requests'; 
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { likePost } from "../../api/likes/requests";
 
-// Функція для додавання лайку (через асинхронний thunk)
 export const addLike = createAsyncThunk(
-  'like/addLike',
+  "like/addLike",
   async ({ postId, userId }, { rejectWithValue }) => {
     try {
-      const response = await likePost(postId, userId); // Додаємо лайк через API
-      return response; // Повертаємо результат (структура відповіді повинна містити postId та likesCount)
+      const response = await likePost(postId, userId);
+      return response;
     } catch (error) {
-      return rejectWithValue(error.message); // Повертаємо помилку, якщо є
+      return rejectWithValue(error.message);
     }
   }
 );
 
 const initialState = {
-  likes: JSON.parse(localStorage.getItem('likes')) || {}, // Завантажуємо лайки з localStorage при ініціалізації
+  likes: JSON.parse(localStorage.getItem("likes")) || {},
   loading: false,
   error: null,
 };
 
 const likeSlice = createSlice({
-  name: 'like',
+  name: "like",
   initialState,
-  reducers: {
-    // Додаткові редюсери (якщо потрібні)
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(addLike.pending, (state) => {
@@ -35,13 +32,11 @@ const likeSlice = createSlice({
       .addCase(addLike.fulfilled, (state, action) => {
         const { postId, likesCount } = action.payload;
 
-        // Оновлюємо кількість лайків для поста в Redux
-        state.likes[postId] = likesCount; 
+        state.likes[postId] = likesCount;
         state.loading = false;
 
-        // Збереження лайків в localStorage
-        const storedLikes = { ...state.likes }; // Копіюємо поточні лайки
-        localStorage.setItem('likes', JSON.stringify(storedLikes)); // Зберігаємо в localStorage
+        const storedLikes = { ...state.likes };
+        localStorage.setItem("likes", JSON.stringify(storedLikes));
       })
       .addCase(addLike.rejected, (state, action) => {
         state.loading = false;

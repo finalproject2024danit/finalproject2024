@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef} from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import {
@@ -6,7 +6,7 @@ import {
   fetchFriendsWithPagination,
 } from "../../redux/slices/friendsSlice.js";
 import styles from "./RightSidebar.module.scss";
-import ButtonDeleteFriend from "../../components/ButtonDeleteFriend/index.jsx";
+
 import Modal from "../../components/Modal/ModalFriend/Modal.jsx";
 
 const RightSidebar = () => {
@@ -16,25 +16,20 @@ const RightSidebar = () => {
     (state) => state.friends
   );
   const [isModalOpen, setModalOpen] = useState(false);
-  const [selectedFriendId, setSelectedFriendId] = useState(null); 
+  const [selectedFriendId, setSelectedFriendId] = useState(null);
   const scrollContainerRef = useRef(null);
 
-   useEffect(() => {
+  useEffect(() => {
     if (userFromId) {
       dispatch(
         fetchFriendsWithPagination({
           userId: userFromId,
           startPage: 1,
-          perPage: 3,
+          perPage: 10,
         })
       );
     }
   }, [dispatch, userFromId]);
-
-  const handleOpenModal = (friendId) => {
-    setSelectedFriendId(friendId);
-    setModalOpen(true);
-  };
 
   const handleCloseModal = () => {
     setModalOpen(false);
@@ -59,32 +54,35 @@ const RightSidebar = () => {
   };
 
   const handleScroll = (e) => {
-    const bottom =
+    const isBottomReached =
       e.target.scrollTop + e.target.clientHeight >= e.target.scrollHeight - 1;
-  
-    if (bottom && hasMore && status !== "loading") {
-      const scrollTop = scrollContainerRef.current.scrollTop; 
+
+    if (isBottomReached && hasMore && status !== "loading") {
+      const scrollTop = scrollContainerRef.current.scrollTop;
+
       dispatch(
         fetchFriendsWithPagination({
           userId: userFromId,
           startPage: currentPage + 1,
           perPage: 3,
         })
-      ).finally(() => {       
+      ).finally(() => {
         scrollContainerRef.current.scrollTop = scrollTop;
       });
     }
   };
 
-  if (status === "loading") return null;
- 
+  {
+    status === "failed" && <p className={styles.error}>Error: {error}</p>;
+  }
+
   return (
     <div
       className={styles.rightMenu}
       onScroll={handleScroll}
       ref={scrollContainerRef}
     >
-       <h2 className={styles.friendsTitle}>Friends</h2>      
+      <h2 className={styles.friendsTitle}>Friends</h2>
 
       {status === "loading" && <p>Loading...</p>}
       {status === "failed" && <p className={styles.error}>Error: {error}</p>}
@@ -97,17 +95,17 @@ const RightSidebar = () => {
                   src={friend.avatar}
                   alt={`${friend.firstName} ${friend.lastName}`}
                   title={`${friend.firstName} ${friend.lastName}`}
-                  className={styles.friendAvatar} 
+                  className={styles.friendAvatar}
                 />
                 <div className={styles.friendName}>
                   <p>{friend.firstName}</p>
                   <p>{friend.lastName}</p>
                 </div>
               </NavLink>
-              <ButtonDeleteFriend
+              {/* <ButtonDeleteFriend
                 onClick={() => handleOpenModal(friend.id)}
                 className={styles.deleteButton}
-              />
+              /> */}
             </li>
           ))}
         </ul>

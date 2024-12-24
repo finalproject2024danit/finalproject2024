@@ -3,25 +3,26 @@
 .workplaceBox {
   display: flex;
   flex-direction: column;
-  padding: 30px;
+  padding: $padding-largexl;
   background: linear-gradient(to bottom, #141e30, #243b55);
-  color: #ffffff;
+  color: $primary;
   border-radius: 15px;
   box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
+  width: 80vw;
 }
 
 .content {
   flex: 1;
   background-color: rgba(20, 30, 48, 0.8);
-  border-radius: 10px;
-  padding: 20px;
+  border-radius: $border-radius-medium-big;
+  padding: $padding-large;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
 }
 
 .title {
   font-size: 1.8rem;
   margin-bottom: 1rem;
-  color: #ffffff;
+  color: $primary;
 }
 
 .form {
@@ -44,19 +45,19 @@
 .input,
 .select {
   width: 100%;
-  padding: 10px;
-  border-radius: 8px;
+  padding: $padding-medium;
+  border-radius: $border-radius-medium;
   background-color: #1c2a3e;
-  color: #ffffff;
+  color: $primary;
   border: 1px solid #394a6d;
 }
 
 .button {
   padding: 12px 20px;
   margin-top: 15px;
-  border-radius: 8px;
+  border-radius: $border-radius-medium;
   background-color: #3b4e7e;
-  color: #ffffff;
+  color: $primary;
   text-transform: uppercase;
   cursor: pointer;
   border: none;
@@ -70,9 +71,9 @@
 
 .suggestions {
   position: absolute;
-  background-color: #fff;
+  background-color: $primary;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: $border-radius-small;
   z-index: 1000;
   list-style: none;
   padding: 0;
@@ -80,7 +81,7 @@
 }
 
 .suggestions li {
-  padding: 10px;
+  padding: $padding-medium;
   cursor: pointer;
 }
 
@@ -90,23 +91,23 @@
 
 .currentWorkplace {
   background: rgba(20, 30, 48, 0.8);
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 20px;
+  border-radius: $border-radius-large;
+  padding: $padding-large;
+  margin-bottom: $margin-large;
   box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
 }
 
 .subtitle {
   font-size: 1.4rem;
   color: #b0b0b0;
-  margin-bottom: 10px;
+  margin-bottom: $margin-medium;
 }
 
 .workplaceText {
   font-size: 1.2rem;
-  color: #ffffff;
+  color: $primary;
   margin-top: 8px;
-  font-weight: 500;
+  font-weight: $font-weight-medium;
 }
 
 .workplaceText.noWorkplace {

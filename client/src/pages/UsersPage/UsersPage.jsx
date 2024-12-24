@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import styles from "./UsersPage.module.scss";
@@ -25,7 +25,7 @@ const UsersPage = () => {
   const [flippedCards, setFlippedCards] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
-  const usersPerPage = 10;
+  const usersPerPage = 17;
   const sortBy = "firstName";
   const sortDirection = "asc";
   const userFromId = useSelector((state) => state.user.id);
@@ -34,6 +34,7 @@ const UsersPage = () => {
   const [onConfirmAction, setOnConfirmAction] = useState(() => () => {});
   const [selectedUserId, setSelectedUserId] = useState(null);
   const { friends } = useSelector((state) => state.friends);
+  const loaderRef = useRef(null);
 
   const fetchUsers = useCallback(async () => {
     if (!hasMore || loading) return;
@@ -50,12 +51,12 @@ const UsersPage = () => {
         },
       });
 
-      const usersData = response.data || [];     
+      const usersData = response.data || [];
       if (usersData.length > 0) {
         setUsers((prevUsers) => [...prevUsers, ...usersData]);
         if (usersData.length < usersPerPage) {
-          setHasMore(false); 
-      }
+          setHasMore(false);
+        }
       } else {
         setHasMore(false);
       }
@@ -74,22 +75,26 @@ const UsersPage = () => {
     fetchUsers();
   }, [fetchUsers]);
 
-  const handleScroll = () => {
-
-    const scrollPosition = window.innerHeight + document.documentElement.scrollTop; 
-    const threshold = document.documentElement.offsetHeight - 100; 
-  
-    if (!loading && hasMore && scrollPosition >= threshold) {
-
-      setCurrentPage((prevPage) => prevPage + 1);
-    }
-  };
-  
-
   useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore && !loading) {
+          setCurrentPage((prevPage) => prevPage + 1);
+        }
+      },
+      { threshold: 1.0 }
+    );
+
+    if (loaderRef.current) {
+      observer.observe(loaderRef.current);
+    }
+
+    return () => {
+      if (loaderRef.current) {
+        observer.unobserve(loaderRef.current);
+      }
+    };
+  }, [hasMore, loading]);
 
   const filteredUsers = users.filter((user) =>
     `${user.firstName} ${user.lastName}`
@@ -129,62 +134,68 @@ const UsersPage = () => {
 
   return (
     <MainContent title="">
-      <div className={styles.searchContainer}>
-        <input
-          type="text"
-          placeholder={t("users.searchPlaceholder")}
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className={styles.searchInput}
-        />
-      </div>
+      <div className={styles.usersContainer}>
+        <div className={styles.searchContainer}>
+          <input
+            type="text"
+            placeholder={t("users.searchPlaceholder")}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className={styles.searchInput}
+          />
+        </div>
 
-      <div className={styles.userBox}>
-        {filteredUsers.map((user) => (
-          <div
-            key={user.id}
-            className={`${styles.userCard} ${
-              flippedCards[user.id] ? styles.flipped : ""
-            }`}
-            onClick={() => handleCardClick(user.id)}
-          >
-            <div className={styles.front}>
-              <div className={styles.inner}>
-                <img
-                  className={styles.userPhoto}
-                  src={user.avatar || defaultAvatar}
-                  alt={`${user.firstName} ${user.lastName}`}
-                  onError={(e) => (e.target.src = defaultAvatar)}
-                />
-                <h2>
-                  {user.firstName} {user.lastName}
-                </h2>
+        <div className={styles.userBox}>
+          {filteredUsers.map((user) => (
+            <div
+              key={user.id}
+              className={`${styles.userCard} ${
+                flippedCards[user.id] ? styles.flipped : ""
+              }`}
+              onClick={() => handleCardClick(user.id)}
+            >
+              <div className={styles.front}>
+                <div className={styles.inner}>
+                  <img
+                    className={styles.userPhoto}
+                    src={user.avatar || defaultAvatar}
+                    alt={`${user.firstName} ${user.lastName}`}
+                    onError={(e) => (e.target.src = defaultAvatar)}
+                  />
+                  <h2>
+                    {user.firstName} {user.lastName}
+                  </h2>
+                </div>
+              </div>
+              <div className={styles.back}>
+                <div className={styles.inner}>
+                  <NavLink to={`/user/${user.id}`} className={styles.link}>
+                    <h3 className={styles.infoUser}>{t("users.infoUser")}</h3>
+                  </NavLink>
+                  <ButtonAddFriend
+                    userId={user.id}
+                    onClick={handleAddFriend}
+                    isFriend={friends.some((friend) => friend.id === user.id)}
+                    disabled={selectedUserId === null}
+                  />
+                  <h2 className={styles.clickToFlip}>
+                    {t("users.clickToFlip")}
+                  </h2>
+                </div>
               </div>
             </div>
-            <div className={styles.back}>
-              <div className={styles.inner}>
-                <NavLink to={`/user/${user.id}`} className={styles.link}>
-                  <h3 className={styles.infoUser}>{t("users.infoUser")}</h3>
-                </NavLink>
-                <ButtonAddFriend
-                  userId={user.id}
-                  onClick={handleAddFriend}
-                  isFriend={friends.some((friend) => friend.id === user.id)}
-                  disabled={selectedUserId === null}
-                />
-                <h2 className={styles.clickToFlip}>{t("users.clickToFlip")}</h2>
-              </div>
-            </div>
-          </div>
-        ))}
+          ))}
+          {loading && <p>{t("users.loading")}</p>}
+          {error && <p>{error}</p>}
+          <div ref={loaderRef} className={styles.loader}></div>
+        </div>
+
         <Modal
           isOpen={isModalOpen}
           message={modalMessage}
           onConfirm={onConfirmAction}
           onClose={() => setIsModalOpen(false)}
         />
-        {loading && <p>{t("users.loading")}</p>}
-        {error && <p>{error}</p>}
       </div>
     </MainContent>
   );

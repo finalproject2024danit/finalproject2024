@@ -7,17 +7,16 @@ import {
   confirmDeletePost,
   toggleLike,
 } from "../../utils/postUtils.js";
-import {  
-  handleFetchComments,
-  handleSubmitComment,
-  handleDeleteComment,
-} from "../../utils/commentsUtils.js";
 import styles from "./GroupPage.module.scss";
 import MainContent from "../../components/MainContent/MainContent";
-import { setComments } from "../../redux/slices/commentsSlice.js";
+import {
+  setComments,
+  fetchComments,
+  fetchNewComment,
+  removeComment,
+} from "../../redux/slices/commentsSlice.js";
 import LikeIcon from "../../svg/Header/Like/index.jsx";
 import { useParams } from "react-router-dom";
-import ButtonDeleteFriend from "../../components/ButtonDeleteFriend/index.jsx";
 import ModalPost from "../../components/Modal/ModalGroup/ModalPost.jsx";
 import Modal from "../../components/Modal/ModalFriend/Modal.jsx";
 import { format } from "date-fns";
@@ -28,7 +27,7 @@ const GroupPage = () => {
   const { groups, loading, selectedGroup } = useSelector(
     (state) => state.group
   );
-  const { comments = {} } = useSelector((state) => state.comments || {});
+  const comments = useSelector((state) => state.comments.comments);
   const observer = useRef();
   const [page, setPage] = useState(0);
   const [commentValues, setCommentValues] = useState({});
@@ -46,9 +45,8 @@ const GroupPage = () => {
   const [isDeleteCommentModalOpen, setIsDeleteCommentModalOpen] =
     useState(false);
   const [commentToDelete, setCommentToDelete] = useState(null);
-  // const [isExpanded, setIsExpanded] = useState(false);
-  const [expandedPosts, setExpandedPosts] = useState({});  
-  
+  const [expandedPosts, setExpandedPosts] = useState({});
+  const [groupToDelete, setGroupToDelete] = useState(null);
 
   const handleCreatePost = () => {
     createPost(dispatch, selectedGroup, userFromId, newPost, handleCloseModal);
@@ -117,16 +115,11 @@ const GroupPage = () => {
 
   const handleGroupClick = (groupId) => {
     dispatch(fetchGroupById(groupId));
-  };  
+  };
 
   const sortedPosts = selectedGroup?.posts
     ? [...selectedGroup.posts].reverse()
     : [];
-
-  const handleEditPost = (post) => {
-    setEditPost(post);
-    setIsModalOpen(true);
-  };
 
   const handleOpenDeleteModal = (postId) => {
     setPostToDelete(postId);
@@ -139,37 +132,51 @@ const GroupPage = () => {
   };
 
   const toggleExpand = (postId) => {
+    console.log("Fetching comments for post:", postId);
+    dispatch(fetchComments({ postId }));
     setExpandedPosts((prev) => ({
       ...prev,
       [postId]: !prev[postId],
     }));
   };
 
-  // Відкриваємо модальне вікно при натисканні на кнопку видалення коментаря
   const handleOpenDeleteCommentModal = (commentId, postId, groupId) => {
-    console.log("Comment ID:", commentId); // Логування commentId
-    console.log("Post ID:", postId); // Логування postId
-    console.log("Group ID:", groupId); // Логування groupId
-    setCommentToDelete({ commentId, postId, groupId }); // Зберігаємо інформацію про коментар
-    setIsDeleteCommentModalOpen(true); // Відкриваємо модальне вікно
+    setCommentToDelete(commentId);
+    setPostToDelete(postId);
+    setGroupToDelete(groupId);
+    setIsDeleteCommentModalOpen(true);
   };
 
-  // Закриваємо модальне вікно
   const handleCloseDeleteCommentModal = () => {
-    setCommentToDelete(null); // Очищаємо інформацію про коментар
-    setIsDeleteCommentModalOpen(false); // Закриваємо модальне вікно
+    setCommentToDelete(null);
+    setIsDeleteCommentModalOpen(false);
   };
 
-  const handleDeleteCommentConfirm = () => {
-    handleDeleteComment(commentToDelete, dispatch, handleCloseDeleteCommentModal);
+  const handleRemoveComment = () => {
+    if (!commentToDelete || !groupToDelete) {
+      console.error("Comment ID is missing");
+      return;
+    }
+    console.log(
+      "Deleting comment for postId:",
+      postToDelete,
+      "commentId:",
+      commentToDelete
+    );
+    dispatch(
+      removeComment({ postId: postToDelete, commentId: commentToDelete })
+    );
+    handleCloseDeleteCommentModal();
   };
-  
+
   const handleCommentChangeWrapper = (postId, event) => {
     handleCommentChange(postId, event, setCommentValues);
   };
-  
-  const handleSubmitCommentWrapper = (postId, groupId) => {
-    handleSubmitComment(postId, groupId, commentValues, userFromId, dispatch, setCommentValues);
+
+  const fetchNewCommentWrapper = (postId, content, userId) => {
+    if (!content) return;
+    dispatch(fetchNewComment({ postId, userId, content }));
+    setCommentValues((prev) => ({ ...prev, [postId]: "" }));
   };
 
   const handleCommentChange = (postId, event) => {
@@ -182,13 +189,15 @@ const GroupPage = () => {
 
   useEffect(() => {
     if (selectedGroup) {
-      selectedGroup.posts.forEach(post => {
-        handleFetchComments(selectedGroup.id, post.id, dispatch);
+      selectedGroup.posts.forEach((post) => {
+        fetchComments(selectedGroup.id, post.id, dispatch);
       });
     }
   }, [selectedGroup, dispatch]);
 
-  
+  const userFirstName = localStorage.getItem("firstName");
+  const userLastName = localStorage.getItem("lastName");
+
   return (
     <MainContent title="">
       <div className={styles.groupContainer}>
@@ -221,27 +230,20 @@ const GroupPage = () => {
             </button>
             <div className={styles.groupRender}>
               {sortedPosts.length > 0 ? (
-                sortedPosts.map((post, index) => {
-                  const postComments =
-                    comments[selectedGroup.id]?.[post.id] || [];
+                sortedPosts.map((post) => {
+                  const postComments = comments[post.id] || [];
                   const { liked = false, likes = 0 } =
                     likeStates[post.id] || {};
 
                   return (
-                    <div key={index} className={styles.post}>
+                    <div key={post.id} className={styles.post}>
                       <p>{post.content}</p>
                       <div className={styles.postActions}>
                         <button
-                          className={styles.editButton}
-                          onClick={() => handleEditPost(post)}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          className={styles.deleteButton}
+                          className={styles.deleteBtnPost}
                           onClick={() => handleOpenDeleteModal(post.id)}
                         >
-                          Delete
+                          Delete post
                         </button>
                       </div>
                       <div className={styles.postFeedback}>
@@ -259,61 +261,62 @@ const GroupPage = () => {
                       <form
                         onSubmit={(event) => {
                           event.preventDefault();
-                          handleSubmitCommentWrapper(post.id, selectedGroup.id);
+                          fetchNewCommentWrapper(
+                            post.id,
+                            commentValues[post.id],
+                            userFromId.id
+                          );
                         }}
                         className={styles.commentForm}
                       >
                         <div className={styles.commentsList}>
                           {postComments.length > 0 ? (
-                            postComments.map((comment, idx) => (
-                              <div key={idx} className={styles.comment}>
-                                <div className={styles.commentHeader}>
-                                  <div className={styles.commentInfo}>
-                                    <img
-                                      src={
-                                        comment.userAvatar ||
-                                        "defaultAvatar.jpg"
-                                      }
-                                      alt={`${comment.userName} ${comment.userLastName}`}
-                                      className={styles.commentAvatar}
-                                    />
-                                    <span className={styles.commentAuthor}>
-                                      {comment.userName} {comment.userLastName}
+                            postComments.map((comment) => {
+                              return (
+                                <div
+                                  key={comment.id}
+                                  className={styles.comment}
+                                >
+                                  <div className={styles.commentHeader}>
+                                    <div className={styles.commentInfo}>
+                                      <span className={styles.commentAuthor}>
+                                        {userFirstName} {userLastName}
+                                      </span>
+                                    </div>
+                                    <span className={styles.commentDate}>
+                                      {format(
+                                        new Date(comment.createdDate),
+                                        "dd.MM.yyyy"
+                                      )}
                                     </span>
+                                    <button
+                                      type="button"
+                                      className={styles.deleteBtnComment}
+                                      onClick={() => {
+                                        handleOpenDeleteCommentModal(
+                                          comment.id,
+                                          post.id,
+                                          selectedGroup.id
+                                        );
+                                      }}
+                                    >
+                                      x
+                                    </button>                                   
                                   </div>
-                                  <span className={styles.commentDate}>
-                                    {format(
-                                      new Date(comment.createdDate),
-                                      "dd.MM.yyyy"
-                                    )}
-                                  </span>
-                                  <ButtonDeleteFriend
-                                    className={styles.deleteButton}
-                                    onClick={() => {
-                                      console.log("Selected Comment:", comment); // Логування об'єкта comment
-                                      console.log(
-                                        "Selected Comment ID:",
-                                        comment.id
-                                      ); // Логування ID
-                                      handleOpenDeleteCommentModal(
-                                        comment.id,
-                                        post.id,
-                                        selectedGroup.id
-                                      );
-                                    }}
-                                  />
+                                  <p>{comment.content}</p>
                                 </div>
-                                <p>{comment.content}</p>
-                              </div>
-                            ))
+                              );
+                            })
                           ) : (
                             <p>No comments yet.</p>
                           )}
                         </div>
+
                         <button
                           className={styles.toggleButton}
                           onClick={() => toggleExpand(post.id)}
                           aria-label="Toggle Comments"
+                          type="button"
                         >
                           <span>Comments</span>
                           {expandedPosts[post.id] ? "⬆" : "⬇"}
@@ -323,7 +326,9 @@ const GroupPage = () => {
                           <div className={styles.commentSection}>
                             <textarea
                               name={`comment-${post.id}`}
-                              onChange={(e) => handleCommentChangeWrapper(post.id, e)}
+                              onChange={(e) =>
+                                handleCommentChangeWrapper(post.id, e)
+                              }
                               value={commentValues[post.id] || ""}
                               placeholder="Write a comment..."
                               className={styles.commentTextarea}
@@ -361,15 +366,11 @@ const GroupPage = () => {
       <Modal
         isOpen={isDeleteCommentModalOpen}
         onClose={handleCloseDeleteCommentModal}
-        onConfirm={handleDeleteCommentConfirm}
-        message="Are you sure you want to delete this comment?" 
+        onConfirm={handleRemoveComment}
+        message="Are you sure you want to delete this comment?"
       />
     </MainContent>
   );
 };
 
 export default GroupPage;
-
-
-
-

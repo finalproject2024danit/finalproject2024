@@ -1,15 +1,22 @@
 @use "../../App.scss" as *;
 
 .mainBox {
-  // margin-top: 180px;
-  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  border-radius: $border-radius-medium-big;
   width: 99%;
-  height: 100%;
-  padding: 0 10px;
+
+  padding: 0 $padding-medium;
   overflow-y: auto;
   overflow-x: hidden;
   background-color: $background-secondary;
-  
+  padding: 10px;
+  @media (max-width: 768px) {
+    width: 98%;
+  }
+  @media (max-width: 425px) {
+    width: 96%;
+  }
 }
 
 .mainBox::-webkit-scrollbar {
@@ -17,30 +24,16 @@
 }
 
 .mainBox::-webkit-scrollbar-track {
-  background:$background-fifth;
+  background: $background-fifth;
 }
 
 .mainBox::-webkit-scrollbar-thumb {
   background-color: $background-sixth;
-  border-radius: 10px;
+  border-radius: $border-radius-medium-big;
   border: 2px solid $background-fifth;
 }
 
 .mainBox {
   scrollbar-width: thin;
   scrollbar-color: $background-sixth $background-fifth;
-}
-
-@media (max-width: 1024px) {
-  .mainBox {
-    // width: 90%;
-    // margin-top: 150px;
-  }
-}
-
-@media (max-width: 767px) {
-  .mainBox {
-    // width: 95%;
-    // margin-top: 120px;
-  }
 }

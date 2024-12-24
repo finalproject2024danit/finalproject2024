@@ -3,6 +3,7 @@ import chatReducer from "./slices/chatSlice.js";
 import userReducer from "./slices/userSlice.js";
 import groupReducer from "./slices/groupSlice.js";
 import friendsReducer from "./slices/friendsSlice.js";
+import friendsPageReducer from "./slices/friendsPageSlice.js"
 import hobbiesReducer from "./slices/hobbiesSlice.js";
 import residencesReducer from "./slices/residencesSlice.js";
 import newsReducer from "./slices/newsSlice.js";
@@ -17,6 +18,7 @@ export const store = configureStore({
     user: userReducer,
     group: groupReducer,
     friends: friendsReducer,
+    friendsPage: friendsPageReducer,
     hobbies: hobbiesReducer,
     residences: residencesReducer,
     news: newsReducer,

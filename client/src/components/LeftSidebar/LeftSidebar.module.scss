@@ -2,38 +2,47 @@
 
 .leftMenu {
   display: flex;
-  flex-direction: column;  
-  background-color:$background-secondary;
-  border-radius: 10px;  
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background-color: $background-secondary;
+  border-radius: $border-radius-medium-big;
   opacity: 0.9;
   border: 3px solid $twelfth;
 
   .functionBlock {
     display: flex;
     justify-content: space-around;
-    align-items: center;    
+    align-items: center;
     cursor: pointer;
-  } 
+  }
 
   .iconWrapper {
     display: flex;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: $margin-large;
   }
 
   .iconWrapper img {
-    width: 100px;
-    height: 100px;
+    width: 7vw;
+    height: 7vw;
     border-radius: 50%;
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
   }
+
+  .formBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .menuForm {
-    padding: 20px 10px;
+    padding: $padding-large $padding-medium;
     width: 80%;
-    margin-left: 10px;
-    border-radius: 10px;
+    margin-left: $margin-medium;
+    border-radius: $border-radius-medium-big;
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -41,14 +50,13 @@
 
   .menuForm input {
     width: 95%;
-    padding: 20px 5px;
+    padding: $padding-large $padding-small;
   }
 
   a {
     cursor: pointer;
-  } 
+  }
 }
-
 
 @keyframes glow {
   0% {

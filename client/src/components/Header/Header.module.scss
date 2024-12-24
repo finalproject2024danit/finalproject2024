@@ -1,27 +1,51 @@
 @use "../../App.scss" as *;
 
 .headerBox {
-  // margin: 0 auto;
   position: sticky;
   width: 99%;
-  // border-radius: 50%;
-  // overflow: hidden;
-  // padding-right: 50px;
-  top: 0; 
-  left: 5px;
-  z-index: 100; 
-  
- 
+  top: 0;
+  left: 0;
+  z-index: 100;
+
+  display: flex;
+  @media (max-width: 768px) {
+    width: 99%;
+  }
 }
-.shinyCta{
-  border-radius: 20px;
+
+.headerNav {
+  display: flex;
+
+  gap: 15px;
+
+  @media (min-width: 768px) {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+}
+
+.burgerButton {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 101;
+
+  @media (max-width: 768px) {
+    display: block;
+  }
+}
+
+.shinyCta {
+  border-radius: $border-radius-large;
 }
 
 header {
   display: flex;
-  // padding: 20px; 
+
   width: 100%;
-  
 
   h1 {
     background: $linear-gradient-header;
@@ -33,6 +57,9 @@ header {
     font-weight: $font-weight-bold;
     cursor: pointer;
     animation: gradientMove 3s infinite;
+    @media (max-width: 768px) {
+      text-align: center;
+    }
   }
 
   @keyframes gradientMove {
@@ -53,10 +80,14 @@ header {
     background: $background-secondary;
     position: relative;
     border-radius: 50px;
-    box-shadow: inset 0 1px 1px rgba(128, 125, 125, 0.5), 0 1px 0 rgba(104, 133, 130, 0.2);
+    box-shadow: inset 0 1px 1px rgba(128, 125, 125, 0.5),
+      0 1px 0 rgba(104, 133, 130, 0.2);
 
+    @media (max-width: 768px) {
+      display: none;
+    }
     &:after {
-      content: 'UA';
+      content: "UA";
       color: $secondary;
       position: absolute;
       right: 10px;
@@ -67,8 +98,8 @@ header {
     }
 
     &:before {
-      content: 'EN';
-      color: gray;
+      content: "EN";
+      color: $secondary;
       position: absolute;
       left: 10px;
       z-index: 0;
@@ -88,10 +119,10 @@ header {
       background: $background-third;
       border-radius: 50px;
       transition: all 0.4s ease;
-      box-shadow: 0 2px 5px 0 rgba(0,0,0,0.3);
+      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
     }
 
-    input[type=checkbox] {
+    input[type="checkbox"] {
       visibility: hidden;
 
       &:checked + label {
@@ -113,68 +144,97 @@ header {
     content: "";
     position: absolute;
     left: -14px;
-    bottom: -10px; 
-    width: 200%; 
-    height: 3px; 
-    background-color: $background-secondary; 
+    bottom: -10px;
+    width: 200%;
+    height: 3px;
+    background-color: $background-secondary;
     transition: background-color 0.3s ease;
   }
 
   .headerNav li a.active::after {
-    background-color: $background-third; 
+    background-color: $background-third;
   }
 
   .logoBox {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding-left: 10px;
-    background-color: #282f44;
-
-    
+    padding-left: $padding-medium;
+    background-color: $background-secondary;
+    @media (max-width: 768px) {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+  .headerSlogan {
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 
   .header {
     display: flex;
     flex-direction: column;
     width: 100%;
-    background-color: #282f44;
-
+    background-color: $background-secondary;
   }
 
   .headerTop {
     display: flex;
-    justify-content:center;
+    justify-content: center;
     align-items: center;
-    gap: 30px;
-    padding: 10px;
+    gap: $padding-medium;
+    padding: $padding-medium;
     box-sizing: border-box;
-    // border-bottom: 1px solid $fifth;
+    @media (max-width: 768px) {
+      padding: 0;
+      gap: 0;
+    }
   }
 
   .imgLogo {
-    width: 150px;
-    height: 100px;
+    width: 100px;
+    height: 80px;
     border-radius: 50%;
     cursor: pointer;
+    margin-left: $margin-medium;
+
+    @media (min-width: 768px) {
+      width: 150px;
+      height: 100px;
+    }
   }
 
   .headerBottom {
-    padding: 20px;
+    padding: $padding-medium;
     box-sizing: border-box;
+
+    @media (min-width: 768px) {
+      padding: $padding-large;
+    }
   }
 
   .headerNav {
+    display: no;
     display: flex;
-    justify-content: space-evenly;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+
+    @media (min-width: 768px) {
+      justify-content: space-evenly;
+    }
   }
 }
-
 
 .gamesSelect {
   margin: 0 auto;
   position: relative;
   opacity: 0.8;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 }
 
 .gameDropdown {
@@ -182,57 +242,110 @@ header {
   padding: 8px 12px;
   border-radius: 20px;
   border: 1px solid #131212;
-  background-color: #1a1a1a; /* Тёмный фон */
-  color: #807979; /* Белый текст */
-  appearance: none; /* Убирает стрелку браузера */
+  background-color: $background-primary;
+  color: $secondary;
+  appearance: none;
   cursor: pointer;
   transition: background-color 0.5s ease, border-color 0.5s ease;
-  transition: height 1s ease; /* Анимация изменения высоты */
+  transition: height 1s ease;
 }
 
 .gameDropdown:hover {
-  background-color: #333; /* Изменение фона при наведении */
-  border-color: #0a0a0a; /* Цвет рамки при наведении */
+  background-color: $background-sixth;
+  border-color: $background-fourth;
 }
 
 .gameDropdown:focus {
   outline: none;
-  background-color: #444; /* Более яркий фон при фокусе */
-  border-color: #171718; /* Активный цвет рамки */
+  background-color: $background-secondary;
+  border-color: $background-fifth;
 }
 
-/* Стили для опций */
 .gameDropdown option {
-  padding: 8px 12px; /* Паддинги внутри опций */
-  background-color: #1a1a1a; /* Фон опции */
-  color: #615f5f; /* Цвет текста */
-  border-radius: 20px; /* Убираем закругления */
+  padding: 8px 12px;
+  background-color: $background-primary;
+  color: $secondary;
+  border-radius: 20px;
   cursor: pointer;
 }
 
 .gameDropdown option:hover,
 .gameDropdown option:focus {
-  background-color: #444; /* Фон при наведении */
-  color: #363636; /* Цвет текста */
+  background-color: $background-secondary;
+  color: $primary;
 }
 
+.searchContainer {
+  position: relative;
+  display: flex;
 
-// .gamesSelect {
-//   margin: 0 auto;
-// }
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+  }
+}
 
-// .gameDropdown {
-//   padding: 8px;
-//   border-radius: 5px;
-//   // border: 1px solid #ccc;
-//   background-color: #35353511;
-//   color: #f1eeee;
-//   cursor: pointer;
-// }
+.menuForm {
+  padding: $padding-large $padding-medium;
+  width: 90%;
+  margin-left: $margin-medium;
+  border-radius: $border-radius-medium-big;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
 
-// .gameDropdown:focus {
-//   // border-color: #111316;
-//   outline: none;
-// }
+  @media (min-width: 769px) {
+    display: none;
+  }
+}
 
+.menuForm input {
+  width: 95%;
+  padding: $padding-large $padding-small;
+}
 
+a {
+  cursor: pointer;
+}
+.selectForm option {
+  background-color: #131212;
+}
+.selectForm {
+  width: 70%;
+  max-width: 300px;
+  padding: $padding-small;
+  border-radius: $border-radius-medium;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: $nodle-black-0;
+  border: 1px solid $glass-stroke;
+
+  &:focus {
+    border-color: $stem-green-500;
+    box-shadow: 0 0 0 2px rgba($stem-green-500, 0.3);
+  }
+
+  .react-select__control {
+    padding: 0;
+    border: none;
+    border-radius: $border-radius-medium;
+    background-color: $nodle-black-0;
+
+    &--is-focused {
+      box-shadow: 0 0 0 2px rgba($stem-green-500, 0.3);
+    }
+  }
+
+  .react-select__indicator {
+    color: $stem-green-500;
+    transition: transform 0.2s ease;
+
+    &:hover {
+      color: $stem-green-600;
+    }
+    .react-select__dropdown-indicator {
+      transform: rotate(0deg);
+      color: #131212;
+    }
+  }
+}
