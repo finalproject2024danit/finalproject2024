@@ -11,7 +11,9 @@ import ChatIcon from "../../svg/Header/Chat";
 import FriendsIcon from "../../svg/Header/Friends";
 import PenIcon from "../../svg/Header/Pen";
 import styles from "./Header.module.scss";
+import {toggleLanguage} from "../../redux/slices/languageSlice.js";
 import { fetchSearchResults } from "../../redux/slices/searchSlice";
+
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -21,6 +23,8 @@ const Header = () => {
 
   const [isChecked, setIsChecked] = useState(i18n.language === "ua");
   const [selectedGame, setSelectedGame] = useState("");
+
+  const language = useSelector((state) => state.language.language);
   const [menuPlacement, setMenuPlacement] = useState("bottom");
 
   useEffect(() => {
@@ -34,12 +38,11 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
-    setIsChecked(i18n.language === "ua");
-  }, [i18n.language]);
+    i18n.changeLanguage(language);
+  }, [language, i18n]);
 
-  const handleLanguageChange = () => {
-    const newLang = isChecked ? "en" : "ua";
-    i18n.changeLanguage(newLang);
+  const handleLanguageToggle = () => {
+    dispatch(toggleLanguage());
   };
 
   const handleGameChange = (event) => {
@@ -118,14 +121,26 @@ const Header = () => {
                   </span>
                 </h1>
               </NavLink>
+              <div className={styles.radioBtn}>
+                <input
+                    type="checkbox"
+                    checked={language === "ua"}
+                    onChange={handleLanguageToggle}
+                    id="languageToggle"
+                />
+                <label htmlFor="languageToggle">
+                  {language === "ua" ? "UA" : "EN"}
+                </label>
+              </div>
+
             </div>
             <div className={styles.headerBottom}>
               <nav>
                 <ul className={styles.headerNav}>
                   <li>
                     <NavLink
-                      className={({ isActive }) =>
-                        isActive ? styles.active : ""
+                        className={({isActive}) =>
+                            isActive ? styles.active : ""
                       }
                       to="/"
                     >
