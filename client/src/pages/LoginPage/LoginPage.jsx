@@ -44,11 +44,11 @@ const LoginPage = () => {
   const RegistrationSchema = Yup.object().shape({
     email: Yup.string().email("Invalid email").required("Email is required"),
     password: Yup.string()
-      .min(6, "Password too short")
-      .required("Password is required"),
+        .min(6, "Password too short")
+        .required("Password is required"),
     confirmPassword: Yup.string()
-      .oneOf([Yup.ref("password"), null], "Passwords must match")
-      .required("Confirm your password"),
+        .oneOf([Yup.ref("password"), null], "Passwords must match")
+        .required("Confirm your password"),
   });
 
   const handleLogin = async (values) => {
@@ -89,136 +89,136 @@ const LoginPage = () => {
       }
     } catch (error) {
       setRegistrationMessage(
-        error.response?.data?.message || "Registration failed. Try again."
+          error.response?.data?.message || "Registration failed. Try again."
       );
     }
   };
 
   return (
-    <div className={styles.loginBox}>
-      <ul className={styles.circles}>
-        {Array.from({ length: 10 }).map((_, i) => (
-          <li key={i}></li>
-        ))}
-      </ul>
-      <div
-        className={`${styles.wrapper} ${isLoginActive ? styles.active : ""}`}
-      >
-        <div className={`${styles.form} ${styles.login}`}>
-          <header className={styles.logHeader} onClick={handleLoginClick}>
-            Login
-          </header>
-          <Formik
-            initialValues={{
-              email: "alice.johnson@example.com",
-              password: "password123",
-            }}
-            validationSchema={LoginSchema}
-            onSubmit={handleLogin}
-          >
-            {({ isSubmitting }) => (
-              <Form>
-                <Field type="text" name="email" placeholder="Email address" />
-                <ErrorMessage
-                  name="email"
-                  component="div"
-                  className={styles.error}
-                />
+      <div className={styles.loginBox}>
+        <ul className={styles.circles}>
+          {Array.from({ length: 10 }).map((_, i) => (
+              <li key={i}></li>
+          ))}
+        </ul>
+        <div
+            className={`${styles.wrapper} ${isLoginActive ? styles.active : ""}`}
+        >
+          <div className={`${styles.form} ${styles.login}`}>
+            <header className={styles.logHeader} onClick={handleLoginClick}>
+              Login
+            </header>
+            <Formik
+                initialValues={{
+                  email: "alice.johnson@example.com",
+                  password: "password123",
+                }}
+                validationSchema={LoginSchema}
+                onSubmit={handleLogin}
+            >
+              {({ isSubmitting }) => (
+                  <Form>
+                    <Field type="text" name="email" placeholder="Email address" />
+                    <ErrorMessage
+                        name="email"
+                        component="div"
+                        className={styles.error}
+                    />
 
-                <Field type="password" name="password" placeholder="Password" />
-                <ErrorMessage
-                  name="password"
-                  component="div"
-                  className={styles.error}
-                />
+                    <Field type="password" name="password" placeholder="Password" />
+                    <ErrorMessage
+                        name="password"
+                        component="div"
+                        className={styles.error}
+                    />
 
-                {errorMessage && (
-                  <div className={styles.error}>{errorMessage}</div>
-                )}
+                    {errorMessage && (
+                        <div className={styles.error}>{errorMessage}</div>
+                    )}
 
-                <button
-                  className={styles.loginBtn}
-                  type="submit"
-                  disabled={isSubmitting}
-                >
-                  Login
-                </button>
-              </Form>
-            )}
-          </Formik>
-        </div>
+                    <button
+                        className={styles.loginBtn}
+                        type="submit"
+                        disabled={isSubmitting}
+                    >
+                      Login
+                    </button>
+                  </Form>
+              )}
+            </Formik>
+          </div>
 
-        <div className={`${styles.form} ${styles.signUp}`}>
-          <header className={styles.logHeader} onClick={handleRegisterClick}>
-            Signup
-          </header>
-          <Formik
-            initialValues={{
-              firstName: "",
-              lastName: "",
-              email: "",
-              password: "",
-              confirmPassword: "",
-            }}
-            validationSchema={RegistrationSchema}
-            onSubmit={handleRegister}
-          >
-            {({ isSubmitting }) => (
-              <Form>
-                <Field type="text" name="firstName" placeholder="First name" />
-                <ErrorMessage
-                  name="firstName"
-                  component="div"
-                  className={styles.error}
-                />
-                <Field type="text" name="lastName" placeholder="Last name" />
-                <ErrorMessage
-                  name="lastName"
-                  component="div"
-                  className={styles.error}
-                />
-                <Field type="text" name="email" placeholder="Email address" />
-                <ErrorMessage
-                  name="email"
-                  component="div"
-                  className={styles.error}
-                />
+          <div className={`${styles.form} ${styles.signUp}`}>
+            <header className={styles.logHeader} onClick={handleRegisterClick}>
+              Signup
+            </header>
+            <Formik
+                initialValues={{
+                  firstName: "",
+                  lastName: "",
+                  email: "",
+                  password: "",
+                  confirmPassword: "",
+                }}
+                validationSchema={RegistrationSchema}
+                onSubmit={handleRegister}
+            >
+              {({ isSubmitting }) => (
+                  <Form>
+                    <Field type="text" name="firstName" placeholder="First name" />
+                    <ErrorMessage
+                        name="firstName"
+                        component="div"
+                        className={styles.error}
+                    />
+                    <Field type="text" name="lastName" placeholder="Last name" />
+                    <ErrorMessage
+                        name="lastName"
+                        component="div"
+                        className={styles.error}
+                    />
+                    <Field type="text" name="email" placeholder="Email address" />
+                    <ErrorMessage
+                        name="email"
+                        component="div"
+                        className={styles.error}
+                    />
 
-                <Field type="password" name="password" placeholder="Password" />
-                <ErrorMessage
-                  name="password"
-                  component="div"
-                  className={styles.error}
-                />
+                    <Field type="password" name="password" placeholder="Password" />
+                    <ErrorMessage
+                        name="password"
+                        component="div"
+                        className={styles.error}
+                    />
 
-                <Field
-                  type="password"
-                  name="confirmPassword"
-                  placeholder="Confirm Password"
-                />
-                <ErrorMessage
-                  name="confirmPassword"
-                  component="div"
-                  className={styles.error}
-                />
+                    <Field
+                        type="password"
+                        name="confirmPassword"
+                        placeholder="Confirm Password"
+                    />
+                    <ErrorMessage
+                        name="confirmPassword"
+                        component="div"
+                        className={styles.error}
+                    />
 
-                {registrationMessage && (
-                  <div className={styles.message}>{registrationMessage}</div>
-                )}
+                    {registrationMessage && (
+                        <div className={styles.message}>{registrationMessage}</div>
+                    )}
 
-                <button
-                  className={styles.signUpBtn}
-                  type="submit"
-                  disabled={isSubmitting}
-                >
-                  Signup
-                </button>
-              </Form>
-            )}
-          </Formik>
+                    <button
+                        className={styles.signUpBtn}
+                        type="submit"
+                        disabled={isSubmitting}
+                    >
+                      Signup
+                    </button>
+                  </Form>
+              )}
+            </Formik>
+          </div>
         </div>
       </div>
-    </div>
   );
 };
 

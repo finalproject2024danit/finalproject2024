@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import {configureStore} from "@reduxjs/toolkit";
 import chatReducer from "./slices/chatSlice.js";
 import userReducer from "./slices/userSlice.js";
 import groupReducer from "./slices/groupSlice.js";
@@ -13,20 +13,20 @@ import conversationReducer from "./slices/conversationsSlice.js";
 import languageReducer from "./slices/languageSlice.js";
 
 export const store = configureStore({
-  reducer: {
-    chat: chatReducer,
-    user: userReducer,
-    group: groupReducer,
-    friends: friendsReducer,
-    friendsPage: friendsPageReducer,
-    hobbies: hobbiesReducer,
-    residences: residencesReducer,
-    news: newsReducer,
-    comments: commentsReducer,
-    globalsearch: globalsearchReducer,
-    conversations: conversationReducer,
-    language: languageReducer,
-  },
+    reducer: {
+        chat: chatReducer,
+        user: userReducer,
+        group: groupReducer,
+        friends: friendsReducer,
+        friendsPage: friendsPageReducer,
+        hobbies: hobbiesReducer,
+        residences: residencesReducer,
+        news: newsReducer,
+        comments: commentsReducer,
+        globalsearch: globalsearchReducer,
+        conversations: conversationReducer,
+        language: languageReducer,
+    },
 });
 
 export default store;
