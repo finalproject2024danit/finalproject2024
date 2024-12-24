@@ -6,28 +6,31 @@ import GroupIcon from "../../svg/Header/Group";
 import HomeIcon from "../../svg/Header/Home";
 import ChatIcon from "../../svg/Header/Chat";
 import styles from "./Header.module.scss";
+import {useDispatch, useSelector} from "react-redux";
+import {toggleLanguage} from "../../redux/slices/languageSlice.js";
 
 const Header = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate(); // Для перенаправления при выборе игры
 
   const [isChecked, setIsChecked] = useState(i18n.language === "ua");
-  const [selectedGame, setSelectedGame] = useState(""); // Выбранная игра
+  const [selectedGame, setSelectedGame] = useState("");
+  const language = useSelector((state) => state.language.language);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    setIsChecked(i18n.language === "ua");
-  }, [i18n.language]);
+    i18n.changeLanguage(language);
+  }, [language, i18n]);
 
-  const handleLanguageChange = () => {
-    const newLang = isChecked ? "en" : "ua";
-    i18n.changeLanguage(newLang);
+  const handleLanguageToggle = () => {
+    dispatch(toggleLanguage());
   };
 
   const handleGameChange = (event) => {
     const game = event.target.value;
     setSelectedGame(game);
     if (game) {
-      navigate(game); // Переход на страницу игры
+      navigate(game);
     }
   };
 
@@ -59,13 +62,13 @@ const Header = () => {
               </NavLink>
               <div className={styles.radioBtn}>
                 <input
-                  type="checkbox"
-                  checked={isChecked}
-                  onChange={handleLanguageChange}
-                  id="languageToggle"
+                    type="checkbox"
+                    checked={language === "ua"}
+                    onChange={handleLanguageToggle}
+                    id="languageToggle"
                 />
                 <label htmlFor="languageToggle">
-                  {isChecked ? "UA" : "EN"}
+                  {language === "ua" ? "UA" : "EN"}
                 </label>
               </div>
             </div>
@@ -74,8 +77,8 @@ const Header = () => {
                 <ul className={styles.headerNav}>
                   <li>
                     <NavLink
-                      className={({ isActive }) =>
-                        isActive ? styles.active : ""
+                        className={({isActive}) =>
+                            isActive ? styles.active : ""
                       }
                       to="/"
                     >

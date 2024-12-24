@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-// import authReducer from './slices/authSlice.js';
 import chatReducer from "./slices/chatSlice.js";
 import userReducer from "./slices/userSlice.js";
 import groupReducer from "./slices/groupSlice.js";
@@ -10,6 +9,7 @@ import newsReducer from "./slices/newsSlice.js";
 import commentsReducer from "./slices/commentsSlice.js";
 import globalsearchReducer from "./slices/searchSlice.js";
 import conversationReducer from "./slices/conversationsSlice.js";
+import languageReducer from "./slices/languageSlice.js";
 
 export const store = configureStore({
   reducer: {
@@ -23,6 +23,7 @@ export const store = configureStore({
     comments: commentsReducer,
     globalsearch: globalsearchReducer,
     conversations: conversationReducer,
+    language: languageReducer,
   },
 });
 

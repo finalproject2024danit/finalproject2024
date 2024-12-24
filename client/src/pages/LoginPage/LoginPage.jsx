@@ -3,17 +3,21 @@ import {useDispatch, useSelector} from "react-redux";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
 import {fetchRegister, fetchToken, fetchUserDataByToken,} from "../../redux/slices/userSlice.js";
+import {toggleLanguage} from "../../redux/slices/languageSlice.js";
 import {useNavigate} from "react-router-dom";
 import bcrypt from "bcryptjs";
 import styles from "./LoginPage.module.scss";
+import {useTranslation} from "react-i18next";
 
 const LoginPage = () => {
+    const {t, i18n} = useTranslation();
     const token = useSelector((state) => state.user.token);
     const [isLoginActive, setIsLoginActive] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const [registrationMessage, setRegistrationMessage] = useState("");
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const language = useSelector((state) => state.language.language);
 
     useEffect(() => {
         if (token) {
@@ -22,9 +26,17 @@ const LoginPage = () => {
         }
     }, [token, navigate, dispatch]);
 
+    useEffect(() => {
+        i18n.changeLanguage(language);
+    }, [language, i18n]);
+
     const handleLoginClick = () => {
         setIsLoginActive(true);
         setErrorMessage("");
+    };
+
+    const handleLanguageToggle = () => {
+        dispatch(toggleLanguage());
     };
 
     const handleRegisterClick = () => {
@@ -97,13 +109,15 @@ const LoginPage = () => {
                     <li key={i}></li>
                 ))}
             </ul>
+
             <div
                 className={`${styles.wrapper} ${isLoginActive ? styles.active : ""}`}
             >
                 <div className={`${styles.form} ${styles.login}`}>
                     <header className={styles.logHeader} onClick={handleLoginClick}>
-                        Login
+                        {t("login.title")}
                     </header>
+
                     <Formik
                         initialValues={{
                             email: "alice.johnson@example.com",
@@ -114,14 +128,14 @@ const LoginPage = () => {
                     >
                         {({isSubmitting}) => (
                             <Form>
-                                <Field type="text" name="email" placeholder="Email address"/>
+                                <Field type="text" name="email" placeholder={t("login.email")}/>
                                 <ErrorMessage
                                     name="email"
                                     component="div"
                                     className={styles.error}
                                 />
 
-                                <Field type="password" name="password" placeholder="Password"/>
+                                <Field type="password" name="password" placeholder={t("login.password")}/>
                                 <ErrorMessage
                                     name="password"
                                     component="div"
@@ -137,7 +151,7 @@ const LoginPage = () => {
                                     type="submit"
                                     disabled={isSubmitting}
                                 >
-                                    Login
+                                    {t("login.title")}
                                 </button>
                             </Form>
                         )}
@@ -146,8 +160,21 @@ const LoginPage = () => {
 
                 <div className={`${styles.form} ${styles.signUp}`}>
                     <header className={styles.logHeader} onClick={handleRegisterClick}>
-                        Signup
+                        {t("login.signUp")}
                     </header>
+                    <div className={styles.languageToggle}>
+                        <label className={styles.switch}>
+                            <input
+                                type="checkbox"
+                                checked={language === "ua"}
+                                onChange={handleLanguageToggle}
+                            />
+                            <span className={styles.slider}></span>
+                        </label>
+                        <span className={styles.languageLabel}>
+                            {language === "ua" ? "UA" : "EN"}
+                        </span>
+                    </div>
                     <Formik
                         initialValues={{
                             firstName: "",
@@ -161,26 +188,26 @@ const LoginPage = () => {
                     >
                         {({isSubmitting}) => (
                             <Form>
-                                <Field type="text" name="firstName" placeholder="First name"/>
+                                <Field type="text" name="firstName" placeholder={t("login.firstName")}/>
                                 <ErrorMessage
                                     name="firstName"
                                     component="div"
                                     className={styles.error}
                                 />
-                                <Field type="text" name="lastName" placeholder="Last name"/>
+                                <Field type="text" name="lastName" placeholder={t("login.lastName")}/>
                                 <ErrorMessage
                                     name="lastName"
                                     component="div"
                                     className={styles.error}
                                 />
-                                <Field type="text" name="email" placeholder="Email address"/>
+                                <Field type="text" name="email" placeholder={t("login.email")}/>
                                 <ErrorMessage
                                     name="email"
                                     component="div"
                                     className={styles.error}
                                 />
 
-                                <Field type="password" name="password" placeholder="Password"/>
+                                <Field type="password" name="password" placeholder={t("login.password")}/>
                                 <ErrorMessage
                                     name="password"
                                     component="div"
@@ -190,7 +217,7 @@ const LoginPage = () => {
                                 <Field
                                     type="password"
                                     name="confirmPassword"
-                                    placeholder="Confirm Password"
+                                    placeholder={t("login.confirmPassword")}
                                 />
                                 <ErrorMessage
                                     name="confirmPassword"
@@ -207,7 +234,7 @@ const LoginPage = () => {
                                     type="submit"
                                     disabled={isSubmitting}
                                 >
-                                    Signup
+                                    {t("login.signUp")}
                                 </button>
                             </Form>
                         )}
