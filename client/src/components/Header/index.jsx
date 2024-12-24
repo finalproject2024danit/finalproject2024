@@ -11,10 +11,7 @@ import ChatIcon from "../../svg/Header/Chat";
 import FriendsIcon from "../../svg/Header/Friends";
 import PenIcon from "../../svg/Header/Pen";
 import styles from "./Header.module.scss";
-
-import {useDispatch, useSelector} from "react-redux";
 import {toggleLanguage} from "../../redux/slices/languageSlice.js";
-
 import { fetchSearchResults } from "../../redux/slices/searchSlice";
 
 
@@ -28,7 +25,6 @@ const Header = () => {
   const [selectedGame, setSelectedGame] = useState("");
 
   const language = useSelector((state) => state.language.language);
-  const dispatch = useDispatch();
   const [menuPlacement, setMenuPlacement] = useState("bottom");
 
   useEffect(() => {
