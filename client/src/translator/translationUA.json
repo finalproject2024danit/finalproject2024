@@ -19,12 +19,12 @@
     "globalSearch": "Глобальний пошук"
   },
   "login": {
-    "title": "Login",
-    "firstName": "First Name",
-    "lastName": "Last name",
-    "email": "Email",
-    "password": "Password",
-    "confirmPassword": "Confirm password",
-    "signUp": "Signup"
+    "title": "Логін",
+    "firstName": "ім'я",
+    "lastName": "Прізвище",
+    "email": "Емейл",
+    "password": "Пароль",
+    "confirmPassword": "Підтвердження паролю",
+    "signUp": "Реєстрація"
   }
 }
