@@ -13,6 +13,7 @@ import PenIcon from "../../svg/Header/Pen";
 import styles from "./Header.module.scss";
 import { fetchSearchResults } from "../../redux/slices/searchSlice";
 
+
 const Header = () => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
